@@ -1,4 +1,4 @@
-# Tensegrity_Robotics
+# Tensegrity-Robotics
 This repository for my works in the Tensegrity Robotics. It is extension for the work that done in [my university's internship Summer19](https://github.com/hany606/Tensegrity-Robot-IU-Internship19). The work of the simulator is from [NTRTsim](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim).
 
 There is a google doc who contain a lot of data related to the project that I have collected during my internship: [Link](https://docs.google.com/document/d/19-lCDq4gPtaQ6hCJNI77qi1bIzHJGaliu4Yrh53H7hs/edit?usp=sharing)
