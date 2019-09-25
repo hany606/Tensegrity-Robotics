@@ -3,8 +3,11 @@ This repository for my works in the Tensegrity Robotics. It is extension for the
 
 There is a google doc who contain a lot of data related to the project that I have collected during my internship: [Link](https://docs.google.com/document/d/19-lCDq4gPtaQ6hCJNI77qi1bIzHJGaliu4Yrh53H7hs/edit?usp=sharing)
 
+This work is not an individual, this work is part from a research work in robotics lab at Innopolis University.
 
-## How to start?:
+Mainly, this work will concentrate on using RL to control the movements of the tensegrity structure using NTRTsim for now.
+
+## How to start working with the repository?:
   1. Clone the repo:
 	  ```bash
 	  git clone https://github.com/hany606/Tensegrity-Robot-IU-Internship19.git
