@@ -20,6 +20,9 @@
 #include <stdexcept>
 #include<stdio.h>
 
+#define LENGTH 0.1
+#define OFFSET LENGTH/8.0
+
 /**
  * Anonomous namespace so we don't have to declare the config in
  * the header.
@@ -67,32 +70,73 @@ legModel::~legModel()
 void legModel::addNodes(tgStructure& s, double length)
 {   
 
-    //Bar 1 Vertical
-    s.addNode(-0.5*length,length,length);
-    s.addNode(-0.5*length,length,-length);
-    //Bar 2 Vertical
-    s.addNode(0.5*length,length,length);
-    s.addNode(0.5*length,length,-length);
+    // 9*2 nodes
+    // Z, Y swapped
+    //z,x,y
 
-    // Bar 3 Horizontal
-    s.addNode(-length,1.5*length,0);
-    s.addNode(length,1.5*length,0);
-    //Bar 4 Horizontal
-    s.addNode(-length,0.5*length,0);
-    s.addNode(length,0.5*length,0);
+    //parallel to the x-axis                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+    //1 down
+    s.addNode(0, length/2.0, -length/8.0);
+    s.addNode(0, -length/2.0, -length/8.0);
+    //2 = 1 but up same z,y 
+    s.addNode(0, length/2.0, length/8.0);
+    s.addNode(0, -length/2.0,  length/8.0);
+
+    //3 parallel to z-axis  in the middle of 1 & 2
+    //for the x I am not sure 1.5
+    s.addNode(length*2, length/5.0, 0);
+    s.addNode(-length*2, length/5.0, 0);
+    //4 = 3 but right same y,z
+    s.addNode(length*2, -length/5.0, 0);
+    s.addNode(-length*2, -length/5.0, 0);
+    
+    //5 parallel to y 8,3
+    s.addNode(length/8.0, 0, length*1.5);
+    s.addNode(length/8.0, 0, -length*1.5);
+    //6 = 5 but backward and smaller 8,1
+    s.addNode(-length/8.0, 0, length/2.0);
+    s.addNode(-length/8.0, 0, -length/2.0);
 
 
-    //Bar 3D
-    s.addNode(0,2*length,-0.5*length);
-    s.addNode(0,0,-0.5*length);
-    //Bar 3D
-    s.addNode(0,2*length,0.5*length);
-    s.addNode(0,0,0.5*length);
+    //7 = 6 but more backward 11/8,1
+    s.addNode(-11*length/8.0, 0, length/2.0);
+    s.addNode(-11*length/8.0, 0, -length/2.0);
+
+    //8 = 1 but backward 
+    s.addNode(-length, length/2.0, -length/8.0);
+    s.addNode(-length, -length/2.0, -length/8.0);
+
+    s.addNode(-length, length/2.0, length/8.0);
+    s.addNode(-length, -length/2.0,  length/8.0);
+
+    // //Bar 1 Vertical
+    // s.addNode(-0.5*length,length,length);
+    // s.addNode(-0.5*length,length,-length);
+    // //Bar 2 Vertical
+    // s.addNode(0.5*length,length,length);
+    // s.addNode(0.5*length,length,-length);
+
+    // // Bar 3 Horizontal
+    // s.addNode(-length,1.5*length,0);
+    // s.addNode(length,1.5*length,0);
+    // //Bar 4 Horizontal
+    // s.addNode(-length,0.5*length,0);
+    // s.addNode(length,0.5*length,0);
+
+
+    // //Bar 3D
+    // s.addNode(0,2*length,-0.5*length);
+    // s.addNode(0,0,-0.5*length);
+    // //Bar 3D
+    // s.addNode(0,2*length,0.5*length);
+    // s.addNode(0,0,0.5*length);
 
 }
 
 void legModel::addRods(tgStructure& s)
 {
+    // 9 Rods
+
     s.addPair( 0,  1, tgString("rod num", 0));
     s.addPair( 2,  3, tgString("rod num", 1));
     s.addPair( 4,  5, tgString("rod num", 2));
@@ -118,15 +162,15 @@ void legModel::addActuators(tgStructure& s)
                         {-1,-1,-1,-1},{-1,-1,-1,-1}    //10,11
     };
     int counter = 0;
-    for(int i = 0; i < 12; i++){
-        for(int j = 0; j < 4; j++){
-            if(pairs[i][j] == -1)
-                continue;
-            s.addPair(i,pairs[i][j], tgString("actuator num", counter));
-            counter++;
-            printf("%d - %d\n",i,pairs[i][j]);
-        }
-    }
+    // for(int i = 0; i < 12; i++){
+    //     for(int j = 0; j < 4; j++){
+    //         if(pairs[i][j] == -1)
+    //             continue;
+    //         s.addPair(i,pairs[i][j], tgString("actuator num", counter));
+    //         counter++;
+    //         printf("%d - %d\n",i,pairs[i][j]);
+    //     }
+    // }
 }
 
 
