@@ -1,3 +1,4 @@
+//Before the rotating
 /*
  * Copyright © 2012, United States Government, as represented by the
  * Administrator of the National Aeronautics and Space Administration.
@@ -108,63 +109,48 @@ void legzModel::addNodes(tgStructure& s, double length)
     // s.addNode( edge / 2.0, height, 0); // 5
     // // top front
     // s.addNode(0, height, width); // 6
-    //and flipped third with -first
-
-    //flipped first and second
 
     //First parameter is the distance between them, second is the end points
-    s.addNode(1*length/2.0, length/5.0, 0);
-    s.addNode(-1*length/2.0, length/5.0, 0);
+    s.addNode(length/5.0, 1*length/2.0, 0);
+    s.addNode(length/5.0, -1*length/2.0, 0);
     //2 = 1 but up same z,y 
-    s.addNode(1*length/2.0, -length/5.0, 0);
-    s.addNode(-1*length/2.0, -length/5.0, 0);
+    s.addNode(-length/5.0, 1*length/2.0, 0);
+    s.addNode(-length/5.0, -1*length/2.0,  0);
 
     //3 parallel to z-axis  in the middle of 1 & 2
     //for the x I am not sure 1.5
     //last paramter is controlling the length of the bar
-    s.addNode(length/5.0, 0, length*1.0);
-    s.addNode(length/5.0, 0, -length*1.3);
+    s.addNode(0, length/5.0, length*1.0);
+    s.addNode(0, length/5.0, -length*1.3);
     //4 = 3 but right same y,z
-    s.addNode(-length/5.0, 0, length*1.0);
-    s.addNode(-length/5.0, 0, -length*1.3);
+    s.addNode(0, -length/5.0, length*1.0);
+    s.addNode(0, -length/5.0, -length*1.3);
     
     //5 parallel to y 8,3
     //1st parameter is the end points, 3rd parameter is the distance between the center of the robot
-    s.addNode(0, -length/2.0, 3*length/5.0);
+    s.addNode(-length/2.0, 0, 3*length/5.0);
     // s.addNode(-length*1.0, 0, length/4.0);
-    s.addNode(0, length*1.0, 3*length/5.0);
+    s.addNode(length*1.0, 0, 3*length/5.0);
     //6 = 5 but backward and smaller 8,1
-    s.addNode(0, -length/2.0, -length/8.0);
-    s.addNode(0, length/3.0, -length/8.0);
+    s.addNode(-length/3.0, 0, -length/8.0);
+    s.addNode(length/3.0, 0, -length/8.0);
     //7 = 6 but more backward 11/8,1
-    s.addNode(0, -length/2.0, -7*length/8.0);
-    s.addNode(0, length/3.0, -7*length/8.0);
-
+    s.addNode(-length/3.0, 0, -7*length/8.0);
+    s.addNode(length/3.0, 0, -7*length/8.0);
 
     //First parameter is the distance between them, second is the end points, last one is the distance from the center of the robot
     //8 = 1 but backward 
-    s.addNode(1*length/2.0, length/5.0, -6*length/8.0);
-    s.addNode(-1*length/2.0, length/5.0, -6*length/8.0);
+    s.addNode(length/5.0, 1*length/2.0, -6*length/8.0);
+    s.addNode(length/5.0, -1*length/2.0, -6*length/8.0);
 
-    s.addNode(1*length/2.0, -length/5.0, -6*length/8.0);
-    s.addNode(-1*length/2.0, -length/5.0, -6*length/8.0);
-
-
-
-    s.addNode(length/4.0, -length/2.0, -4*length/8.0);
-    s.addNode(length/4.0, length/3.0, -4*length/8.0);
-
-    s.addNode(-length/4.0, -length/2.0, -4*length/8.0);
-    s.addNode(-length/4.0, length/3.0, -4*length/8.0);
-
-    
+    s.addNode(-length/5.0, 1*length/2.0, -6*length/8.0);
+    s.addNode(-length/5.0, -1*length/2.0, -6*length/8.0);
 
 }
 
-
 void legzModel::addRods(tgStructure& s)
 {
-    for(int i = 0; i < 22;){
+    for(int i = 0; i < 18;){
         s.addPair( i++,  i++, "rod");
     }
 
@@ -283,38 +269,12 @@ void legzModel::addMuscles(tgStructure& s)
     s.addPair(11, 17,  "muscle");
     s.addPair(11, 16,  "muscle");
 
-    //This to establize the new base into the main pillars to the structure
-    s.addPair(18,14,"muscle");
-    s.addPair(18,15,"muscle");
-    s.addPair(19,16,"muscle");
-    s.addPair(19,17,"muscle");
 
-    s.addPair(18,2,"muscle");
-    s.addPair(18,3,"muscle");
-    s.addPair(19,0,"muscle");
-    s.addPair(19,1,"muscle");
+    //?
+    //?
+    //?
+    //?
 
-    s.addPair(20,14,"muscle");
-    s.addPair(20,15,"muscle");
-    s.addPair(21,16,"muscle");
-    s.addPair(21,17,"muscle");
-
-    s.addPair(20,2,"muscle");
-    s.addPair(20,3,"muscle");
-    s.addPair(21,0,"muscle");
-    s.addPair(21,1,"muscle");
-    
-
-    //to remove the twist in the strucutre
-
-    s.addPair(18,13,"muscle");
-    // s.addPair(18,10,"muscle");
-    s.addPair(19,12,"muscle");
-    // s.addPair(19,11,"muscle");
-    s.addPair(20,13,"muscle");
-    // s.addPair(20,10,"muscle");
-    s.addPair(21,12,"muscle");
-    // s.addPair(21,11,"muscle");
 }
 
 void legzModel::setup(tgWorld& world)
