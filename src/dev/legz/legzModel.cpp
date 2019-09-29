@@ -130,9 +130,9 @@ void legzModel::addNodes(tgStructure& s, double length)
     
     //5 parallel to y 8,3
     //1st parameter is the end points, 3rd parameter is the distance between the center of the robot
-    s.addNode(0, -length/2.0, 3*length/5.0);
+    s.addNode(0, -length/2.0, 6*length/5.0);
     // s.addNode(-length*1.0, 0, length/4.0);
-    s.addNode(0, length*1.0, 3*length/5.0);
+    s.addNode(0, length*1.0, 6*length/5.0);
     //6 = 5 but backward and smaller 8,1
     s.addNode(0, -length/2.0, -length/8.0);
     s.addNode(0, length/3.0, -length/8.0);
@@ -151,20 +151,29 @@ void legzModel::addNodes(tgStructure& s, double length)
 
 
 
-    s.addNode(length/4.0, -length/2.0, -4*length/8.0);
-    s.addNode(length/4.0, length/3.0, -4*length/8.0);
+    s.addNode(length/4.0, -length/2.0, -5*length/8.0);
+    s.addNode(length/4.0, length/2.0, -5*length/8.0);
 
-    s.addNode(-length/4.0, -length/2.0, -4*length/8.0);
-    s.addNode(-length/4.0, length/3.0, -4*length/8.0);
+    s.addNode(-length/4.0, -length/2.0, -5*length/8.0);
+    s.addNode(-length/4.0, length/2.0, -5*length/8.0);
 
-    
+
+
+
+    s.addNode(length/4.0, -length/2.0, 2*length/8.0);
+    s.addNode(length/4.0, length/2.0, 2*length/8.0);
+
+    s.addNode(-length/4.0, -length/2.0, 2*length/8.0);
+    s.addNode(-length/4.0, length/2.0, 2*length/8.0);
+
+
 
 }
 
 
 void legzModel::addRods(tgStructure& s)
 {
-    for(int i = 0; i < 22;){
+    for(int i = 0; i < 26;){
         s.addPair( i++,  i++, "rod");
     }
 
@@ -284,36 +293,64 @@ void legzModel::addMuscles(tgStructure& s)
     s.addPair(11, 16,  "muscle");
 
     //This to establize the new base into the main pillars to the structure
-    s.addPair(18,14,"muscle");
-    s.addPair(18,15,"muscle");
-    s.addPair(19,16,"muscle");
-    s.addPair(19,17,"muscle");
-
+    //connect with the back horizontal bars
+    s.addPair(19,14,"muscle");
+    s.addPair(19,15,"muscle");
+    s.addPair(18,16,"muscle");
+    s.addPair(18,17,"muscle");
+    //connect with the front horizontal bars
     s.addPair(18,2,"muscle");
     s.addPair(18,3,"muscle");
     s.addPair(19,0,"muscle");
     s.addPair(19,1,"muscle");
 
-    s.addPair(20,14,"muscle");
-    s.addPair(20,15,"muscle");
-    s.addPair(21,16,"muscle");
-    s.addPair(21,17,"muscle");
+    //the same for the other bar
+    s.addPair(21,14,"muscle");
+    s.addPair(21,15,"muscle");
+    s.addPair(20,16,"muscle");
+    s.addPair(20,17,"muscle");
 
     s.addPair(20,2,"muscle");
     s.addPair(20,3,"muscle");
     s.addPair(21,0,"muscle");
     s.addPair(21,1,"muscle");
+
+
+
+
+    //This to establize the new base into the main pillars to the structure
+    //connect with the back horizontal bars
+    // s.addPair(23,14,"muscle");
+    // s.addPair(23,15,"muscle");
+    // s.addPair(22,16,"muscle");
+    // s.addPair(22,17,"muscle");
+    //connect with the front horizontal bars
+    s.addPair(22,2,"muscle");
+    s.addPair(22,3,"muscle");
+    s.addPair(23,0,"muscle");
+    s.addPair(23,1,"muscle");
+
+    //the same for the other bar
+    // s.addPair(25,14,"muscle");
+    // s.addPair(25,15,"muscle");
+    // s.addPair(24,16,"muscle");
+    // s.addPair(24,17,"muscle");
+
+    s.addPair(24,2,"muscle");
+    s.addPair(24,3,"muscle");
+    s.addPair(25,0,"muscle");
+    s.addPair(25,1,"muscle");
     
 
     //to remove the twist in the strucutre
 
-    s.addPair(18,13,"muscle");
+    // s.addPair(18,13,"muscle");
     // s.addPair(18,10,"muscle");
-    s.addPair(19,12,"muscle");
+    // s.addPair(19,12,"muscle");
     // s.addPair(19,11,"muscle");
-    s.addPair(20,13,"muscle");
+    // s.addPair(20,13,"muscle");
     // s.addPair(20,10,"muscle");
-    s.addPair(21,12,"muscle");
+    // s.addPair(21,12,"muscle");
     // s.addPair(21,11,"muscle");
 }
 
@@ -328,6 +365,11 @@ void legzModel::setup(tgWorld& world)
     // Create a structure that will hold the details of this model
     tgStructure s;
     
+
+    //Note!!!: we can add different tension for the strings by adding the rods with different tags
+    //  and add another Builder for that tag
+
+
     // Add nodes to the structure
     addNodes(s, c.legz_length);
     
