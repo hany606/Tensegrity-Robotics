@@ -130,9 +130,9 @@ void legzModel::addNodes(tgStructure& s, double length)
     
     //5 parallel to y 8,3
     //1st parameter is the end points, 3rd parameter is the distance between the center of the robot
-    s.addNode(0, -length/2.0, 6*length/5.0);
+    s.addNode(0, -length/2.0, 5*length/5.0);
     // s.addNode(-length*1.0, 0, length/4.0);
-    s.addNode(0, length*1.0, 6*length/5.0);
+    s.addNode(0, length*1.0, 5*length/5.0);
     //6 = 5 but backward and smaller 8,1
     s.addNode(0, -length/2.0, -length/8.0);
     s.addNode(0, length/3.0, -length/8.0);
@@ -173,9 +173,24 @@ void legzModel::addNodes(tgStructure& s, double length)
 
 void legzModel::addRods(tgStructure& s)
 {
+    char tag[] = "rod1";
     for(int i = 0; i < 26;){
-        s.addPair( i++,  i++, "rod");
+        
+        if(i == 18){
+            // strcpy(tag, "rod2");
+        }
+        s.addPair( i++,  i++, tag);
     }
+    s.addPair( 19,  23, tag);
+    s.addPair( 21,  25, tag);
+
+    strcpy(tag, "rod2");
+
+    s.addPair(18, 22, tag);
+    s.addPair(20, 24, tag);
+    s.addPair(18, 20, tag);
+    s.addPair(22, 24, tag);
+
 
 }
 
@@ -358,7 +373,8 @@ void legzModel::setup(tgWorld& world)
 {
     // Define the configurations of the rods and strings
     // Note that pretension is defined for this string
-    const tgRod::Config rodConfig(c.radius, c.density);
+    const tgRod::Config rodConfig1(c.radius, c.density);
+    const tgRod::Config rodConfig2(c.radius, c.density*100);
     // const tgSpringCableActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension);
      const tgBasicActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension,
         c.hist, c.maxTension);
@@ -384,7 +400,8 @@ void legzModel::setup(tgWorld& world)
     
     // Create the build spec that uses tags to turn the structure into a real model
     tgBuildSpec spec;
-    spec.addBuilder("rod", new tgRodInfo(rodConfig));
+    spec.addBuilder("rod1", new tgRodInfo(rodConfig1));
+    spec.addBuilder("rod2", new tgRodInfo(rodConfig2));
     spec.addBuilder("muscle", new tgBasicActuatorInfo(muscleConfig));
     
     // Create your structureInfo
