@@ -30,6 +30,8 @@
 // This library
 #include "core/tgModel.h"
 #include "core/tgSubject.h"
+#include "core/tgRod.h"
+#include "core/tgBasicActuator.h"
 // The C++ Standard Library
 #include <vector>
 
@@ -96,7 +98,14 @@ public:
      * Return a vector of all muscles for the controllers to work with.
      * @return A vector of all of the muscles
      */
-    const std::vector<tgSpringCableActuator*>& getAllActuators() const;
+    std::vector<tgBasicActuator*>& getAllActuators();
+
+
+    /**
+     * Return a vector of all rod bodies for the controllers to work with.
+     * @return A vector of all of the rod rigid bodies
+     */
+    std::vector<tgRod*>& getAllRods();
       
 private:
     
@@ -125,12 +134,18 @@ private:
      */
     static void addMuscles(tgStructure& s);
 
-private:    
+public:    
     /**
      * A list of all of the spring cable actuators. Will be empty until most of the way
      * through setup when it is filled using tgModel's find methods
      */
-    std::vector<tgSpringCableActuator*> allActuators;
+    std::vector<tgBasicActuator*> allActuators;
+
+    /**
+     * A list of all of the rods. Will be empty until most of the way
+     * through setup when it is filled using tgModel's find methods
+     */
+    std::vector<tgRod*> allRods;
 };
 
 #endif  // legz_MODEL_H

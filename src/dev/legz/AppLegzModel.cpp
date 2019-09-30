@@ -26,6 +26,7 @@
 
 // This application
 #include "legzModel.h"
+#include "LengthController.h"
 // This library
 #include "core/terrain/tgBoxGround.h"
 #include "core/tgModel.h"
@@ -69,7 +70,10 @@ int main(int argc, char** argv)
     // Fourth create the models with their controllers and add the models to the
     // simulation
     legzModel* const myModel = new legzModel();
-    
+
+    LengthController* const myController = new LengthController(200);
+
+    myModel->attach(myController);
     // Add the model to the world
     simulation.addModel(myModel);
     

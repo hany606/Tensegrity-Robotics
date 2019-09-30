@@ -10,5 +10,6 @@ link_libraries(tgcreator
 add_executable(AppLegzModel
     legzModel.cpp
     AppLegzModel.cpp
+    LengthController.cpp
 ) 
 

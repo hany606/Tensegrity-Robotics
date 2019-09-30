@@ -57,6 +57,7 @@ namespace
         double legz_length;
         bool hist;
         double maxTension;
+        double targetVelocity;
 
     } c =
    {
@@ -75,6 +76,7 @@ namespace
        20.0,        //length of bar
        0,           // history logging (boolean)
        30000,       // max tension
+       1
 
     // 0.2,     // density (mass / length^3)
     // 0.31,     // radius (length)
@@ -376,8 +378,8 @@ void legzModel::setup(tgWorld& world)
     const tgRod::Config rodConfig1(c.radius, c.density);
     const tgRod::Config rodConfig2(c.radius, c.density*100);
     // const tgSpringCableActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension);
-     const tgBasicActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension,
-        c.hist, c.maxTension);
+    const tgBasicActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension,
+        c.hist, c.maxTension, c.targetVelocity);
     // Create a structure that will hold the details of this model
     tgStructure s;
     
@@ -412,8 +414,9 @@ void legzModel::setup(tgWorld& world)
 
     // We could now use tgCast::filter or similar to pull out the
     // models (e.g. muscles) that we want to control. 
-    allActuators = tgCast::filter<tgModel, tgSpringCableActuator> (getDescendants());
-    
+    allActuators = tgCast::filter<tgModel, tgBasicActuator> (getDescendants());
+    allRods = tgCast::filter<tgModel, tgRod> (getDescendants());
+
     // Notify controllers that setup has finished.
     notifySetup();
     
@@ -442,11 +445,17 @@ void legzModel::onVisit(tgModelVisitor& r)
     tgModel::onVisit(r);
 }
 
-const std::vector<tgSpringCableActuator*>& legzModel::getAllActuators() const
+std::vector<tgBasicActuator*>& legzModel::getAllActuators()
 {
     return allActuators;
 }
-    
+
+std::vector<tgRod*>& legzModel::getAllRods()
+{
+    return allRods;
+}
+
+
 void legzModel::teardown()
 {
     notifyTeardown();
