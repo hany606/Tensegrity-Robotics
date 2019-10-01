@@ -76,7 +76,7 @@ namespace
        20.0,        //length of bar
        0,           // history logging (boolean)
        30000,       // max tension
-       1
+       3
 
     // 0.2,     // density (mass / length^3)
     // 0.31,     // radius (length)

@@ -17,6 +17,9 @@
 // The C++ Standard Library
 #include <vector>
 
+#include "TCP.h"
+#include "JSON_Structure.h"
+
 // Forward declarations
 class legzModel;
 
@@ -58,7 +61,7 @@ private:
     double globalTime = 0;
     int toggle;
     std::vector<int> actuators_states;
-
+    TCP* tcp_com;
 };
 
 #endif LENGTH_CONTROLLER_H

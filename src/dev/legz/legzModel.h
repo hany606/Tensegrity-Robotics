@@ -146,6 +146,7 @@ public:
      * through setup when it is filled using tgModel's find methods
      */
     std::vector<tgRod*> allRods;
+    
 };
 
 #endif  // legz_MODEL_H
