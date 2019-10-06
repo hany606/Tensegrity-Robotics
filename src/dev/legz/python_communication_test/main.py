@@ -44,7 +44,9 @@ globalFlag = 0  #this is used to reset the NTRT environment and TCP connection w
 
 # JSON object structure
 jsonObj = {
-    'Controllers': [0,0,0,0,0,0],
+    'Controllers_num': 10,
+    'Controllers_index': [2, 3, 5, 6, 7, 8, 12, 14, 18, 20],
+    'Controllers_val': [18,-1,-1,-1,-1,-1,-1,-1,-1,-1],
     'Reset': 0
 }
 #--------------------------------------------------------------------------------------------
