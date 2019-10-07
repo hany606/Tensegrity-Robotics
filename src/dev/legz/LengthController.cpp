@@ -91,7 +91,7 @@ void LengthController::onStep(legzModel& subject, double dt)
 	      toggle = 1;   //is used like a state flag
       }
 
-      /*
+      
       // First move
       else if(toggle==1){
         toggle = 2;
@@ -107,9 +107,9 @@ void LengthController::onStep(legzModel& subject, double dt)
         // if(actuators[target_actuator]->getRestLength()!=target_length)
         //   toggle = 1;
 
-        const int num_target_actuators = 10; 
-        double dLength[] = {20, 20, 10, 10, 10, 10, 10, 10, 10};
-        int target_actuator[] = {2, 3, 5, 6, 7, 8, 12, 14, 18, 20};
+        const int num_target_actuators = 9; 
+        double dLength[] = {20, 10, 10, 10, 10, 10, 10, 10, 10};
+        int target_actuator[] = {2, 4, 5, 6, 7, 11, 13, 17, 19};
         double target_length[num_target_actuators];
         for(int i = 0; i < num_target_actuators; i++){
           target_length[i] = max(0.0, start_lengths[target_actuator[i]] - dLength[i]);
@@ -132,11 +132,11 @@ void LengthController::onStep(legzModel& subject, double dt)
       // Second move
       else if(toggle==2){
         toggle = 1;
-        const int num_target_actuators = 10;
+        const int num_target_actuators = 9;
         // double dLength[] = {-15, -15};
-        double dLength[] = {-20, -20, -10, -10, -10, -10, -10, -10, -10};
+        double dLength[] = {-20, -10, -10, -10, -10, -10, -10, -10};
 
-        int target_actuator[] = {2, 3, 5, 6, 7, 8, 12, 14, 18, 20};
+        int target_actuator[] = {2, 4, 5, 6, 7, 11, 13, 17, 19};
         double target_length[num_target_actuators];
         for(int i = 0; i < num_target_actuators; i++){
           target_length[i] = max(0.0, start_lengths[target_actuator[i]] - dLength[i]);
@@ -156,12 +156,13 @@ void LengthController::onStep(legzModel& subject, double dt)
           toggle = 2;
 
       }
-      */
-     if(toggle == 1){
+      
       //-----------------------------------------------------------
-      // Part 1: Write the observations to the python module
-      // Get the observation
-      //(1) Center of Mass
+      /*
+      if(toggle == 1){
+        // Part 1: Write the observations to the python module
+        // Get the observation
+        //(1) Center of Mass
         double CMS[3] = {0,0,0};
         // for(int i = 0; i < rods.size(); i++){
         CMS[0] += rods[4]->centerOfMass().getX();
@@ -213,7 +214,7 @@ void LengthController::onStep(legzModel& subject, double dt)
         LengthController::tcp_com->read_TCP(buffer,MAX_BUFF_SIZE);
         // printf("Recieved: %s \n",buffer);
         json read = JSON_Structure::stringToJson(buffer);
-       
+        
         // TODO: Here is taking the length of the cable from the python module, but in other versions we will send from the python just the change not the cable's length
         for(int i = 0; i < (int) read["Controllers_num"]; i++){
           if((double)(read["Controllers_val"][i]) == -1)
@@ -229,6 +230,7 @@ void LengthController::onStep(legzModel& subject, double dt)
         }
 
       }
+      */
     }
   }
 
