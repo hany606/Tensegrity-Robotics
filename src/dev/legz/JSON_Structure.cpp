@@ -11,9 +11,17 @@ void JSON_Structure::setup(){
         {"Controllers", 
             {0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0}
         },
-        {"Center_of_Mass", {0.,0.,0.}},
-        {"Orientation", {0.,0.,0.,0.}},
-        {"Flags", {0,0,0}}
+        {"Center_of_Mass", {{0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.},
+                            {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.},
+                            {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.},
+                            {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}, {0.,0.,0.}}},
+        {"Orientation", {{0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.},
+                         {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.},
+                         {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.},
+                         {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}, {0.,0.,0.,0.}}},
+        {"Flags", {1,0,0}},
+        {"Time", 0.},
+        {"ZFinished", 1}
     };
 
 }
@@ -25,16 +33,20 @@ void JSON_Structure::setController(int num, double val){
     JSON_Structure::jsonFile["Controllers"][num] = val;
 }
 
-void JSON_Structure::setCenterOfMass(double x, double y, double z){
-    JSON_Structure::jsonFile["Center_of_Mass"] = {x,y,z};
+void JSON_Structure::setCenterOfMass(int num, double x, double y, double z){
+    JSON_Structure::jsonFile["Center_of_Mass"][num] = {x,y,z};
 }
 
-void JSON_Structure::setOrientation(double i, double j, double k, double w){
-    JSON_Structure::jsonFile["Orientation"] = {i,j,k,w};
+void JSON_Structure::setOrientation(int num, double i, double j, double k, double w){
+    JSON_Structure::jsonFile["Orientation"][num] = {i,j,k,w};
 }
 
 void JSON_Structure::setFlags(int index, int value){
     JSON_Structure::jsonFile["Flags"][index] = value;
+}
+
+void JSON_Structure::setTime(double t){
+    JSON_Structure::jsonFile["Time"] = t;
 }
 
 std::string JSON_Structure::jsonToString(){

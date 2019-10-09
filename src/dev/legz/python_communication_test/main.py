@@ -21,8 +21,10 @@ import signal
 import json
 from time import sleep
 import os
+import random
 
 # import stable_baselines
+
 
 print("Finish importing the libraries")
 
@@ -35,7 +37,7 @@ print("Finish importing the libraries")
 
 #Settings for the TCP communication
 packetSize = 500
-portNum = 10023
+portNum = 10004
 hostName = 'localhost'
 # connection = None
 # clientAddress = None
@@ -44,9 +46,10 @@ globalFlag = 0  #this is used to reset the NTRT environment and TCP connection w
 
 # JSON object structure
 jsonObj = {
-    'Controllers_num': 9,
-    'Controllers_index': [2, 4, 5, 6, 7, 11, 13, 17, 19],
-    'Controllers_val': [18,-1,-1,-1,-1,-1,-1,-1,-1],
+    # 'Controllers_num': 9,
+    # 'Controllers_index': [2, 4, 5, 6, 7, 11, 13, 17, 19],
+    # 'Controllers_val': [18,-1,-1,-1,-1,-1,-1,-1,-1],
+    'Controllers_val': [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
     'Reset': 0
 }
 #--------------------------------------------------------------------------------------------
@@ -69,7 +72,7 @@ def signalHandler(signal, frame):
         sleep(5)
 # function for writing data into TCP connection
 def write(connection, data):
-    print('sending data to the client:"{}"'.format(data))
+    # print('sending data to the client:"{}"'.format(data))
     try:
         connection.sendall(data.encode())
     except Exception as e:
@@ -80,16 +83,22 @@ def write(connection, data):
 def read(connection):
     try:
         data = []
+        counter = 1
         # Receive the data in small chunks and retransmit it
-        # while True:
-        data.append(connection.recv(packetSize))         #reading part
-        print('received "{}"'.format(data[-1]))
-            # if not(data[-1]):
-            #     print >>sys.stderr, 'no more data from', client_address
-            #     break
-        return data[-1]
-    except:
+        while True:
+            data.append(connection.recv(packetSize).decode("utf-8"))         #reading part
+            # print('{} received "{}"'.format(counter,data[-1]))
+            # print(data[-1][-14:-1], ('ZFinished' in str(data[-1][-14:-1])))
+            if 'ZFinished' in str(data[-1][-14:-1]):
+                # print("FINISHED*************")
+                # sleep(5)
+                break
+            counter += 1
+        return "".join(data)
+    except ValueError:
+        print(ValueError)
         print("$$$$$$$$$$$$ ERROR in Reading $$$$$$$$$$$$")
+        # sleep(2)
         return None
 def reset():
     global globalFlag
@@ -105,10 +114,14 @@ def main():
         print('connection from', clientAddress)
         global globalFlag
         globalFlag = 0
+        target = 24
+        sign = 1
+
         while True:
             r = read(connection)
+            # print(r)
             if(r != None):
-                jsonObjTmp = json.loads(r.decode("utf-8"))  # Parse the data from string to json
+                jsonObjTmp = json.loads(r)  # Parse the data from string to json
             # TODO: Use the incoming data after being converted to json
 
             # TODO:
@@ -119,6 +132,24 @@ def main():
             # Generate Action
             # Decide either end of episode (Reset the simulator) or specific Action
             # Modify the action in json
+            if(jsonObjTmp["Controllers"][2] >= 23.5 and sign == 1):
+                print("FLIP")
+                target = jsonObjTmp["Controllers"][2]
+                sign = -6
+            if(jsonObjTmp["Controllers"][2] <= 22.5 and sign == -6):
+                print("FLIP")
+                # target = 24
+                sign = 1
+                target = jsonObjTmp["Controllers"][2] + sign*0.5
+            # print(target)
+            print(sign)
+            # jsonObj["Controllers_val"][2] = target
+            if(jsonObjTmp["Flags"][0] == 1):
+                print("FLAG")
+                jsonObj["Controllers_val"][2] = target
+            print("##{:} $${:}".format(jsonObj["Controllers_val"][2],jsonObjTmp["Controllers"][2]))
+            input()
+            # jsonObj["Controllers_val"][2] = jsonObjTmp["Controllers"][2]
 
             write(connection,json.dumps(jsonObj))   # Write to the simulator module the json object with the required info
             if(globalFlag > 0):
@@ -141,6 +172,7 @@ sock.listen(1)  # Listen for incoming connections
 
 
 signal.signal(signal.SIGINT, signalHandler) # Activate the listen to the Ctrl+C
+
 
 # This is top open the simulator
 print("Opening the NTRT simulator")

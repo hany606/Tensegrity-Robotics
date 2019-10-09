@@ -47,6 +47,7 @@ void TCP::setup(){
 
 void TCP::write_TCP(void *buffer, int buff_size){
     int n = write(sockfd, buffer, strlen((char*)buffer));
+    // printf("-----%ld\n", strlen((char*)buffer));
     if (n < 0) 
         TCP::error("ERROR writing to socket");
 }

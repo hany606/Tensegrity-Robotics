@@ -59,14 +59,7 @@ namespace
         double maxTension;
         double targetVelocity;
 
-    } c =
-   {
-    //    0.2,     // density (mass / length^3)
-    //    0.20,     // radius (length)
-    //    1000.0,   // stiffness (mass / sec^2)
-    //    20.0,     // damping (mass / sec)
-    //    12000.0,     // pretension (mass * length / sec^2)
-    //    20.0,     // legz_height (length)
+    }c = {
 
        0.2,     // density (mass / length^3)
        0.20,     // radius (length)
@@ -77,15 +70,8 @@ namespace
        0,           // history logging (boolean)
        30000,       // max tension
        3
-
-    // 0.2,     // density (mass / length^3)
-    // 0.31,     // radius (length)
-    // 1,   // stiffness (mass / sec^2)
-    // 1,     // damping (mass / sec)
-    // 20,     // pretension (mass * length / sec^2)
-    // 1,     // legz_height (length)
-  };
-} // namespace
+    };
+}
 
 legzModel::legzModel() :
 tgModel() 
@@ -98,18 +84,7 @@ legzModel::~legzModel()
 
 void legzModel::addNodes(tgStructure& s, double length)
 {
-    // // bottom right
-    // s.addNode(-edge / 2.0, 0, 0); // 1
-    // // bottom left
-    // s.addNode( edge / 2.0, 0, 0); // 2
-    // // bottom front
-    // s.addNode(0, 0, width); // 3
-    // // top right
-    // s.addNode(-edge / 2.0, height, 0); // 4
-    // // top left
-    // s.addNode( edge / 2.0, height, 0); // 5
-    // // top front
-    // s.addNode(0, height, width); // 6
+   
     //and flipped third with -first
 
     //flipped first and second
