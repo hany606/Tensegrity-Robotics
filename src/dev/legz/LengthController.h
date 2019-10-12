@@ -54,6 +54,7 @@ public:
     std::vector<double> start_lengths; //instantiate vector of random restlengths
     std::vector<tgBasicActuator*> actuators;
     std::vector<tgRod*> rods;
+    std::vector<double> target_lengths;
 
 private:
 	

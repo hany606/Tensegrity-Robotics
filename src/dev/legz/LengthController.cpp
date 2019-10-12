@@ -21,9 +21,9 @@
 
 
 #define HOST_NAME "localhost"
-#define PORT_NUM 10004
+#define PORT_NUM 10007
 #define MAX_BUFF_SIZE 5000
-#define EPS 0.1   //less than dl
+#define EPS 0.00001  
 
 bool all_reached_target = true;
 
@@ -73,6 +73,7 @@ void LengthController::onSetup(legzModel& subject)
     printf("Actutor of string #%d -> start Lenght: %lf\n", i, start_length);
     start_lengths.push_back(start_length);
     actuators_states.push_back(0);
+    target_lengths.push_back(0);
   }
 }
 
@@ -278,12 +279,11 @@ void LengthController::onStep(legzModel& subject, double dt)
 
         // (3) Get the length of targeting cables
         for(int i = 0; i < actuators.size(); i++){
-          JSON_Structure::setController(i, (int) (actuators[i]->getCurrentLength()*10000) /10000.0);
+          JSON_Structure::setController(i, (int) (actuators[i]->getRestLength()*10000) /10000.0);
         }
 
         // (4) Get the reached flag
         JSON_Structure::setFlags(0, (int) all_reached_target);
-        all_reached_target = false;
 
         // (5) Set the time stamp
         JSON_Structure::setTime(globalTime);
@@ -301,26 +301,56 @@ void LengthController::onStep(legzModel& subject, double dt)
 
         // std::cout<<read["Controllers_val"][2]<<std::endl;
         // TODO: Here is taking the length of the cable from the python module, but in other versions we will send from the python just the change not the cable's length
+        //set new targets
+        if(all_reached_target == true){
+          all_reached_target = false;
+          for(int i = 0; i < actuators.size(); i++){
+            target_lengths[i] = actuators[i]->getRestLength() + (double)read["Controllers_val"][i];
+          }
+
+        }
+
         for(int i = 0; i < actuators.size(); i++){
-          if(((double) read["Controllers_val"][i]) == -1 || abs((int) (actuators[i]->getCurrentLength()*10000)/10000.0 - (double)read["Controllers_val"][i]) == 0)
+          if(((double) read["Controllers_val"][i]) == 0)
             continue;
           
-          printf("ERR:%lf\n",abs((int) (actuators[i]->getCurrentLength()*10000)/10000.0 - (double)read["Controllers_val"][i]));
-          std::cout<<"REAL: "<<actuators[2]->getCurrentLength()<<std::endl;
-          std::cout<<"Target: "<<(double)read["Controllers_val"][i]<<std::endl;
+          printf("Controller#%dERR:%lf\n",i,abs(actuators[i]->getRestLength() - target_lengths[i]));
+          std::cout<<"REAL: "<<actuators[i]->getCurrentLength()<<"::"<<actuators[i]->getRestLength()<<std::endl;
+          std::cout<<"Target: "<<target_lengths[i]<<std::endl;
 
-          m_controllers[i]->control(dt,((double) read["Controllers_val"][i]));
+          // m_controllers[i]->control(dt,((double) read["Controllers_val"][i]));
+          m_controllers[i]->control(dt, target_lengths[i]);
           actuators[i]->moveMotors(dt);
           // printf("%d\n", actuators.size());
           // printf("#%d -> %lf\n, -> %lf", i, (double) read["Controllers_val"][i], 5);
           // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read["Controllers_val"][i]));
-          if( abs((int) (actuators[i]->getCurrentLength()*10000)/10000.0 - (double)read["Controllers_val"][i]) > EPS)
-            all_reached_target = false;
-          else{
+          if( abs(actuators[i]->getRestLength() - target_lengths[i]) <= EPS){
             all_reached_target = true;
-            printf("REACHED\n");
+            printf("Reached\n");
           }
         }
+
+        // for(int i = 0; i < actuators.size(); i++){
+        //   if(((double) read["Controllers_val"][i]) == -1 || abs((int) (actuators[i]->getCurrentLength()*10000)/10000.0 - (double)read["Controllers_val"][i]) == 0)
+        //     continue;
+          
+        //   printf("ERR:%lf\n",abs((int) (actuators[i]->getCurrentLength()*10000)/10000.0 - (double)read["Controllers_val"][i]));
+        //   std::cout<<"REAL: "<<actuators[2]->getCurrentLength()<<std::endl;
+        //   std::cout<<"Target: "<<(double)read["Controllers_val"][i]<<std::endl;
+
+        //   // m_controllers[i]->control(dt,((double) read["Controllers_val"][i]));
+        //   m_controllers[i]->control(dt, actuators[i]->getCurrentLength());
+        //   actuators[i]->moveMotors(dt);
+        //   // printf("%d\n", actuators.size());
+        //   // printf("#%d -> %lf\n, -> %lf", i, (double) read["Controllers_val"][i], 5);
+        //   // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read["Controllers_val"][i]));
+        //   if( abs((int) (actuators[i]->getCurrentLength()*10000)/10000.0 - (double)read["Controllers_val"][i]) > EPS)
+        //     all_reached_target = false;
+        //   else{
+        //     all_reached_target = true;
+        //     printf("REACHED\n");
+        //   }
+        // }
 
       }
     }

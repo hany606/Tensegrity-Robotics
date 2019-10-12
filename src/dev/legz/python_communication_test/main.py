@@ -19,7 +19,7 @@ import socket
 import sys
 import signal
 import json
-from time import sleep
+from time import *
 import os
 import random
 
@@ -37,7 +37,7 @@ print("Finish importing the libraries")
 
 #Settings for the TCP communication
 packetSize = 500
-portNum = 10004
+portNum = 10007
 hostName = 'localhost'
 # connection = None
 # clientAddress = None
@@ -49,7 +49,8 @@ jsonObj = {
     # 'Controllers_num': 9,
     # 'Controllers_index': [2, 4, 5, 6, 7, 11, 13, 17, 19],
     # 'Controllers_val': [18,-1,-1,-1,-1,-1,-1,-1,-1],
-    'Controllers_val': [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+    # 'Controllers_val': [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+    'Controllers_val': [0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0],
     'Reset': 0
 }
 #--------------------------------------------------------------------------------------------
@@ -105,6 +106,7 @@ def reset():
     globalFlag = 1
 
 def main():
+    start_time = time()
     while True:
         #Note: TODO: Make in the simulator wait a second then send a message
         os.system('/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/legz/python_communication_test/helper.sh')
@@ -115,13 +117,15 @@ def main():
         global globalFlag
         globalFlag = 0
         target = 24
-        sign = 1
+        sign = -5
 
         while True:
             r = read(connection)
             # print(r)
             if(r != None):
                 jsonObjTmp = json.loads(r)  # Parse the data from string to json
+            print("s1##{:} $${:}".format(jsonObj["Controllers_val"][2],jsonObjTmp["Controllers"][2]))
+
             # TODO: Use the incoming data after being converted to json
 
             # TODO:
@@ -132,25 +136,40 @@ def main():
             # Generate Action
             # Decide either end of episode (Reset the simulator) or specific Action
             # Modify the action in json
-            if(jsonObjTmp["Controllers"][2] >= 23.5 and sign == 1):
-                print("FLIP")
-                target = jsonObjTmp["Controllers"][2]
-                sign = -6
-            if(jsonObjTmp["Controllers"][2] <= 22.5 and sign == -6):
-                print("FLIP")
-                # target = 24
-                sign = 1
-                target = jsonObjTmp["Controllers"][2] + sign*0.5
-            # print(target)
-            print(sign)
-            # jsonObj["Controllers_val"][2] = target
-            if(jsonObjTmp["Flags"][0] == 1):
-                print("FLAG")
-                jsonObj["Controllers_val"][2] = target
-            print("##{:} $${:}".format(jsonObj["Controllers_val"][2],jsonObjTmp["Controllers"][2]))
-            input()
-            # jsonObj["Controllers_val"][2] = jsonObjTmp["Controllers"][2]
+            
 
+
+            # if(jsonObjTmp["Controllers"][2] >= 23.5 and sign == 1):
+            #     print("FLIP")
+            #     target = jsonObjTmp["Controllers"][2]
+            #     sign = -6
+            # if(jsonObjTmp["Controllers"][2] <= 22.5 and sign == -6):
+            #     print("FLIP")
+            #     # target = 24
+            #     sign = 1
+            #     target = jsonObjTmp["Controllers"][2] + sign*0.5
+            # # print(target)
+            # print(sign)
+            # # jsonObj["Controllers_val"][2] = target
+            # if(jsonObjTmp["Flags"][0] == 1):
+            #     print("FLAG")
+            #     # jsonObj["Controllers_val"][2] = target
+            #     jsonObj["Controllers_val"][2] = jsonObjTmp["Controllers"][2]
+
+            # print("s2##{:} $${:}".format(jsonObj["Controllers_val"][2],jsonObjTmp["Controllers"][2]))
+            # input()
+            # # jsonObj["Controllers_val"][2] = jsonObjTmp["Controllers"][2]
+            # if((time() - start_time)% 5 and jsonObjTmp["Flags"][0] == 1):
+            if(jsonObjTmp["Flags"][0] == 1):
+                sign = -1*sign
+                print("FLIP")
+
+            jsonObj["Controllers_val"][2] = sign
+            jsonObj["Controllers_val"][5] = sign
+
+            print("state##{:} $${:}".format(jsonObj["Controllers_val"][2],jsonObjTmp["Controllers"][2]))
+            
+                
             write(connection,json.dumps(jsonObj))   # Write to the simulator module the json object with the required info
             if(globalFlag > 0):
                 print("GLOBAL FLAG Exit")
