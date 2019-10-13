@@ -132,7 +132,7 @@ void tgSimView::teardown()
 void tgSimView::run()
     {
         // This would normally run forever, but this is just for testing
-        run(10);
+        // run(10);
     }
 
 void tgSimView::run(int steps) 
@@ -150,7 +150,7 @@ void tgSimView::run(int steps)
             totalTime += m_stepSize;
             
             if (m_renderTime >= m_renderRate) {
-                render();
+                // render();
                 //std::cout << totalTime << std::endl;
                 m_renderTime = 0;
             }

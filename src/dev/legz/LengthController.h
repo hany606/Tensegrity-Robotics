@@ -14,6 +14,8 @@
 #include "core/tgObserver.h"
 #include "controllers/tgBasicController.h"
 #include "core/tgBasicActuator.h"
+#include "tgcreator/tgNode.h"
+
 // The C++ Standard Library
 #include <vector>
 

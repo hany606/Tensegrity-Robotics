@@ -106,7 +106,8 @@ public:
      * @return A vector of all of the rod rigid bodies
      */
     std::vector<tgRod*>& getAllRods();
-      
+
+
 private:
     
     /**
@@ -146,6 +147,7 @@ public:
      * through setup when it is filled using tgModel's find methods
      */
     std::vector<tgRod*> allRods;
+
     
 };
 

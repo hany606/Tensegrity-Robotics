@@ -145,6 +145,7 @@ void legzModel::addNodes(tgStructure& s, double length)
 
 
 
+
 }
 
 
@@ -167,6 +168,7 @@ void legzModel::addRods(tgStructure& s)
     s.addPair(20, 24, tag);
     s.addPair(18, 20, tag);
     s.addPair(22, 24, tag);
+
 
 
 }
@@ -352,9 +354,12 @@ void legzModel::setup(tgWorld& world)
     // Note that pretension is defined for this string
     const tgRod::Config rodConfig1(c.radius, c.density);
     const tgRod::Config rodConfig2(c.radius, c.density*100);
+
     // const tgSpringCableActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension);
     const tgBasicActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension,
         c.hist, c.maxTension, c.targetVelocity);
+
+    
     // Create a structure that will hold the details of this model
     tgStructure s;
     
@@ -429,6 +434,8 @@ std::vector<tgRod*>& legzModel::getAllRods()
 {
     return allRods;
 }
+
+
 
 
 void legzModel::teardown()
