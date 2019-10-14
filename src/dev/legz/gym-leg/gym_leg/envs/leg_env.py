@@ -20,13 +20,12 @@ class LegEnv(gym.Env):
 
     def __init__(self):
         # Agent self variables
-        self.num_hits = 0
-        self.max_num_hit = 5
+        self.goal = self._generateGoal()
         # Initial configuration for the leg
         # TODO:
-        #   -set the initial configuration for the drone
+        #   -setup the leg; initialization, communication, start, and set the variables
         #   -Set the initial goal
-        # Creation of the drone racer and pass the initial configuration
+        # Creation of the environment and pass the initial configuration
         # TODO: [Done]
         self.env = LegModel()
         self.env.startSimulator()
@@ -35,13 +34,19 @@ class LegEnv(gym.Env):
 
         # Put the details of the action and observation spaces
         # TODO:
-        #   - action_dim
         #   - action_space  [Done]
         #   - observation_space
-        # self.action_dim = 2
-        self.action_space = spaces.Discrete(120)  # 120 discrete actions = 2 (+/-) for each actuator (60)
+        self.action_space = spaces.Discrete(180)  # 180 discrete actions = 3 (+/0/-) for each actuator (60)
+        # TODO: Take into consideration the static cables and rods that are made to make the structure rigid
+        #           they should be exculeded from the construction
         self.observation_space = spaces.Box(
             low=np.array([0, 0]), high=np.array([400, 400]), dtype=np.float16)
+
+    # TODO: for now it is static goal
+    #           for next is to implement a random goal and validate that it is reachable and in the working space of the end_effector
+    # TODO: add a reachable static goal
+    def _generateGoal(self):
+        return [0,0,0]
 
     def step(self, action):
         """
@@ -71,51 +76,44 @@ class LegEnv(gym.Env):
                  However, official evaluations of your agent are not allowed to
                  use this for learning.
         """
-        self._take_action(action)
-        observation = self._get_observation()
-        reward = self._get_reward(observation)
-        done = self._is_done()
+        # TODO: change the controller simulator to read and take the action then write the data of the observations
+        #           reverse the order of TCP to read the observation of the corresponding action not the previouse one
+        observation = self._getObservation()
+        self._takeAction(action)
+        reward = self._getReward(observation)
+        done = self._isDone()
         return observation, reward, done, {}
 
-    def _take_action(self, action):
-        # TODO: put the scheme of the actions for the drone [Done]
-        if action == 0:
-            self.env.z_rotate_CCW()
-        elif action == 1:
-            self.env.z_rotate_CW()
-        elif action == 2:
-            self.env.x_rotate_CCW()
-        elif action == 3:
-            self.env.x_rotate_CW()
-        elif action == 4:
-            self.env.y_rotate_CCW()
-        elif action == 5:
-            self.env.y_rotate_CW()
-        elif action == 6:
-            self.env.z_down()
-        elif action == 7:
-            self.env.z_up()
-        elif action == 8:
-            self.env.x_right()
-        elif action == 9:
-            self.env.x_left()
-        elif action == 10:
-            self.env.y_forward()
-        elif action == 11:
-            self.env.y_backward()
+    # Actions [0,180):
+    #   - 3 possible actions for each controller
+    #   0+(3*index) -> -1 -> decrease by dl
+    #   1+(3*index) ->  0 -> stay the same
+    #   2+(3*index) -> +1 -> increase by dl
+    def _takeAction(self, action):
+        # TODO: put the scheme of the actions for the leg [Done]
+        # TODO: test !!!
+        index = action//3
+        value = (action%3)-1
+        # if it was zero means that it will be decreased by dl, if it was 1 will be the same, if it was 2 it will be increased
+        self.env.actions_json[index] = value
+        self.env.step()
 
-        self.env.move()
-
-    def _get_observation(self):
-        current_stat = self.env.get_state()
+    # Observations:
+    #   - The dimensions is specified above and their min. and max. values
+    #   1- Time
+    #   2- Cables' lengths
+    #   3- Endpoints of rods (include the end_effector)
+    def _getObservation(self):
         # TODO: add the time passed in the observation as it can be used to calculate the reward
-        observation = [self.env.get_orientation(state=current_stat), self.env.get_position(state=current_stat)
-            , self.env.get_angular_acceleration(state=current_stat), self.env.get_angular_velocity(state=current_stat)
-            , self.env.get_linear_acceleration(state=current_stat), self.env.get_linear_velocity(state=current_stat)]
+        observation = [self.env.getTime(), self.env.getCablesLengths(), self.env.getEndPoints()]
         return observation
 
-    def _get_reward(self, observation):
-        # TODO:Set the reward criteria, which will be the difference between the distance between the point and the current position
+    def _getReward(self, observation):
+        # TODO:Set the reward criteria, which will depend on:
+        #   - Euclidian distance between the end-effector and the target_point
+        #   - The stability of the structure -> depends on the minimum volume of the structure when collapse
+        #   - The time
+
         # Example:
         # end_effector = self.env.get_end_effector()
         # distance = math.sqrt((end_effector[0] - self.goal['x']) ** 2 + (end_effector[1] - self.goal['y']) ** 2)
@@ -125,12 +123,13 @@ class LegEnv(gym.Env):
         # if distance < eps:
         #     return 100
         # return -max(int(distance / 100), 1)
-        return -1
 
-    def _is_done(self):
+        return -0.1*self._getDistancetoGoal()-0.01*self.env.getTime()
+
+    def _isDone(self):
         # TODO:
         #  The criteria for finish will be either
-        #       - it hits anything more than a specific threshold
+        #       - it collapsed or not
         #       - Reached the goal or near to it
 
         # Example:
@@ -141,20 +140,37 @@ class LegEnv(gym.Env):
         # if distance < eps:
         #     return 1
 
-        eps = 60
-        distance = 0    # TODO
-        if self.num_hits > self.max_num_hit or distance < eps:
-            return 1
-        return 0
+        eps = 0.01
+        distance = self._getDistancetoGoal()
+        
+        # TODO: Implement either if it collapsed criteria
+        collapsed = self._isCollapsed
+        if(distance <= eps and collapsed != False):
+            return True
+
+        return False
+    def _getDistancetoGoal(self):
+        end_effector = self.env.getEndEffector()
+        MSE = 0
+        for i in range(3):
+            MSE += (end_effector[i] - self.goal[i])**2 
+        distance = math.sqrt(MSE)
+        return distance
+
+    # TODO: Implement it
+    # By calculating the volume and comparing with the volume that it is known when it collapsed
+    #   or under specific threshold
+    def _isCollapsed(self):
+        return False
 
     def reset(self):
         # TODO:
         # Reset the state of the environment to an initial state, and the self vars to the initial values
-        self.num_hits = 0
+
         # Reset the environments
         self.env.reset()
         # get the observations after the resetting of the environment
-        return self._get_observation()
+        return self._getObservation()
 
     def render(self, mode='human'):
         # TODO:
@@ -162,4 +178,4 @@ class LegEnv(gym.Env):
         self.env.render()
 
     def close(self):
-        self.env.close()
+        self.env.closeSimulator()

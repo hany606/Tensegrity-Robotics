@@ -1,3 +1,6 @@
+## This is old, a lot of things have been changed
+# JSON_Structure, read and write sequence
+
 ##################################################################################################
 # About: Server TCP code, get json object from the simulator and send another json object and
 #       process the data using stable baseline

@@ -21,13 +21,15 @@ sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/legz
 
 
 class LegModel():
-    def __init__(self, host_name='localhost', port_num=10012, packet_size=500, sim_exec=sim_exec):
+    def __init__(self, host_name='localhost', port_num=10012, packet_size=5000,
+                 sim_exec=sim_exec, dl=0.1, rod_num=19, controller_num=60,
+                 end_effector_index=4):
         self.host_name = host_name
         self.port_num = port_num
         self.packet_size = packet_size
         self.sim_exec = sim_exec
         self.actions_json = {
-            'Controllers_val': [0,0,5,0,0,5,0,0,0,0,
+            'Controllers_val': [0,0,0,0,0,0,0,0,0,0,
                                 0,0,0,0,0,0,0,0,0,0,
                                 0,0,0,0,0,0,0,0,0,0,
                                 0,0,0,0,0,0,0,0,0,0,
@@ -35,6 +37,7 @@ class LegModel():
                                 0,0,0,0,0,0,0,0,0,0],
             'Reset': 0
         }
+        self.sim_json = {"Flags":[1,0,0]}
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    # Create a TCP/IP socket
         self.server_address = (self.host_name, self.port_num) # Bind the socket to the port
 
@@ -45,6 +48,10 @@ class LegModel():
         self.sock.listen(1)  # Listen for incoming connections
         self.reset_flag = False
         self.close_flag = False
+        self.dl = dl                            # Self modified parameter
+        self.rod_num = rod_num                  # Self modified parameter
+        self.controller_num = controller_num    # Self modified parameter
+        self.end_effector_index = end_effector_index    # Self modified parameter
 
     # function for writing data into TCP connection
     def write(self, data):
@@ -107,14 +114,8 @@ class LegModel():
         if (self.close_flag == False):
             if (self.reset_flag == True):
                 self.reset()
-
-            sim_raw_data = self.read()
-            # print(sim_raw_data)
-            # process
-            if(sim_raw_data != None):
-                sim_json = json.loads(sim_raw_data)  # Parse the data from string to json
             
-            if(sim_json["Flags"][0] == 1):
+            if(self.sim_json["Flags"][0] == 1):
                 self.actions_json["Controllers_val"][2] = -1*self.actions_json["Controllers_val"][2]
                 self.actions_json["Controllers_val"][5] = -1*self.actions_json["Controllers_val"][5]
                 # print("FLIP")
@@ -122,14 +123,49 @@ class LegModel():
                 
             self.write(json.dumps(self.actions_json))   # Write to the simulator module the json object with the required info
 
+            sim_raw_data = self.read()
+            # print(sim_raw_data)
+            if(sim_raw_data != None):
+                self.sim_json = json.loads(sim_raw_data)  # Parse the data from string to json
             
         else:
             self.closeSimulator()
 
+    def getCablesLengths(self):
+        return self.sim_json["Controllers"]
+    
+    #TODO
+    def _getEndPointsByRod(self, rod_num):
+        rods_cms = self.sim_json["Center_of_Mass"]
+        rods_orientation = self.sim_json["Orientation"]
+        # ....
+        # ....
+        # ....
+        # [endPoint1, endPoint2] -> [x,y,z]
+        return [[0,0,0], [0,0,0]]
+
+    def getEndPoints(self, rod_num=None):
+        if(rod_num != None):
+            # [rod1, rod2,...] -> [endPoint1, endPoint2] -> [x,y,z]
+            end_points = []
+            for i in range(self.rod_num):
+                end_points.append(self._getEndPointsByRod(i))
+            return end_points
+        return self._getEndPointsByRod(rod_num)
+
+    def getEndEffector(self):
+        return self._getEndPointsByRod(self.end_effector_index)[0]
+
+        
+    
+    def getTime(self):
+        return self.sim_json["Time"]
 
 # This function for testing the model by itself
 def main():
     leg = LegModel()
+    leg.actions_json["Controllers_val"][2] = 5
+    leg.actions_json["Controllers_val"][5] = 5
     def cleanExit(signal, frame):
         print("HANDLER")
         leg.connection.close()
