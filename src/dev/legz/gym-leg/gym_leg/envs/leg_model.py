@@ -12,6 +12,7 @@ import signal
 import json
 from time import *
 import os
+import subprocess
 import random
 import numpy as np
 from transforms3d.euler import euler2mat
@@ -20,13 +21,13 @@ sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/legz
 
 
 class LegModel():
-    def __init__(self, host_name='localhost', port_num=10008, packet_size=500, sim_exec=sim_exec):
+    def __init__(self, host_name='localhost', port_num=10012, packet_size=500, sim_exec=sim_exec):
         self.host_name = host_name
         self.port_num = port_num
         self.packet_size = packet_size
         self.sim_exec = sim_exec
-        self.json_obj = {
-            'Controllers_val': [0,0,0,0,0,0,0,0,0,0,
+        self.actions_json = {
+            'Controllers_val': [0,0,5,0,0,5,0,0,0,0,
                                 0,0,0,0,0,0,0,0,0,0,
                                 0,0,0,0,0,0,0,0,0,0,
                                 0,0,0,0,0,0,0,0,0,0,
@@ -42,6 +43,8 @@ class LegModel():
         print('#########\nstarting up on {} port {}\n#########'.format(self.server_address, self.port_num))
         self.sock.bind(self.server_address)
         self.sock.listen(1)  # Listen for incoming connections
+        self.reset_flag = False
+        self.close_flag = False
 
     # function for writing data into TCP connection
     def write(self, data):
@@ -75,27 +78,88 @@ class LegModel():
             return None
 
     def startSimulator(self):
+        self.close_flag = False
+        self.reset_flag = False
         if(self.sim_exec == sim_exec):
             print("#Warning: Starting an old version")
-        os.system(self.sim_exec)
+        # sleep(0.5)
+        self.child_process = subprocess.Popen(self.sim_exec)
         print('#########\nwaiting for a connection\n#########')
         self.connection, self.clientAddress = self.sock.accept()  #wait until it get a client
         print('connection from', self.clientAddress)
 
     def closeSimulator(self):
-        pass
-    
+        self.close_flag = True
+        # kill the shell script of the simulator
+        self.connection.close()
+        os.kill(self.child_process.pid, signal.SIGTERM)
+
     def render(self):
         pass
     
     def reset(self):
+        self.reset_flag = True
         self.closeSimulator()
         # sleep(2)
         self.startSimulator()
 
+    def step(self):
+        if (self.close_flag == False):
+            if (self.reset_flag == True):
+                self.reset()
+
+            sim_raw_data = self.read()
+            # print(sim_raw_data)
+            # process
+            if(sim_raw_data != None):
+                sim_json = json.loads(sim_raw_data)  # Parse the data from string to json
+            
+            if(sim_json["Flags"][0] == 1):
+                self.actions_json["Controllers_val"][2] = -1*self.actions_json["Controllers_val"][2]
+                self.actions_json["Controllers_val"][5] = -1*self.actions_json["Controllers_val"][5]
+                # print("FLIP")
+                # input()            
+                
+            self.write(json.dumps(self.actions_json))   # Write to the simulator module the json object with the required info
+
+            
+        else:
+            self.closeSimulator()
+
+
+# This function for testing the model by itself
 def main():
-    pass
+    leg = LegModel()
+    def cleanExit(signal, frame):
+        print("HANDLER")
+        leg.connection.close()
+        leg.closeSimulator()
+        sys.exit(0)
+    # signal.signal(signal.SIGTERM, cleanExit) 
+    signal.signal(signal.SIGINT, cleanExit) # Activate the listen to the Ctrl+C
+
+    leg.startSimulator()
+    # sleep(5)
+    # leg.closeSimulator()
+
+    start_time = time()
+    reset = False
+    while(True):
+        leg.step()
+        if(time() - start_time > 20):
+            # leg.closeSimulator()
+            pass    
+            # leg.close_flag = True
+        if( time() - start_time > 5 and reset == False):
+            reset = True
+            # leg.reset()
+            # leg.reset_flag = True
+
+
+
 
 
 if __name__ == "__main__":
+
     main()
+

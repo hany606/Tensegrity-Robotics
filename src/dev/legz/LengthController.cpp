@@ -21,7 +21,7 @@
 
 
 #define HOST_NAME "localhost"
-#define PORT_NUM 10008
+#define PORT_NUM 10012
 #define MAX_BUFF_SIZE 5000
 #define EPS 0.00001  
 
@@ -89,7 +89,7 @@ void LengthController::onStep(legzModel& subject, double dt)
   }
   else {
     globalTime += dt;
-    if(globalTime > 2){ //delay start of cable actuation
+    if(globalTime > 0){ //delay start of cable actuation
       if(toggle==0){    //print once when motors start moving
         cout << endl << "Activating Cable Motors -------------------------------------" << endl;
 	      toggle = 1;   //is used like a state flag

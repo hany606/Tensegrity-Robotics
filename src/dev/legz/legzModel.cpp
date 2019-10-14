@@ -170,6 +170,10 @@ void legzModel::addRods(tgStructure& s)
     s.addPair(22, 24, tag);
 
 
+    // s.addPair(0, 1, "rod3");
+
+    
+
 
 }
 
@@ -354,7 +358,8 @@ void legzModel::setup(tgWorld& world)
     // Note that pretension is defined for this string
     const tgRod::Config rodConfig1(c.radius, c.density);
     const tgRod::Config rodConfig2(c.radius, c.density*100);
-
+    // const tgRod::Config rodConfig3(0.000001, 0.00000001);
+    
     // const tgSpringCableActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension);
     const tgBasicActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension,
         c.hist, c.maxTension, c.targetVelocity);
@@ -384,6 +389,8 @@ void legzModel::setup(tgWorld& world)
     tgBuildSpec spec;
     spec.addBuilder("rod1", new tgRodInfo(rodConfig1));
     spec.addBuilder("rod2", new tgRodInfo(rodConfig2));
+    // spec.addBuilder("rod3", new tgRodInfo(rodConfig3));
+    
     spec.addBuilder("muscle", new tgBasicActuatorInfo(muscleConfig));
     
     // Create your structureInfo

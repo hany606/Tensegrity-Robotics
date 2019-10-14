@@ -119,7 +119,7 @@ def main():
         global globalFlag
         globalFlag = 0
         target = 24
-        sign = -5
+        sign = -0.1
 
         while True:
             r = read(connection)
@@ -188,6 +188,7 @@ def main():
             if(jsonObjTmp["Flags"][0] == 1):
                 sign = -1*sign
                 print("FLIP")
+                # input()
 
             jsonObj["Controllers_val"][2] = sign
             jsonObj["Controllers_val"][5] = sign
