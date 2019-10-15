@@ -32,7 +32,7 @@ void JSON_Structure::setup(json jsonFile){
 }
 
 void JSON_Structure::setController(int num, double val){
-    JSON_Structure::jsonFile["Controllers"][num] = val;
+    JSON_Structure::jsonFile["Cables_lengths"][num] = val;
 }
 
 void JSON_Structure::setCenterOfMass(int num, double x, double y, double z){

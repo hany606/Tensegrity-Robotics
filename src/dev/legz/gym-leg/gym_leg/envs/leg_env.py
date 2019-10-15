@@ -5,6 +5,7 @@ import numpy as np
 import gym
 from gym import error, spaces, utils
 from gym.utils import seeding
+import sys
 
 import logging
 
@@ -14,33 +15,54 @@ import numpy as np
 import math
 from leg_model import LegModel
 
+sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/legz/python_communication_test/helper.sh'
+
 
 class LegEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self):
+    def __init__(self, host_name='localhost', port_num=10022, sim_exec=sim_exec,  dl=0.1):
+        # super(LegEnv, self).__init__()
         # Agent self variables
         self.goal = self._generateGoal()
+        self.max_time = 200
+        self.max_cable_length = 100
+        self.min_coordinate_point = -500
+        self.max_coordinate_point = 500
+        self.dl = dl
+
         # Initial configuration for the leg
-        # TODO:
+        # TODO: [Done]
         #   -setup the leg; initialization, communication, start, and set the variables
         #   -Set the initial goal
         # Creation of the environment and pass the initial configuration
         # TODO: [Done]
-        self.env = LegModel()
+        self.env = LegModel(host_name=host_name, port_num=port_num, sim_exec=sim_exec, dl=dl)
         self.env.startSimulator()
 
         # Example: self.env = Viewer(goal=self.goal)
 
         # Put the details of the action and observation spaces
-        # TODO:
+        # TODO: [Done]
         #   - action_space  [Done]
-        #   - observation_space
-        self.action_space = spaces.Discrete(180)  # 180 discrete actions = 3 (+/0/-) for each actuator (60)
+        #   - observation_space [Done]
+        n_actions = 180 # TODO TODO TODO TODO: this is not the correct action_space, it should be 3^60 to get all the possible combination for the cables trit; for each controller (bit but has 3 values)
+        self.action_space = spaces.Discrete(n_actions)  # 180 discrete actions = 3 (+/0/-) for each actuator (60)
         # TODO: Take into consideration the static cables and rods that are made to make the structure rigid
         #           they should be exculeded from the construction
-        self.observation_space = spaces.Box(
-            low=np.array([0, 0]), high=np.array([400, 400]), dtype=np.float16)
+        # Observations:
+        #   - The dimensions is specified above and their min. and max. values
+        #   1- Time
+        #   2- Cables' lengths
+        #   3- Endpoints of rods (include the end_effector)
+        self.observation_space = spaces.Tuple((
+                                spaces.Box(low=0, high=self.max_time, shape=(1,), dtype=np.float16),
+                                spaces.Box(low=0, high=self.max_cable_length, shape=(self.env.controllers_num,), dtype=np.float16),
+                                spaces.Box(low=self.min_coordinate_point, high=self.max_coordinate_point, shape=(self.env.rods_num,3), dtype=np.float16)))
+
+    def __del__(self):
+        self.env.closeSimulator()
+        sys.exit(0)
 
     # TODO: for now it is static goal
     #           for next is to implement a random goal and validate that it is reachable and in the working space of the end_effector
@@ -78,8 +100,8 @@ class LegEnv(gym.Env):
         """
         # TODO: change the controller simulator to read and take the action then write the data of the observations
         #           reverse the order of TCP to read the observation of the corresponding action not the previouse one
-        observation = self._getObservation()
         self._takeAction(action)
+        observation = self._getObservation()
         reward = self._getReward(observation)
         done = self._isDone()
         return observation, reward, done, {}
@@ -93,16 +115,18 @@ class LegEnv(gym.Env):
         # TODO: put the scheme of the actions for the leg [Done]
         # TODO: test !!!
         index = action//3
-        value = (action%3)-1
+        value = ((action%3)-1)*self.dl
         # if it was zero means that it will be decreased by dl, if it was 1 will be the same, if it was 2 it will be increased
-        self.env.actions_json[index] = value
+        self.env.actions_json["Controllers_val"][index] = value
         self.env.step()
+        # TODO: wait until the done_flag is set
 
     # Observations:
     #   - The dimensions is specified above and their min. and max. values
     #   1- Time
     #   2- Cables' lengths
     #   3- Endpoints of rods (include the end_effector)
+    # TODO: conform the return with the new boundries shapes
     def _getObservation(self):
         # TODO: add the time passed in the observation as it can be used to calculate the reward
         observation = [self.env.getTime(), self.env.getCablesLengths(), self.env.getEndPoints()]
@@ -179,3 +203,27 @@ class LegEnv(gym.Env):
 
     def close(self):
         self.env.closeSimulator()
+
+
+# This function for testing the env by itsel
+def main():
+    env = LegEnv()
+    init_obs ,_,_,_=env.step(1)
+    print(init_obs[1])
+    print(env.env.actions_json)
+    input()
+    for _ in range(50):
+        observation, reward, done, _= env.step(6)
+    
+    final_obs ,_,_,_=env.step(7)
+    print(final_obs[1])
+    print(env.env.actions_json)
+
+    input()
+    
+    while(1):
+        observation, reward, done, _= env.step(1)
+        print("while",observation[1][2])
+
+if __name__ == "__main__":
+    main()

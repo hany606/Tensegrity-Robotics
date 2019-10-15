@@ -21,8 +21,8 @@ sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/legz
 
 
 class LegModel():
-    def __init__(self, host_name='localhost', port_num=10012, packet_size=5000,
-                 sim_exec=sim_exec, dl=0.1, rod_num=19, controller_num=60,
+    def __init__(self, host_name='localhost', port_num=10013, packet_size=5000,
+                 sim_exec=sim_exec, dl=0.1, rods_num=19, controllers_num=60,
                  end_effector_index=4):
         self.host_name = host_name
         self.port_num = port_num
@@ -49,9 +49,13 @@ class LegModel():
         self.reset_flag = False
         self.close_flag = False
         self.dl = dl                            # Self modified parameter
-        self.rod_num = rod_num                  # Self modified parameter
-        self.controller_num = controller_num    # Self modified parameter
+        self.rods_num = rods_num                  # Self modified parameter
+        self.controllers_num = controllers_num    # Self modified parameter
         self.end_effector_index = end_effector_index    # Self modified parameter
+
+    def __del__(self):
+        self.closeSimulator()
+        sys.exit(0)
 
     # function for writing data into TCP connection
     def write(self, data):
@@ -98,7 +102,8 @@ class LegModel():
     def closeSimulator(self):
         self.close_flag = True
         # kill the shell script of the simulator
-        self.connection.close()
+        if self.connection is not None:        
+            self.connection.close()
         os.kill(self.child_process.pid, signal.SIGTERM)
 
     def render(self):
@@ -110,14 +115,16 @@ class LegModel():
         # sleep(2)
         self.startSimulator()
 
+    # TODO: make a general step function
     def step(self):
         if (self.close_flag == False):
             if (self.reset_flag == True):
                 self.reset()
             
-            if(self.sim_json["Flags"][0] == 1):
-                self.actions_json["Controllers_val"][2] = -1*self.actions_json["Controllers_val"][2]
-                self.actions_json["Controllers_val"][5] = -1*self.actions_json["Controllers_val"][5]
+            # if(self.sim_json["Flags"][0] == 1):
+            #     self.actions_json["Controllers_val"][2] = -1*self.actions_json["Controllers_val"][2]
+            #     self.actions_json["Controllers_val"][5] = -1*self.actions_json["Controllers_val"][5]
+                
                 # print("FLIP")
                 # input()            
                 
@@ -125,19 +132,26 @@ class LegModel():
 
             sim_raw_data = self.read()
             # print(sim_raw_data)
-            if(sim_raw_data != None):
+            if(sim_raw_data is not None):
                 self.sim_json = json.loads(sim_raw_data)  # Parse the data from string to json
-            
+            # print(self.sim_json["Center_of_Mass"][4])
+            print("step Function",self.sim_json["Cables_lengths"][2])
+
         else:
             self.closeSimulator()
 
-    def getCablesLengths(self):
-        return self.sim_json["Controllers"]
-    
+    def getCablesLengths(self, i=None):
+        print("getCableLengths Function",self.sim_json["Cables_lengths"][2])
+        if(i is None):
+            return self.sim_json["Cables_lengths"]
+        return self.sim_json["Cables_lengths"][i]
+        
     #TODO
     def _getEndPointsByRod(self, rod_num):
-        rods_cms = self.sim_json["Center_of_Mass"]
-        rods_orientation = self.sim_json["Orientation"]
+        # print(self.sim_json["Center_of_Mass"][0])
+        # print(rod_num, type(rod_num))
+        rods_cms = self.sim_json["Center_of_Mass"][rod_num]
+        rods_orientation = self.sim_json["Orientation"][rod_num]
         # ....
         # ....
         # ....
@@ -145,10 +159,10 @@ class LegModel():
         return [[0,0,0], [0,0,0]]
 
     def getEndPoints(self, rod_num=None):
-        if(rod_num != None):
+        if(rod_num is None):
             # [rod1, rod2,...] -> [endPoint1, endPoint2] -> [x,y,z]
             end_points = []
-            for i in range(self.rod_num):
+            for i in range(self.rods_num):
                 end_points.append(self._getEndPointsByRod(i))
             return end_points
         return self._getEndPointsByRod(rod_num)
@@ -168,9 +182,7 @@ def main():
     leg.actions_json["Controllers_val"][5] = 5
     def cleanExit(signal, frame):
         print("HANDLER")
-        leg.connection.close()
-        leg.closeSimulator()
-        sys.exit(0)
+        leg.__del__()
     # signal.signal(signal.SIGTERM, cleanExit) 
     signal.signal(signal.SIGINT, cleanExit) # Activate the listen to the Ctrl+C
 
