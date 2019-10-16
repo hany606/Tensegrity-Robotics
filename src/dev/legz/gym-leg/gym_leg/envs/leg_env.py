@@ -3,9 +3,11 @@
 # 1). A small action (dl=0.1) give multiple sequence of observation.
 #       - [Done] Solution 1: Give the last observation.        [The implemented one]
 #       - Solution 2: Give all the sequence of observation.
-# 2). Action space is too big and we need to reforumlate it.
-#       - Solution  : Descirbed in the comments above the corressponding part.
+# 2). Action space is too big and we need to reforumlate it.    
+#       - [Done] Solution  : Descirbed in the comments above the corressponding part.
 # ----------------------------------------------------------------------------------------
+
+# TODO: change the unmodifable "immutable" objects to tuple instead of list because of the concept.
 
 # This file will contain all the information about the agent and the environment starting from the rendering of the GUI to the rewards,... etc.
 import os
@@ -80,7 +82,7 @@ class LegEnv(gym.Env):
     #           for next is to implement a random goal and validate that it is reachable and in the working space of the end_effector
     # TODO: add a reachable static goal
     def _generateGoal(self):
-        return [0,0,0]
+        return (4.252820907910812, 11.42265959555328, -3.1326669704587604)  # Reachable point by the cms of the end-effector rod when the 2nd controller is decreased to 17.1468
 
     def step(self, action):
         """
@@ -126,12 +128,14 @@ class LegEnv(gym.Env):
     def _takeAction(self, action):
         # TODO: put the scheme of the actions for the leg [Done]
         # TODO: test !!!
-        index = action//3
-        value = ((action%3)-1)*self.dl
+        # TODO: chage it according to the new scheme
+        for i in range(self.env.controllers_num):
+            value = (action[i]-1)*self.dl
+            self.env.actions_json["Controllers_val"][i] = value
+        
         # if it was zero means that it will be decreased by dl, if it was 1 will be the same, if it was 2 it will be increased
-        self.env.actions_json["Controllers_val"][index] = value
         self.env.step()
-        # TODO: wait until the done_flag is set
+        # TODO: wait until the done_flag is set [Done from the side of the simulator]
 
     # Observations:
     #   - The dimensions is specified above and their min. and max. values
@@ -141,7 +145,7 @@ class LegEnv(gym.Env):
     # TODO: conform the return with the new boundries shapes
     def _getObservation(self):
         # TODO: add the time passed in the observation as it can be used to calculate the reward
-        observation = [self.env.getTime(), self.env.getCablesLengths(), self.env.getEndPoints()]
+        observation = (self.env.getTime(), self.env.getCablesLengths(), self.env.getEndPoints())
         return observation
 
     def _getReward(self, observation):
@@ -183,8 +187,8 @@ class LegEnv(gym.Env):
         collapsed = self._isCollapsed
         if(distance <= eps and collapsed != False):
             return True
-
         return False
+
     def _getDistancetoGoal(self):
         end_effector = self.env.getEndEffector()
         MSE = 0
@@ -219,23 +223,39 @@ class LegEnv(gym.Env):
 
 # This function for testing the env by itsel
 def main():
+    def print_observation(obs):
+        print("@@@@@@@@@@@\nTime: {:}\n Cables' lengths: {:}\n End points: {:}\n@@@@@@@@@@@".format(obs[0], obs[1], obs[2]))
     env = LegEnv()
-    init_obs ,_,_,_=env.step(1)
+    action_arr = [1 for _ in range(env.env.controllers_num)]
+
+
+    init_obs ,_,_,_=env.step(action_arr)
     print(init_obs[1][2])
     print(env.env.actions_json)
-    # input("WAIT for INPUT ?????")
+    input("-> check point: WAIT for INPUT !!!!")
+    action_arr[2] = 0
     for _ in range(50):
-        observation, reward, done, _= env.step(6)
-        print(observation[1][2])
+        observation, reward, done, _= env.step(action_arr)
+        print_observation(observation)
     
-    final_obs ,_,_,_=env.step(7)
+    input("-> check point: WAIT for INPUT !!!!")
+    for i in range(1000):
+        action = env.action_space.sample()
+        print("--------------- ({:}) ---------------".format(i))
+        print("######\nAction: {:}\n######".format(action))
+        observation, reward, done, _= env.step(action)
+        print_observation(observation)
+        # if(observation[0] > env.max_time):
+        #     break
+
+    action_arr = [1 for _ in range(env.env.controllers_num)]
+    final_obs ,_,_,_=env.step(action_arr)
     print(final_obs[1][2])
     print(env.env.actions_json)
-
-    # input("WAIT for INPUT ?????")
-    
+    print(env.env.sim_json)
+    input("-> check point: WAIT for INPUT !!!!")
     while(1):
-        observation, reward, done, _= env.step(1)
+        observation, reward, done, _= env.step(action_arr)
         # print("while",observation[1][2])
 
 if __name__ == "__main__":

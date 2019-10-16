@@ -127,7 +127,7 @@ class LegModel():
                 
                 # print("FLIP")
                 # input()            
-            print("write")
+            # print("write")
             self.write(json.dumps(self.actions_json))   # Write to the simulator module the json object with the required info
 
             sim_raw_data = self.read()
