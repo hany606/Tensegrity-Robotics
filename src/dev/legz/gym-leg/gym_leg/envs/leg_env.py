@@ -1,3 +1,12 @@
+# ----------------------------------------------------------------------------------------
+# Problems that undetermined: [TODO]
+# 1). A small action (dl=0.1) give multiple sequence of observation.
+#       - [Done] Solution 1: Give the last observation.        [The implemented one]
+#       - Solution 2: Give all the sequence of observation.
+# 2). Action space is too big and we need to reforumlate it.
+#       - Solution  : Descirbed in the comments above the corressponding part.
+# ----------------------------------------------------------------------------------------
+
 # This file will contain all the information about the agent and the environment starting from the rendering of the GUI to the rewards,... etc.
 import os
 import time
@@ -22,7 +31,7 @@ class LegEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
     def __init__(self, host_name='localhost', port_num=10022, sim_exec=sim_exec,  dl=0.1):
-        # super(LegEnv, self).__init__()
+        super(LegEnv, self).__init__()
         # Agent self variables
         self.goal = self._generateGoal()
         self.max_time = 200
@@ -46,8 +55,11 @@ class LegEnv(gym.Env):
         # TODO: [Done]
         #   - action_space  [Done]
         #   - observation_space [Done]
-        n_actions = 180 # TODO TODO TODO TODO: this is not the correct action_space, it should be 3^60 to get all the possible combination for the cables trit; for each controller (bit but has 3 values)
-        self.action_space = spaces.Discrete(n_actions)  # 180 discrete actions = 3 (+/0/-) for each actuator (60)
+        # Solution 1 for action_space: put the dimension for all permutation that can be happen
+        # n_actions = 3**60  #180 #TODO [Done]: this is not the correct action_space, it should be 3^60 to get all the possible combination for the cables trit; for each controller (bit but has 3 values)
+        # self.action_space = spaces.Discrete(n_actions)  # 180 discrete actions = 3 (+/0/-) for each actuator (60)
+        # Solution 2 for action_space:
+        self.action_space = spaces.MultiDiscrete([3 for i in range(self.env.controllers_num)])
         # TODO: Take into consideration the static cables and rods that are made to make the structure rigid
         #           they should be exculeded from the construction
         # Observations:
@@ -209,21 +221,22 @@ class LegEnv(gym.Env):
 def main():
     env = LegEnv()
     init_obs ,_,_,_=env.step(1)
-    print(init_obs[1])
+    print(init_obs[1][2])
     print(env.env.actions_json)
-    input()
+    # input("WAIT for INPUT ?????")
     for _ in range(50):
         observation, reward, done, _= env.step(6)
+        print(observation[1][2])
     
     final_obs ,_,_,_=env.step(7)
-    print(final_obs[1])
+    print(final_obs[1][2])
     print(env.env.actions_json)
 
-    input()
+    # input("WAIT for INPUT ?????")
     
     while(1):
         observation, reward, done, _= env.step(1)
-        print("while",observation[1][2])
+        # print("while",observation[1][2])
 
 if __name__ == "__main__":
     main()

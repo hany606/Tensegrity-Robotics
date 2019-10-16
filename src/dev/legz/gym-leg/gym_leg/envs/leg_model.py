@@ -127,7 +127,7 @@ class LegModel():
                 
                 # print("FLIP")
                 # input()            
-                
+            print("write")
             self.write(json.dumps(self.actions_json))   # Write to the simulator module the json object with the required info
 
             sim_raw_data = self.read()
@@ -135,13 +135,13 @@ class LegModel():
             if(sim_raw_data is not None):
                 self.sim_json = json.loads(sim_raw_data)  # Parse the data from string to json
             # print(self.sim_json["Center_of_Mass"][4])
-            print("step Function",self.sim_json["Cables_lengths"][2])
+            # print("step Function",self.sim_json["Cables_lengths"][2])
 
         else:
             self.closeSimulator()
 
     def getCablesLengths(self, i=None):
-        print("getCableLengths Function",self.sim_json["Cables_lengths"][2])
+        # print("getCableLengths Function",self.sim_json["Cables_lengths"][2])
         if(i is None):
             return self.sim_json["Cables_lengths"]
         return self.sim_json["Cables_lengths"][i]
