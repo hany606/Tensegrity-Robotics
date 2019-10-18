@@ -25,7 +25,7 @@
 
 
 #define HOST_NAME "localhost"
-#define PORT_NUM 10024
+#define PORT_NUM 10028
 #define MAX_BUFF_SIZE 5000
 #define EPS 0.00001  
 

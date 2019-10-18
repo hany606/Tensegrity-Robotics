@@ -6,6 +6,10 @@
 # 2). Action space is too big and we need to reforumlate it.    
 #       - [Done] Solution  : Descirbed in the comments above the corressponding part.
 # 3). Should we add got stuck for reward and observation or not????
+# 4). close and reset not working properly, they destroy the port number
+#       - Make text file with the place of the app of the simulator that every time, both of them read the number and simulator increase the number and this is the number of the port
+# 5). We need to remove the upper rods in the holding box as they resist the rods sometimes
+#       we will need to change any number of 19 in the whole system
 # ----------------------------------------------------------------------------------------
 
 # TODO: change the unmodifable "immutable" objects to tuple instead of list because of the concept.
@@ -13,11 +17,12 @@
 # This file will contain all the information about the agent and the environment starting from the rendering of the GUI to the rewards,... etc.
 import os
 import time
-import numpy as np
 import gym
 from gym import error, spaces, utils
 from gym.utils import seeding
 import sys
+import scipy.spatial as ss
+import signal
 
 import logging
 
@@ -33,7 +38,7 @@ sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/legz
 class LegEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, host_name='localhost', port_num=10024, sim_exec=sim_exec,  dl=0.1):
+    def __init__(self, host_name='localhost', port_num=10028, sim_exec=sim_exec,  dl=0.1):
         super(LegEnv, self).__init__()
         # Agent self variables
         self.goal = self._generateGoal()
@@ -42,6 +47,9 @@ class LegEnv(gym.Env):
         self.min_coordinate_point = -500
         self.max_coordinate_point = 500
         self.dl = dl
+        self.initial_volume = 12464.22707673338 # By testing
+        self.collapsed_volume = 10500
+
 
         # Initial configuration for the leg
         # TODO: [Done]
@@ -169,7 +177,7 @@ class LegEnv(gym.Env):
         return -0.1*self._getDistancetoGoal()-0.01*self.env.getTime()
 
     def _isDone(self):
-        # TODO:
+        # TODO [Done]:
         #  The criteria for finish will be either
         #       - it collapsed or not
         #       - Reached the goal or near to it
@@ -185,9 +193,10 @@ class LegEnv(gym.Env):
         eps = 0.1
         distance = self._getDistancetoGoal()
         
-        # TODO: Implement either if it collapsed criteria
-        collapsed = self._isCollapsed
+        # TODO [Done]: Implement either if it collapsed criteria
+        collapsed = self._isCollapsed(self.env.getEndPoints())
         print("Distance between the goal: {:}".format(distance))
+        print("Collapsed: ???: {:}".format(collapsed))
         if(distance <= eps or collapsed == True):
             return True
         return False
@@ -200,17 +209,29 @@ class LegEnv(gym.Env):
         distance = math.sqrt(MSE)
         return distance
 
-    # TODO: Implement it
+    # TODO[Done]: Implement it
     # By calculating the volume and comparing with the volume that it is known when it collapsed
     #   or under specific threshold
-    def _isCollapsed(self):
-        return False
+    def _isCollapsed(self, points_raw):
+        points = []
+        for i in range(len(points_raw)):
+            points.append(points_raw[i][0])
+            points.append(points_raw[i][1])
 
+        hull = ss.ConvexHull(points)
+        print("Volume: {:}".format(hull.volume))
+        # Initial Volume by testing: 12464.22707673338
+        eps = 500
+        if(hull.volume - self.collapsed_volume <= 500):
+            return True
+        return False
+    
+    # TODO: Problem mentioned in the header
     def reset(self):
         # TODO:
         # Reset the state of the environment to an initial state, and the self vars to the initial values
 
-        # Reset the environments
+        # Reset the environment and the simulator
         self.env.reset()
         # get the observations after the resetting of the environment
         return self._getObservation()
@@ -220,8 +241,10 @@ class LegEnv(gym.Env):
         # Example:
         self.env.render()
 
+    # TODO: Problem mentioned in the header
     def close(self):
         self.env.closeSimulator()
+        sys.exit(0)
 
 
 # This function for testing the env by itsel
@@ -237,13 +260,15 @@ def main():
     print(init_obs[1][2])
     print(env.env.actions_json)
     # print("")
-    # input("-> check point: WAIT for INPUT !!!!")
+    input("-> check point: WAIT for INPUT !!!!")
     action_arr[2] = 0
     for _ in range(50):
         observation, reward, done, _= env.step(action_arr)
         print_observation(observation)
         print("Done:???:{:}".format(done))
-
+    # env.reset()
+    # time.sleep(5)
+    # env.close()
     # # print("")
     input("-> check point: WAIT for INPUT !!!!")
     # for i in range(1000):
@@ -257,7 +282,7 @@ def main():
     #     # if(observation[0] > env.max_time):
     #     #     break
 
-    action_arr = [1 for _ in range(env.env.controllers_num)]
+    action_arr = [0 for _ in range(env.env.controllers_num)]
     # final_obs ,_,_,_=env.step(action_arr)
     # print(final_obs[1][2])
     # print(env.env.actions_json)
@@ -266,8 +291,8 @@ def main():
     while(1):
         observation, reward, done, _= env.step(action_arr)
         print_observation(observation)
-        print(env.env.getEndEffector())
-        # print("Done:???:{:}".format(done))
+        # print(env.env.getEndEffector())
+        print("Done:???:{:}".format(done))
 
         # print("while",observation[1][2])
 
