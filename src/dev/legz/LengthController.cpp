@@ -9,6 +9,10 @@
 #include "LengthController.h"
 #include "nlohmann/json.hpp"
 
+#include <core/tgSpringCableActuator.h>
+
+
+
 
 // The C++ Standard Library
 #include <cassert>
@@ -21,7 +25,7 @@
 
 
 #define HOST_NAME "localhost"
-#define PORT_NUM 10022
+#define PORT_NUM 10024
 #define MAX_BUFF_SIZE 5000
 #define EPS 0.00001  
 
@@ -34,6 +38,10 @@ bool all_reached_target = true;
 // double last_all_reached_time = 0;   // This is used to indicate if there is a stuck or not in the length of the cable
 vector <double> last_error;  //actuators.size()
 
+int end_points_map[][2]={{3,0},{19,16},{12,15},{11,24},{17,7},{32,34}
+                        ,{23,20},{29,28},{31,30},{38,37},{46,45},{52,55}
+                        ,{56,59},{37,55},{50,59},{38,53},{47,57},{41,48}
+                        ,{53,56}};
 
 LengthController::LengthController(const double length) :
   m_length(length)
@@ -61,6 +69,7 @@ void LengthController::onSetup(legzModel& subject)
   //get all of the tensegrity structure's cables
   actuators = subject.getAllActuators();
   rods = subject.getAllRods();
+
 
 
 
@@ -98,9 +107,19 @@ void LengthController::onStep(legzModel& subject, double dt)
     if(globalTime > 0){ //delay start of cable actuation
       if(toggle==0){    //print once when motors start moving
         cout << endl << "Activating Cable Motors -------------------------------------" << endl;
-	      toggle = 1;   //is used like a state flag ---- set it to 2 to disable the movement
+	      // std::cout<<"CMS: "<<rods[0]->centerOfMass()<<"\tPoint1:"<<actuators[3]->getAnchors_mod()[0]->getWorldPosition()<<"or:"<<actuators[3]->getAnchors_mod()[1]->getWorldPosition()<<"\tPoint2:"<<actuators[0]->getAnchors_mod()[0]->getWorldPosition()<<"or:"<<actuators[0]->getAnchors_mod()[1]->getWorldPosition()<<"\n";
+        // std::cout<<rods[1]->length()<<"\n";
+        toggle = 1;   //is used like a state flag ---- set it to 2 to disable the movement
       }
-
+      // Debugging mode
+      if(toggle == 2){
+        //actuators[0] between point 1,6
+        //actuators[3] between point 0,4
+        //rod[0] between point 0,1
+        std::cout<<"CMS: "<<rods[0]->centerOfMass()<<"\nPoint1:"<<actuators[3]->getAnchors_mod()[0]->getWorldPosition()<<"\nPoint2:"<<actuators[0]->getAnchors_mod()[0]->getWorldPosition()<<"\n";
+        // std::cout<<rods[1]->length()<<"\n";
+        // std::cout<<rods[1]->getPRigidBody()<<"\n";
+      }
       /**
        * Observations:
        *    1 - Cables' lengths
@@ -180,14 +199,14 @@ void LengthController::onStep(legzModel& subject, double dt)
           // Part 1: Write the observations to the python module
           // Get the observation
           //(1) Center of Mass
-          for(int i = 0; i < rods.size(); i++){
-            double CMS[3] = {0,0,0};
-            CMS[0] += rods[i]->centerOfMass().getX();
-            CMS[1] += rods[i]->centerOfMass().getY();
-            CMS[2] += rods[i]->centerOfMass().getZ();
-            // printf("%lf %lf %lf \n", CMS[0],CMS[1], CMS[2]);
-            JSON_Structure::setCenterOfMass(i, CMS[0],CMS[1],CMS[2]);
-          }
+          // for(int i = 0; i < rods.size(); i++){
+          //   double CMS[3] = {0,0,0};
+          //   CMS[0] += rods[i]->centerOfMass().getX();
+          //   CMS[1] += rods[i]->centerOfMass().getY();
+          //   CMS[2] += rods[i]->centerOfMass().getZ();
+          //   // printf("%lf %lf %lf \n", CMS[0],CMS[1], CMS[2]);
+          //   JSON_Structure::setCenterOfMass(i, CMS[0],CMS[1],CMS[2]);
+          // }
           
 
 
@@ -208,11 +227,16 @@ void LengthController::onStep(legzModel& subject, double dt)
           // (2) Get the orientation
 
 
+          // for(int i = 0; i < rods.size(); i++){
+          //   btVector3 orientation = rods[i]->orientation();
+          //   // std::cout<<orientation[0]<<":"<<orientation[1]<<":"<<orientation[2]<<":"<<orientation[3]<<std::endl;
+          //   JSON_Structure::setOrientation(i, orientation[0], orientation[1], orientation[2], orientation[3]);
+          // } 
           for(int i = 0; i < rods.size(); i++){
-            btVector3 orientation = rods[i]->orientation();
-            // std::cout<<orientation[0]<<":"<<orientation[1]<<":"<<orientation[2]<<":"<<orientation[3]<<std::endl;
-            JSON_Structure::setOrientation(i, orientation[0], orientation[1], orientation[2], orientation[3]);
-          } 
+            btVector3 end_point1 = actuators[end_points_map[i][0]]->getAnchors_mod()[0]->getWorldPosition();
+            btVector3 end_point2 = actuators[end_points_map[i][1]]->getAnchors_mod()[0]->getWorldPosition();
+            JSON_Structure::setEndPoints(i,end_point1,end_point2);
+          }
 
           // (3) Get the length of targeting cables
           for(int i = 0; i < actuators.size(); i++){

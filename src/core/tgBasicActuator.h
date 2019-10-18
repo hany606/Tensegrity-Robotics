@@ -30,6 +30,7 @@
 // This application
 #include "tgModel.h"
 #include "tgSpringCableActuator.h"
+#include "tgSpringCableAnchor.h"
 
 // Forward declarations
 class tgBulletSpringCable;
@@ -107,6 +108,8 @@ public:
      * @param[in] dt, time elapsed since last call.
      */
     virtual void moveMotors(double dt);
+
+    virtual std::vector<const tgSpringCableAnchor*> getAnchors_mod();
 
 
 private:

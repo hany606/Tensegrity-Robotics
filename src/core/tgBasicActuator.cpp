@@ -224,6 +224,11 @@ void tgBasicActuator::moveMotors(double dt)
     
 }
 
+
+std::vector<const tgSpringCableAnchor*> tgBasicActuator::getAnchors_mod(){
+    return m_springCable->getAnchors();
+}
+
 bool tgBasicActuator::invariant() const
 {
     return
@@ -233,3 +238,5 @@ bool tgBasicActuator::invariant() const
       (m_config.minActualLength >= 0.0) &&
       (m_preferredLength >= 0.0);
 }
+
+

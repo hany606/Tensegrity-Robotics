@@ -150,14 +150,20 @@ class LegModel():
     def _getEndPointsByRod(self, rod_num):
         # print(self.sim_json["Center_of_Mass"][0])
         # print(rod_num, type(rod_num))
-        rods_cms = self.sim_json["Center_of_Mass"][rod_num]
-        rods_orientation = self.sim_json["Orientation"][rod_num]
+        # rods_cms = self.sim_json["Center_of_Mass"][rod_num]
+        # rods_orientation = self.sim_json["Orientation"][rod_num]
+        # print("Orientation", rods_orientation)
+        # Coordinates_in_rod_sys = Rotation_matrix*Coordinates_in_global_sys + CMS
+        # (Coordinates_in_rod_sys - CMS)*inv(Rotation_matrix) = Coordinates_in_global_sys
         # ....
         # ....
         # ....
         # [endPoint1, endPoint2] -> [x,y,z]
-        return [[0,0,0], [0,0,0]]
-
+        # return [[rods_cms[0],rods_cms[1],rods_cms[2]], [rods_cms[0],rods_cms[1],rods_cms[2]]]       #TODO change this
+        end_point1 = self.sim_json["End_points"][rod_num][0]
+        end_point2 = self.sim_json["End_points"][rod_num][1]
+        return [[end_point1[0],end_point1[1],end_point1[2]], [end_point2[0],end_point2[1],end_point2[2]]]
+    
     def getEndPoints(self, rod_num=None):
         if(rod_num is None):
             # [rod1, rod2,...] -> [endPoint1, endPoint2] -> [x,y,z]
@@ -168,7 +174,7 @@ class LegModel():
         return self._getEndPointsByRod(rod_num)
 
     def getEndEffector(self):
-        return self._getEndPointsByRod(self.end_effector_index)[0]
+        return self._getEndPointsByRod(self.end_effector_index)[1]
 
         
     

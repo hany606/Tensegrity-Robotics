@@ -154,9 +154,9 @@ void legzModel::addRods(tgStructure& s)
     char tag[] = "rod1";
     for(int i = 0; i < 26;){
         
-        if(i == 18){
-            // strcpy(tag, "rod2");
-        }
+        // if(i == 18){
+        //     // strcpy(tag, "rod2");
+        // }
         s.addPair( i++,  i++, tag);
     }
     s.addPair( 19,  23, tag);
@@ -270,7 +270,7 @@ void legzModel::addMuscles(tgStructure& s)
     s.addPair(7, 10,  "muscle");
     s.addPair(5, 10,  "muscle");
     s.addPair(3, 10,  "muscle");
-    s.addPair(3, 8,  "muscle");
+    s.addPair(8, 3,  "muscle");
     s.addPair(2, 10,  "muscle");
     s.addPair(2, 8,  "muscle");
     s.addPair(13, 7,  "muscle");
@@ -281,10 +281,10 @@ void legzModel::addMuscles(tgStructure& s)
     s.addPair(7, 15,  "muscle");
     s.addPair(5, 16,  "muscle");
     s.addPair(5, 14,  "muscle");
-    s.addPair(13, 15,  "muscle");
-    s.addPair(13, 14,  "muscle");
-    s.addPair(12, 17,  "muscle");
-    s.addPair(12, 16,  "muscle");
+    s.addPair(15, 13,  "muscle");
+    s.addPair(14, 13,  "muscle");
+    s.addPair(17, 12,  "muscle");
+    s.addPair(16, 12,  "muscle");
     s.addPair(10, 15,  "muscle");
     s.addPair(10, 14,  "muscle");
     s.addPair(11, 17,  "muscle");
