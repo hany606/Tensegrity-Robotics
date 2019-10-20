@@ -2,3 +2,4 @@ gym_leg.egg-info
 *.pyc
 .idea
 /logs
+/gym_leg/envs/record*

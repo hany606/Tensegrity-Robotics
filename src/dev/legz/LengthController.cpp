@@ -28,7 +28,7 @@
 #define PORT_NUM 10028
 #define MAX_BUFF_SIZE 5000
 #define EPS 0.00001  
-
+#define SMALL_EPS(eps) EPS/1000.0
 
 using namespace std;
 using json = nlohmann::json;
@@ -59,6 +59,8 @@ LengthController::~LengthController()
 
 void LengthController::onSetup(legzModel& subject)
 {
+  freopen("record.txt","w",stdout); //For debugging
+
   LengthController::tcp_com = new TCP(HOST_NAME, PORT_NUM);
 
   LengthController::tcp_com->setup();
@@ -163,15 +165,22 @@ void LengthController::onStep(legzModel& subject, double dt)
             continue;
           
           counter++;
-          double error = abs(actuators[i]->getRestLength() - target_lengths[i]);
-          if(error == last_error[i]){
+          double error_sign = actuators[i]->getRestLength() - target_lengths[i];
+          double error = fabs(error_sign);
+          // if(error == last_error[i]){
+          double stuck_err = last_error[i] - error;
+          // that the error is equal to the last_error and the last_error was greater than the current error and the error was decreasing and the target length is smaller than the current which means that it is going to decrease more
+          if( actuators[i]->getRestLength() == 0.1 ||(fabs(stuck_err) < SMALL_EPS(EPS) && stuck_err > 0 && error_sign > 0 )){ //changed
             // while (1);
-            printf("Stuck\n");
-            all_reached_target = true;
+            printf("!!!!Stuck: %d\n",i);
+            // all_reached_target = true;  //TODO: This is wrong, it should just flag the controller reach flag not all
+            reached_counter++;
+            printf("Controller#%d\tError: %lf\n", i, error);
+            std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+            continue;
           }
-          printf("Controller#%dERR:%lf\n", i, error);
-          std::cout<<"REAL: Current :"<<actuators[i]->getCurrentLength()<<": Rest :"<<actuators[i]->getRestLength()<<std::endl;
-          std::cout<<"Target: "<<target_lengths[i]<<std::endl;
+          printf("Controller#%d\tError: %lf\n", i, error);
+          std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
 
           // m_controllers[i]->control(dt,((double) read["Controllers_val"][i]));
           m_controllers[i]->control(dt, target_lengths[i]);
@@ -179,14 +188,15 @@ void LengthController::onStep(legzModel& subject, double dt)
           // printf("%d\n", actuators.size());
           // printf("#%d -> %lf\n, -> %lf", i, (double) read["Controllers_val"][i], 5);
           // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read["Controllers_val"][i]));
-          if( error <= EPS){
+          if(error <= EPS){
             // all_reached_target = true;
             reached_counter++;
             read["Controllers_val"][i] = 0;
-            printf("Reached\n");
+            printf("Reached%d\n", i);
           }
           last_error[i] = error;
         }
+
         if(reached_counter == counter)
           all_reached_target = true;
         if(counter == 0)
@@ -194,6 +204,7 @@ void LengthController::onStep(legzModel& subject, double dt)
 
 
         if(all_reached_target == true){
+          printf("\n--------------------------------------------------------\n");
           // printf("Write\n");
 
           // Part 1: Write the observations to the python module

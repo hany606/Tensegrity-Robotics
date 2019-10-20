@@ -57,7 +57,17 @@ void tgBulletRenderer::render(const tgRod& rod) const
 #ifndef BT_NO_PROFILE 
     BT_PROFILE("tgBulletRenderer::renderRod");
 #endif //BT_NO_PROFILE 
-        // render the rod (change color, etc. if we want)
+
+	// render the rod (change color, etc. if we want) -> How to change the color of the rods???
+	// btDynamicsWorld& dynamicsWorld = tgBulletUtil::worldToDynamicsWorld(m_world);
+	// btIDebugDraw* const pDrawer = dynamicsWorld.getDebugDrawer();
+	// const btVector3 color = btVector3(0.0, .0, 1.0);
+	// const btVector3 lineTo = btVector3(0.0, 20.0, 0.0);
+
+	// const btVector3 lineFrom =	btVector3(0.0, 0.0, 0.0);
+
+	// pDrawer->drawLine(lineFrom, lineTo, color);
+
 }
 
 void tgBulletRenderer::render(const tgSpringCableActuator& mSCA) const
