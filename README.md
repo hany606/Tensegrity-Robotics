@@ -7,6 +7,7 @@ This work is not an individual, this work is part from a research work in roboti
 
 Mainly, this work will concentrate on using RL to control the movements of the tensegrity structure using NTRTsim for now.
 
+
 ## How to start working with the repository?:
   1. Clone the repo:
 	  ```bash
@@ -25,7 +26,7 @@ Mainly, this work will concentrate on using RL to control the movements of the t
 	
 	If the setup.sh has failed, try first to run it again. (It worked for me)
 
-4. Test the environment
+4. Test the simulator environment
 	 a. Run build.sh
     ```bash
     ./bin/build.sh
@@ -45,4 +46,9 @@ Mainly, this work will concentrate on using RL to control the movements of the t
 	cd build/dev
 	cd Model_name
 	./App_Name_Model
+	```
+7. To run the openAI gym custom environment and test it. However, you will to change the line 39 in the python file with the correct path. [TODO it will detect by itself the path].
+	```bash
+	cd src/dev/legz/gym-leg/gym_leg/envs/
+	python3 leg_env.py
 	```
