@@ -42,7 +42,7 @@ sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/legz
 class LegEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, host_name='localhost', port_num=10028, sim_exec=sim_exec,  dl=0.1):
+    def __init__(self, host_name='localhost', port_num=10036, sim_exec=sim_exec,  dl=0.1):
         super(LegEnv, self).__init__()
         # Agent self variables
         self.goal = self._generateGoal()
@@ -89,8 +89,7 @@ class LegEnv(gym.Env):
 
     def __del__(self):
         self.env.closeSimulator()
-        sys.exit(0)
-
+            
     # TODO: for now it is static goal
     #           for next is to implement a random goal and validate that it is reachable and in the working space of the end_effector
     # TODO [Done]: add a reachable static goal
@@ -230,11 +229,11 @@ class LegEnv(gym.Env):
             return True
         return False
     
-    # TODO: Problem mentioned in the header
+    # TODO[Done]: Problem mentioned in the header
     def reset(self):
         # TODO:
         # Reset the state of the environment to an initial state, and the self vars to the initial values
-
+        self.goal = self._generateGoal()
         # Reset the environment and the simulator
         self.env.reset()
         # get the observations after the resetting of the environment
@@ -245,10 +244,10 @@ class LegEnv(gym.Env):
         # Example:
         self.env.render()
 
-    # TODO: Problem mentioned in the header
+    # TODO[Done]: Problem mentioned in the header
     def close(self):
         self.env.closeSimulator()
-        sys.exit(0)
+        # sys.exit(0)
 
 
 # This function for testing the env by itsel
@@ -258,7 +257,8 @@ def main():
         # logging.info("\nTime: {:}\n Cables' lengths: {:}\n End points: {:}\n".format(obs[0], obs[1], obs[2]))
     env = LegEnv()
     action_arr = [1 for _ in range(env.env.controllers_num)]
-
+    # action_arr[2] = 0
+    # action_arr[5] = 0
 
     init_obs ,_,_,_=env.step(action_arr)
     print(init_obs[1][2])
@@ -274,24 +274,25 @@ def main():
     # time.sleep(5)
     # env.close()
     # # print("")
-    input("-> check point: WAIT for INPUT !!!!")
-    for i in range(1000):
-        action = env.action_space.sample()
-        print("--------------- ({:}) ---------------".format(i))
-        # logging.debug("--------------- ({:}) ---------------".format(i))
-        print("######\nAction: {:}\n######".format(action))
-        # logging.info("\nAction: {:}\n".format(action))
-        observation, reward, done, _= env.step(action)
-        print_observation(observation)
-        # if(observation[0] > env.max_time):
-        #     break
+    # input("-> check point: WAIT for INPUT !!!!")
+    # for i in range(100000):
+    #     action = env.action_space.sample()
+    #     # action = action_arr
+    #     print("--------------- ({:}) ---------------".format(i))
+    #     # logging.debug("--------------- ({:}) ---------------".format(i))
+    #     print("######\nAction: {:}\n######".format(action))
+    #     # logging.info("\nAction: {:}\n".format(action))
+    #     observation, reward, done, _= env.step(action)
+    #     print_observation(observation)
+    #     # if(observation[0] > env.max_time):
+    #     #     break
 
     action_arr = [1 for _ in range(env.env.controllers_num)]
     # final_obs ,_,_,_=env.step(action_arr)
     # print(final_obs[1][2])
     # print(env.env.actions_json)
     # print(env.env.sim_json)
-    input("-> check point: WAIT for INPUT !!!!")
+    # input("-> check point: WAIT for INPUT !!!!")
     while(1):
         observation, reward, done, _= env.step(action_arr)
         print_observation(observation)
@@ -300,5 +301,29 @@ def main():
 
         # print("while",observation[1][2])
 
+# Done: it is now working perfectly
+def reset_test():
+    env = LegEnv()
+    action_arr = [1 for _ in range(env.env.controllers_num)]
+    for i in range(10):
+        init_obs ,_,_,_=env.step(action_arr)
+        print(env.reset())
+    print("Finished the loop of reseting")
+    env.close()
+    print("After closing the environment")
+    # print(env.reset())
+    # init_obs ,_,_,_=env.step(action_arr)
+    # env.close()
+    # print("Reached the end without any errors")
+
+def learn_test():
+    from stable_baselines.common.vec_env import DummyVecEnv
+    from stable_baselines.deepq.policies import MlpPolicy
+    from stable_baselines import DQN
+    def print_observation(obs):
+        print("@@@@@@@@@@@\nTime: {:}\n Cables' lengths: {:}\n End points: {:}\n@@@@@@@@@@@".format(obs[0], obs[1], obs[2]))
+    env = LegEnv()
+
 if __name__ == "__main__":
-    main()
+    # main()
+    reset_test()

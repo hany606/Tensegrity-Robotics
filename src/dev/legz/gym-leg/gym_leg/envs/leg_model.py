@@ -21,7 +21,7 @@ sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/legz
 
 
 class LegModel():
-    def __init__(self, host_name='localhost', port_num=10013, packet_size=5000,
+    def __init__(self, host_name='localhost', port_num=10036, packet_size=5000,
                  sim_exec=sim_exec, dl=0.1, rods_num=19, controllers_num=60,
                  end_effector_index=4):
         self.host_name = host_name
@@ -38,12 +38,18 @@ class LegModel():
             'Reset': 0
         }
         self.sim_json = {"Flags":[1,0,0]}
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    # Create a TCP/IP socket
+        # self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    # Create a TCP/IP socket
+        # self.sock = socket.socket(socket.SOL_SOCKET, socket.SO_REUSEADDR)    # Create a TCP/IP socket
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        print(self.port_num)
         self.server_address = (self.host_name, self.port_num) # Bind the socket to the port
 
         self.connection = None
         self.client_address = None
+        self.child_process = None
         print('#########\nstarting up on {} port {}\n#########'.format(self.server_address, self.port_num))
+        # print(self.server_address)
         self.sock.bind(self.server_address)
         self.sock.listen(1)  # Listen for incoming connections
         self.reset_flag = False
@@ -55,7 +61,7 @@ class LegModel():
 
     def __del__(self):
         self.closeSimulator()
-        sys.exit(0)
+        # sys.exit(0)
 
     # function for writing data into TCP connection
     def write(self, data):
@@ -102,17 +108,18 @@ class LegModel():
     def closeSimulator(self):
         self.close_flag = True
         # kill the shell script of the simulator
-        if self.connection is not None:        
+        if self.connection is not None:
             self.connection.close()
-        os.kill(self.child_process.pid, signal.SIGTERM)
+        if self.child_process is not None:
+            os.kill(self.child_process.pid, signal.SIGKILL)
 
     def render(self):
         pass
     
     def reset(self):
         self.reset_flag = True
-        os.kill(self.child_process.pid, signal.SIGTERM)
-        # self.closeSimulator()
+        self.closeSimulator()
+        # os.kill(self.child_process.pid, signal.SIGTERM)
         # sleep(1)
         self.startSimulator()
 
@@ -193,8 +200,12 @@ def main():
     # signal.signal(signal.SIGTERM, cleanExit) 
     signal.signal(signal.SIGINT, cleanExit) # Activate the listen to the Ctrl+C
 
-    leg.startSimulator()
-    # sleep(5)
+    # leg.startSimulator()
+    # sleep(1)
+    # leg.reset()
+    # sleep(1)
+    # leg.reset()
+    # sleep(1)
     # leg.closeSimulator()
 
     start_time = time()

@@ -25,7 +25,7 @@
 
 
 #define HOST_NAME "localhost"
-#define PORT_NUM 10028
+#define PORT_NUM 10036
 #define MAX_BUFF_SIZE 5000
 #define EPS 0.00001  
 #define SMALL_EPS(eps) EPS/1000.0
@@ -38,10 +38,14 @@ bool all_reached_target = true;
 // double last_all_reached_time = 0;   // This is used to indicate if there is a stuck or not in the length of the cable
 vector <double> last_error;  //actuators.size()
 
+// It has been extracted by some nodes that connect betwee nthe controllers of the cabels
+//    and some nodes has been swaped inplace in order to get all the nodes in the first index of the 
+//    anchor list to uniform and ease the access to the data 
 int end_points_map[][2]={{3,0},{19,16},{12,15},{11,24},{17,7},{32,34}
                         ,{23,20},{29,28},{31,30},{38,37},{46,45},{52,55}
                         ,{56,59},{37,55},{50,59},{38,53},{47,57},{41,48}
                         ,{53,56}};
+
 
 LengthController::LengthController(const double length) :
   m_length(length)
@@ -59,7 +63,7 @@ LengthController::~LengthController()
 
 void LengthController::onSetup(legzModel& subject)
 {
-  freopen("record.txt","w",stdout); //For debugging
+  // freopen("record.txt","w",stdout); //For debugging
 
   LengthController::tcp_com = new TCP(HOST_NAME, PORT_NUM);
 
