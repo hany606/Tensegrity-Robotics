@@ -1,18 +1,12 @@
 # gym-Leg agent
 
-This folder is the same structure as the agents that described in OpenAI gym.
-This folder will include the OpenAI agent for the tensegrity leg
+gym_tensegirty: contians the environment of the agent for the tensegrity leg that compatible with OpenAI gym environments.
 
-## Status \& problems:
-
-*
-
-## Problems that has been fixed:
-
-*
+learning_scripts: contains the Reinforcement Learning algorithms that are used.
 
 
-## Future:
+
+## Convention:
 
 * varibles : underscore_case
 * Functions: cammelCase
