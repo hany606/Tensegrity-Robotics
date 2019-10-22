@@ -1,3 +1,4 @@
+
 """leg_model.py: Create the agent of model of the leg and provide an easy interface to be used with RL algorithms"""
 __author__ = "Hany Hamed"
 __credits__ = ["Hany Hamed", "Prof. Sergie Savin"]
@@ -19,9 +20,8 @@ from transforms3d.euler import euler2mat
 
 sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/legz/python_communication_test/helper.sh'
 
-
 class LegModel():
-    def __init__(self, host_name='localhost', port_num=10036, packet_size=5000,
+    def __init__(self, host_name='localhost', port_num=10037, packet_size=5000,
                  sim_exec=sim_exec, dl=0.1, rods_num=19, controllers_num=60,
                  end_effector_index=4):
         self.host_name = host_name
@@ -187,6 +187,7 @@ class LegModel():
         
     
     def getTime(self):
+        print(self.sim_json)
         return self.sim_json["Time"]
 
 # This function for testing the model by itself

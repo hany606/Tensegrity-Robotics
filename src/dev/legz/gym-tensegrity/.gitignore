@@ -3,3 +3,4 @@ gym_leg.egg-info
 .idea
 /logs
 /gym_leg/envs/record*
+/gym_leg/envs/records_testing/*
