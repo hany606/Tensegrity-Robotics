@@ -2,5 +2,5 @@ gym_leg.egg-info
 *.pyc
 .idea
 /logs
-/gym_leg/envs/record*
-/gym_leg/envs/records_testing/*
+/gym_tensegrity/envs/record*
+/gym_tensegrity/envs/records_testing/*
