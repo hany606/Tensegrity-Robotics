@@ -1,5 +1,5 @@
 #using stable-baselines
-import gym_leg
+import gym_tensegrity
 
 import gym
 from gym import wrappers
@@ -11,21 +11,21 @@ from stable_baselines.common.vec_env import DummyVecEnv
 from stable_baselines.deepq.policies import MlpPolicy
 from stable_baselines import DQN
 
-env = gym.make('gym_leg:leg-v0')
+env = gym.make('gym_tensegrity:leg-v0')
 # env = wrappers.Monitor(env, 'CartPole_q_learning_video', force=True)
 
 env = DummyVecEnv([lambda: env])
 
 model = DQN(MlpPolicy, env, verbose=1)
-model.learn(total_timesteps=25000)
-model.save("deepq_tensegrity_leg")
+# model.learn(total_timesteps=25000)
+# model.save("deepq_tensegrity_leg")
 
-# del model # remove to demonstrate saving and loading
+# # del model # remove to demonstrate saving and loading
 
-model = DQN.load("deepq_tensegrity_leg")
+# model = DQN.load("deepq_tensegrity_leg")
 
-obs = env.reset()
-while True:
-    action, _states = model.predict(obs)
-    obs, rewards, dones, info = env.step(action)
-    env.render()
+# obs = env.reset()
+# while True:
+#     action, _states = model.predict(obs)
+#     obs, rewards, dones, info = env.step(action)
+#     env.render()

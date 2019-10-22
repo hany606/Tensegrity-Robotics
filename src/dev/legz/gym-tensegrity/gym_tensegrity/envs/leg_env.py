@@ -1,3 +1,10 @@
+"""leg_env.py: Create the gym custom environment of tensegrity leg"""
+__author__ = "Hany Hamed"
+__credits__ = ["Hany Hamed", "Prof. Sergie Savin"]
+__version__ = "1.0.0"
+__email__ = "h.hamed.elanwar@gmail.com / h.hamed@innopolis.university"
+__status__ = "Testing"
+
 # ----------------------------------------------------------------------------------------
 # Problems that undetermined: [TODO]
 # 1). A small action (dl=0.1) give multiple sequence of observation.
@@ -14,8 +21,10 @@
 # 7). TODO easy: add stuck flag to the sent json from the simulator
 # 8). easy TODO: change the unmodifable "immutable" objects to tuple instead of list because of the concept.
 #
-# 9). should be easy TODO I had to write here the LegModel as it is not installed and copied with the LegEnv
-# 10). change the name of the gym to gym-tensegrity and gym_tensegrity but the env is leg as it is
+# 9). [Done] should be easy TODO I had to write here the LegModel as it is not installed and copied with the LegEnv
+# 10). [Done] change the name of the gym to gym-tensegrity and gym_tensegrity but the env is leg as it is
+# 11). TODO: Change the testing functions to the new action_space and observation_space modifications
+# 12). TODO: Implement new observation_space that will work with stable_baselines
 # ----------------------------------------------------------------------------------------
 
 
@@ -37,7 +46,7 @@ import logging
 
 import numpy as np
 import math
-from leg_model import LegModel
+from gym_tensegrity.envs.leg_model import LegModel
 
 sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/legz/python_communication_test/helper.sh'
 
@@ -45,7 +54,7 @@ sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/legz
 class LegEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, host_name='localhost', port_num=10036, sim_exec=sim_exec,  dl=0.1):
+    def __init__(self, host_name='localhost', port_num=10037, sim_exec=sim_exec,  dl=0.1):
         super(LegEnv, self).__init__()
         # Agent self variables
         self.goal = self._generateGoal()
@@ -75,9 +84,10 @@ class LegEnv(gym.Env):
         #   - observation_space [Done]
         # Solution 1 for action_space: put the dimension for all permutation that can be happen
         # n_actions = 3**60  #180 #TODO [Done]: this is not the correct action_space, it should be 3^60 to get all the possible combination for the cables trit; for each controller (bit but has 3 values)
-        # self.action_space = spaces.Discrete(n_actions)  # 180 discrete actions = 3 (+/0/-) for each actuator (60)
+        n_actions = 2**(2*self.env.controllers_num)
+        self.action_space = spaces.Discrete(n_actions)  # 180 discrete actions = 3 (+/0/-) for each actuator (60)
         # Solution 2 for action_space:
-        self.action_space = spaces.MultiDiscrete([3 for i in range(self.env.controllers_num)])
+        # self.action_space = spaces.MultiDiscrete([3 for i in range(self.env.controllers_num)])
         # TODO: Take into consideration the static cables and rods that are made to make the structure rigid
         #           they should be exculeded from the construction
         # Observations:
@@ -85,10 +95,24 @@ class LegEnv(gym.Env):
         #   1- Time
         #   2- Cables' lengths
         #   3- Endpoints of rods (include the end_effector)
-        self.observation_space = spaces.Tuple((
-                                spaces.Box(low=0, high=self.max_time, shape=(1,), dtype=np.float16),
-                                spaces.Box(low=0, high=self.max_cable_length, shape=(self.env.controllers_num,), dtype=np.float16),
-                                spaces.Box(low=self.min_coordinate_point, high=self.max_coordinate_point, shape=(self.env.rods_num,3), dtype=np.float16)))
+        # self.observation_space = spaces.Tuple((
+        #                         spaces.Box(low=0, high=self.max_time, shape=(1,), dtype=np.float16),
+        #                         spaces.Box(low=0, high=self.max_cable_length, shape=(self.env.controllers_num,), dtype=np.float16),
+        #                         spaces.Box(low=self.min_coordinate_point, high=self.max_coordinate_point, shape=(self.env.rods_num,3), dtype=np.float16)))
+        # self.observation_space = spaces.Box(0, self.max_time, dtype=np.float32)
+        
+        # wrong as we have array of array in the end points(array) and cable lengths, it will need modification
+        # low = np.array([
+        #     0,
+        #     0,
+        #     self.min_coordinate_point])
+        
+        # high = np.array([
+        #     self.max_time,
+        #     self.max_cable_length,
+        #     self.max_coordinate_point])
+
+        # self.observation_space = spaces.Box(low, high, dtype=np.float32)
 
     def __del__(self):
         self.env.closeSimulator()
@@ -141,17 +165,33 @@ class LegEnv(gym.Env):
     #   0+(3*index) -> -1 -> decrease by dl
     #   1+(3*index) ->  0 -> stay the same
     #   2+(3*index) -> +1 -> increase by dl
-    def _takeAction(self, action):
-        # TODO [Done]: put the scheme of the actions for the leg [Done]
-        # TODO [Done]: test !!!
-        # TODO [Done]: chage it according to the new scheme
-        for i in range(self.env.controllers_num):
-            value = (action[i]-1)*self.dl
-            self.env.actions_json["Controllers_val"][i] = value
+    def _takeAction(self, action):    
+        # # Solution 2: Working but not with stable_baseline 
+        # # [Feature not implemented yet in their library to have tuple of actions in the action space]
+        # # More details about their problem: https://github.com/hill-a/stable-baselines/issues/133
+        # # TODO [Done]: put the scheme of the actions for the leg [Done]
+        # # TODO [Done]: test !!!
+        # # TODO [Done]: chage it according to the new scheme
+        # for i in range(self.env.controllers_num):
+        #     value = (action[i]-1)*self.dl
+        #     self.env.actions_json["Controllers_val"][i] = value
         
-        # if it was zero means that it will be decreased by dl, if it was 1 will be the same, if it was 2 it will be increased
-        self.env.step()
-        # TODO: wait until the done_flag is set [Done from the side of the simulator]
+        # # if it was zero means that it will be decreased by dl, if it was 1 will be the same, if it was 2 it will be increased
+        # self.env.step()
+        # # TODO: wait until the done_flag is set [Done from the side of the simulator]
+        
+        # Solution 1: Under testing
+        # MSB - LSB
+        # Each controller has 2 bits:
+        #   if the bits 00 = 0 it will mean stay the same
+        #   if the bits 01 = 1 it will mean decrease by dl
+        #   if the bits 10 = 2 it will mean increase by dl
+        #   if the bits 11 = 3 it will mean increase by dl  ? Redundacy in the actions (wasting) Will it make problems in the learning process?
+        for i in range(0, 2*self.env.controllers_num, 2):
+            value = (1 if (2**i & action) > 0 else 0) + (2 if (2**(i+1) & action) > 0 else 0)
+            value = min(value, 2) - 1
+            self.env.actions_json["Controllers_val"][i] = value
+
 
     # Observations:
     #   - The dimensions is specified above and their min. and max. values
@@ -161,8 +201,8 @@ class LegEnv(gym.Env):
     # TODO: conform the return with the new boundries shapes
     def _getObservation(self):
         # TODO: add the time passed in the observation as it can be used to calculate the reward
-        observation = (self.env.getTime(), self.env.getCablesLengths(), self.env.getEndPoints())
-        return observation
+        observation = [self.env.getTime(), self.env.getCablesLengths(), self.env.getEndPoints()]
+        return np.array(observation)
 
     def _getReward(self, observation):
         # TODO:Set the reward criteria, which will depend on:

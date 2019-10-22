@@ -1,4 +1,4 @@
-gym_leg.egg-info
+*.egg-info
 *.pyc
 .idea
 /logs

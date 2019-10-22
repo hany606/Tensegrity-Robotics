@@ -1,10 +1,9 @@
-
 """leg_model.py: Create the agent of model of the leg and provide an easy interface to be used with RL algorithms"""
 __author__ = "Hany Hamed"
 __credits__ = ["Hany Hamed", "Prof. Sergie Savin"]
-__version__ = "0.0.1"
+__version__ = "1.0.0"
 __email__ = "h.hamed.elanwar@gmail.com / h.hamed@innopolis.university"
-__status__ = "Production"
+__status__ = "Testing"
 
 
 import socket
