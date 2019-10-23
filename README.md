@@ -9,7 +9,7 @@ Mainly, this work will concentrate on using RL to control the movements of the t
 
 ## Active Projects:
 1. Tensegrity Leg:
-It is in src/dev/legz
+It is in [src/dev/legz](https://github.com/hany606/Tensegrity-Robotics/tree/master/src/dev/legz)
 
 
 ## How to start working with the repository?:
