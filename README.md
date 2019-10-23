@@ -7,6 +7,10 @@ This work is not an individual, this work is part from a research work in roboti
 
 Mainly, this work will concentrate on using RL to control the movements of the tensegrity structure using NTRTsim for now.
 
+## Active Projects:
+1. Tensegrity Leg:
+It is in src/dev/legz
+
 
 ## How to start working with the repository?:
   1. Clone the repo:
