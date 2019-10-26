@@ -21,10 +21,11 @@ __status__ = "Testing"
 # 7). TODO easy: add stuck flag to the sent json from the simulator
 # 8). easy TODO: change the unmodifable "immutable" objects to tuple instead of list because of the concept.
 #
-# 9). [Done] should be easy TODO I had to write here the LegModel as it is not installed and copied with the LegEnv
+# 9). [Done] should be easy TODO [Done] I had to write here the LegModel as it is not installed and copied with the LegEnv
 # 10). [Done] change the name of the gym to gym-tensegrity and gym_tensegrity but the env is leg as it is
-# 11). TODO: Change the testing functions to the new action_space and observation_space modifications
-# 12). TODO: Implement new observation_space that will work with stable_baselines
+# 11). TODO [Done]: Change the testing functions to the new action_space and observation_space modifications
+# 12). TODO [Done]: Implement new observation_space that will work with stable_baselines
+# 13). TODO :add the enabled actuators
 # ----------------------------------------------------------------------------------------
 
 
@@ -70,7 +71,7 @@ class LegEnv(gym.Env):
 
 
         # Initial configuration for the leg
-        # TODO: [Done]
+        # TODO [Done]:
         #   -setup the leg; initialization, communication, start, and set the variables
         #   -Set the initial goal
         # Creation of the environment and pass the initial configuration
@@ -165,7 +166,7 @@ class LegEnv(gym.Env):
                  However, official evaluations of your agent are not allowed to
                  use this for learning.
         """
-        # TODO[Done]: change the controller simulator to read and take the action then write the data of the observations
+        # TODO [Done]: change the controller simulator to read and take the action then write the data of the observations
         #           reverse the order of TCP to read the observation of the corresponding action not the previouse one
         self._takeAction(action)
         observation = self._getObservation()
@@ -192,7 +193,7 @@ class LegEnv(gym.Env):
         
         # # if it was zero means that it will be decreased by dl, if it was 1 will be the same, if it was 2 it will be increased
         # self.env.step()
-        # # TODO: wait until the done_flag is set [Done from the side of the simulator]
+        # # TODO [Done]: wait until the done_flag is set [Done from the side of the simulator]
         
         # Solution 1: Under testing
         # MSB - LSB
@@ -243,9 +244,9 @@ class LegEnv(gym.Env):
     #   1- Time
     #   2- Cables' lengths
     #   3- Endpoints of rods (include the end_effector)
-    # TODO: conform the return with the new boundries shapes
+    # TODO [Done]: conform the return with the new boundries shapes
     def _getObservation(self):
-        # TODO: add the time passed in the observation as it can be used to calculate the reward
+        # TODO[Done]: add the time passed in the observation as it can be used to calculate the reward
         # print(self.env.getTime())
         observation = np.array(self.env.getTime())
         observation = np.append(observation, self.env.getCablesLengths())
@@ -263,7 +264,7 @@ class LegEnv(gym.Env):
         return np.array(observation)
 
     def _getReward(self, observation):
-        # TODO:Set the reward criteria, which will depend on:
+        # TODO [Done]:Set the reward criteria, which will depend on:
         #   - Euclidian distance between the end-effector and the target_point
         #   - The stability of the structure -> depends on the minimum volume of the structure when collapse
         #   - The time
@@ -313,7 +314,7 @@ class LegEnv(gym.Env):
         distance = math.sqrt(MSE)
         return distance
 
-    # TODO[Done]: Implement it
+    # TODO [Done]: Implement it
     # By calculating the volume and comparing with the volume that it is known when it collapsed
     #   or under specific threshold
     def _isCollapsed(self, points_raw):
@@ -330,9 +331,9 @@ class LegEnv(gym.Env):
             return True
         return False
     
-    # TODO[Done]: Problem mentioned in the header
+    # TODO [Done]: Problem mentioned in the header
     def reset(self):
-        # TODO:
+        # TODO [Done]:
         # Reset the state of the environment to an initial state, and the self vars to the initial values
         self.goal = self._generateGoal()
         # Reset the environment and the simulator
@@ -345,7 +346,7 @@ class LegEnv(gym.Env):
         # Example:
         self.env.render()
 
-    # TODO[Done]: Problem mentioned in the header
+    # TODO [Done]: Problem mentioned in the header
     def close(self):
         self.env.closeSimulator()
         # sys.exit(0)
