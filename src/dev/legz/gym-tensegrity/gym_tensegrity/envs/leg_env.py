@@ -84,7 +84,7 @@ class LegEnv(gym.Env):
         #   - observation_space [Done]
         # Solution 1 for action_space: put the dimension for all permutation that can be happen
         # n_actions = 3**60  #180 #TODO [Done]: this is not the correct action_space, it should be 3^60 to get all the possible combination for the cables trit; for each controller (bit but has 3 values)
-        n_actions = 2**(2*self.env.controllers_num)
+        n_actions = 2**(1+self.env.controllers_num)
         self.action_space = spaces.Discrete(n_actions)  # 180 discrete actions = 3 (+/0/-) for each actuator (60)
         # Solution 2 for action_space:
         # self.action_space = spaces.MultiDiscrete([3 for i in range(self.env.controllers_num)])
@@ -100,6 +100,16 @@ class LegEnv(gym.Env):
         #                         spaces.Box(low=0, high=self.max_cable_length, shape=(self.env.controllers_num,), dtype=np.float16),
         #                         spaces.Box(low=self.min_coordinate_point, high=self.max_coordinate_point, shape=(self.env.rods_num,3), dtype=np.float16)))
         # self.observation_space = spaces.Box(0, self.max_time, dtype=np.float32)
+
+        low = np.array([0])
+        low = np.append(low, np.zeros(self.env.controllers_num))
+        low = np.append(low, np.full((1,self.env.rods_num*3), self.min_coordinate_point))
+
+        high = np.array([self.max_time])
+        high = np.append(high, np.full((1,self.env.controllers_num), self.max_cable_length))
+        high = np.append(high, np.full((1,self.env.rods_num*3), self.max_coordinate_point))
+ 
+        self.observation_space = spaces.Box(low= low, high= high, dtype=np.float32)
         
         # wrong as we have array of array in the end points(array) and cable lengths, it will need modification
         # low = np.array([
@@ -165,7 +175,8 @@ class LegEnv(gym.Env):
     #   0+(3*index) -> -1 -> decrease by dl
     #   1+(3*index) ->  0 -> stay the same
     #   2+(3*index) -> +1 -> increase by dl
-    def _takeAction(self, action):    
+    def _takeAction(self, action):
+        pass  
         # # Solution 2: Working but not with stable_baseline 
         # # [Feature not implemented yet in their library to have tuple of actions in the action space]
         # # More details about their problem: https://github.com/hill-a/stable-baselines/issues/133
@@ -183,14 +194,45 @@ class LegEnv(gym.Env):
         # Solution 1: Under testing
         # MSB - LSB
         # Each controller has 2 bits:
-        #   if the bits 00 = 0 it will mean stay the same
-        #   if the bits 01 = 1 it will mean decrease by dl
+        #   if the bits 00 = 0 it will mean decrease by dl
+        #   if the bits 01 = 1 it will mean stay the same
         #   if the bits 10 = 2 it will mean increase by dl
         #   if the bits 11 = 3 it will mean increase by dl  ? Redundacy in the actions (wasting) Will it make problems in the learning process?
-        for i in range(0, 2*self.env.controllers_num, 2):
-            value = (1 if (2**i & action) > 0 else 0) + (2 if (2**(i+1) & action) > 0 else 0)
-            value = min(value, 2) - 1
-            self.env.actions_json["Controllers_val"][i] = value
+        # for i in range(0, 2*self.env.controllers_num, 2):
+        #     value = (1 if (2**i & action) > 0 else 0) + (2 if (2**(i+1) & action) > 0 else 0)
+        #     value = min(value, 2) - 1
+        #     self.env.actions_json["Controllers_val"][i] = value**self.dl
+        for i in range(self.env.controllers_num//2):
+            box_start_index = i*2
+            value = (1 if (2**box_start_index & action) > 0 else 0) + (2 if (2**(box_start_index+1) & action) > 0 else 0) + (4 if (2**(box_start_index+2) & action) > 0 else 0)
+            # print(value, box_start_index)
+            if (value == 0):
+                self.env.actions_json["Controllers_val"][box_start_index] = 1
+                self.env.actions_json["Controllers_val"][box_start_index+1] = 0
+            elif (value == 1):
+                self.env.actions_json["Controllers_val"][box_start_index] = -1
+                self.env.actions_json["Controllers_val"][box_start_index+1] = 0
+            elif (value == 2):
+                self.env.actions_json["Controllers_val"][box_start_index] = 0
+                self.env.actions_json["Controllers_val"][box_start_index+1] = 1
+            elif (value == 3):
+                self.env.actions_json["Controllers_val"][box_start_index] = 1
+                self.env.actions_json["Controllers_val"][box_start_index+1] = 1
+            elif (value == 4):
+                self.env.actions_json["Controllers_val"][box_start_index] = -1
+                self.env.actions_json["Controllers_val"][box_start_index+1] = 1
+            elif (value == 5):
+                self.env.actions_json["Controllers_val"][box_start_index] = 0
+                self.env.actions_json["Controllers_val"][box_start_index+1] = -1
+            elif (value == 6):
+                self.env.actions_json["Controllers_val"][box_start_index] = 1
+                self.env.actions_json["Controllers_val"][box_start_index+1] = -1
+            elif (value == 7):
+                self.env.actions_json["Controllers_val"][box_start_index] = -1
+                self.env.actions_json["Controllers_val"][box_start_index+1] = -1
+            self.env.actions_json["Controllers_val"][box_start_index] *= self.dl
+            self.env.actions_json["Controllers_val"][box_start_index+1] *= self.dl
+        self.env.step()
 
 
     # Observations:
@@ -201,7 +243,20 @@ class LegEnv(gym.Env):
     # TODO: conform the return with the new boundries shapes
     def _getObservation(self):
         # TODO: add the time passed in the observation as it can be used to calculate the reward
-        observation = [self.env.getTime(), self.env.getCablesLengths(), self.env.getEndPoints()]
+        # print(self.env.getTime())
+        observation = np.array(self.env.getTime())
+        observation = np.append(observation, self.env.getCablesLengths())
+        end_points = self.env.getEndPoints()
+        end_points_flatten = []
+        # print("--------------")
+        # print(end_points)
+        for end_point_2 in end_points:
+            for end_point in end_point_2:
+                for pos in end_point:
+                    end_points_flatten.append(pos)
+
+        observation = np.append(observation, end_points_flatten)
+        # observation = [self.env.getTime(), self.env.getCablesLengths(), self.env.getEndPoints()]
         return np.array(observation)
 
     def _getReward(self, observation):
@@ -296,16 +351,21 @@ class LegEnv(gym.Env):
 # This function for testing the env by itsel
 def main():
     def print_observation(obs):
-        print("@@@@@@@@@@@\nTime: {:}\n Cables' lengths: {:}\n End points: {:}\n@@@@@@@@@@@".format(obs[0], obs[1], obs[2]))
+        # Old
+        # print("@@@@@@@@@@@\nTime: {:}\n Cables' lengths: {:}\n End points: {:}\n@@@@@@@@@@@".format(obs[0], obs[1], obs[2]))
+        print("Observations {:}".format(obs))
+
         # logging.info("\nTime: {:}\n Cables' lengths: {:}\n End points: {:}\n".format(obs[0], obs[1], obs[2]))
     env = LegEnv()
-    action_arr = [1 for _ in range(env.env.controllers_num)]
+    # action_arr = np.zeros((2**(2*env.env.controllers_num)))
+    # Old
+    # action_arr = [1 for _ in range(env.env.controllers_num)]
     # action_arr[2] = 0
     # action_arr[5] = 0
 
-    init_obs ,_,_,_=env.step(action_arr)
-    print(init_obs[1][2])
-    print(env.env.actions_json)
+    # init_obs ,_,_,_=env.step(action_arr)
+    # print(init_obs[1][2])
+    # print(env.env.actions_json)
     # print("")
     # input("-> check point: WAIT for INPUT !!!!")
     # action_arr[2] = 0
@@ -317,30 +377,30 @@ def main():
     # time.sleep(5)
     # env.close()
     # # print("")
-    # input("-> check point: WAIT for INPUT !!!!")
-    # for i in range(100000):
-    #     action = env.action_space.sample()
-    #     # action = action_arr
-    #     print("--------------- ({:}) ---------------".format(i))
-    #     # logging.debug("--------------- ({:}) ---------------".format(i))
-    #     print("######\nAction: {:}\n######".format(action))
-    #     # logging.info("\nAction: {:}\n".format(action))
-    #     observation, reward, done, _= env.step(action)
-    #     print_observation(observation)
-    #     # if(observation[0] > env.max_time):
-    #     #     break
+    input("-> check point: WAIT for INPUT !!!!")
+    for i in range(100000):
+        action = env.action_space.sample()
+        # action = action_arr
+        print("--------------- ({:}) ---------------".format(i))
+        # logging.debug("--------------- ({:}) ---------------".format(i))
+        print("######\nAction: {:}\n######".format(action))
+        # logging.info("\nAction: {:}\n".format(action))
+        observation, reward, done, _= env.step(action)
+        print_observation(observation)
+        # if(observation[0] > env.max_time):
+        #     break
 
-    action_arr = [1 for _ in range(env.env.controllers_num)]
+    # action_arr = [1 for _ in range(env.env.controllers_num)]
     # final_obs ,_,_,_=env.step(action_arr)
     # print(final_obs[1][2])
     # print(env.env.actions_json)
     # print(env.env.sim_json)
-    # input("-> check point: WAIT for INPUT !!!!")
-    while(1):
-        observation, reward, done, _= env.step(action_arr)
-        print_observation(observation)
-        # print(env.env.getEndEffector())
-        print("Done:???:{:}".format(done))
+    input("-> check point: WAIT for INPUT !!!!")
+    # while(1):
+    #     observation, reward, done, _= env.step(action_arr)
+    #     print_observation(observation)
+    #     # print(env.env.getEndEffector())
+    #     print("Done:???:{:}".format(done))
 
         # print("while",observation[1][2])
 
@@ -369,5 +429,5 @@ def learn_test():
 
 
 if __name__ == "__main__":
-    # main()
-    reset_test()
+    main()
+    # reset_test()
