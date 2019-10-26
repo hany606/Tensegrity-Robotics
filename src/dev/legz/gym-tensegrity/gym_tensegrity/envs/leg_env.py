@@ -65,6 +65,8 @@ class LegEnv(gym.Env):
         self.dl = dl
         self.initial_volume = 12464.22707673338 # By testing
         self.collapsed_volume = 10500
+        self.enabled_actuators_list = [] # TODO: for now it will take the first (enabled_actuators_num) as enabled
+        self.enabled_actuators_num =  10   # TODO: in future it will be the length of the list
 
 
         # Initial configuration for the leg
@@ -84,7 +86,8 @@ class LegEnv(gym.Env):
         #   - observation_space [Done]
         # Solution 1 for action_space: put the dimension for all permutation that can be happen
         # n_actions = 3**60  #180 #TODO [Done]: this is not the correct action_space, it should be 3^60 to get all the possible combination for the cables trit; for each controller (bit but has 3 values)
-        n_actions = 2**(1+self.env.controllers_num)
+        # n_actions = 2**(1+self.env.controllers_num)
+        n_actions = 2**(1+self.enabled_actuators_num)
         self.action_space = spaces.Discrete(n_actions)  # 180 discrete actions = 3 (+/0/-) for each actuator (60)
         # Solution 2 for action_space:
         # self.action_space = spaces.MultiDiscrete([3 for i in range(self.env.controllers_num)])
@@ -103,11 +106,11 @@ class LegEnv(gym.Env):
 
         low = np.array([0])
         low = np.append(low, np.zeros(self.env.controllers_num))
-        low = np.append(low, np.full((1,self.env.rods_num*3), self.min_coordinate_point))
+        low = np.append(low, np.full((1,self.env.rods_num*3*2), self.min_coordinate_point))
 
         high = np.array([self.max_time])
         high = np.append(high, np.full((1,self.env.controllers_num), self.max_cable_length))
-        high = np.append(high, np.full((1,self.env.rods_num*3), self.max_coordinate_point))
+        high = np.append(high, np.full((1,self.env.rods_num*3*2), self.max_coordinate_point))
  
         self.observation_space = spaces.Box(low= low, high= high, dtype=np.float32)
         
@@ -176,7 +179,7 @@ class LegEnv(gym.Env):
     #   1+(3*index) ->  0 -> stay the same
     #   2+(3*index) -> +1 -> increase by dl
     def _takeAction(self, action):
-        pass  
+        # pass  
         # # Solution 2: Working but not with stable_baseline 
         # # [Feature not implemented yet in their library to have tuple of actions in the action space]
         # # More details about their problem: https://github.com/hill-a/stable-baselines/issues/133
@@ -202,7 +205,7 @@ class LegEnv(gym.Env):
         #     value = (1 if (2**i & action) > 0 else 0) + (2 if (2**(i+1) & action) > 0 else 0)
         #     value = min(value, 2) - 1
         #     self.env.actions_json["Controllers_val"][i] = value**self.dl
-        for i in range(self.env.controllers_num//2):
+        for i in range(self.enabled_actuators_num//2):
             box_start_index = i*2
             value = (1 if (2**box_start_index & action) > 0 else 0) + (2 if (2**(box_start_index+1) & action) > 0 else 0) + (4 if (2**(box_start_index+2) & action) > 0 else 0)
             # print(value, box_start_index)
@@ -297,7 +300,7 @@ class LegEnv(gym.Env):
         # TODO [Done]: Implement either if it collapsed criteria
         collapsed = self._isCollapsed(self.env.getEndPoints())
         print("Distance between the goal: {:}".format(distance))
-        print("Collapsed: ???: {:}".format(collapsed))
+        # print("Collapsed: ???: {:}".format(collapsed))
         if(distance <= eps or collapsed == True):
             return True
         return False
@@ -320,7 +323,7 @@ class LegEnv(gym.Env):
             points.append(points_raw[i][1])
 
         hull = ss.ConvexHull(points)
-        print("Volume: {:}".format(hull.volume))
+        # print("Volume: {:}".format(hull.volume))
         # Initial Volume by testing: 12464.22707673338
         eps = 500
         if(hull.volume - self.collapsed_volume <= eps):

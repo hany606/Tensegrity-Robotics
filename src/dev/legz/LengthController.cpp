@@ -63,7 +63,7 @@ LengthController::~LengthController()
 
 void LengthController::onSetup(legzModel& subject)
 {
-  // freopen("record.txt","w",stdout); //For debugging
+  // freopen("records_testing/record.txt","w",stdout); //For debugging
 
   LengthController::tcp_com = new TCP(HOST_NAME, PORT_NUM);
 

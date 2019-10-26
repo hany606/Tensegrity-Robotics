@@ -36,7 +36,25 @@ class LegModel():
                                 0,0,0,0,0,0,0,0,0,0],
             'Reset': 0
         }
-        self.sim_json = {"Flags":[1,0,0]}
+        self.sim_json = {"Cables_lengths":
+                        [0,0,0,0,0,0,0,0,0,0,
+                         0,0,0,0,0,0,0,0,0,0,
+                         0,0,0,0,0,0,0,0,0,0,
+                         0,0,0,0,0,0,0,0,0,0,
+                         0,0,0,0,0,0,0,0,0,0,
+                         0,0,0,0,0,0,0,0,0,0],
+                         "End_points":
+                        [[[0.,0.,0.],[0.,0.,0.]], [[0.,0.,0.],[0.,0.,0.]], [[0.,0.,0.],[0.,0.,0.]],
+                         [[0.,0.,0.],[0.,0.,0.]], [[0.,0.,0.],[0.,0.,0.]], [[0.,0.,0.],[0.,0.,0.]],
+                         [[0.,0.,0.],[0.,0.,0.]], [[0.,0.,0.],[0.,0.,0.]], [[0.,0.,0.],[0.,0.,0.]],
+                         [[0.,0.,0.],[0.,0.,0.]], [[0.,0.,0.],[0.,0.,0.]], [[0.,0.,0.],[0.,0.,0.]],
+                         [[0.,0.,0.],[0.,0.,0.]], [[0.,0.,0.],[0.,0.,0.]], [[0.,0.,0.],[0.,0.,0.]],
+                         [[0.,0.,0.],[0.,0.,0.]], [[0.,0.,0.],[0.,0.,0.]], [[0.,0.,0.],[0.,0.,0.]],
+                         [[0.,0.,0.],[0.,0.,0.]]],
+                        "Time": 0.,
+                        "ZFinished": 1,
+                        "Flags":[1,0,0]}
+                        
         # self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    # Create a TCP/IP socket
         # self.sock = socket.socket(socket.SOL_SOCKET, socket.SO_REUSEADDR)    # Create a TCP/IP socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -186,7 +204,7 @@ class LegModel():
         
     
     def getTime(self):
-        print(self.sim_json)
+        # print(self.sim_json)
         return self.sim_json["Time"]
 
 # This function for testing the model by itself
