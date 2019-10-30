@@ -17,17 +17,18 @@ env = gym.make('gym_tensegrity:leg-v0')
 env = DummyVecEnv([lambda: env])
 
 model = DQN(MlpPolicy, env, verbose=1)
-# model.learn(total_timesteps=25000)
+model.learn(total_timesteps=25000)
 model.save("deepq_tensegrity_leg")
+print("Finish Training and saving the model")
 
 # # del model # remove to demonstrate saving and loading
 
-model = DQN.load("deepq_tensegrity_leg")
+# model = DQN.load("deepq_tensegrity_leg")
 
-obs = env.reset()
-done  = False
-while not done:
-    action, _states = model.predict(obs)
-    obs, rewards, done, info = env.step(action)
-    # print(obs)
-    env.render()
+# obs = env.reset()
+# done  = False
+# while not done:
+#     action, _states = model.predict(obs)
+#     obs, rewards, done, info = env.step(action)
+#     # print(obs)
+#     env.render()

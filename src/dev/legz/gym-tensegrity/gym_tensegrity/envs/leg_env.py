@@ -139,7 +139,8 @@ class LegEnv(gym.Env):
     # TODO [Done]: add a reachable static goal
     def _generateGoal(self):
         # return (4.252820907910812, 11.42265959555328, -3.1326669704587604)  # Reachable point by the cms of the end-effector rod when the 2nd controller is decreased to 17.1468
-        return (-4.071894028029348, 30.865273129264445, 14.268032968387198)
+        # return (-4.071894028029348, 30.865273129264445, 14.268032968387198)
+        return (-4.90788472695319, 30.659340405658163, 20.34403515302529)   # Reachable point by the cms of the end-effector rod when the 2nd controller is increased by 50*dl
 
     def step(self, action):
         """
@@ -243,10 +244,10 @@ class LegEnv(gym.Env):
         bits_num = floor(log2(self.env.controllers_num))+1
         value_sign = (1 if ((2**bits_num) & action) > 0 else -1)    # if sign_bit is 0 = decrease, 1 = increase
         value = value_sign*self.dl
-        print(self.env.controllers_num)
+        # print(self.env.controllers_num)
         controller_index = min(self.env.controllers_num-1, action - (2**bits_num if value_sign == 1 else 0))
         # TODO: Don't know if it is necessary or not. Maybe here we can set all the controllers to zero and delete the last line in the method
-        print("Controllers_index {:} :::{:}, Controller_value: {:}".format(controller_index, action, value))
+        # print("Controllers_index {:} :::{:}, Controller_value: {:}".format(controller_index, action, value))
         
         self.env.actions_json["Controllers_val"][controller_index] = value
         self.env.step()
@@ -455,10 +456,11 @@ def main_new():
     print(env.env.actions_json)
     # print("")
     input("-> check point: WAIT for INPUT !!!!")
-    for _ in range(5000):
+    for _ in range(50):
         observation, reward, done, _= env.step(action)
         print_observation(observation)
         print("Done:???:{:}".format(done))
+    print(env.env.getEndEffector())
     # env.reset()
     # time.sleep(5)
     # env.close()
