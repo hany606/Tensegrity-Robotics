@@ -40,7 +40,6 @@ from gym.utils import seeding
 import sys
 import scipy.spatial as ss
 import signal
-from math import floor,log2
 
 import logging
 
@@ -67,8 +66,8 @@ class LegEnv(gym.Env):
         self.dl = dl
         self.initial_volume = 12464.22707673338 # By testing
         self.collapsed_volume = 10500
-        # self.enabled_actuators_list = [] # TODO: for now it will take the first (enabled_actuators_num) as enabled
-        # self.enabled_actuators_num =  10   # TODO: in future it will be the length of the list
+        self.enabled_actuators_list = [] # TODO: for now it will take the first (enabled_actuators_num) as enabled
+        self.enabled_actuators_num =  10   # TODO: in future it will be the length of the list
 
 
         # Initial configuration for the leg
@@ -89,11 +88,9 @@ class LegEnv(gym.Env):
         # Solution 1 for action_space: put the dimension for all permutation that can be happen
         # n_actions = 3**60  #180 #TODO [Done]: this is not the correct action_space, it should be 3^60 to get all the possible combination for the cables trit; for each controller (bit but has 3 values)
         # n_actions = 2**(1+self.env.controllers_num)
-        # n_actions = 2**(1+self.enabled_actuators_num)
-        # self.action_space = spaces.Discrete(n_actions)  # 180 discrete actions = 3 (+/0/-) for each actuator (60)
-        n_actions = 2**(floor(log2(self.env.controllers_num))+1)     # bits that represent the binary number for the index of the controller and an extra bit for the action 0 = decrease, 1 = increase
-        self.action_space = spaces.Discrete(n_actions)
-        #  Solution 2 for action_space:
+        n_actions = 2**(1+self.enabled_actuators_num)
+        self.action_space = spaces.Discrete(n_actions)  # 180 discrete actions = 3 (+/0/-) for each actuator (60)
+        # Solution 2 for action_space:
         # self.action_space = spaces.MultiDiscrete([3 for i in range(self.env.controllers_num)])
         # TODO: Take into consideration the static cables and rods that are made to make the structure rigid
         #           they should be exculeded from the construction
@@ -209,49 +206,38 @@ class LegEnv(gym.Env):
         #     value = (1 if (2**i & action) > 0 else 0) + (2 if (2**(i+1) & action) > 0 else 0)
         #     value = min(value, 2) - 1
         #     self.env.actions_json["Controllers_val"][i] = value**self.dl
-        # for i in range(self.enabled_actuators_num//2):
-        #     box_start_index = i*2
-        #     value = (1 if (2**box_start_index & action) > 0 else 0) + (2 if (2**(box_start_index+1) & action) > 0 else 0) + (4 if (2**(box_start_index+2) & action) > 0 else 0)
-        #     # print(value, box_start_index)
-        #     if (value == 0):
-        #         self.env.actions_json["Controllers_val"][box_start_index] = 1
-        #         self.env.actions_json["Controllers_val"][box_start_index+1] = 0
-        #     elif (value == 1):
-        #         self.env.actions_json["Controllers_val"][box_start_index] = -1
-        #         self.env.actions_json["Controllers_val"][box_start_index+1] = 0
-        #     elif (value == 2):
-        #         self.env.actions_json["Controllers_val"][box_start_index] = 0
-        #         self.env.actions_json["Controllers_val"][box_start_index+1] = 1
-        #     elif (value == 3):
-        #         self.env.actions_json["Controllers_val"][box_start_index] = 1
-        #         self.env.actions_json["Controllers_val"][box_start_index+1] = 1
-        #     elif (value == 4):
-        #         self.env.actions_json["Controllers_val"][box_start_index] = -1
-        #         self.env.actions_json["Controllers_val"][box_start_index+1] = 1
-        #     elif (value == 5):
-        #         self.env.actions_json["Controllers_val"][box_start_index] = 0
-        #         self.env.actions_json["Controllers_val"][box_start_index+1] = -1
-        #     elif (value == 6):
-        #         self.env.actions_json["Controllers_val"][box_start_index] = 1
-        #         self.env.actions_json["Controllers_val"][box_start_index+1] = -1
-        #     elif (value == 7):
-        #         self.env.actions_json["Controllers_val"][box_start_index] = -1
-        #         self.env.actions_json["Controllers_val"][box_start_index+1] = -1
-        #     self.env.actions_json["Controllers_val"][box_start_index] *= self.dl
-        #     self.env.actions_json["Controllers_val"][box_start_index+1] *= self.dl
-        # self.env.step()
-        bits_num = floor(log2(self.env.controllers_num))+1
-        value_sign = (1 if ((2**bits_num) & action) > 0 else -1)    # if sign_bit is 0 = decrease, 1 = increase
-        value = value_sign*self.dl
-        print(self.env.controllers_num)
-        controller_index = min(self.env.controllers_num-1, action - (2**bits_num if value_sign == 1 else 0))
-        # TODO: Don't know if it is necessary or not. Maybe here we can set all the controllers to zero and delete the last line in the method
-        print("Controllers_index {:} :::{:}, Controller_value: {:}".format(controller_index, action, value))
-        
-        self.env.actions_json["Controllers_val"][controller_index] = value
+        for i in range(self.enabled_actuators_num//2):
+            box_start_index = i*2
+            value = (1 if (2**box_start_index & action) > 0 else 0) + (2 if (2**(box_start_index+1) & action) > 0 else 0) + (4 if (2**(box_start_index+2) & action) > 0 else 0)
+            # print(value, box_start_index)
+            if (value == 0):
+                self.env.actions_json["Controllers_val"][box_start_index] = 1
+                self.env.actions_json["Controllers_val"][box_start_index+1] = 0
+            elif (value == 1):
+                self.env.actions_json["Controllers_val"][box_start_index] = -1
+                self.env.actions_json["Controllers_val"][box_start_index+1] = 0
+            elif (value == 2):
+                self.env.actions_json["Controllers_val"][box_start_index] = 0
+                self.env.actions_json["Controllers_val"][box_start_index+1] = 1
+            elif (value == 3):
+                self.env.actions_json["Controllers_val"][box_start_index] = 1
+                self.env.actions_json["Controllers_val"][box_start_index+1] = 1
+            elif (value == 4):
+                self.env.actions_json["Controllers_val"][box_start_index] = -1
+                self.env.actions_json["Controllers_val"][box_start_index+1] = 1
+            elif (value == 5):
+                self.env.actions_json["Controllers_val"][box_start_index] = 0
+                self.env.actions_json["Controllers_val"][box_start_index+1] = -1
+            elif (value == 6):
+                self.env.actions_json["Controllers_val"][box_start_index] = 1
+                self.env.actions_json["Controllers_val"][box_start_index+1] = -1
+            elif (value == 7):
+                self.env.actions_json["Controllers_val"][box_start_index] = -1
+                self.env.actions_json["Controllers_val"][box_start_index+1] = -1
+            self.env.actions_json["Controllers_val"][box_start_index] *= self.dl
+            self.env.actions_json["Controllers_val"][box_start_index+1] *= self.dl
         self.env.step()
-        self.env.actions_json["Controllers_val"][controller_index] = 0
-        
+
 
     # Observations:
     #   - The dimensions is specified above and their min. and max. values
@@ -446,43 +432,6 @@ def learn_test():
     env = LegEnv()
 
 
-def main_new():
-    def print_observation(obs):
-        print("Observations {:}".format(obs))
-    env = LegEnv()
-    action = 5+64
-    init_obs ,_,_,_=env.step(action)
-    print(env.env.actions_json)
-    # print("")
-    input("-> check point: WAIT for INPUT !!!!")
-    for _ in range(5000):
-        observation, reward, done, _= env.step(action)
-        print_observation(observation)
-        print("Done:???:{:}".format(done))
-    # env.reset()
-    # time.sleep(5)
-    # env.close()
-    # # print("")
-    input("-> check point: WAIT for INPUT !!!!")
-    for i in range(1000):
-        action = env.action_space.sample()
-        print("--------------- ({:}) ---------------".format(i))
-        print("######\nAction: {:}\n######".format(action))
-        observation, reward, done, _= env.step(action)
-        print_observation(observation)
-        # if(observation[0] > env.max_time):
-        #     break
-    action = 0
-    final_obs ,_,_,_=env.step(action)
-    print(env.env.actions_json)
-    print(env.env.sim_json)
-    input("-> check point: WAIT for INPUT !!!!")
-    while(1):
-        observation, reward, done, _= env.step(action)
-        print_observation(observation)
-        # print(env.env.getEndEffector())
-        print("Done:???:{:}".format(done))
-
 if __name__ == "__main__":
-    main_new()
+    main()
     # reset_test()
