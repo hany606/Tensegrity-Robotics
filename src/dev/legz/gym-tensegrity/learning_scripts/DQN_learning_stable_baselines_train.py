@@ -69,19 +69,19 @@ model = DQN(MlpPolicy, env, verbose=1, learning_rate=0.1, exploration_fraction=0
 
 
 # mean_reward_before_train = evaluate(model, num_episodes=10000, num_steps=10000)
-mean_reward_before_train = evaluate(model, num_episodes=10, num_steps=1000, plt_tag='ro')
-
+mean_reward_before_train = evaluate(model, num_episodes=10000, num_steps=1000, plt_tag='r')
+# plt.show()
 # input("Check point!!!")
 
-model.learn(total_timesteps=10000)
-model.save("DQN_tensegrity_leg")
+model.learn(total_timesteps=10000000)
+model.save("DQN_tensegrity_leg_long_training")
 print("Finish Training and saving the model")
 
 del model
 
 # input("Check point!!!")
 model = DQN.load("DQN_tensegrity_leg")
-mean_reward = evaluate(model, num_episodes=10, num_steps=1000, plt_tag='b^')
+mean_reward = evaluate(model, num_episodes=10000, num_steps=1000, plt_tag='b')
 
 plt.show()
 
