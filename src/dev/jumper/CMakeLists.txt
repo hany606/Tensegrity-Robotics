@@ -6,14 +6,14 @@ link_libraries(tgcreator
                 core
                 terrain 
                 tgOpenGLSupport)
-                
-add_executable(AppLegzModel
-    legzModel.cpp
-    AppLegzModel.cpp
+
+add_executable(AppJumperModel
+    JumperModel.cpp
+    AppJumperModel.cpp
     LengthController.cpp
     TCP.cpp
     JSON_Structure.cpp
 ) 
 
 
-target_link_libraries(AppLegzModel PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(AppJumperModel PRIVATE nlohmann_json::nlohmann_json)

@@ -43,6 +43,7 @@
 #include "LinearMath/btAlignedObjectArray.h"
 // The C++ Standard library
 #include <iostream>
+#include <string.h>
 
 // Forward declarations
 class tgGLDebugDrawer;
@@ -66,7 +67,7 @@ public:
      */
     tgSimViewGraphics(tgWorld& world,
               double stepSize = 1.0/120.0,
-              double renderRate = 1.0/60.0);
+              double renderRate = 1.0/60.0, char windowName[100] = "Tensegrity Demo");
     
     //Exit physics should have already been called
         //exitPhysics();
@@ -143,6 +144,7 @@ public:
 
 private:    
     tgGLDebugDrawer*    gDebugDrawer;   
+    char windowName[100];
 };
 
 

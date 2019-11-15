@@ -35,11 +35,13 @@
 
 tgSimViewGraphics::tgSimViewGraphics(tgWorld& world,
                      double stepSize,
-                     double renderRate) : 
+                     double renderRate, char windowName[100]) : 
   tgSimView(world, stepSize, renderRate)
 {
     /// @todo figure out a good time to delete this
     gDebugDrawer = new tgGLDebugDrawer();
+    strcpy(tgSimViewGraphics::windowName, windowName);
+    // tgSimViewGraphics::windowName = windowName;
     // Supress compiler warning for bullet's unused variable
     (void) btInfinityMask;
 }
@@ -105,7 +107,7 @@ void tgSimViewGraphics::run(int steps)
 {
     if (isInitialzed())
     {
-        tgglutmain(1024, 600, "Tensegrity Demo", this);
+        tgglutmain(1024, 600, tgSimViewGraphics::windowName, this);
 
         glutMainLoop();
         
