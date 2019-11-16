@@ -43,7 +43,7 @@ vector <double> last_error;  //actuators.size()
 // It has been extracted by some nodes that connect betwee nthe controllers of the cabels
 //    and some nodes has been swaped inplace in order to get all the nodes in the first index of the 
 //    anchor list to uniform and ease the access to the data 
-int end_points_map[]={4,1,2,3,0,5};
+int end_points_map[]={0,1,2,3,0,4};
 
 LengthController::LengthController(const double length) :
   m_length(length)
@@ -112,7 +112,12 @@ void LengthController::onStep(JumperModel& subject, double dt)
     if(globalTime > 0){ //delay start of cable actuation
       if(toggle==0){    //print once when motors start moving
         cout << endl << "Activating Cable Motors -------------------------------------" << endl;
-	      // std::cout<<"CMS: "<<rods[0]->centerOfMass()<<"\tPoint1:"<<actuators[3]->getAnchors_mod()[0]->getWorldPosition()<<"or:"<<actuators[3]->getAnchors_mod()[1]->getWorldPosition()<<"\tPoint2:"<<actuators[0]->getAnchors_mod()[0]->getWorldPosition()<<"or:"<<actuators[0]->getAnchors_mod()[1]->getWorldPosition()<<"\n";
+        std::cout<<"End Point"<<0<<"\nPoint:"<<actuators[0]->getAnchors_mod()[1]->getWorldPosition()<<"\n----------------------\n";
+        for(int i = 1; i < 6; i++){
+            btVector3 end_point = actuators[end_points_map[i]]->getAnchors_mod()[0]->getWorldPosition();
+            std::cout<<"End Point"<<i<<"\nPoint:"<<end_point<<"\n----------------------\n";
+        }
+        // std::cout<<"CMS: "<<rods[0]->centerOfMass()<<"\tPoint1:"<<actuators[3]->getAnchors_mod()[0]->getWorldPosition()<<"or:"<<actuators[3]->getAnchors_mod()[1]->getWorldPosition()<<"\tPoint2:"<<actuators[0]->getAnchors_mod()[0]->getWorldPosition()<<"or:"<<actuators[0]->getAnchors_mod()[1]->getWorldPosition()<<"\n";
         // std::cout<<rods[1]->length()<<"\n";
         toggle = 1;   //is used like a state flag ---- set it to 2 to disable the movement
       }
@@ -197,7 +202,8 @@ void LengthController::onStep(JumperModel& subject, double dt)
         if(all_reached_target == true){
           printf("\n--------------------------------------------------------\n");
           // (1) Get the end-points
-          for(int i = 0; i < 6; i++){
+          JSON_Structure::setEndPoints(0,actuators[0]->getAnchors_mod()[1]->getWorldPosition());
+          for(int i = 1; i < 6; i++){
             btVector3 end_point = actuators[end_points_map[i]]->getAnchors_mod()[0]->getWorldPosition();
             JSON_Structure::setEndPoints(i,end_point);
             // std::cout<<"End Point"<<i<<"\nPoint:"<<end_point<<"\n----------------------\n";

@@ -1,9 +1,9 @@
-"""Jumper_model.py: Create the agent of model of the Jumper and provide an easy interface to be used with RL algorithms"""
+"""Jumper_model.py: Create the agent of model of the one legged jumping tensegrity robot and provide an easy interface to be used with RL algorithms"""
 __author__ = "Hany Hamed"
-__credits__ = ["Hany Hamed", "Prof. Sergie Savin"]
+__credits__ = ["Hany Hamed", "Prof. Sergie Savin", "Oleg Balakhnov"]
 __version__ = "1.0.0"
 __email__ = "h.hamed.elanwar@gmail.com / h.hamed@innopolis.university"
-__status__ = "Testing"
+__status__ = "Developing"
 
 
 import socket
@@ -13,16 +13,13 @@ import json
 from time import *
 import os
 import subprocess
-import random
 import numpy as np
-from transforms3d.euler import euler2mat
 
 sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/jumper/util/helper.sh'
 
 class JumperModel():
     def __init__(self, host_name='localhost', port_num=10040, packet_size=5000,
-                 sim_exec=sim_exec, dl=0.1, rods_num=19, controllers_num=60,
-                 end_effector_index=4):
+                 sim_exec=sim_exec, dl=0.1, controllers_num=8):
         self.host_name = host_name
         self.port_num = port_num
         self.packet_size = packet_size
@@ -55,9 +52,10 @@ class JumperModel():
         self.reset_flag = False
         self.close_flag = False
         self.dl = dl                            # Self modified parameter
-        self.rods_num = rods_num                  # Self modified parameter
+        self.end_points_num = 6
         self.controllers_num = controllers_num    # Self modified parameter
-        self.end_effector_index = end_effector_index    # Self modified parameter
+        self.leg_end_points = [4,5]
+        self.leg_length = 20
 
     def __del__(self):
         self.closeSimulator()
@@ -80,7 +78,7 @@ class JumperModel():
             # Receive the data in small chunks and retransmit it
             while True:
                 data.append(self.connection.recv(self.packet_size).decode("utf-8"))         #reading part
-                print('{} received "{}"'.format(counter,data[-1]))
+                # print('{} received "{}"'.format(counter,data[-1]))
                 if 'ZFinished' in str(data[-1][-14:-1]):
                     break
                 counter += 1
@@ -126,7 +124,6 @@ class JumperModel():
                 self.reset()
             
             self.write(json.dumps(self.actions_json))   # Write to the simulator module the json object with the required info
-
             sim_raw_data = self.read()
             # print(sim_raw_data)
             if(sim_raw_data is not None):
@@ -139,23 +136,38 @@ class JumperModel():
             return self.sim_json["Cables_lengths"]
         return self.sim_json["Cables_lengths"][i]
         
-    def _getEndPointsByRod(self, rod_num):
-        end_point1 = self.sim_json["End_points"][rod_num][0]
-        end_point2 = self.sim_json["End_points"][rod_num][1]
-        return [[end_point1[0],end_point1[1],end_point1[2]], [end_point2[0],end_point2[1],end_point2[2]]]
-    
-    def getEndPoints(self, rod_num=None):
-        if(rod_num is None):
-            # [rod1, rod2,...] -> [endPoint1, endPoint2] -> [x,y,z]
-            end_points = []
-            for i in range(self.rods_num):
-                end_points.append(self._getEndPointsByRod(i))
-            return end_points
-        return self._getEndPointsByRod(rod_num)
+    def getEndPoints(self):
+        end_points = []
+        for i in range(self.end_points_num):
+            end_points.append(self.sim_json["End_points"][i])
+        return end_points
 
-   # TODO
+    # point_a: is the end point of the leg from down
+    # point_b: is the end point of the virtual horizontal leg from up
+    # point_c: is the end point of the actual leg from up
     def getLegAngle(self):
-        pass    
+        point_a = np.array(self.sim_json["End_points"][self.leg_end_points[0]])
+        point_b = [0,0,0]
+        point_b[:] = point_a[:]
+        point_b[1] += self.leg_length
+        point_c = np.array(self.sim_json["End_points"][self.leg_end_points[1]])
+        v1 = point_b - point_a
+        v2 = point_c - point_a
+        dot_product = np.dot(v1,v2)
+        v1_mag = np.linalg.norm(v1)
+        v2_mag = np.linalg.norm(v2)
+        # print("pointa", point_a)
+        # print("pointb",point_b)
+        # print("pointc", point_c)
+        # print("v1", v1)
+        # print("v2", v2)
+        # print("dot_product", dot_product)
+        # print("1 mag", v1_mag)
+        # print("2 mag", v2_mag)
+        # print("arccos", np.arccos(dot_product/(v1_mag*v2_mag)))
+        angle = np.arccos(dot_product/(v1_mag*v2_mag))
+        # print("angle", angle)
+        return angle
     
     def getTime(self):
         return self.sim_json["Time"]

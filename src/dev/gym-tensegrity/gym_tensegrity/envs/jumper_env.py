@@ -1,6 +1,6 @@
 """jumper_env.py: Create the gym custom environment of tensegrity one legged jumpeing robot"""
 __author__ = "Hany Hamed"
-__credits__ = ["Hany Hamed", "Prof. Sergie Savin"]
+__credits__ = ["Hany Hamed", "Prof. Sergie Savin", "Oleg Balakhnov"]
 __version__ = "0.0.1"
 __email__ = "h.hamed.elanwar@gmail.com / h.hamed@innopolis.university"
 __status__ = "Developing"
@@ -30,6 +30,7 @@ import sys
 import signal
 from math import floor,log2
 import logging
+from random import randint
 
 # logger = logging.getLogger(__name__)
 
@@ -55,6 +56,9 @@ class JumperEnv(gym.Env):
         self.env = JumperModel(host_name=host_name, port_num=port_num, sim_exec=sim_exec, dl=dl)
         self.env.startSimulator()
 
+        # 3 bits for indexing the cable's controller 2^3 = 8 and one bit for the control direction
+        # This action space will inforce to have only one working controller at a time
+        # Also, always one controller work at least there is no possibilty to have all of them not working, to aoid this point we can add another bit fot the control direction 
         n_actions = 2**(floor(log2(self.env.controllers_num))+1)
         self.action_space = spaces.Discrete(n_actions)
         
@@ -97,8 +101,6 @@ class JumperEnv(gym.Env):
                  However, official evaluations of your agent are not allowed to
                  use this for learning.
         """
-        # TODO [Done]: change the controller simulator to read and take the action then write the data of the observations
-        #           reverse the order of TCP to read the observation of the corresponding action not the previouse one
         self._takeAction(action)
         observation = self._getObservation()
         reward = self._getReward(observation)
@@ -108,11 +110,11 @@ class JumperEnv(gym.Env):
     # 3 bits for the index of the cable, 1 bit (the last one) for the direction of the controller (increase or decrease)
     def _takeAction(self, action):
         bits_num = floor(log2(self.env.controllers_num))+1
-        value_sign = (1 if ((2**bits_num) & action) > 0 else -1)    # if sign_bit is 0 = decrease, 1 = increase
+        value_sign = (1 if ((2**(bits_num-1)) & action) > 0 else -1)    # if sign_bit is 0 = decrease, 1 = increase
         value = value_sign*self.dl
         # print(self.env.controllers_num)
         controller_index = action - (2**(bits_num-1) if value_sign == 1 else 0)
-        print("Controllers_index {:} :::{:}, Controller_value: {:}".format(controller_index, action, value))
+        # print("Controllers_index {:} :::{:}, Controller_value: {:}".format(controller_index, action, value))
         
         # TODO: Don't know if it is necessary or not. Maybe here we can set all the controllers to zero and delete the last line in the method
         self.env.actions_json["Controllers_val"][controller_index] = value
@@ -133,27 +135,25 @@ class JumperEnv(gym.Env):
         observation = np.append(observation, self.env.getLegAngle())
         return np.array(observation)
 
-    # TODO
     def _getReward(self, observation):
         # Reward Criteria will depend on:
         #   - The angle of the leg
         #   - The time
-        # TODO: Add the time and normalize it
         time = self.env.getTime()
-        done_reward = 0
-        if self._isDone():
-            done_reward = 100
-        return time + done_reward
+        # The coefficient of the the time has been calculated according to y = ct and having t_max= 200, y_max= 4 (the maximum reward that can be gained)
+        # The total reward from the time that can be gained will be 400 (using the integration) 
+        
+        return 0.02*time - 0.4*abs(self.env.getLegAngle())
 
-    # TODO
     def _isDone(self):
-        # TODO :
         #  The criteria for finish will be either
         #   - Time "The time is more than t_max
         #   - Fall "The angle is more than theta_max"
+        time = self.env.getTime()
+        if time > self.max_time or abs(self.env.getLegAngle()) > np.pi/4:
+            return True
         return False
 
-    # TODO
     def reset(self):
         # Reset the state of the environment to an initial state, and the self vars to the initial values
         # Reset the environment and the simulator
@@ -173,6 +173,32 @@ class JumperEnv(gym.Env):
 def main():
     def print_observation(obs):
         print("Observations {:}".format(obs))
+    env = JumperEnv()
+    # action = randint(0,15)
+    action = 14
+    # print("Action: {:}".format(action))
+    init_obs ,_,_,_=env.step(action)
+    print_observation(init_obs)
+    print(env.env.actions_json)
+    # print("")
+    input("-> check point: WAIT for INPUT !!!!")
+    for i in range(50):
+        observation, reward, done, _= env.step(action)
+        print_observation(observation)
+        print("Done:???:{:}".format(done))
+
+    input("-> check point: WAIT for INPUT !!!!")
+    for i in range(1,1001):
+        # action = env.action_space.sample()
+        action = 2
+        print("--------------- ({:}) ---------------".format(i))
+        print("######\nAction: {:}\n######".format(action))
+        observation, reward, done, _= env.step(action)
+        print_observation(observation)
+
+    while True:
+        observation, reward, done, _= env.step(2)
+        print_observation(observation)
 
 
 if __name__ == "__main__":

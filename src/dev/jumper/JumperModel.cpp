@@ -73,7 +73,7 @@ namespace
        10.0,        //lenght of one of the square side 
        0,           // history logging (boolean)
        30000,       // max tension
-       3
+       30
     };
 }
 
@@ -120,8 +120,8 @@ void JumperModel::addMuscles(tgStructure& s)
 
 
     // Lower Strings
-    s.addPair(0,5,"muscle");
-    s.addPair(5,1,"muscle");
+    s.addPair(5,0,"muscle");
+    s.addPair(1,5,"muscle");
     s.addPair(2,5,"muscle");
     s.addPair(3,5,"muscle");
 
