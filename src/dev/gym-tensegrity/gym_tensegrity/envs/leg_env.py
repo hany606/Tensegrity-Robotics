@@ -271,7 +271,9 @@ class LegEnv(gym.Env):
         value_sign = (1 if ((2**bits_num) & action) > 0 else -1)    # if sign_bit is 0 = decrease, 1 = increase
         value = value_sign*self.dl
         # print(self.env.controllers_num)
+        # TODO: Mistake here
         controller_index = min(self.env.controllers_num-1, action - (2**bits_num if value_sign == 1 else 0))
+        
         # TODO: Don't know if it is necessary or not. Maybe here we can set all the controllers to zero and delete the last line in the method
         # print("Controllers_index {:} :::{:}, Controller_value: {:}".format(controller_index, action, value))
         

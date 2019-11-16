@@ -39,9 +39,7 @@ class JumperModel():
                         "Time": 0.,
                         "ZFinished": 1,
                         "Flags":[1,0,0]}
-                        
-        # self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    # Create a TCP/IP socket
-        # self.sock = socket.socket(socket.SOL_SOCKET, socket.SO_REUSEADDR)    # Create a TCP/IP socket
+
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         print(self.port_num)
@@ -83,11 +81,7 @@ class JumperModel():
             while True:
                 data.append(self.connection.recv(self.packet_size).decode("utf-8"))         #reading part
                 print('{} received "{}"'.format(counter,data[-1]))
-                # input()
-                # print(data[-1][-14:-1], ('ZFinished' in str(data[-1][-14:-1])))
                 if 'ZFinished' in str(data[-1][-14:-1]):
-                    # print("FINISHED*************")
-                    # sleep(5)
                     break
                 counter += 1
             return "".join(data)
@@ -126,52 +120,26 @@ class JumperModel():
         # sleep(1)
         self.startSimulator()
 
-    # TODO: make a general step function
     def step(self):
         if (self.close_flag == False):
             if (self.reset_flag == True):
                 self.reset()
             
-            # if(self.sim_json["Flags"][0] == 1):
-            #     self.actions_json["Controllers_val"][2] = -1*self.actions_json["Controllers_val"][2]
-            #     self.actions_json["Controllers_val"][5] = -1*self.actions_json["Controllers_val"][5]
-                
-                # print("FLIP")
-                # input()            
-            # print("write")
-            # print(self.actions_json)
             self.write(json.dumps(self.actions_json))   # Write to the simulator module the json object with the required info
 
             sim_raw_data = self.read()
             # print(sim_raw_data)
             if(sim_raw_data is not None):
                 self.sim_json = json.loads(sim_raw_data)  # Parse the data from string to json
-            # print(self.sim_json["Center_of_Mass"][4])
-            # print("step Function",self.sim_json["Cables_lengths"][2])
-
         else:
             self.closeSimulator()
 
     def getCablesLengths(self, i=None):
-        # print("getCableLengths Function",self.sim_json["Cables_lengths"][2])
         if(i is None):
             return self.sim_json["Cables_lengths"]
         return self.sim_json["Cables_lengths"][i]
         
-    #TODO
     def _getEndPointsByRod(self, rod_num):
-        # print(self.sim_json["Center_of_Mass"][0])
-        # print(rod_num, type(rod_num))
-        # rods_cms = self.sim_json["Center_of_Mass"][rod_num]
-        # rods_orientation = self.sim_json["Orientation"][rod_num]
-        # print("Orientation", rods_orientation)
-        # Coordinates_in_rod_sys = Rotation_matrix*Coordinates_in_global_sys + CMS
-        # (Coordinates_in_rod_sys - CMS)*inv(Rotation_matrix) = Coordinates_in_global_sys
-        # ....
-        # ....
-        # ....
-        # [endPoint1, endPoint2] -> [x,y,z]
-        # return [[rods_cms[0],rods_cms[1],rods_cms[2]], [rods_cms[0],rods_cms[1],rods_cms[2]]]       #TODO change this
         end_point1 = self.sim_json["End_points"][rod_num][0]
         end_point2 = self.sim_json["End_points"][rod_num][1]
         return [[end_point1[0],end_point1[1],end_point1[2]], [end_point2[0],end_point2[1],end_point2[2]]]
@@ -185,13 +153,11 @@ class JumperModel():
             return end_points
         return self._getEndPointsByRod(rod_num)
 
-    def getEndEffector(self):
-        return self._getEndPointsByRod(self.end_effector_index)[1]
-
-        
+   # TODO
+    def getLegAngle(self):
+        pass    
     
     def getTime(self):
-        # print(self.sim_json)
         return self.sim_json["Time"]
 
 # This function for testing the model by itself
