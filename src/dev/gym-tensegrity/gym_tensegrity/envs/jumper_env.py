@@ -44,7 +44,7 @@ sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/jump
 class JumperEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, host_name='localhost', port_num=10040, sim_exec=sim_exec,  dl=0.1):
+    def __init__(self, host_name='localhost', port_num=10041, sim_exec=sim_exec,  dl=0.1):
         super(JumperEnv, self).__init__()
         # Agent self variables
         self.max_time = 200
@@ -113,14 +113,14 @@ class JumperEnv(gym.Env):
         value_sign = (1 if ((2**(bits_num-1)) & action) > 0 else -1)    # if sign_bit is 0 = decrease, 1 = increase
         value = value_sign*self.dl
         # print(self.env.controllers_num)
-        controller_index = action - (2**(bits_num-1) if value_sign == 1 else 0)
+        # controller_index = action - (2**(bits_num-1) if value_sign == 1 else 0)
+        controller_index = action%(2**(bits_num-1))
         # print("Controllers_index {:} :::{:}, Controller_value: {:}".format(controller_index, action, value))
         
         # TODO: Don't know if it is necessary or not. Maybe here we can set all the controllers to zero and delete the last line in the method
         self.env.actions_json["Controllers_val"][controller_index] = value
         self.env.step()
         self.env.actions_json["Controllers_val"][controller_index] = 0    # IF we comment that, this will enable the environment to operate simultanously actuators
-        
 
     # Observations:
     #   - The dimensions is specified above and their min. and max. values
@@ -133,6 +133,7 @@ class JumperEnv(gym.Env):
         observation = np.append(observation, self.env.getCablesLengths())
 
         observation = np.append(observation, self.env.getLegAngle())
+        # print("finish getting the observation")
         return np.array(observation)
 
     def _getReward(self, observation):
@@ -143,14 +144,16 @@ class JumperEnv(gym.Env):
         # The coefficient of the the time has been calculated according to y = ct and having t_max= 200, y_max= 4 (the maximum reward that can be gained)
         # The total reward from the time that can be gained will be 400 (using the integration) 
         
-        return 0.02*time - 0.4*abs(self.env.getLegAngle())
+        # I multiplied the factor in 10 to increase the negative reward
+        return 0.02*time - 10*0.4*abs(self.env.getLegAngle())
 
     def _isDone(self):
         #  The criteria for finish will be either
         #   - Time "The time is more than t_max
         #   - Fall "The angle is more than theta_max"
         time = self.env.getTime()
-        if time > self.max_time or abs(self.env.getLegAngle()) > np.pi/4:
+        # if time > self.max_time or abs(self.env.getLegAngle()) > np.pi/4:
+        if abs(self.env.getLegAngle()) > np.pi/12:
             return True
         return False
 
@@ -158,6 +161,11 @@ class JumperEnv(gym.Env):
         # Reset the state of the environment to an initial state, and the self vars to the initial values
         # Reset the environment and the simulator
         self.env.reset()
+        self.env.step()
+        # Not necessary as long as we didn't comment it in the _takeAction above
+        # for i in self.env.controllers_num:
+        #     self.env.actions_json["Controllers_val"][i] = 0
+
         # get the observations after the resetting of the environment
         return self._getObservation()
 
@@ -183,18 +191,22 @@ def main():
     # print("")
     input("-> check point: WAIT for INPUT !!!!")
     for i in range(50):
+        input("-> check point: WAIT for INPUT !!!!")
         observation, reward, done, _= env.step(action)
         print_observation(observation)
         print("Done:???:{:}".format(done))
 
     input("-> check point: WAIT for INPUT !!!!")
     for i in range(1,1001):
-        # action = env.action_space.sample()
-        action = 2
+        action = env.action_space.sample()
+        # action = 2
+        input("-> check point: WAIT for INPUT !!!!")
         print("--------------- ({:}) ---------------".format(i))
         print("######\nAction: {:}\n######".format(action))
         observation, reward, done, _= env.step(action)
         print_observation(observation)
+        print("Done:???:{:}".format(done))
+
 
     while True:
         observation, reward, done, _= env.step(2)

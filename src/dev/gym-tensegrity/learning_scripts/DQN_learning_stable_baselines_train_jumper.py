@@ -28,22 +28,34 @@ def evaluate(model, num_episodes= 1000, num_steps=1000, plt_tag='ro'):
         episode_rewards.append(0.0)
         history.append([])
         done_list.append(0)
+        input("Waiting for an input")
         obs = env.reset()
-        for step in range(num_steps):
+        successful_flag = True
+        for i in range(num_steps):
             # _states are only useful when using LSTM policies
+            print(obs)
             action, _states = model.predict(obs)
-            print(action)
+            print("Action: ", action[0])
             history[-1].append(action)
             # here, action, rewards and dones are arrays
             # because we are using vectorized env
-            obs, rewards, dones, info = env.step(action)
+            obs, rewards, done, info = env.step(action)
             
             episode_rewards[-1] += rewards[0]
-            if dones[0]:
-                successful_episode_rewards.append(0.0)
-                successful_episode_rewards[-1] = episode_rewards[-1] 
-                done_list[-1] = 1
+            print(done)
+            input("Waiting for an input2")
+
+            if done[0]:
+                successful_flag = False
+                print("Faild(((")
+                # TODO: Why it is reseting by itself here??????
+                # Maybe something related to gym when I comment break as it is not get out the episode but reset itself
                 break
+
+        if(successful_flag):
+            successful_episode_rewards.append(0.0)
+            successful_episode_rewards[-1] = episode_rewards[-1] 
+            done_list[-1] = 1
     print(episode_rewards)
     print(successful_episode_rewards)
     for i in range(len(done_list)):
@@ -61,6 +73,7 @@ def evaluate(model, num_episodes= 1000, num_steps=1000, plt_tag='ro'):
 
 
 env = gym.make('gym_tensegrity:jumper-v0')
+# env = gym.make("CartPole-v1")
 # env = wrappers.Monitor(env, 'Tensegrity_leg_video', force=True)
 
 env = DummyVecEnv([lambda: env])
@@ -69,11 +82,11 @@ model = DQN(MlpPolicy, env, verbose=1, learning_rate=0.1, exploration_fraction=0
 
 
 # mean_reward_before_train = evaluate(model, num_episodes=10000, num_steps=10000)
-mean_reward_before_train = evaluate(model, num_episodes=10, num_steps=10, plt_tag='r')
+mean_reward_before_train = evaluate(model, num_episodes=10, num_steps=150, plt_tag='r')
 # plt.show()
 # input("Check point!!!")
 
-model.learn(total_timesteps=100)
+model.learn(total_timesteps=150*10)
 model.save("DQN_tensegrity_jumper_short_training")
 print("Finish Training and saving the model")
 
@@ -81,7 +94,7 @@ del model
 
 # input("Check point!!!")
 model = DQN.load("DQN_tensegrity_jumper_short_training")
-mean_reward = evaluate(model, num_episodes=10, num_steps=10, plt_tag='b')
+mean_reward = evaluate(model, num_episodes=10, num_steps=150, plt_tag='b')
 
 plt.show()
 
