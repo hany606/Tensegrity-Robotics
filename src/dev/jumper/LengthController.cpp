@@ -25,7 +25,7 @@
 
 
 #define HOST_NAME "localhost"
-#define PORT_NUM 10041
+#define PORT_NUM 10042
 #define MAX_BUFF_SIZE 5000
 #define EPS 0.00001  
 #define SMALL_EPS(eps) EPS/1000.0
@@ -166,7 +166,7 @@ void LengthController::onStep(JumperModel& subject, double dt)
           // if(error == last_error[i]){
           double stuck_err = last_error[i] - error;
           // that the error is equal to the last_error and the last_error was greater than the current error and the error was decreasing and the target length is smaller than the current which means that it is going to decrease more
-          if( actuators[i]->getRestLength() == 0.1 ||(fabs(stuck_err) < SMALL_EPS(EPS) && stuck_err > 0 && error_sign > 0 )){ //changed
+          if( (actuators[i]->getRestLength() == 0.1  && target_lengths[i] <= actuators[i]->getRestLength()) ||(fabs(stuck_err) < SMALL_EPS(EPS) && stuck_err > 0 && error_sign > 0 )){ //changed
             // while (1);
             printf("!!!!Stuck: %d\n",i);
             // all_reached_target = true;  //TODO: This is wrong, it should just flag the controller reach flag not all

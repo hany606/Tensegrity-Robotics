@@ -44,7 +44,7 @@ sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/jump
 class JumperEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, host_name='localhost', port_num=10041, sim_exec=sim_exec,  dl=0.1):
+    def __init__(self, host_name='localhost', port_num=10042, sim_exec=sim_exec,  dl=0.1):
         super(JumperEnv, self).__init__()
         # Agent self variables
         self.max_time = 200
@@ -189,29 +189,50 @@ def main():
     print_observation(init_obs)
     print(env.env.actions_json)
     # print("")
-    input("-> check point: WAIT for INPUT !!!!")
-    for i in range(50):
-        input("-> check point: WAIT for INPUT !!!!")
-        observation, reward, done, _= env.step(action)
-        print_observation(observation)
-        print("Done:???:{:}".format(done))
+
+    # input("-> check point: WAIT for INPUT !!!!")
+    # for i in range(50):
+    #     input("-> check point: WAIT for INPUT !!!!")
+    #     observation, reward, done, _= env.step(action)
+    #     print_observation(observation)
+    #     print("Done:???:{:}".format(done))
+
+    # input("-> check point: WAIT for INPUT !!!!")
+    # for i in range(1,1001):
+    #     action = env.action_space.sample()
+    #     # action = 2
+    #     input("-> check point: WAIT for INPUT !!!!")
+    #     print("--------------- ({:}) ---------------".format(i))
+    #     print("######\nAction: {:}\n######".format(action))
+    #     observation, reward, done, _= env.step(action)
+    #     print_observation(observation)
+    #     print("Done:???:{:}".format(done))
 
     input("-> check point: WAIT for INPUT !!!!")
-    for i in range(1,1001):
-        action = env.action_space.sample()
-        # action = 2
-        input("-> check point: WAIT for INPUT !!!!")
-        print("--------------- ({:}) ---------------".format(i))
-        print("######\nAction: {:}\n######".format(action))
-        observation, reward, done, _= env.step(action)
-        print_observation(observation)
-        print("Done:???:{:}".format(done))
+
+    # for i in range(50):
+    #     observation, reward, done, _= env.step(2)
+
+    input("-> check point: WAIT for INPUT !!!!")
 
 
+    flag = 0
     while True:
-        observation, reward, done, _= env.step(2)
-        print_observation(observation)
+        inp = input("~~~~~~input: ")
+        if(inp == "w"):
+            flag = 1
+        elif(inp == "s"):
+            flag = -1
+        elif(inp == "d"):
+            flag = 0
 
+        if(flag <= 0):
+            observation, reward, done, _= env.step(4)
+            observation, reward, done, _= env.step(5)
+        if(flag >= 0):
+            observation, reward, done, _= env.step(12)
+            observation, reward, done, _= env.step(13)
+        print("angle:{:}".format(observation[-1]*180/np.pi))
 
 if __name__ == "__main__":
     main()

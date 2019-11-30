@@ -97,6 +97,12 @@ void JumperModel::addNodes(tgStructure& s)
 
     s.addNode(0,-c.leg_length,0);
     s.addNode(0,c.leg_length,0);
+
+    s.addNode(c.squar_side_length/2.0,-c.leg_length-5,c.squar_side_length/2.0);
+    s.addNode(-c.squar_side_length/2.0,-c.leg_length-5,c.squar_side_length/2.0);
+    s.addNode(-c.squar_side_length/2.0,-c.leg_length-5,-c.squar_side_length/2.0);
+    s.addNode(c.squar_side_length/2.0,-c.leg_length-5,-c.squar_side_length/2.0);
+
 }
 
 
@@ -108,6 +114,16 @@ void JumperModel::addRods(tgStructure& s)
     s.addPair(3,0,"square_rod");
     
     s.addPair(4,5,"leg_rod");
+
+    s.addPair(6,7,"square_rod");
+    s.addPair(7,8,"square_rod");
+    s.addPair(8,9,"square_rod");
+    s.addPair(9,6,"square_rod");
+
+    s.addPair(0,6,"square_rod");
+    s.addPair(1,7,"square_rod");
+    // s.addPair(2,8,"square_rod");
+    // s.addPair(3,9,"square_rod");
 }
 
 void JumperModel::addMuscles(tgStructure& s)
@@ -134,6 +150,8 @@ void JumperModel::setup(tgWorld& world)
     const tgRod::Config leg_rod_config(c.leg_radius, c.density);
     const tgRod::Config square_rod_config(c.square_side_radius, c.density);
 
+    // const tgRod::Config square_rod_config(c.square_side_radius, c.density*10);
+
     
     // const tgSpringCableActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension);
     const tgBasicActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension,
@@ -158,8 +176,10 @@ void JumperModel::setup(tgWorld& world)
     addMuscles(s);
     
     // Move the structure so it doesn't start in the ground
+    // s.move(btVector3(0, 50, 0));
     s.move(btVector3(0, 100, 0));
-    
+
+
     // Create the build spec that uses tags to turn the structure into a real model
     tgBuildSpec spec;
     spec.addBuilder("square_rod", new tgRodInfo(square_rod_config));
