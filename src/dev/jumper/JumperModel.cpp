@@ -98,10 +98,10 @@ void JumperModel::addNodes(tgStructure& s)
     s.addNode(0,-c.leg_length,0);
     s.addNode(0,c.leg_length,0);
 
-    s.addNode(c.squar_side_length/2.0,-c.leg_length-5,c.squar_side_length/2.0);
-    s.addNode(-c.squar_side_length/2.0,-c.leg_length-5,c.squar_side_length/2.0);
-    s.addNode(-c.squar_side_length/2.0,-c.leg_length-5,-c.squar_side_length/2.0);
-    s.addNode(c.squar_side_length/2.0,-c.leg_length-5,-c.squar_side_length/2.0);
+    // s.addNode(c.squar_side_length/2.0,-c.leg_length-5,c.squar_side_length/2.0);
+    // s.addNode(-c.squar_side_length/2.0,-c.leg_length-5,c.squar_side_length/2.0);
+    // s.addNode(-c.squar_side_length/2.0,-c.leg_length-5,-c.squar_side_length/2.0);
+    // s.addNode(c.squar_side_length/2.0,-c.leg_length-5,-c.squar_side_length/2.0);
 
 }
 
@@ -115,13 +115,13 @@ void JumperModel::addRods(tgStructure& s)
     
     s.addPair(4,5,"leg_rod");
 
-    s.addPair(6,7,"square_rod");
-    s.addPair(7,8,"square_rod");
-    s.addPair(8,9,"square_rod");
-    s.addPair(9,6,"square_rod");
+    // s.addPair(6,7,"square_rod");
+    // s.addPair(7,8,"square_rod");
+    // s.addPair(8,9,"square_rod");
+    // s.addPair(9,6,"square_rod");
 
-    s.addPair(0,6,"square_rod");
-    s.addPair(1,7,"square_rod");
+    // s.addPair(0,6,"square_rod");
+    // s.addPair(1,7,"square_rod");
     // s.addPair(2,8,"square_rod");
     // s.addPair(3,9,"square_rod");
 }
