@@ -208,17 +208,18 @@ def main():
     #     print_observation(observation)
     #     print("Done:???:{:}".format(done))
 
-    input("-> check point: WAIT for INPUT !!!!")
+    # input("-> check point: WAIT for INPUT !!!!")
 
     # for i in range(50):
     #     observation, reward, done, _= env.step(2)
 
-    input("-> check point: WAIT for INPUT !!!!")
+    # input("-> check point: WAIT for INPUT !!!!")
 
 
     flag = 0
     while True:
-        inp = input("~~~~~~input: ")
+        inp = "d"
+        # inp = input("~~~~~~input: ")
         if(inp == "w"):
             flag = 1
         elif(inp == "s"):
