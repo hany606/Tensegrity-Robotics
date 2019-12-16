@@ -217,13 +217,13 @@ def main():
 
 
     flag = 0
-    i = 0
+    # i = 0
     while True:
-        i += 1
-        print(i)
-        if(i > 100):
-            i = 0
-            env.reset()
+        # i += 1
+        # print(i)
+        # if(i > 100):
+        #     i = 0
+        #     env.reset()
         inp = "d"
         # inp = input("~~~~~~input: ")
         if(inp == "w"):

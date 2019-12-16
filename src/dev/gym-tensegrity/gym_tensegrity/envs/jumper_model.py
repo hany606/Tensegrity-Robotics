@@ -15,7 +15,7 @@ import os
 import subprocess
 import numpy as np
 
-sim_exec = 'gnome-terminal --command="./home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
+sim_exec = 'gnome-terminal -e /home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
 
 class JumperModel():
     def __init__(self, host_name='localhost', port_num=10040, packet_size=5000,
