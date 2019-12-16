@@ -24,8 +24,6 @@ class JumperModel():
         self.port_num = port_num
         self.packet_size = packet_size
         self.sim_exec = sim_exec + ' {:} {:}'.format(host_name, port_num)
-        print("------------------------------")
-        print(self.sim_exec)
         self.actions_json = {
             'Controllers_val': [0,0,0,0,0,0,0,0],
             'Reset': 0
@@ -97,8 +95,6 @@ class JumperModel():
         if(self.sim_exec == sim_exec):
             print("#Warning: Starting an old version")
         # sleep(0.5)
-        print("^^^^^^^^^^^^^^^^^^^^^^^")
-        print(self.sim_exec)
         # subprocess_args = [self.sim_exec[:14], self.sim_exec[15:]]
         subprocess_args = self.sim_exec.split(" ")
         subprocess_args[2] = " ".join(subprocess_args[2:])

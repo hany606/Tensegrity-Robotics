@@ -178,16 +178,16 @@ class JumperEnv(gym.Env):
         self.env.closeSimulator()
         # sys.exit(0)
 
-def main():
+def main(port_num=10042):
     def print_observation(obs):
         print("Observations {:}".format(obs))
-    env = JumperEnv()
+    env = JumperEnv(port_num=port_num)
     # action = randint(0,15)
     action = 14
     # print("Action: {:}".format(action))
     init_obs ,_,_,_=env.step(action)
-    print_observation(init_obs)
-    print(env.env.actions_json)
+    # print_observation(init_obs)
+    # print(env.env.actions_json)
     # print("")
 
     # input("-> check point: WAIT for INPUT !!!!")
@@ -239,7 +239,31 @@ def main():
         if(flag >= 0):
             observation, reward, done, _= env.step(12)
             observation, reward, done, _= env.step(13)
-        print("angle:{:}".format(observation[-1]*180/np.pi))
+        # print("angle:{:}".format(observation[-1]*180/np.pi))
+
+def forked_process_main():
+    port_num_base = 10042
+    num_threads = 2
+    for i in range(num_threads):
+        pid = os.fork()
+        print("fork {:}".format(pid))
+        if(pid > 0):
+            print("Child: {:} -> on port: {:}".format(pid, port_num_base+i))
+            main(port_num_base+i)
+
+def threaded_main():
+    import threading
+    port_num_base = 10042
+    num_threads = 10
+    threads_list = []
+    for i in range(num_threads):
+        threads_list.append(threading.Thread(target=main, args=(port_num_base+i,)))
+    
+    for i in range(num_threads):
+        threads_list[i].start()
+
 
 if __name__ == "__main__":
-    main()
+    # main()
+    # forked_process_main()
+    threaded_main()

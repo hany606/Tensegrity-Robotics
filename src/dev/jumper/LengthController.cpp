@@ -45,7 +45,7 @@ vector <double> last_error;  //actuators.size()
 //    anchor list to uniform and ease the access to the data 
 int end_points_map[]={0,1,2,3,0,4};
 
-LengthController::LengthController(const char* host, const int port): host_name(host), port_num(port){
+LengthController::LengthController(const char* host, const long long port): host_name(host), port_num(port){
 
 }
 

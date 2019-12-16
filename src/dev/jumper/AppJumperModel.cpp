@@ -73,7 +73,7 @@ int main(int argc, char** argv)
     JumperModel* const myModel = new JumperModel();
 
     const char* host_name = argv[1];
-    const int port_num = std::stoi(argv[2]);
+    const long long  port_num = std::stoll(argv[2]);
     LengthController* const myController = new LengthController(host_name, port_num);
     myModel->attach(myController);
 

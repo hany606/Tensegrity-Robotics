@@ -34,7 +34,7 @@ public:
 	 * @param[in] tension, a double specifying the desired tension
 	 * throughougt structure. Must be non-negitive
 	 */
-    LengthController(const char* host, const int port);
+    LengthController(const char* host, const long long port);
     
     /**
      * Nothing to delete, destructor must be virtual
