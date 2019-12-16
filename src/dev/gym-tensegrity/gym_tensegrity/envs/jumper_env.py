@@ -38,8 +38,8 @@ import numpy as np
 import math
 from gym_tensegrity.envs.jumper_model import JumperModel
 
-sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/jumper/util/helper.sh'
-
+# sim_exec = 'gnome-terminal --command="./home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
+sim_exec = 'gnome-terminal -e /home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
 
 class JumperEnv(gym.Env):
     metadata = {'render.modes': ['human']}
@@ -217,7 +217,13 @@ def main():
 
 
     flag = 0
+    i = 0
     while True:
+        i += 1
+        print(i)
+        if(i > 100):
+            i = 0
+            env.reset()
         inp = "d"
         # inp = input("~~~~~~input: ")
         if(inp == "w"):

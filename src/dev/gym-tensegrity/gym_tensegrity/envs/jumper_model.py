@@ -15,7 +15,7 @@ import os
 import subprocess
 import numpy as np
 
-sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/jumper/util/helper.sh'
+sim_exec = 'gnome-terminal --command="./home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
 
 class JumperModel():
     def __init__(self, host_name='localhost', port_num=10040, packet_size=5000,
@@ -23,7 +23,9 @@ class JumperModel():
         self.host_name = host_name
         self.port_num = port_num
         self.packet_size = packet_size
-        self.sim_exec = sim_exec
+        self.sim_exec = sim_exec + ' {:} {:}'.format(host_name, port_num)
+        print("------------------------------")
+        print(self.sim_exec)
         self.actions_json = {
             'Controllers_val': [0,0,0,0,0,0,0,0],
             'Reset': 0
@@ -95,7 +97,12 @@ class JumperModel():
         if(self.sim_exec == sim_exec):
             print("#Warning: Starting an old version")
         # sleep(0.5)
-        self.child_process = subprocess.Popen(self.sim_exec)
+        print("^^^^^^^^^^^^^^^^^^^^^^^")
+        print(self.sim_exec)
+        # subprocess_args = [self.sim_exec[:14], self.sim_exec[15:]]
+        subprocess_args = self.sim_exec.split(" ")
+        subprocess_args[2] = " ".join(subprocess_args[2:])
+        self.child_process = subprocess.Popen(subprocess_args[:3])
         print('#########\nwaiting for a connection\n#########')
         self.connection, self.clientAddress = self.sock.accept()  #wait until it get a client
         print('connection from', self.clientAddress)
