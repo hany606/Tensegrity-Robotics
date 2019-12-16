@@ -37,6 +37,7 @@
 #include "LinearMath/btVector3.h"
 // The C++ Standard Library
 #include <iostream>
+#include <string>
 
 /**
  * The entry point.
@@ -71,7 +72,9 @@ int main(int argc, char** argv)
     // simulation
     JumperModel* const myModel = new JumperModel();
 
-    LengthController* const myController = new LengthController(200);
+    const char* host_name = argv[1];
+    const int port_num = std::stoi(argv[2]);
+    LengthController* const myController = new LengthController(host_name, port_num);
     myModel->attach(myController);
 
     // Add the model to the world

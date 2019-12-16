@@ -34,7 +34,7 @@ public:
 	 * @param[in] tension, a double specifying the desired tension
 	 * throughougt structure. Must be non-negitive
 	 */
-    LengthController(const double length = 400);
+    LengthController(const char* host, const int port);
     
     /**
      * Nothing to delete, destructor must be virtual
@@ -60,7 +60,9 @@ public:
 
 private:
 	
-    const double m_length;
+    double m_length = 200;
+    const int port_num;
+    const char* host_name;
     double globalTime = 0;
     int toggle;
     std::vector<int> actuators_states;

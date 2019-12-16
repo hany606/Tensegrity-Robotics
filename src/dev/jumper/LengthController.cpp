@@ -24,8 +24,8 @@
 #include <math.h>
 
 
-#define HOST_NAME "localhost"
-#define PORT_NUM 10042
+// #define HOST_NAME "localhost"
+// #define PORT_NUM 10042
 #define MAX_BUFF_SIZE 5000
 #define EPS 0.00001  
 #define SMALL_EPS(eps) EPS/1000.0
@@ -45,13 +45,7 @@ vector <double> last_error;  //actuators.size()
 //    anchor list to uniform and ease the access to the data 
 int end_points_map[]={0,1,2,3,0,4};
 
-LengthController::LengthController(const double length) :
-  m_length(length)
-{
-  if (length < 0.0)
-    {
-      throw std::invalid_argument("Negative length");
-    }
+LengthController::LengthController(const char* host, const int port): host_name(host), port_num(port){
 
 }
 
@@ -62,8 +56,7 @@ LengthController::~LengthController()
 void LengthController::onSetup(JumperModel& subject)
 {
   // freopen("records_testing/record.txt","w",stdout); //For debugging
-
-  LengthController::tcp_com = new TCP(HOST_NAME, PORT_NUM);
+  LengthController::tcp_com = new TCP(host_name, port_num);
   LengthController::tcp_com->setup();
 
   JSON_Structure::setup();
