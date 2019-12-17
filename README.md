@@ -19,7 +19,7 @@ It is in [src/dev/legz](https://github.com/hany606/Tensegrity-Robotics/tree/mast
 	  ```
   2. Go to the folder:
 	 ```bash
-	 cd Tensegrity-Robot-IU-Internship
+	 cd Tensegrity-Robotics
 	    ```
 	  
  3. Running the setup.sh
@@ -40,18 +40,17 @@ It is in [src/dev/legz](https://github.com/hany606/Tensegrity-Robotics/tree/mast
 	./build/examples/3_prism/AppPrismModel
 	```
 	The simulator should be appeared now.
-5. Go to the main branch of my project
-	```bash
-	git checkout develop
-	```
-6. To Open any stimulation for a structure, you should build the codes then run it from build directory
+
+[TODO] Add the steps for the solution of compiling the nlohmann/json library
+[TODO] easy way to install linuxbrew, then install the json library 
+5. To Open any stimulation for a structure, you should build the codes then run it from build directory
 	```bash
 	./bin/build.sh
 	cd build/dev
 	cd Model_name
 	./App_Name_Model
 	```
-7. To run the openAI gym custom environment and test it. However, you will to change the line 39 in the python file with the correct path. [TODO it will detect by itself the path].
+6. To run the openAI gym custom environment and test it. However, you will to change the line 39 in the python file with the correct path. [TODO it will detect by itself the path].
 	```bash
 	cd src/dev/legz/gym-leg/gym_leg/envs/
 	python3 leg_env.py
