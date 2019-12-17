@@ -41,8 +41,10 @@ It is in [src/dev/legz](https://github.com/hany606/Tensegrity-Robotics/tree/mast
 	```
 	The simulator should be appeared now.
 
-[TODO] Add the steps for the solution of compiling the nlohmann/json library
-[TODO] easy way to install linuxbrew, then install the json library 
+[TODO] Add the steps for the solution of compiling the nlohmann/json library.
+
+[TODO] easy way to install linuxbrew, then install the json library.
+
 5. To Open any stimulation for a structure, you should build the codes then run it from build directory
 	```bash
 	./bin/build.sh
