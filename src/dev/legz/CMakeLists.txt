@@ -1,5 +1,8 @@
 link_directories(${LIB_DIR})
 
+find_package(nlohmann_json REQUIRED)
+
+
 link_libraries(tgcreator
                 util
                 sensors
