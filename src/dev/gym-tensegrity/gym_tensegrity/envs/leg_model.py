@@ -15,7 +15,6 @@ import os
 import subprocess
 import random
 import numpy as np
-from transforms3d.euler import euler2mat
 
 sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/src/dev/legz/python_communication_test/helper.sh'
 
