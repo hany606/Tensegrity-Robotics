@@ -1,6 +1,6 @@
 """jumper_env.py: Create the gym custom environment of tensegrity one legged jumpeing robot"""
 __author__ = "Hany Hamed"
-__credits__ = ["Hany Hamed", "Prof. Sergie Savin", "Oleg Balakhnov"]
+__credits__ = ["Hany Hamed", "Vlad Kurenkov", "Prof. Sergie Savin", "Oleg Balakhnov"]
 __version__ = "0.0.1"
 __email__ = "h.hamed.elanwar@gmail.com / h.hamed@innopolis.university"
 __status__ = "Developing"
@@ -39,7 +39,8 @@ import math
 from gym_tensegrity.envs.jumper_model import JumperModel
 
 # sim_exec = 'gnome-terminal --command="./home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
-sim_exec = 'gnome-terminal -e /home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
+# sim_exec = 'gnome-terminal -e /home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
+sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
 
 class JumperEnv(gym.Env):
     metadata = {'render.modes': ['human']}
@@ -264,6 +265,6 @@ def threaded_main():
 
 
 if __name__ == "__main__":
-    # main()
+    main()
     # forked_process_main()
-    threaded_main()
+    # threaded_main()
