@@ -96,9 +96,12 @@ class JumperModel():
             print("#Warning: Starting an old version")
         # sleep(0.5)
         # subprocess_args = [self.sim_exec[:14], self.sim_exec[15:]]
-        subprocess_args = self.sim_exec.split(" ")
-        subprocess_args[2] = " ".join(subprocess_args[2:])
+
+        # subprocess_args = self.sim_exec.split(" ")
+        # subprocess_args[2] = " ".join(subprocess_args[2:])
+        # subprocess_args[:3]
         self.child_process = subprocess.Popen(subprocess_args[:3])
+        # self.child_process = subprocess.Popen(self.sim_exec, shell=True)
         print('#########\nwaiting for a connection\n#########')
         self.connection, self.clientAddress = self.sock.accept()  #wait until it get a client
         print('connection from', self.clientAddress)
