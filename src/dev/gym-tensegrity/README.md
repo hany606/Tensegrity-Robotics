@@ -1,4 +1,4 @@
-# gym-Leg agent
+# gym-Tensegrity
 
 gym_tensegirty: contians the environments of the agents for the tensegrity models that compatible with OpenAI gym environments.
 

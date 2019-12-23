@@ -41,18 +41,20 @@ It is in [src/dev/legz](https://github.com/hany606/Tensegrity-Robotics/tree/mast
 	```
 	The simulator should be appeared now.
 
-[TODO] Add the steps for the solution of compiling the nlohmann/json library.
+5. Install [nlohmann-json library](https://github.com/nlohmann/json). 
 
-[TODO] easy way to install linuxbrew, then install the json library.
+You can install it by linuxbrew, but you need to install first from [here](https://docs.brew.sh/Homebrew-on-Linux).
 
-5. To Open any stimulation for a structure, you should build the codes then run it from build directory
+Sometimes there are errors regarding this library, hence, you can comment [this line](https://github.com/hany606/Tensegrity-Robotics/blob/7ced260c976b223864f59208bfcef89499cf10e8/src/dev/CMakeLists.txt#L7) and ensure to delete the folder of json_build in the directory of build.
+
+6. To Open any stimulation for a structure, you should build the codes then run it from build directory
 	```bash
 	./bin/build.sh
 	cd build/dev
 	cd Model_name
 	./App_Name_Model
 	```
-6. To run the openAI gym custom environment and test it. However, you will to change the line 39 in the python file with the correct path. [TODO it will detect by itself the path].
+7. To run the openAI gym custom environment and test it. However, you will to change the line 39 in the python file with the correct path. [TODO it will detect by itself the path].
 	```bash
 	cd src/dev/legz/gym-leg/gym_leg/envs/
 	python3 leg_env.py
