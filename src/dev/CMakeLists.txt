@@ -4,8 +4,8 @@ Project(Dev)
 subdirs(
 	sixBars	#at least one file in order no to give error in building
 	#test
-	json_build
-	legz
+	#json_build
+	#legz
 	jumper
 
 )

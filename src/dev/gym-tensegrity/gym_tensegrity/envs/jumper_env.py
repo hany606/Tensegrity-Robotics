@@ -38,7 +38,9 @@ import numpy as np
 import math
 from gym_tensegrity.envs.jumper_model import JumperModel
 
+# Machine with Xscreen
 sim_exec = 'gnome-terminal -e /home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
+#Headless
 # sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
 
 class JumperEnv(gym.Env):
@@ -239,7 +241,8 @@ def main(port_num=10042):
         if(flag >= 0):
             observation, reward, done, _= env.step(12)
             observation, reward, done, _= env.step(13)
-        # print("angle:{:}".format(observation[-1]*180/np.pi))
+        print(observation)
+        print("angle:{:}".format(observation[-1]*180/np.pi))
 
 def forked_process_main():
     port_num_base = 10042
