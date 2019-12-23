@@ -19,13 +19,12 @@ RUN pip3 install gym
 RUN pip3 install tqdm
 
 WORKDIR /home/hany606/
-RUN git clone https://github.com/hany606/Tensegrity-Robotics.git ~/hany606/ --branch headless_server
+RUN git clone https://github.com/hany606/Tensegrity-Robotics.git /home/hany606/ --branch headless_server
 
 CMD ["/home/hany606/Tensegrity-Robotics/bin/build.sh"]
 CMD ["/home/hany606/Tensegrity-Robotics/bin/build.sh"]
 CMD ["/home/hany606/Tensegrity-Robotics/bin/build.sh"]
 
-# RUN ls /home/hany606/Tensegrity-Robotics/
 CMD ["/home/hany606/Tensegrity-Robotics/bin/setup_gym_env.sh"]
 
 RUN Xvfb :3 -screen 0 1024x768x24 -ac +extension GLX +render -noreset &> xvfb.log &
