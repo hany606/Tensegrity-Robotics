@@ -21,3 +21,7 @@ learning_scripts: contains the Reinforcement Learning algorithms that are used.
 
     * [Jupyter guide from the creators of stable-baselines](https://github.com/araffin/rl-tutorial-jnrr19/blob/master/5_custom_gym_env.ipynb)
     
+
+## Setup:
+
+pip install -e .
