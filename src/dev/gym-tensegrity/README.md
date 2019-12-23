@@ -24,4 +24,4 @@ learning_scripts: contains the Reinforcement Learning algorithms that are used.
 
 ## Setup:
 
-pip install -e .
+```pip install -e .```
