@@ -33,7 +33,7 @@
 using namespace std;
 using json = nlohmann::json;
 
-json read;
+json read_json;
 bool all_reached_target = true;
 // double last_all_reached_time = 0;   // This is used to indicate if there is a stuck or not in the length of the cable
 vector <double> last_error;  //actuators.size()
@@ -119,9 +119,9 @@ void LengthController::onStep(JumperModel& subject, double dt)
         //actuators[0] between point 1,6
         //actuators[3] between point 0,4
         //rod[0] between point 0,1
-        // std::cout<<"CMS: "<<rods[0]->centerOfMass()<<"\nPoint1:"<<actuators[3]->getAnchors_mod()[0]->getWorldPosition()<<"\nPoint2:"<<actuators[0]->getAnchors_mod()[0]->getWorldPosition()<<"\n";
-        // std::cout<<rods[1]->length()<<"\n";
-        // std::cout<<rods[1]->getPRigidBody()<<"\n";
+        std::cout<<"CMS: "<<rods[0]->centerOfMass()<<"\nPoint1:"<<actuators[3]->getAnchors_mod()[0]->getWorldPosition()<<"\nPoint2:"<<actuators[0]->getAnchors_mod()[0]->getWorldPosition()<<"\n";
+        std::cout<<rods[1]->length()<<"\n";
+        std::cout<<rods[1]->getPRigidBody()<<"\n";
       }
       /**
        * Observations:
@@ -137,21 +137,21 @@ void LengthController::onStep(JumperModel& subject, double dt)
           char buffer[MAX_BUFF_SIZE];
           bzero(&buffer,MAX_BUFF_SIZE);
           LengthController::tcp_com->read_TCP(buffer,MAX_BUFF_SIZE);
-          read = JSON_Structure::stringToJson(buffer);
+          read_json = JSON_Structure::stringToJson(buffer);
         }
 
         //set new targets
         if(all_reached_target == true){
           all_reached_target = false;
           for(int i = 0; i < actuators.size(); i++){
-            target_lengths[i] = actuators[i]->getRestLength() + (double)read["Controllers_val"][i];
+            target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["Controllers_val"][i];
           }
         }
 
         int counter = 0;
         int reached_counter = 0;
         for(int i = 0; i < actuators.size(); i++){
-          if(((double) read["Controllers_val"][i]) == 0)
+          if(((double) read_json["Controllers_val"][i]) == 0)
             continue;
           
           counter++;
@@ -172,16 +172,16 @@ void LengthController::onStep(JumperModel& subject, double dt)
           printf("Controller#%d\tError: %lf\n", i, error);
           std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
 
-          // m_controllers[i]->control(dt,((double) read["Controllers_val"][i]));
+          // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
           m_controllers[i]->control(dt, target_lengths[i]);
           actuators[i]->moveMotors(dt);
           // printf("%d\n", actuators.size());
-          // printf("#%d -> %lf\n, -> %lf", i, (double) read["Controllers_val"][i], 5);
-          // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read["Controllers_val"][i]));
+          // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
+          // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
           if(error <= EPS){
             // all_reached_target = true;
             reached_counter++;
-            read["Controllers_val"][i] = 0;
+            read_json["Controllers_val"][i] = 0;
             printf("Reached%d\n", i);
           }
           last_error[i] = error;
