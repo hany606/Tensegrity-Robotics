@@ -18,8 +18,11 @@ RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 40 --slave /us
 RUN pip3 install gym
 RUN pip3 install tqdm
 
-WORKDIR /home/hany606/
-RUN git clone https://github.com/hany606/Tensegrity-Robotics.git /home/hany606/ --branch headless_server
+RUN mkdir -p /home/hany606 \
+    cd /home/hany606
+
+WORKDIR /home/hany606
+RUN git clone https://github.com/hany606/Tensegrity-Robotics.git --branch headless_server
 
 CMD ["/home/hany606/Tensegrity-Robotics/bin/build.sh"]
 CMD ["/home/hany606/Tensegrity-Robotics/bin/build.sh"]
