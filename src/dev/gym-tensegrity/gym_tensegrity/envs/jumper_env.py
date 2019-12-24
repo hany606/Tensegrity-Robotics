@@ -50,7 +50,7 @@ class JumperEnv(gym.Env):
         super(JumperEnv, self).__init__()
         # Agent self variables
         self.max_time = 200
-        self.max_cable_length = 100
+        self.max_cable_length = 50
         self.min_leg_angle = -np.pi/2
         self.max_leg_angle =  np.pi/2
         self.dl = dl
@@ -61,9 +61,16 @@ class JumperEnv(gym.Env):
         # 3 bits for indexing the cable's controller 2^3 = 8 and one bit for the control direction
         # This action space will inforce to have only one working controller at a time
         # Also, always one controller work at least there is no possibilty to have all of them not working, to aoid this point we can add another bit fot the control direction 
-        n_actions = 2**(floor(log2(self.env.controllers_num))+1)
-        self.action_space = spaces.Discrete(n_actions)
         
+        # Discrete Action space
+        # n_actions = 2**(floor(log2(self.env.controllers_num))+1)
+        # self.action_space = spaces.Discrete(n_actions)
+        
+        # Continuous Action space
+        low = np.array([0 for i in range(self.env.controllers_num)])
+        high = np.array([self.max_cable_length for i in range(self.env.controllers_num)])
+        self.action_space = spaces.Box(low=low, high=high, dtype=np.float32)
+
         low = np.array(self.min_leg_angle)
         low = np.append(low, np.zeros(self.env.controllers_num))
 
@@ -109,20 +116,33 @@ class JumperEnv(gym.Env):
         done = self._isDone()
         return observation, reward, done, {}
 
-    # 3 bits for the index of the cable, 1 bit (the last one) for the direction of the controller (increase or decrease)
-    def _takeAction(self, action):
-        bits_num = floor(log2(self.env.controllers_num))+1
-        value_sign = (1 if ((2**(bits_num-1)) & action) > 0 else -1)    # if sign_bit is 0 = decrease, 1 = increase
-        value = value_sign*self.dl
-        # print(self.env.controllers_num)
-        # controller_index = action - (2**(bits_num-1) if value_sign == 1 else 0)
-        controller_index = action%(2**(bits_num-1))
-        # print("Controllers_index {:} :::{:}, Controller_value: {:}".format(controller_index, action, value))
+    # # Discrete
+    # # 3 bits for the index of the cable, 1 bit (the last one) for the direction of the controller (increase or decrease)
+    # def _takeAction(self, action):
+    #     bits_num = floor(log2(self.env.controllers_num))+1
+    #     value_sign = (1 if ((2**(bits_num-1)) & action) > 0 else -1)    # if sign_bit is 0 = decrease, 1 = increase
+    #     value = value_sign*self.dl
+    #     # print(self.env.controllers_num)
+    #     # controller_index = action - (2**(bits_num-1) if value_sign == 1 else 0)
+    #     controller_index = action%(2**(bits_num-1))
+    #     # print("Controllers_index {:} :::{:}, Controller_value: {:}".format(controller_index, action, value))
         
-        # TODO: Don't know if it is necessary or not. Maybe here we can set all the controllers to zero and delete the last line in the method
-        self.env.actions_json["Controllers_val"][controller_index] = value
+    #     # TODO: Don't know if it is necessary or not. Maybe here we can set all the controllers to zero and delete the last line in the method
+    #     self.env.actions_json["Controllers_val"][controller_index] = value
+    #     self.env.step()
+    #     self.env.actions_json["Controllers_val"][controller_index] = 0    # IF we comment that, this will enable the environment to operate simultanously actuators
+
+    # Continuous
+    # action is vector of continuous values for the controllers of the strings
+    def _takeAction(self, action):
+        if(isinstance(action, np.ndarray)):
+            action_list = action.tolist()
+        else:
+            action_list = action
+        self.env.actions_json["Controllers_val"][:] = action_list
         self.env.step()
-        self.env.actions_json["Controllers_val"][controller_index] = 0    # IF we comment that, this will enable the environment to operate simultanously actuators
+
+
 
     # Observations:
     #   - The dimensions is specified above and their min. and max. values
@@ -180,6 +200,7 @@ class JumperEnv(gym.Env):
         self.env.closeSimulator()
         # sys.exit(0)
 
+# Discrete action space functions testing
 def main(port_num=10042):
     def print_observation(obs):
         print("Observations {:}".format(obs))
@@ -265,8 +286,33 @@ def threaded_main():
     for i in range(num_threads):
         threads_list[i].start()
 
+# Continuous action space functions testing
+def main_cont(port_num=10042):
+    def print_observation(obs):
+        print("Observations {:}".format(obs))
+    env = JumperEnv(port_num=port_num)
+    # action = randint(0,15)
+    action = [7.95 for i in range(8)]
+    # action[0] = 5
+    print("Action: {:}".format(action))
+    # input("-> check point: WAIT for INPUT !!!!")
+    init_obs ,_,_,_=env.step(action)
+
+    print_observation(init_obs)
+    # print(env.env.actions_json)
+    # print("")
+
+    # input("-> check point: WAIT for INPUT !!!!")
+
+    flag = 0
+    # i = 0
+    while True:
+        observation, reward, done, _= env.step(init_obs[:-1])
+        print(observation)
+        print("angle:{:}".format(observation[-1]*180/np.pi))
 
 if __name__ == "__main__":
-    main()
+    main_cont()
+    # main()
     # forked_process_main()
     # threaded_main()
