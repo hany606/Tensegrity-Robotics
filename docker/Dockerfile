@@ -28,3 +28,6 @@ CMD ["/home/hany606/Tensegrity-Robotics/bin/setup_helper.sh" ]
 
 RUN Xvfb :3 -screen 0 1024x768x24 -ac +extension GLX +render -noreset &> xvfb.log &
 RUN export DISPLAY=:3
+
+CMD ["/home/hany606/Tensegrity-Robotics/bin/build.sh" ]
+

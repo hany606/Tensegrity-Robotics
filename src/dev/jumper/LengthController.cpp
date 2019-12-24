@@ -110,6 +110,11 @@ void LengthController::onStep(JumperModel& subject, double dt)
             btVector3 end_point = actuators[end_points_map[i]]->getAnchors_mod()[0]->getWorldPosition();
             std::cout<<"End Point"<<i<<"\nPoint:"<<end_point<<"\n----------------------\n";
         }
+
+        for(int i = 0; i < 8; i++){
+          std::cout<< "String #"<<i<<": "<<((int) (actuators[i]->getRestLength()*10000)/10000.0)<<"\n";
+
+        }
         // std::cout<<"CMS: "<<rods[0]->centerOfMass()<<"\tPoint1:"<<actuators[3]->getAnchors_mod()[0]->getWorldPosition()<<"or:"<<actuators[3]->getAnchors_mod()[1]->getWorldPosition()<<"\tPoint2:"<<actuators[0]->getAnchors_mod()[0]->getWorldPosition()<<"or:"<<actuators[0]->getAnchors_mod()[1]->getWorldPosition()<<"\n";
         // std::cout<<rods[1]->length()<<"\n";
         toggle = 1;   //is used like a state flag ---- set it to 2 to disable the movement
@@ -144,7 +149,12 @@ void LengthController::onStep(JumperModel& subject, double dt)
         if(all_reached_target == true){
           all_reached_target = false;
           for(int i = 0; i < actuators.size(); i++){
-            target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["Controllers_val"][i];
+            // Discrete action space
+            // target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["Controllers_val"][i];
+
+            // Continuous action space
+            target_lengths[i] = (double)read_json["Controllers_val"][i];
+
           }
         }
 
