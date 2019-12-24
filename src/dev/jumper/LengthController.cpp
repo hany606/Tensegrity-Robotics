@@ -149,11 +149,11 @@ void LengthController::onStep(JumperModel& subject, double dt)
         if(all_reached_target == true){
           all_reached_target = false;
           for(int i = 0; i < actuators.size(); i++){
-            // Discrete action space
-            // target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["Controllers_val"][i];
+            // Discrete action space and for cotinous delta lengths
+            target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["Controllers_val"][i];
 
-            // Continuous action space
-            target_lengths[i] = (double)read_json["Controllers_val"][i];
+            // Continuous action space for lengths
+            // target_lengths[i] = (double)read_json["Controllers_val"][i];
 
           }
         }

@@ -73,7 +73,7 @@ namespace
        10.0,        //lenght of one of the square side 
        0,           // history logging (boolean)
        30000,       // max tension
-       30
+       30           // target velocity
     };
 }
 

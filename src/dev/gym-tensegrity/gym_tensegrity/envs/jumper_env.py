@@ -30,7 +30,7 @@ import sys
 import signal
 from math import floor,log2
 import logging
-from random import randint
+from random import randint,uniform
 
 # logger = logging.getLogger(__name__)
 
@@ -58,17 +58,27 @@ class JumperEnv(gym.Env):
         self.env = JumperModel(host_name=host_name, port_num=port_num, sim_exec=sim_exec, dl=dl)
         self.env.startSimulator()
 
+        # Discrete Action space
         # 3 bits for indexing the cable's controller 2^3 = 8 and one bit for the control direction
         # This action space will inforce to have only one working controller at a time
         # Also, always one controller work at least there is no possibilty to have all of them not working, to aoid this point we can add another bit fot the control direction 
-        
-        # Discrete Action space
         # n_actions = 2**(floor(log2(self.env.controllers_num))+1)
         # self.action_space = spaces.Discrete(n_actions)
         
-        # Continuous Action space
-        low = np.array([0 for i in range(self.env.controllers_num)])
-        high = np.array([self.max_cable_length for i in range(self.env.controllers_num)])
+        # Continuous Action space for the lengths
+        # low = np.array([0 for i in range(self.env.controllers_num)])
+        # high = np.array([self.max_cable_length for i in range(self.env.controllers_num)])
+        # self.action_space = spaces.Box(low=low, high=high, dtype=np.float32)
+
+        # Continuous Action space for the delta lengths
+        self.delta_length = 2 
+
+        # low = np.array(-1*self.delta_length*self.env.controllers_num)
+        # high = np.array(-1*low)
+        # self.action_space = spaces.Box(low=low, high=high, dtype=np.float32)
+
+        low = np.array([-1*self.delta_length for i in range(self.env.controllers_num)])
+        high = np.array([self.delta_length for i in range(self.env.controllers_num)])
         self.action_space = spaces.Box(low=low, high=high, dtype=np.float32)
 
         low = np.array(self.min_leg_angle)
@@ -78,6 +88,12 @@ class JumperEnv(gym.Env):
         high = np.append(high, np.full((1,self.env.controllers_num), self.max_cable_length))
  
         self.observation_space = spaces.Box(low= low, high= high, dtype=np.float32)
+
+        # To randomize the initial state of the strings
+        random_init_lengths = [((1 if randint(1,10)%2 else -1)*uniform(self.delta_length-1, self.delta_length)) for i in range(self.env.controllers_num)]
+        self.env.actions_json["Controllers_val"][:] = random_init_lengths
+        self.env.step()
+
 
     def __del__(self):
         self.env.closeSimulator()
@@ -132,15 +148,39 @@ class JumperEnv(gym.Env):
     #     self.env.step()
     #     self.env.actions_json["Controllers_val"][controller_index] = 0    # IF we comment that, this will enable the environment to operate simultanously actuators
 
-    # Continuous
+    # Continuous length
     # action is vector of continuous values for the controllers of the strings
+    # def _takeAction(self, action):
+    #     if(isinstance(action, np.ndarray)):
+    #         action_list = action.tolist()
+    #     else:
+    #         action_list = action
+    #     self.env.actions_json["Controllers_val"][:] = action_list
+    #     self.env.step()
+
+    # Continuous delta length
+    # action is number that represents the length and the index of the controller
+    # For example imaging that the delta_length = 10
+    # Then if the action belongs to (-10,0]U[0,10) -- controller 0
+    # action belongs to (-50,-40]U[40,50) -- controller 1
     def _takeAction(self, action):
         if(isinstance(action, np.ndarray)):
             action_list = action.tolist()
         else:
             action_list = action
         self.env.actions_json["Controllers_val"][:] = action_list
+        # # print(action, type(action))
+        # controller_index = abs(action)//self.delta_length
+        # value = (1 if action > 0 else -1)*abs(action)%self.delta_length
+        # if(action == -1*self.delta_length*self.env.controllers_num or action == self.delta_length*self.env.controllers_num):
+        #         controller_index = self.env.controllers_num-1
+        #         value = (1 if action > 0 else -1)*self.delta_length
+        # # print("TAke action")
+        # # print("debug", 11.1272207%self.delta_length)
+        # # print(controller_index, value, action)
+        # self.env.actions_json["Controllers_val"][int(controller_index)] = float(value)
         self.env.step()
+
 
 
 
@@ -286,8 +326,8 @@ def threaded_main():
     for i in range(num_threads):
         threads_list[i].start()
 
-# Continuous action space functions testing
-def main_cont(port_num=10042):
+# Continuous action space for lengths function testing
+def main_cont_lengths(port_num=10042):
     def print_observation(obs):
         print("Observations {:}".format(obs))
     env = JumperEnv(port_num=port_num)
@@ -311,8 +351,38 @@ def main_cont(port_num=10042):
         print(observation)
         print("angle:{:}".format(observation[-1]*180/np.pi))
 
+# Continuous action space for delta lengths function testing
+def main_cont_dlengths(port_num=10042):
+    def print_observation(obs):
+        print("Observations {:}".format(obs))
+    env = JumperEnv(port_num=port_num)
+    # action = randint(0,15)
+    action = [0 for i in range(8)]
+    # action[0] = 5
+    print("Action: {:}".format(action))
+    # input("-> check point: WAIT for INPUT !!!!")
+    init_obs ,_,_,_=env.step(action)
+
+    print_observation(init_obs)
+    # print(env.env.actions_json)
+    # print("")
+
+    # input("-> check point: WAIT for INPUT !!!!")
+
+    flag = 0
+    # i = 0
+    while True:
+        # action = env.action_space.sample()
+        observation, reward, done, _= env.step(action)
+        print(action)
+        # input("-> check point: WAIT for INPUT !!!!")
+        print(observation)
+        print("angle:{:}".format(observation[-1]*180/np.pi))
+
+
 if __name__ == "__main__":
-    main_cont()
+    main_cont_dlengths()
+    # main_cont_lengths()
     # main()
     # forked_process_main()
     # threaded_main()
