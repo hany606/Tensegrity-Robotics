@@ -39,7 +39,9 @@ import math
 from gym_tensegrity.envs.jumper_model import JumperModel
 
 # Machine with Xscreen
-# sim_exec = 'gnome-terminal -e /home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
+path_to_model = os.path.join(os.environ["TENSEGRITY_HOME"], "build/dev/jumper/AppJumperModel")
+sim_exec = "gnome-terminal -e {}".format(path_to_model)
+
 #Headless
 sim_exec = '~/hany606/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
 
@@ -90,9 +92,9 @@ class JumperEnv(gym.Env):
         self.observation_space = spaces.Box(low= low, high= high, dtype=np.float32)
 
         # To randomize the initial state of the strings
-        random_init_lengths = [((1 if randint(1,10)%2 else -1)*uniform(self.delta_length-1, self.delta_length)) for i in range(self.env.controllers_num)]
-        self.env.actions_json["Controllers_val"][:] = random_init_lengths
-        self.env.step()
+        # random_init_lengths = [((1 if randint(1,10)%2 else -1)*uniform(self.delta_length-1, self.delta_length)) for i in range(self.env.controllers_num)]
+        # self.env.actions_json["Controllers_val"][:] = random_init_lengths
+        # self.env.step()
 
 
     def __del__(self):
@@ -164,11 +166,15 @@ class JumperEnv(gym.Env):
     # Then if the action belongs to (-10,0]U[0,10) -- controller 0
     # action belongs to (-50,-40]U[40,50) -- controller 1
     def _takeAction(self, action):
-        if(isinstance(action, np.ndarray)):
-            action_list = action.tolist()
-        else:
-            action_list = action
-        self.env.actions_json["Controllers_val"][:] = action_list
+        if (not isinstance(action, np.ndarray)):
+            raise Exception("The action space should be an np.array")
+        if action.shape != self.action_space.shape:
+            raise Exception("The shape of the provided action does not match")
+
+        if not self.action_space.contains(action):
+            raise Exception("The provided action is out of allowed space.")
+
+        self.env.actions_json["Controllers_val"][:] = action.tolist()
         # # print(action, type(action))
         # controller_index = abs(action)//self.delta_length
         # value = (1 if action > 0 else -1)*abs(action)%self.delta_length

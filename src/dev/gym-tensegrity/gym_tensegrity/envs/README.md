@@ -1,5 +1,7 @@
 # Environments
 
+export TENSEGRITY_HOME="absolute/path/to/the/root/folder"
+
 ### Leg environment (leg_env.py, leg_model.py):
     This is an environment to work with the NTRTsim for tensegrity leg.
     

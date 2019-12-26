@@ -22,7 +22,7 @@
 #include <fstream>
 #include <string>
 #include <math.h>
-
+#include <algorithm>
 
 // #define HOST_NAME "localhost"
 // #define PORT_NUM 10042
@@ -151,6 +151,9 @@ void LengthController::onStep(JumperModel& subject, double dt)
           for(int i = 0; i < actuators.size(); i++){
             // Discrete action space and for cotinous delta lengths
             target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["Controllers_val"][i];
+            if (target_lengths[i] < 0.0) {
+              target_lengths[i] = 0.0;
+            }
 
             // Continuous action space for lengths
             // target_lengths[i] = (double)read_json["Controllers_val"][i];
