@@ -90,9 +90,9 @@ class JumperEnv(gym.Env):
         self.observation_space = spaces.Box(low= low, high= high, dtype=np.float32)
 
         # To randomize the initial state of the strings
-        random_init_lengths = [((1 if randint(1,10)%2 else -1)*uniform(self.delta_length-1, self.delta_length)) for i in range(self.env.controllers_num)]
-        self.env.actions_json["Controllers_val"][:] = random_init_lengths
-        self.env.step()
+        # random_init_lengths = [((1 if randint(1,10)%2 else -1)*uniform(self.delta_length-1, self.delta_length)) for i in range(self.env.controllers_num)]
+        # self.env.actions_json["Controllers_val"][:] = random_init_lengths
+        # self.env.step()
 
 
     def __del__(self):
