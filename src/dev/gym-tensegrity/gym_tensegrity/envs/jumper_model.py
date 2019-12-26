@@ -15,7 +15,8 @@ import os
 import subprocess
 import numpy as np
 
-sim_exec = 'gnome-terminal -e /home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
+path_to_model = os.path.join(os.environ["TENSEGRITY_HOME"], "build/dev/jumper/AppJumperModel")
+sim_exec = "gnome-terminal -e {}".format(path_to_model)
 
 class JumperModel():
     def __init__(self, host_name='localhost', port_num=10040, packet_size=5000,
@@ -102,9 +103,9 @@ class JumperModel():
         self.child_process = subprocess.Popen(subprocess_args[:3])  
         #Headless
         # self.child_process = subprocess.Popen(self.sim_exec, shell=True)  
-        print('#########\nwaiting for a connection\n#########')
+        #print('#########\nwaiting for a connection\n#########')
         self.connection, self.clientAddress = self.sock.accept()  #wait until it get a client
-        print('connection from', self.clientAddress)
+        #print('connection from', self.clientAddress)
 
     def closeSimulator(self):
         self.close_flag = True
