@@ -363,7 +363,7 @@ def main_cont_dlengths(port_num=10042):
         print("Observations {:}".format(obs))
     env = JumperEnv(port_num=port_num)
     # action = randint(0,15)
-    action = [0 for i in range(8)]
+    action = np.array([0 for i in range(8)])
     # action[0] = 5
     print("Action: {:}".format(action))
     # input("-> check point: WAIT for INPUT !!!!")
