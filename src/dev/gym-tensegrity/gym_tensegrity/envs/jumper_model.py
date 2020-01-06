@@ -40,15 +40,21 @@ class JumperModel():
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        print(self.port_num)
-        self.server_address = (self.host_name, self.port_num) # Bind the socket to the port
+        # print(self.port_num)
+        self.server_address = [self.host_name, self.port_num] # Bind the socket to the port
 
         self.connection = None
         self.client_address = None
         self.child_process = None
-        print('#########\nstarting up on {} port {}\n#########'.format(self.server_address, self.port_num))
-        # print(self.server_address)
-        self.sock.bind(self.server_address)
+        print('#########\nstarting up on {}\n#########'.format(self.server_address))
+        try:
+            self.sock.bind(tuple(self.server_address))
+        except socket.error as exc:
+            self.port_num += 1
+            self.server_address[1] = self.port_num
+            print('#########\nstarting up on {} after getting an error of busy port first\n#########'.format(self.server_address))
+            self.sock.bind(tuple(self.server_address))
+        print('#########\nServer binding is finished\n#########')
         self.sock.listen(1)  # Listen for incoming connections
         self.reset_flag = False
         self.close_flag = False

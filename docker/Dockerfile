@@ -22,6 +22,7 @@ RUN pip3 install torch torchvision
 RUN pip3 install tensorflow-gpu
 RUN pip3 install ray[rllib]
 RUN pip3 install ray[debug]
+RUN pip3 install pandas
 
 
 RUN mkdir -p ~/Tensegrity \
