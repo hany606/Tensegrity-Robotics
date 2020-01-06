@@ -48,16 +48,31 @@ sim_exec = "{}".format(path_to_model)
 class JumperEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, host_name='localhost', port_num=10042, sim_exec=sim_exec,  dl=0.1):
+    def __init__(self, config=None):
+        if(config is not None):    
+            self.config =  {
+                            'host_name': 'localhost' if 'host_name' not in config.keys() else config['host_name'],
+                            'port_num':10042 if 'port_num' not in config.keys() else config['port_num'],
+                            'sim_exec':sim_exec if 'sim_exec' not in config.keys() else config['sim_exec'],
+                            'dl':0.1 if 'dl' not in config.keys() else config['dl']
+                            }
+        else:
+            self.config =  {
+                            'host_name': 'localhost',
+                            'port_num':10042,
+                            'sim_exec':sim_exec,
+                            'dl':0.1
+                            }
+
         super(JumperEnv, self).__init__()
         # Agent self variables
         self.max_time = 200
         self.max_cable_length = 50
         self.min_leg_angle = -np.pi/2
         self.max_leg_angle =  np.pi/2
-        self.dl = dl
+        self.dl = self.config['dl']
         
-        self.env = JumperModel(host_name=host_name, port_num=port_num, sim_exec=sim_exec, dl=dl)
+        self.env = JumperModel(host_name=self.config['host_name'], port_num=self.config['port_num'], sim_exec=self.config['sim_exec'], dl=self.config['dl'])
         self.env.startSimulator()
 
         # Discrete Action space
@@ -95,6 +110,7 @@ class JumperEnv(gym.Env):
         # random_init_lengths = [((1 if randint(1,10)%2 else -1)*uniform(self.delta_length-1, self.delta_length)) for i in range(self.env.controllers_num)]
         # self.env.actions_json["Controllers_val"][:] = random_init_lengths
         # self.env.step()
+
 
 
     def __del__(self):
@@ -250,7 +266,7 @@ class JumperEnv(gym.Env):
 def main(port_num=10042):
     def print_observation(obs):
         print("Observations {:}".format(obs))
-    env = JumperEnv(port_num=port_num)
+    env = JumperEnv()
     # action = randint(0,15)
     action = 14
     # print("Action: {:}".format(action))
@@ -319,7 +335,8 @@ def forked_process_main():
         print("fork {:}".format(pid))
         if(pid > 0):
             print("Child: {:} -> on port: {:}".format(pid, port_num_base+i))
-            main(port_num_base+i)
+            config = {"port_num":port_num_base+i}
+            main(config)
 
 def threaded_main():
     import threading
@@ -327,7 +344,8 @@ def threaded_main():
     num_threads = 10
     threads_list = []
     for i in range(num_threads):
-        threads_list.append(threading.Thread(target=main, args=(port_num_base+i,)))
+        config = {"port_num":port_num_base+i}
+        threads_list.append(threading.Thread(target=main, args=(config,)))
     
     for i in range(num_threads):
         threads_list[i].start()
@@ -336,7 +354,7 @@ def threaded_main():
 def main_cont_lengths(port_num=10042):
     def print_observation(obs):
         print("Observations {:}".format(obs))
-    env = JumperEnv(port_num=port_num)
+    env = JumperEnv()
     # action = randint(0,15)
     action = [7.95 for i in range(8)]
     # action[0] = 5
@@ -361,7 +379,7 @@ def main_cont_lengths(port_num=10042):
 def main_cont_dlengths(port_num=10042):
     def print_observation(obs):
         print("Observations {:}".format(obs))
-    env = JumperEnv(port_num=port_num)
+    env = JumperEnv()
     # action = randint(0,15)
     action = np.array([0 for i in range(8)])
     # action[0] = 5

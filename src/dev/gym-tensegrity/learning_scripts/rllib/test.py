@@ -18,5 +18,6 @@ tune.run(
         },
         config={
             "env": "Jumper",
+            "num_workers": 1,
         },
     )

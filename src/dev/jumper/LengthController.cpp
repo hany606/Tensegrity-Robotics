@@ -56,8 +56,11 @@ LengthController::~LengthController()
 void LengthController::onSetup(JumperModel& subject)
 {
   // freopen("records_testing/record.txt","w",stdout); //For debugging
+  std::cout<<"Starting communication through TCP: "<<host_name<<port_num<<"\n";
   LengthController::tcp_com = new TCP(host_name, port_num);
   LengthController::tcp_com->setup();
+  std::cout<<"Finished Setup the communication\n";
+
 
   JSON_Structure::setup();
   m_controllers.clear(); //clear vector of controllers
@@ -70,7 +73,7 @@ void LengthController::onSetup(JumperModel& subject)
 
 
 
-  printf("Number of actuators: %d , Number of Rods: %d\n", actuators.size(), rods.size());
+  printf("Number of actuators: %d , Number of Rods: %d\n", (int) actuators.size(), (int) rods.size());
   // std::cout<<rods[1]->getTags()[0][1]<<"\n";
 
   //Attach a tgBasicController to each actuator
@@ -84,7 +87,7 @@ void LengthController::onSetup(JumperModel& subject)
     m_controllers.push_back(m_lenController);
     //generate random end restlength
     double start_length = actuators[i]->getStartLength();
-    printf("Actutor of string #%d -> start Lenght: %lf\n", i, start_length);
+    printf("Actutor of string #%d -> start Lenght: %lf\n", (int) i, start_length);
     start_lengths.push_back(start_length);
     actuators_states.push_back(0);
     target_lengths.push_back(0);
