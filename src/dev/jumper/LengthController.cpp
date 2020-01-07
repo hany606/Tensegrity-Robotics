@@ -56,10 +56,10 @@ LengthController::~LengthController()
 void LengthController::onSetup(JumperModel& subject)
 {
   // freopen("records_testing/record.txt","w",stdout); //For debugging
-  std::cout<<"Starting communication through TCP: "<<host_name<<port_num<<"\n";
+  // std::cout<<"Starting communication through TCP: "<<host_name<<port_num<<"\n";//DEBUG
   LengthController::tcp_com = new TCP(host_name, port_num);
   LengthController::tcp_com->setup();
-  std::cout<<"Finished Setup the communication\n";
+  // std::cout<<"Finished Setup the communication\n";//DEBUG
 
 
   JSON_Structure::setup();
@@ -73,7 +73,7 @@ void LengthController::onSetup(JumperModel& subject)
 
 
 
-  printf("Number of actuators: %d , Number of Rods: %d\n", (int) actuators.size(), (int) rods.size());
+  // printf("Number of actuators: %d , Number of Rods: %d\n", (int) actuators.size(), (int) rods.size());//DEBUG
   // std::cout<<rods[1]->getTags()[0][1]<<"\n";
 
   //Attach a tgBasicController to each actuator
@@ -87,7 +87,7 @@ void LengthController::onSetup(JumperModel& subject)
     m_controllers.push_back(m_lenController);
     //generate random end restlength
     double start_length = actuators[i]->getStartLength();
-    printf("Actutor of string #%d -> start Lenght: %lf\n", (int) i, start_length);
+    // printf("Actutor of string #%d -> start Lenght: %lf\n", (int) i, start_length);//DEBUG
     start_lengths.push_back(start_length);
     actuators_states.push_back(0);
     target_lengths.push_back(0);
@@ -107,6 +107,8 @@ void LengthController::onStep(JumperModel& subject, double dt)
     globalTime += dt;
     if(globalTime > 0){ //delay start of cable actuation
       if(toggle==0){    //print once when motors start moving
+        //DEBUG
+        /*
         cout << endl << "Activating Cable Motors -------------------------------------" << endl;
         std::cout<<"End Point"<<0<<"\nPoint:"<<actuators[0]->getAnchors_mod()[1]->getWorldPosition()<<"\n----------------------\n";
         for(int i = 1; i < 6; i++){
@@ -118,6 +120,8 @@ void LengthController::onStep(JumperModel& subject, double dt)
           std::cout<< "String #"<<i<<": "<<((int) (actuators[i]->getRestLength()*10000)/10000.0)<<"\n";
 
         }
+        */
+
         // std::cout<<"CMS: "<<rods[0]->centerOfMass()<<"\tPoint1:"<<actuators[3]->getAnchors_mod()[0]->getWorldPosition()<<"or:"<<actuators[3]->getAnchors_mod()[1]->getWorldPosition()<<"\tPoint2:"<<actuators[0]->getAnchors_mod()[0]->getWorldPosition()<<"or:"<<actuators[0]->getAnchors_mod()[1]->getWorldPosition()<<"\n";
         // std::cout<<rods[1]->length()<<"\n";
         toggle = 1;   //is used like a state flag ---- set it to 2 to disable the movement
@@ -144,7 +148,10 @@ void LengthController::onStep(JumperModel& subject, double dt)
         if(all_reached_target == true){
           char buffer[MAX_BUFF_SIZE];
           bzero(&buffer,MAX_BUFF_SIZE);
+          // std::cout<<"Waiting for the TCP to read\n";        //DEBUG
           LengthController::tcp_com->read_TCP(buffer,MAX_BUFF_SIZE);
+          // std::cout<<"Buffer ::\n";//DEBUG
+          // std::cout<<buffer<<"\n";//DEBUG
           read_json = JSON_Structure::stringToJson(buffer);
         }
 
@@ -178,15 +185,15 @@ void LengthController::onStep(JumperModel& subject, double dt)
           // that the error is equal to the last_error and the last_error was greater than the current error and the error was decreasing and the target length is smaller than the current which means that it is going to decrease more
           if( (actuators[i]->getRestLength() == 0.1  && target_lengths[i] <= actuators[i]->getRestLength()) ||(fabs(stuck_err) < SMALL_EPS(EPS) && stuck_err > 0 && error_sign > 0 )){ //changed
             // while (1);
-            printf("!!!!Stuck: %d\n",i);
+            // printf("!!!!Stuck: %d\n",i);//DEBUG
             // all_reached_target = true;  //TODO: This is wrong, it should just flag the controller reach flag not all
             reached_counter++;
-            printf("Controller#%d\tError: %lf\n", i, error);
-            std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+            // printf("Controller#%d\tError: %lf\n", i, error);//DEBUG
+            // std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;//DEBUG
             continue;
           }
-          printf("Controller#%d\tError: %lf\n", i, error);
-          std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+          // printf("Controller#%d\tError: %lf\n", i, error);//DEBUG
+          // std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;//DEBUG
 
           // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
           m_controllers[i]->control(dt, target_lengths[i]);
@@ -198,7 +205,7 @@ void LengthController::onStep(JumperModel& subject, double dt)
             // all_reached_target = true;
             reached_counter++;
             read_json["Controllers_val"][i] = 0;
-            printf("Reached%d\n", i);
+            // printf("Reached%d\n", i);//DEBUG
           }
           last_error[i] = error;
         }
@@ -210,7 +217,7 @@ void LengthController::onStep(JumperModel& subject, double dt)
 
 
         if(all_reached_target == true){
-          printf("\n--------------------------------------------------------\n");
+          // printf("\n--------------------------------------------------------\n");//DEBUG
           // (1) Get the end-points
           JSON_Structure::setEndPoints(0,actuators[0]->getAnchors_mod()[1]->getWorldPosition());
           for(int i = 1; i < 6; i++){
