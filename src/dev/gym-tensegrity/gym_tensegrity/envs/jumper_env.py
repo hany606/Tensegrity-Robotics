@@ -117,33 +117,6 @@ class JumperEnv(gym.Env):
         self.env.closeSimulator()
             
     def step(self, action):
-        """
-        Parameters
-        ----------
-        action :
-
-        Returns
-        -------
-        observation, reward, episode_over(done), info : tuple
-            observation (object) :
-                an environment-specific object representing your observation of
-                the environment.
-            reward (float) :
-                amount of reward achieved by the previous action. The scale
-                varies between environments, but the goal is always to increase
-                your total reward.
-            done (bool) :
-                whether it's time to reset the environment again. Most (but not
-                all) tasks are divided up into well-defined episodes, and done
-                being True indicates the episode has terminated. (For example,
-                perhaps the pole tipped too far, or you lost your last life.)
-            info (dict) :
-                 diagnostic information useful for debugging. It can sometimes
-                 be useful for learning (for example, it might contain the raw
-                 probabilities behind the environment's last state change).
-                 However, official evaluations of your agent are not allowed to
-                 use this for learning.
-        """
         self._takeAction(action)
         observation = self._getObservation()
         reward = self._getReward(observation)
@@ -191,6 +164,7 @@ class JumperEnv(gym.Env):
             raise Exception("The provided action is out of allowed space.")
 
         self.env.actions_json["Controllers_val"][:] = action.tolist()
+        # The commented part is for take only one value and decide the controller index and the value from it not vector of actions
         # # print(action, type(action))
         # controller_index = abs(action)//self.delta_length
         # value = (1 if action > 0 else -1)*abs(action)%self.delta_length
@@ -203,20 +177,14 @@ class JumperEnv(gym.Env):
         # self.env.actions_json["Controllers_val"][int(controller_index)] = float(value)
         self.env.step()
 
-
-
-
     # Observations:
     #   - The dimensions is specified above and their min. and max. values
     #   1- Angle of the leg
     #   2- Cables' lengths
-    # TODO:
-    #   - Check the observation strucutre
     def _getObservation(self):
         observation = np.empty((1,0))
-        observation = np.append(observation, self.env.getCablesLengths())
-
         observation = np.append(observation, self.env.getLegAngle())
+        observation = np.append(observation, self.env.getCablesLengths())
         # print("finish getting the observation")
         return np.array(observation)
 
@@ -254,159 +222,7 @@ class JumperEnv(gym.Env):
         return self._getObservation()
 
     def render(self, mode='human'):
-        # TODO:
-        # Example:
         self.env.render()
 
     def close(self):
         self.env.closeSimulator()
-        # sys.exit(0)
-
-# Discrete action space functions testing
-def main(port_num=10042):
-    def print_observation(obs):
-        print("Observations {:}".format(obs))
-    env = JumperEnv()
-    # action = randint(0,15)
-    action = 14
-    # print("Action: {:}".format(action))
-    init_obs ,_,_,_=env.step(action)
-    # print_observation(init_obs)
-    # print(env.env.actions_json)
-    # print("")
-
-    # input("-> check point: WAIT for INPUT !!!!")
-    # for i in range(50):
-    #     input("-> check point: WAIT for INPUT !!!!")
-    #     observation, reward, done, _= env.step(action)
-    #     print_observation(observation)
-    #     print("Done:???:{:}".format(done))
-
-    # input("-> check point: WAIT for INPUT !!!!")
-    # for i in range(1,1001):
-    #     action = env.action_space.sample()
-    #     # action = 2
-    #     input("-> check point: WAIT for INPUT !!!!")
-    #     print("--------------- ({:}) ---------------".format(i))
-    #     print("######\nAction: {:}\n######".format(action))
-    #     observation, reward, done, _= env.step(action)
-    #     print_observation(observation)
-    #     print("Done:???:{:}".format(done))
-
-    # input("-> check point: WAIT for INPUT !!!!")
-
-    # for i in range(50):
-    #     observation, reward, done, _= env.step(2)
-
-    # input("-> check point: WAIT for INPUT !!!!")
-
-
-    flag = 0
-    # i = 0
-    while True:
-        # i += 1
-        # print(i)
-        # if(i > 100):
-        #     i = 0
-        #     env.reset()
-        inp = "d"
-        # inp = input("~~~~~~input: ")
-        if(inp == "w"):
-            flag = 1
-        elif(inp == "s"):
-            flag = -1
-        elif(inp == "d"):
-            flag = 0
-
-        if(flag <= 0):
-            observation, reward, done, _= env.step(4)
-            observation, reward, done, _= env.step(5)
-        if(flag >= 0):
-            observation, reward, done, _= env.step(12)
-            observation, reward, done, _= env.step(13)
-        print(observation)
-        print("angle:{:}".format(observation[-1]*180/np.pi))
-
-def forked_process_main():
-    port_num_base = 10042
-    num_threads = 2
-    for i in range(num_threads):
-        pid = os.fork()
-        print("fork {:}".format(pid))
-        if(pid > 0):
-            print("Child: {:} -> on port: {:}".format(pid, port_num_base+i))
-            config = {"port_num":port_num_base+i}
-            main(config)
-
-def threaded_main():
-    import threading
-    port_num_base = 10042
-    num_threads = 10
-    threads_list = []
-    for i in range(num_threads):
-        config = {"port_num":port_num_base+i}
-        threads_list.append(threading.Thread(target=main, args=(config,)))
-    
-    for i in range(num_threads):
-        threads_list[i].start()
-
-# Continuous action space for lengths function testing
-def main_cont_lengths(port_num=10042):
-    def print_observation(obs):
-        print("Observations {:}".format(obs))
-    env = JumperEnv()
-    # action = randint(0,15)
-    action = [7.95 for i in range(8)]
-    # action[0] = 5
-    print("Action: {:}".format(action))
-    # input("-> check point: WAIT for INPUT !!!!")
-    init_obs ,_,_,_=env.step(action)
-
-    print_observation(init_obs)
-    # print(env.env.actions_json)
-    # print("")
-
-    # input("-> check point: WAIT for INPUT !!!!")
-
-    flag = 0
-    # i = 0
-    while True:
-        observation, reward, done, _= env.step(init_obs[:-1])
-        print(observation)
-        print("angle:{:}".format(observation[-1]*180/np.pi))
-
-# Continuous action space for delta lengths function testing
-def main_cont_dlengths(port_num=10042):
-    def print_observation(obs):
-        print("Observations {:}".format(obs))
-    env = JumperEnv()
-    # action = randint(0,15)
-    action = np.array([0 for i in range(8)])
-    # action[0] = 5
-    print("Action: {:}".format(action))
-    # input("-> check point: WAIT for INPUT !!!!")
-    init_obs ,_,_,_=env.step(action)
-
-    print_observation(init_obs)
-    # print(env.env.actions_json)
-    # print("")
-
-    # input("-> check point: WAIT for INPUT !!!!")
-
-    flag = 0
-    # i = 0
-    while True:
-        # action = env.action_space.sample()
-        observation, reward, done, _= env.step(action)
-        print(action)
-        # input("-> check point: WAIT for INPUT !!!!")
-        print(observation)
-        print("angle:{:}".format(observation[-1]*180/np.pi))
-
-
-if __name__ == "__main__":
-    main_cont_dlengths()
-    # main_cont_lengths()
-    # main()
-    # forked_process_main()
-    # threaded_main()
