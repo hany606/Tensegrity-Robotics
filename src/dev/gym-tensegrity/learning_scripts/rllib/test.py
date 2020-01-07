@@ -14,7 +14,7 @@ ray.init()
 tune.run(
         "ARS",
         stop={
-            "timesteps_total": 10000,
+            "timesteps_total": 1000,
         },
         config={
             "env": "Jumper",
