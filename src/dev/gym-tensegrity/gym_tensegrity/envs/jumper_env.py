@@ -205,7 +205,8 @@ class JumperEnv(gym.Env):
         #   - Fall "The angle is more than theta_max"
         time = self.env.getTime()
         # if time > self.max_time or abs(self.env.getLegAngle()) > np.pi/4:
-        if abs(self.env.getLegAngle()) > np.pi/12:
+        # if the angle is greater than 20 degrees this will mean that the episode is done and the agent failed to balance
+        if abs(self.env.getLegAngle()) > np.pi/9:
             return True
         return False
 

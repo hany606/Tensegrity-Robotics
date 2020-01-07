@@ -120,13 +120,14 @@ def main_cont_lengths(port_num=10042):
 def main_cont_dlengths(port_num=10042):
     def print_observation(obs):
         print("Observations {:}".format(obs))
+    tot_reward = 0
     env = gym.make('gym_tensegrity:jumper-v0')
     # action = randint(0,15)
     action = np.array([0 for i in range(8)])
     # action[0] = 5
     print("Action: {:}".format(action))
     # input("-> check point: WAIT for INPUT !!!!")
-    init_obs ,_,_,_=env.step(action)
+    init_obs ,tot_reward,_,_=env.step(action)
 
     print_observation(init_obs)
     print(type(init_obs))
@@ -138,13 +139,14 @@ def main_cont_dlengths(port_num=10042):
     while True:
         # action = env.action_space.sample()
         observation, reward, done, _= env.step(action)
+        tot_reward += reward
         print(type(observation))
         print(action)
         input("-> check point: WAIT for INPUT !!!!")
         print("Reward: {:}, Done: {:}".format(reward,done))
         print_observation(observation)
         print("angle:{:}".format(observation[-1]*180/np.pi))
-
+        print("Total Reward: {:}".format(tot_reward))
 
 if __name__ == "__main__":
     main_cont_dlengths()
