@@ -154,7 +154,7 @@ void LengthController::onStep(JumperModel& subject, double dt)
           // std::cout<<"Waiting for the TCP to read\n";        //DEBUG
           // std::cout<<".\n";
           LengthController::tcp_com->read_TCP(buffer,MAX_BUFF_SIZE);
-          std::cout<<"Buffer ::\n";//DEBUG
+          std::cout<<"Buffer ::";//DEBUG
           std::cout<<buffer<<"\n";//DEBUG
           read_json = JSON_Structure::stringToJson(buffer);
         }
