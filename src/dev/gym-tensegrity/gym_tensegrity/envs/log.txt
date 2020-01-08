@@ -1,0 +1,1679 @@
+AppJumperModel
+Box Ground
+setup graphics
+#########
+starting up on ['localhost', 10042]
+#########
+#########
+Server binding is finished
+#########
+Action: [0 0 0 0 0 0 0 0]
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+<class 'numpy.ndarray'>
+-> check point: WAIT for INPUT !!!!<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 4e-05, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 6.000000000000001e-05
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 6e-05, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00012000000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 8e-05, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00020000000000000004
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00030000000000000003
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00012, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00042
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00014000000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0005600000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00016, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00072
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00017999999999999998, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0009
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0002, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0011
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00021999999999999998, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00132
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00024, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00156
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00026, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00182
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00028000000000000003, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0021
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0003, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0024
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00032, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0027199999999999998
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00034, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00306
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00035999999999999997, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00342
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00038, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0038
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0004, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0042
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00042, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00462
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00043999999999999996, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00506
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00046, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.005520000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00048, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.006000000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0005, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.006500000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00052, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00702
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00054, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00756
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0005600000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.00812
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00058, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.008700000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0006, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.009300000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00062, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.009920000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00064, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.010560000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00066, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.01122
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00068, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0119
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0007000000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0126
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0007199999999999999, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.01332
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00074, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.01406
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00076, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.01482
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00078, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0156
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0008, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.016399999999999998
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0008200000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.01722
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00084, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.01806
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00086, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.01892
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0008799999999999999, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.019799999999999998
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0009, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0207
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00092, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.02162
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00094, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.02256
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00096, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.02352
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00098, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0245
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.025500000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0010199999999999999, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.026520000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00104, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.02756
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00106, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.02862
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00108, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0297
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0011, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0308
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0011200000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.031920000000000004
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0011400000000000002, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.033060000000000006
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00116, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.03422000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00118, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.03540000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0012, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.03660000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00122, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.037820000000000006
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00124, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.039060000000000004
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00126, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.04032
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00128, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.041600000000000005
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0013000000000000002, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.04290000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00132, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.04422000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00134, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.04556000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00136, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.04692000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0013800000000000002, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.04830000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0014000000000000002, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.04970000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0014199999999999998, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.051120000000000006
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0014399999999999999, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.05256
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00146, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.054020000000000006
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00148, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.05550000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0015, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.05700000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00152, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.05852000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00154, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.06006000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00156, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.06162000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00158, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0632
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0016, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.06480000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0016200000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.06642
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0016400000000000002, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.06806000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00166, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.06972
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00168, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0714
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0017000000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0731
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00172, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.07482
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00174, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.07656
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0017599999999999998, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.07832
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00178, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0801
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0018, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0819
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00182, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.08372
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00184, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.08556
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00186, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.08742
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00188, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0893
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0019, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.0912
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00192, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.09312000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00194, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.09506
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00196, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.09702000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00198, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.099
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.002, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.101
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00202, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.10302
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0020399999999999997, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.10506
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0020599999999999998, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.10712
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00208, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.1092
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0021, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.11130000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00212, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.11342
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00214, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.11556000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00216, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.11772
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00218, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.1199
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0022, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.1221
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00222, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.12432
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0022400000000000002, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.12656
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0022600000000000003, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.12882000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0022800000000000003, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.13110000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0023, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.13340000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00232, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.13572
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00234, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.13806000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00236, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.14042000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0023799999999999997, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.1428
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0024, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.14520000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00242, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.14762000000000003
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00244, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.15006000000000003
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00246, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.15252000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00248, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.15500000000000003
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0025, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.15750000000000003
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00252, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.16002000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00254, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.16256
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00256, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.16512000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0025800000000000003, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.16770000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0026000000000000003, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.1703
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0026200000000000004, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.17292000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00264, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.17556000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00266, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.17822000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00268, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.1809
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0027, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.1836
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00272, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.18632
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0027400000000000002, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.18906
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0027600000000000003, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.19182000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0027800000000000004, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.19460000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0028000000000000004, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.19740000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0028199999999999996, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.20022
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0028399999999999996, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.20306000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0028599999999999997, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.20592000000000002
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0028799999999999997, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.2088
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0029, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.2117
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00292, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.21462
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00294, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.21756
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00296, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.22052
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00298, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.2235
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.003, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.2265
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00302, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.22952
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00304, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.23256
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0030600000000000002, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.23562
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00308, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.2387
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0031, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.2418
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00312, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.24492
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00314, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.24806
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00316, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.25122
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00318, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.2544
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0032, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.2576
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00322, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.26082
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0032400000000000003, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.26406
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0032600000000000003, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.26732
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0032800000000000004, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.2706
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0033000000000000004, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.27390000000000003
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00332, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.27722
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00334, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.28056000000000003
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00336, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.28392
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00338, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.2873
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0034000000000000002, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.2907
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0034200000000000003, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.29412
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00344, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.29756
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00346, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.30102
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00348, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.3045
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0034999999999999996, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.308
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0035199999999999997, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.31152
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0035399999999999997, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.31506
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00356, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.31862
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00358, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.32220000000000004
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0036, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.32580000000000003
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00362, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.32942000000000005
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00364, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.33306
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00366, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.33672
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00368, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.34040000000000004
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0037, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.3441
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00372, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.34782
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0037400000000000003, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.35156000000000004
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00376, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.35532
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00378, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.35910000000000003
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0038, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.36290000000000006
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00382, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.36672000000000005
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00384, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.37056000000000006
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00386, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.37442000000000003
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00388, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.3783
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0039000000000000003, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.38220000000000004
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00392, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.38612
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00394, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.39006
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00396, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.39402000000000004
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00398, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.398
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.004, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.402
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00402, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.40602000000000005
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00404, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.41006000000000004
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00406, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.41412000000000004
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.004079999999999999, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.4182
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0040999999999999995, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.4223
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0041199999999999995, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.42642
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00414, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.43056
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00416, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.43472
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00418, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.4389
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0042, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.4431
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00422, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.44732
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00424, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.45156
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00426, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.45582
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00428, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.4601
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0043, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.46440000000000003
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00432, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.46872
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00434, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.47306000000000004
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00436, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.47742
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00438, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.4818
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0044, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.4862
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00442, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.49062
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00444, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.49506
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00446, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.49952
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0044800000000000005, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.504
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0045000000000000005, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5085
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.004520000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5130199999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.004540000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5175599999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.004560000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5221199999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00458, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5267
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0046, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5313
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00462, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.53592
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00464, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5405599999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00466, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5452199999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00468, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5498999999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0047, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5546
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00472, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5593199999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00474, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5640599999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0047599999999999995, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5688199999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0047799999999999995, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5735999999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0048, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5783999999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00482, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.58322
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00484, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5880599999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00486, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5929199999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00488, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.5977999999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0049, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.6026999999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00492, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.6076199999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00494, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.61256
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00496, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.61752
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00498, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.6224999999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.005, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.6275
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00502, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.63252
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00504, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.63756
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00506, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.64262
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00508, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.6476999999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0051, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.6527999999999999
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00512, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.65792
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0051400000000000005, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.66306
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0051600000000000005, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.66822
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.005180000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.6734
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.005200000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.6786
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.005220000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.68382
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.005240000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.68906
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00526, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.69432
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00528, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.6996
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0053, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.7049
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00532, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.71022
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00534, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.71556
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00536, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.72092
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00538, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.7263000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0054, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.7317
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00542, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.73712
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.00544, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.74256
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0054600000000000004, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.74802
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0054800000000000005, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.7535000000000001
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.0055000000000000005, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.759
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.005520000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.76452
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.005540000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.77006
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Reward: 0.005560000000000001, Done: False
+Observations [0.   7.95 7.95 7.95 7.95 7.95 7.95 7.95 7.95]
+angle:455.5014471290045
+Total Reward: 0.77562
+<class 'numpy.ndarray'>
+[0 0 0 0 0 0 0 0]
+-> check point: WAIT for INPUT !!!!Starting communication through TCP: localhost10042
+Finished Setup the communication
+Working.........................................................................................................................................................................................................................................................................................

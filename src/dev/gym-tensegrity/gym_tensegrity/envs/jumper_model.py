@@ -155,6 +155,9 @@ class JumperModel():
             end_points.append(self.sim_json["End_points"][i])
         return end_points
 
+    def getLegEndPoints(self):
+        return [self.sim_json["End_points"][self.leg_end_points[0]], self.sim_json["End_points"][self.leg_end_points[1]]]
+
     # point_a: is the end point of the leg from down
     # point_b: is the end point of the virtual horizontal leg from up
     # point_c: is the end point of the actual leg from up

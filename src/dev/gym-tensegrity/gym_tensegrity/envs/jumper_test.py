@@ -2,6 +2,7 @@ import gym
 import gym_tensegrity
 import numpy as np
 import os
+from time import sleep
 
 # Discrete action space functions testing
 def main(port_num=10042):
@@ -123,30 +124,33 @@ def main_cont_dlengths(port_num=10042):
     tot_reward = 0
     env = gym.make('gym_tensegrity:jumper-v0')
     # action = randint(0,15)
-    action = np.array([0 for i in range(8)])
-    # action[0] = 5
+    action = np.array([0. for i in range(8)])
+    # action[0] = 1.7
     print("Action: {:}".format(action))
     # input("-> check point: WAIT for INPUT !!!!")
-    init_obs ,tot_reward,_,_=env.step(action)
+    init_obs ,tot_reward,done,_=env.step(action)
 
     print_observation(init_obs)
     print(type(init_obs))
+    action[0] = 0
     # print(env.env.actions_json)
     # print("")
 
     input("-> check point: WAIT for INPUT !!!!")
 
-    while True:
+    while not done:
         # action = env.action_space.sample()
         observation, reward, done, _= env.step(action)
         tot_reward += reward
-        print(type(observation))
-        print(action)
+        print("Action: {:}".format(action))
+
         input("-> check point: WAIT for INPUT !!!!")
         print("Reward: {:}, Done: {:}".format(reward,done))
+        print("Time: {:}".format(env.env.getTime()))
         print_observation(observation)
-        print("angle:{:}".format(observation[-1]*180/np.pi))
+        print("angle:{:}".format(observation[0]*180/np.pi))
         print("Total Reward: {:}".format(tot_reward))
+        # sleep(0.01)
 
 if __name__ == "__main__":
     main_cont_dlengths()

@@ -61,6 +61,8 @@ void LengthController::onSetup(JumperModel& subject)
   LengthController::tcp_com->setup();
   std::cout<<"Finished Setup the communication\n";
 
+  printf("LengthController is working now\n");
+
 
   JSON_Structure::setup();
   m_controllers.clear(); //clear vector of controllers
@@ -82,7 +84,7 @@ void LengthController::onSetup(JumperModel& subject)
     tgBasicActuator * const pActuator = actuators[i];
     assert(pActuator != NULL);  //precondition
     //instantiate controllers for each cable
-    tgBasicController* m_lenController = new tgBasicController(pActuator, m_length);
+    tgBasicController* m_lenController = new tgBasicController(pActuator);
     //add controller to vector
     m_controllers.push_back(m_lenController);
     //generate random end restlength
@@ -107,6 +109,8 @@ void LengthController::onStep(JumperModel& subject, double dt)
     globalTime += dt;
     if(globalTime > 0){ //delay start of cable actuation
       if(toggle==0){    //print once when motors start moving
+        std::cout<<"Working...\n";
+
         cout << endl << "Activating Cable Motors -------------------------------------" << endl;
         std::cout<<"End Point"<<0<<"\nPoint:"<<actuators[0]->getAnchors_mod()[1]->getWorldPosition()<<"\n----------------------\n";
         for(int i = 1; i < 6; i++){
@@ -144,6 +148,9 @@ void LengthController::onStep(JumperModel& subject, double dt)
         if(all_reached_target == true){
           char buffer[MAX_BUFF_SIZE];
           bzero(&buffer,MAX_BUFF_SIZE);
+          // std::cout<<".\n";
+          // std::cout<<"Buffer ::";//DEBUG
+          // std::cout<<buffer<<"\n";//DEBUG
           LengthController::tcp_com->read_TCP(buffer,MAX_BUFF_SIZE);
           read_json = JSON_Structure::stringToJson(buffer);
         }
