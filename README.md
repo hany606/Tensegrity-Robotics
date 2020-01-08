@@ -55,8 +55,11 @@ Sometimes there are errors regarding this library, hence, you can comment [this 
 	cd Model_name
 	./App_Name_Model
 	```
-7. To run the openAI gym custom environment and test it. However, you will to change the line 39 in the python file with the correct path. [TODO it will detect by itself the path].
+7. To run the openAI gym custom environment and test it. You need first to export the directory folder, then you can run the test for the environment or just install the gym_tensegrity library as it is described in this [README](https://github.com/hany606/Tensegrity-Robotics/blob/master/src/dev/gym-tensegrity/README.md)
+	```bash
+	export TENSEGRITY_HOME="absolute/path/to/the/root/folder"
+	```
 	```bash
 	cd src/dev/legz/gym-leg/gym_leg/envs/
-	python3 leg_env.py
+	python3 jumper_test.py
 	```
