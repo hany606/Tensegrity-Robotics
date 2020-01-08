@@ -71,6 +71,7 @@ class JumperEnv(gym.Env):
         self.min_leg_angle = -np.pi/2
         self.max_leg_angle =  np.pi/2
         self.dl = self.config['dl']
+        self.count_rewards_flag = False
         
         self.env = JumperModel(host_name=self.config['host_name'], port_num=self.config['port_num'], sim_exec=self.config['sim_exec'], dl=self.config['dl'])
         self.env.startSimulator()
@@ -193,11 +194,19 @@ class JumperEnv(gym.Env):
         #   - The angle of the leg
         #   - The time
         time = self.env.getTime()
-        # The coefficient of the the time has been calculated according to y = ct and having t_max= 200, y_max= 4 (the maximum reward that can be gained)
-        # The total reward from the time that can be gained will be 400 (using the integration) 
-        
-        # I multiplied the factor in 10 to increase the negative reward
-        return 0.02*time - 10*0.4*abs(self.env.getLegAngle())
+        leg_end_points_lower_z = self.env.getLegEndPoints()[0][1]
+        if(leg_end_points_lower_z < 1.5):
+                self.count_rewards_flag = True
+
+        # Due to problem in counting the rewards while dropping from the sky, it is better to start
+        #   giving rewards when it lands to the ground
+        if(self.count_rewards_flag):
+            # Positive survival rewards and negative reward proportional with the angle of the leg
+            reward = 2 - 8*abs(self.env.getLegAngle())
+        else:
+            reward = 0
+
+        return reward
 
     def _isDone(self):
         #  The criteria for finish will be either

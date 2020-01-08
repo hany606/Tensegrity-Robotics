@@ -60,11 +60,10 @@ public:
 
 private:
 	
-    double m_length = 200;
     const int port_num;
     const char* host_name;
     double globalTime = 0;
-    int toggle;
+    int toggle = 0;
     std::vector<int> actuators_states;
     TCP* tcp_com;
 };
