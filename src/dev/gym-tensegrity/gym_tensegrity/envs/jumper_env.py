@@ -195,7 +195,8 @@ class JumperEnv(gym.Env):
         #   - The time
         time = self.env.getTime()
         leg_end_points_lower_z = self.env.getLegEndPoints()[0][1]
-        if(leg_end_points_lower_z < 1.5):
+        # print("Z_LEG:{:}".format(leg_end_points_lower_z))
+        if(leg_end_points_lower_z < 2):
                 self.count_rewards_flag = True
 
         # Due to problem in counting the rewards while dropping from the sky, it is better to start
@@ -205,6 +206,10 @@ class JumperEnv(gym.Env):
             reward = 2 - 8*abs(self.env.getLegAngle())
         else:
             reward = 0
+
+        if(self._isDone()):
+            reward = -10
+
 
         return reward
 
