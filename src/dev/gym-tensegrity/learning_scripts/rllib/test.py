@@ -4,6 +4,7 @@ import ray
 from ray import tune
 
 def create_environment(env_config):
+    print(env_config.worker_index)
     import gym_tensegrity
     return gym.make('gym_tensegrity:jumper-v0')
 
@@ -25,26 +26,26 @@ def create_environment(env_config):
 ray.init()
 tune.register_env("Jumper", create_environment)
 # tune.register_env("Jumper", lambda config: MultiEnvPorts(config))
-analysis = tune.run(
-        "ARS",
-        name="long_Train",
-        stop={
-            "timesteps_total": 500000,
-        },
-        verbose=2,
-        reuse_actors= True,
-        config={
-            "env": "Jumper",
-            "num_workers": 1,
-            "noise_stdev": 0.02,
-            "num_rollouts": 30,
-            "rollouts_used": 30,
-            "sgd_stepsize": 0.01,
-            "noise_size": 250000000,
-            "eval_prob": 0.09,
-            # "num_envs_per_worker":1,
-        },
-    )
+# analysis = tune.run(
+#         "ARS",
+#         name="long_Train",
+#         stop={
+#             "timesteps_total": 100,
+#         },
+#         verbose=2,
+#         reuse_actors= True,
+#         config={
+#             "env": "Jumper",
+#             "num_workers": 1,
+#             "noise_stdev": 0.02,
+#             "num_rollouts": 30,
+#             "rollouts_used": 30,
+#             "sgd_stepsize": 0.01,
+#             "noise_size": 250000000,
+#             "eval_prob": 0.09,
+#             # "num_envs_per_worker":1,
+#         },
+#     )
 
 # print("*-*-*-*-*--*-**-*-*-*-*-*-*-*-*--*-*---*--*-*-*-*-*--*-*--*-*-*--*-")
 # for i in analysis.trials:

@@ -52,7 +52,7 @@ class JumperEnv(gym.Env):
         if(config is not None):    
             self.config =  {
                             'host_name': 'localhost' if 'host_name' not in config.keys() else config['host_name'],
-                            'port_num':10042 if 'port_num' not in config.keys() else config['port_num'],
+                            'port_num':None if 'port_num' not in config.keys() else config['port_num'],
                             'sim_exec':sim_exec if 'sim_exec' not in config.keys() else config['sim_exec'],
                             'dl':0.1 if 'dl' not in config.keys() else config['dl'],
                             'observation': 'end_points' if 'observation' not in config.keys() else config['observation']
@@ -60,7 +60,7 @@ class JumperEnv(gym.Env):
         else:
             self.config =  {
                             'host_name': 'localhost',
-                            'port_num':10042,
+                            'port_num':None,
                             'sim_exec':sim_exec,
                             'dl':0.1,
                             'observation':'end_points'
