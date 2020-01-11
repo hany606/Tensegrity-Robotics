@@ -262,7 +262,7 @@ class JumperEnv(gym.Env):
         self.env.reset()
         self.env.step()
         # Not necessary as long as we didn't comment it in the _takeAction above
-        for i in self.env.controllers_num:
+        for i in range(self.env.controllers_num):
             self.env.actions_json["Controllers_val"][i] = 0
 
         # get the observations after the resetting of the environment
