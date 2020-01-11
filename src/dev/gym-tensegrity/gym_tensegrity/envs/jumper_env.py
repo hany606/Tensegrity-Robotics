@@ -54,22 +54,31 @@ class JumperEnv(gym.Env):
                             'host_name': 'localhost' if 'host_name' not in config.keys() else config['host_name'],
                             'port_num':10042 if 'port_num' not in config.keys() else config['port_num'],
                             'sim_exec':sim_exec if 'sim_exec' not in config.keys() else config['sim_exec'],
-                            'dl':0.1 if 'dl' not in config.keys() else config['dl']
+                            'dl':0.1 if 'dl' not in config.keys() else config['dl'],
+                            'observation': 'end_points' if 'observation' not in config.keys() else config['observation']
                             }
         else:
             self.config =  {
                             'host_name': 'localhost',
                             'port_num':10042,
                             'sim_exec':sim_exec,
-                            'dl':0.1
+                            'dl':0.1,
+                            'observation':'end_points'
                             }
 
         super(JumperEnv, self).__init__()
+
+        if(self.config['observation'] not in ['end_points', 'rest_length', 'current_length']):
+            raise Exception("Wrong choice for the type of the observation, you should choose one of these [end_points(default), rest_length, current_length]")
+
         # Agent self variables
         self.max_time = 200
         self.max_cable_length = 50
         self.min_leg_angle = -np.pi/2
         self.max_leg_angle =  np.pi/2
+        self.end_points_num = 6
+        self.min_coordinate = -200
+        self.max_coordinate = -self.min_coordinate
         self.dl = self.config['dl']
         self.count_rewards_flag = False
         
@@ -99,12 +108,29 @@ class JumperEnv(gym.Env):
         high = np.array([self.delta_length for i in range(self.env.controllers_num)])
         self.action_space = spaces.Box(low=low, high=high, dtype=np.float32)
 
-        low = np.array(self.min_leg_angle)
-        low = np.append(low, np.zeros(self.env.controllers_num))
 
-        high = np.array(self.max_leg_angle)
-        high = np.append(high, np.full((1,self.env.controllers_num), self.max_cable_length))
- 
+        if(self.config['observation'] == 'end_points'):
+            low = np.empty((1,0))
+            low = np.append(low, np.full((1,self.end_points_num*3), self.min_coordinate))
+
+            high = np.empty((1,0))
+            high = np.append(high, np.full((1,self.end_points_num*3), self.max_coordinate))
+
+        
+        elif(self.config['observation'] == 'rest_length'):
+            low = np.array(self.min_leg_angle)
+            low = np.append(low, np.zeros(self.env.controllers_num))
+
+            high = np.array(self.max_leg_angle)
+            high = np.append(high, np.full((1,self.env.controllers_num), self.max_cable_length))
+
+        elif(self.config['observation'] == 'current_length'):
+            low = np.array(self.min_leg_angle)
+            low = np.append(low, np.zeros(self.env.controllers_num))
+
+            high = np.array(self.max_leg_angle)
+            high = np.append(high, np.full((1,self.env.controllers_num), self.max_cable_length))            
+
         self.observation_space = spaces.Box(low= low, high= high, dtype=np.float32)
 
         # To randomize the initial state of the strings
@@ -183,19 +209,29 @@ class JumperEnv(gym.Env):
     #   1- Angle of the leg
     #   2- Cables' lengths
     def _getObservation(self):
-        observation = np.empty((1,0))
-        observation = np.append(observation, self.env.getLegAngle())
-        observation = np.append(observation, self.env.getCablesLengths())
+        if(self.config['observation'] == 'end_points'):
+            observation = np.empty((1,0))
+            for i in self.env.getEndPoints():
+                observation = np.append(observation, i)
+
+        elif(self.config['observation'] == 'rest_length'):
+            observation = np.empty((1,0))
+            observation = np.append(observation, self.env.getLegAngle())
+            observation = np.append(observation, self.env.getRestCablesLengths())
+
+        elif(self.config['observation'] == 'current_length'):
+            observation = np.empty((1,0))
+            observation = np.append(observation, self.env.getLegAngle())
+            observation = np.append(observation, self.env.getCurrentCablesLengths())
+
         # print("finish getting the observation")
         return np.array(observation)
 
     def _getReward(self, observation):
         # Reward Criteria will depend on:
-        #   - The angle of the leg
-        #   - The time
-        time = self.env.getTime()
+        # Survival rewards with the time
+
         leg_end_points_lower_z = self.env.getLegEndPoints()[0][1]
-        # print("Z_LEG:{:}".format(leg_end_points_lower_z))
         if(leg_end_points_lower_z < 2):
                 self.count_rewards_flag = True
 
@@ -203,13 +239,9 @@ class JumperEnv(gym.Env):
         #   giving rewards when it lands to the ground
         if(self.count_rewards_flag):
             # Positive survival rewards and negative reward proportional with the angle of the leg
-            reward = 2 - 8*abs(self.env.getLegAngle())
+            reward = 1
         else:
             reward = 0
-
-        if(self._isDone()):
-            reward = -10
-
 
         return reward
 
@@ -230,8 +262,8 @@ class JumperEnv(gym.Env):
         self.env.reset()
         self.env.step()
         # Not necessary as long as we didn't comment it in the _takeAction above
-        # for i in self.env.controllers_num:
-        #     self.env.actions_json["Controllers_val"][i] = 0
+        for i in self.env.controllers_num:
+            self.env.actions_json["Controllers_val"][i] = 0
 
         # get the observations after the resetting of the environment
         return self._getObservation()

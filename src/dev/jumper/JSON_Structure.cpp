@@ -9,7 +9,10 @@ using json = nlohmann::json;
 
 void JSON_Structure::setup(){
     JSON_Structure::jsonFile = {
-        {"Cables_lengths", 
+        {"Rest_cables_lengths", 
+            {0,0,0,0,0,0,0,0}
+        },
+        {"Current_cables_lengths", 
             {0,0,0,0,0,0,0,0}
         },
         {"End_points",
@@ -27,8 +30,12 @@ void JSON_Structure::setup(json jsonFile){
     JSON_Structure::jsonFile = jsonFile;
 }
 
-void JSON_Structure::setController(int num, double val){
-    JSON_Structure::jsonFile["Cables_lengths"][num] = val;
+void JSON_Structure::setRestCableLength(int num, double val){
+    JSON_Structure::jsonFile["Rest_cables_lengths"][num] = val;
+}
+
+void JSON_Structure::setCurrentCableLength(int num, double val){
+    JSON_Structure::jsonFile["Current_cables_lengths"][num] = val;
 }
 
 void JSON_Structure::setEndPoints(int num, btVector3 end_point){
