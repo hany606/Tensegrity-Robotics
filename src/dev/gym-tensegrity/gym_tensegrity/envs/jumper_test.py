@@ -135,7 +135,7 @@ def main_cont_dlengths(config):
     # print(env.env.actions_json)
     # print("")
 
-    # input("-> check point: WAIT for INPUT !!!!")
+    input("-> check point: WAIT for INPUT !!!!")
 
     while not done:
         # action = env.action_space.sample()

@@ -6,6 +6,7 @@ import ray.rllib.agents.ppo as ppo
 
 
 def create_environment(env_config):
+    print(env_config.worker_index)
     import gym
     return gym.make('MountainCarContinuous-v0')
 

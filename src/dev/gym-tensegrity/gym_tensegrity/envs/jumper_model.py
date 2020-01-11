@@ -24,7 +24,6 @@ class JumperModel():
         self.host_name = host_name
         self.port_num = port_num
         self.packet_size = packet_size
-        self.sim_exec = sim_exec + ' {:} {:}'.format(host_name, port_num)
         self.actions_json = {
             'Controllers_val': [0,0,0,0,0,0,0,0],
             'Reset': 0
@@ -43,6 +42,8 @@ class JumperModel():
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         # print(self.port_num)
+        if(self.port_num is None):
+            self.port_num = 0
         self.server_address = [self.host_name, self.port_num] # Bind the socket to the port
 
         self.connection = None
@@ -51,11 +52,13 @@ class JumperModel():
         print('#########\nstarting up on {}\n#########'.format(self.server_address))
         try:
             self.sock.bind(tuple(self.server_address))
+
         except socket.error as exc:
             self.port_num += 1
             self.server_address[1] = self.port_num
             print('#########\nstarting up on {} after getting an error of busy port first\n#########'.format(self.server_address))
             self.sock.bind(tuple(self.server_address))
+        print('#########\nConnected to port: {:}\n#########'.format(self.sock.getsockname()[1]))
         print('#########\nServer binding is finished\n#########')
         self.sock.listen(1)  # Listen for incoming connections
         self.reset_flag = False
@@ -65,6 +68,9 @@ class JumperModel():
         self.controllers_num = controllers_num    # Self modified parameter
         self.leg_end_points = [4,5]
         self.leg_length = 20
+        self.port_num = self.sock.getsockname()[1]
+        self.sim_exec = sim_exec + ' {:} {:}'.format(host_name, self.port_num)
+
 
     def __del__(self):
         self.closeSimulator()
