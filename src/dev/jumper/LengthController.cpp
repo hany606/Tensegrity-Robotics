@@ -230,9 +230,12 @@ void LengthController::onStep(JumperModel& subject, double dt)
             // std::cout<<"End Point"<<i<<"\nPoint:"<<end_point<<"\n----------------------\n";
           }
 
+
           // (2) Get the length of targeting cables
           for(int i = 0; i < actuators.size(); i++){
-            JSON_Structure::setController(i, (int) (actuators[i]->getRestLength()*10000) /10000.0);
+            JSON_Structure::setRestCableLength(i, (int) (actuators[i]->getRestLength()*10000) /10000.0);
+            JSON_Structure::setCurrentCableLength(i, (int) (actuators[i]->getCurrentLength()*10000) /10000.0);
+
           }
 
           // (3) Get the reached flag

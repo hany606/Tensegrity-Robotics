@@ -34,3 +34,5 @@ src/.settings/org.eclipse.cdt.codan.core.prefs
 
 !src/dev/test/json/
 
+*_ignore.txt
+

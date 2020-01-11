@@ -118,11 +118,11 @@ def main_cont_lengths(port_num=10042):
         print("angle:{:}".format(observation[-1]*180/np.pi))
 
 # Continuous action space for delta lengths function testing
-def main_cont_dlengths(port_num=10042):
+def main_cont_dlengths(config):
     def print_observation(obs):
         print("Observations {:}".format(obs))
     tot_reward = 0
-    env = gym.make('gym_tensegrity:jumper-v0')
+    env = gym.make('gym_tensegrity:jumper-v0', config=config)
     # action = randint(0,15)
     action = np.array([0. for i in range(8)])
     # action[0] = 1.7
@@ -131,12 +131,11 @@ def main_cont_dlengths(port_num=10042):
     init_obs ,tot_reward,done,_=env.step(action)
 
     print_observation(init_obs)
-    print(type(init_obs))
     action[0] = 0
     # print(env.env.actions_json)
     # print("")
 
-    input("-> check point: WAIT for INPUT !!!!")
+    # input("-> check point: WAIT for INPUT !!!!")
 
     while not done:
         # action = env.action_space.sample()
@@ -144,16 +143,19 @@ def main_cont_dlengths(port_num=10042):
         tot_reward += reward
         print("Action: {:}".format(action))
 
-        input("-> check point: WAIT for INPUT !!!!")
+        # input("-> check point: WAIT for INPUT !!!!")
         print("Reward: {:}, Done: {:}".format(reward,done))
         print("Time: {:}".format(env.env.getTime()))
         print_observation(observation)
-        print("angle:{:}".format(observation[0]*180/np.pi))
+        if(config["observation"] is not "end_points"):
+            print("angle:{:}".format(observation[0]*180/np.pi))
         print("Total Reward: {:}".format(tot_reward))
-        # sleep(0.01)
+        sleep(0.02)
+    input("-> check point: WAIT for INPUT !!!!")
+    
 
 if __name__ == "__main__":
-    main_cont_dlengths()
+    main_cont_dlengths({'observation':'end_points'})
     # main_cont_lengths()
     # main()
     # forked_process_main()

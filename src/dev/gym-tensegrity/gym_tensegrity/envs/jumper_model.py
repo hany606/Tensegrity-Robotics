@@ -29,7 +29,9 @@ class JumperModel():
             'Controllers_val': [0,0,0,0,0,0,0,0],
             'Reset': 0
         }
-        self.sim_json = {"Cables_lengths":
+        self.sim_json = {"Rest_cables_lengths":
+                        [0,0,0,0,0,0,0,0],
+                        "Current_cables_lengths":
                         [0,0,0,0,0,0,0,0],
                          "End_points":
                         [[0.,0.,0.], [0.,0.,0.], [0.,0.,0.], [0.,0.,0.], 
@@ -144,13 +146,20 @@ class JumperModel():
         else:
             self.closeSimulator()
 
-    def getCablesLengths(self, i=None):
+    def getRestCablesLengths(self, i=None):
         if(i is None):
-            return self.sim_json["Cables_lengths"]
-        return self.sim_json["Cables_lengths"][i]
+            return self.sim_json["Rest_cables_lengths"]
+        return self.sim_json["Rest_cables_lengths"][i]
         
+    
+    def getCurrentCablesLengths(self, i=None):
+        if(i is None):
+            return self.sim_json["Current_cables_lengths"]
+        return self.sim_json["Current_cables_lengths"][i]
+
     def getEndPoints(self):
         end_points = []
+        # Notice that the end_points are in the form (y,z,x) as it is coming from the simulator like this
         for i in range(self.end_points_num):
             end_points.append(self.sim_json["End_points"][i])
         return end_points

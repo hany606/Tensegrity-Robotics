@@ -12,7 +12,9 @@ namespace JSON_Structure
 
     void setup();
     void setup(nlohmann::json jsonFile);
-    void setController(int num, double val);
+    void setRestCableLength(int num, double val);
+    void setCurrentCableLength(int num, double val);
+
     // void setCenterOfMass(int num, double x, double y, double z);
     // void setOrientation(int num, double i, double j, double k, double w);
     void setEndPoints(int num, btVector3 end_point);
