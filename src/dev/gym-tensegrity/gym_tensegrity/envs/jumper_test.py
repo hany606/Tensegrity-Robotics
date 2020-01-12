@@ -147,15 +147,14 @@ def main_cont_dlengths(config):
         print("Reward: {:}, Done: {:}".format(reward,done))
         print("Time: {:}".format(env.env.getTime()))
         print_observation(observation)
-        if(config["observation"] is not "end_points"):
-            print("angle:{:}".format(observation[0]*180/np.pi))
+        print("angle:{:}".format(env.env.getLegAngle()*180/np.pi))
         print("Total Reward: {:}".format(tot_reward))
         sleep(0.02)
     input("-> check point: WAIT for INPUT !!!!")
     
 
 if __name__ == "__main__":
-    main_cont_dlengths({'observation':'end_points'})
+    main_cont_dlengths({'observation':['end_points', 'rest_length']})
     # main_cont_lengths()
     # main()
     # forked_process_main()
