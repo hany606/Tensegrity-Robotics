@@ -6,7 +6,8 @@ import ray.rllib.agents.ppo as ppo
 
 
 def create_environment(env_config):
-    print(env_config.worker_index)
+    config = {'port_num': 10000+int(env_config.worker_index)}
+    print("WORKER: {:}, {:}, {:}".format(env_config.worker_index, type(env_config.worker_index), config))
     import gym
     return gym.make('MountainCarContinuous-v0')
 
