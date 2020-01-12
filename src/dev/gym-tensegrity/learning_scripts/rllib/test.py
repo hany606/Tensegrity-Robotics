@@ -3,9 +3,19 @@ import gym_tensegrity
 import ray
 from ray import tune
 
+def static_vars(**kwargs):
+    def decorate(func):
+        for k in kwargs:
+            setattr(func, k, kwargs[k])
+        return func
+    return decorate
+
+# @static_vars(counter=0)
 def create_environment(env_config):
-    print(env_config.worker_index)
+    # config = {'port_num': 10000+create_environment.counter}
+    # create_environment.counter += 1
     import gym_tensegrity
+    # return gym.make('gym_tensegrity:jumper-v0', config=config)
     return gym.make('gym_tensegrity:jumper-v0')
 
 
@@ -23,29 +33,29 @@ def create_environment(env_config):
 #     def step(self, action):
 #         return self.env.step(action)
 
+tune.register_env("jumper", create_environment)
 ray.init()
-tune.register_env("Jumper", create_environment)
 # tune.register_env("Jumper", lambda config: MultiEnvPorts(config))
-# analysis = tune.run(
-#         "ARS",
-#         name="long_Train",
-#         stop={
-#             "timesteps_total": 100,
-#         },
-#         verbose=2,
-#         reuse_actors= True,
-#         config={
-#             "env": "Jumper",
-#             "num_workers": 1,
-#             "noise_stdev": 0.02,
-#             "num_rollouts": 30,
-#             "rollouts_used": 30,
-#             "sgd_stepsize": 0.01,
-#             "noise_size": 250000000,
-#             "eval_prob": 0.09,
-#             # "num_envs_per_worker":1,
-#         },
-#     )
+analysis = tune.run(
+        "ARS",
+        name="long_Train",
+        stop={
+            "timesteps_total": 1000000,
+        },
+        verbose=2,
+        reuse_actors= True,
+        config={
+            "env": "jumper",
+            "num_workers": 10,
+            "noise_stdev": 0.02,
+            "num_rollouts": 30,
+            "rollouts_used": 30,
+            "sgd_stepsize": 0.03,
+            "noise_size": 250000000,
+            "eval_prob": 0.5,
+            # "num_envs_per_worker":1,
+        },
+    )
 
 # print("*-*-*-*-*--*-**-*-*-*-*-*-*-*-*--*-*---*--*-*-*-*-*--*-*--*-*-*--*-")
 # for i in analysis.trials:
