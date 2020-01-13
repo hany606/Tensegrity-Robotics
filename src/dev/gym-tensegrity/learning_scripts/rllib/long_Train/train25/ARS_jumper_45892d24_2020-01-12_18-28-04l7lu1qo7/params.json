@@ -1,0 +1,10 @@
+{
+  "env": "jumper",
+  "eval_prob": 0.5,
+  "noise_size": 25000000,
+  "noise_stdev": 0.02,
+  "num_rollouts": 8,
+  "num_workers": 10,
+  "rollouts_used": 4,
+  "sgd_stepsize": 0.01
+}
