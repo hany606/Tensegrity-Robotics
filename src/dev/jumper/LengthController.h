@@ -15,12 +15,16 @@
 #include "controllers/tgBasicController.h"
 #include "core/tgBasicActuator.h"
 #include "tgcreator/tgNode.h"
+#include "nlohmann/json.hpp"
 
 // The C++ Standard Library
 #include <vector>
 
 #include "TCP.h"
 #include "JSON_Structure.h"
+
+
+
 
 // Forward declarations
 class JumperModel;
@@ -34,7 +38,7 @@ public:
 	 * @param[in] tension, a double specifying the desired tension
 	 * throughougt structure. Must be non-negitive
 	 */
-    LengthController(const char* host, const long long port);
+    LengthController(const char* host, const long long port, int control_type);
     
     /**
      * Nothing to delete, destructor must be virtual
@@ -52,6 +56,13 @@ public:
      */
     virtual void onStep(JumperModel& subject, double dt);
 
+    virtual void controlRestLength(nlohmann::json read_json, double dt, double time);
+    virtual void controlRestLength_mod(nlohmann::json read_json, double dt, double time);
+    virtual void controlCurrentLength(nlohmann::json read_json, double dt, double time);
+    virtual void controlCurrentLength_mod(nlohmann::json read_json, double dt, double time);
+
+
+
     std::vector<tgBasicController*> m_controllers; //instantiate vector of controllers
     std::vector<double> start_lengths; //instantiate vector of random restlengths
     std::vector<tgBasicActuator*> actuators;
@@ -64,6 +75,7 @@ private:
     const char* host_name;
     double globalTime = 0;
     int toggle = 0;
+    int control_type = 1;
     std::vector<int> actuators_states;
     TCP* tcp_com;
 };

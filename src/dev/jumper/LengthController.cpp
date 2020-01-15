@@ -7,11 +7,7 @@
 
 // This module
 #include "LengthController.h"
-#include "nlohmann/json.hpp"
-
 #include <core/tgSpringCableActuator.h>
-
-
 
 
 // The C++ Standard Library
@@ -28,8 +24,8 @@
 // #define PORT_NUM 10042
 #define MAX_BUFF_SIZE 5000
 #define EPS 0.00001  
-#define SMALL_EPS(eps) EPS/1000.0
-
+#define SMALL_EPS(eps) eps/1000.0
+#define BIG_EPS(eps) eps*10.0
 using namespace std;
 using json = nlohmann::json;
 
@@ -39,13 +35,23 @@ bool all_reached_target = true;
 vector <double> last_error;  //actuators.size()
 
 
-
 // It has been extracted by some nodes that connect betwee nthe controllers of the cabels
 //    and some nodes has been swaped inplace in order to get all the nodes in the first index of the 
 //    anchor list to uniform and ease the access to the data 
 int end_points_map[]={0,1,2,3,0,4};
 
-LengthController::LengthController(const char* host, const long long port): host_name(host), port_num(port){
+// control_type: 0 for rest_length control and 1 for current_length control
+LengthController::LengthController(const char* host, const long long port, int control_type): host_name(host), port_num(port), control_type(control_type){
+  if(control_type == 0)
+    printf("The controller is on the rest_length mode\n");
+  else if(control_type == 1)
+    printf("The controller is on the current_length mode\n");
+  else if(control_type == 2)
+    printf("The controller is on the rest_length_mod mode\n");  
+  else if(control_type == 3)
+    printf("The controller is on the current_length_mod mode\n");
+  else
+    throw std::invalid_argument( "control_type should be 0 for rest_length or 1 for current_length\n You choosed sometthing different in App.....cpp please change it\n" );
 
 }
 
@@ -71,9 +77,6 @@ void LengthController::onSetup(JumperModel& subject)
   //get all of the tensegrity structure's cables
   actuators = subject.getAllActuators();
   rods = subject.getAllRods();
-
-
-
 
   printf("Number of actuators: %d , Number of Rods: %d\n", (int) actuators.size(), (int) rods.size());
   // std::cout<<rods[1]->getTags()[0][1]<<"\n";
@@ -131,9 +134,9 @@ void LengthController::onStep(JumperModel& subject, double dt)
         //actuators[0] between point 1,6
         //actuators[3] between point 0,4
         //rod[0] between point 0,1
-        std::cout<<"CMS: "<<rods[0]->centerOfMass()<<"\nPoint1:"<<actuators[3]->getAnchors_mod()[0]->getWorldPosition()<<"\nPoint2:"<<actuators[0]->getAnchors_mod()[0]->getWorldPosition()<<"\n";
-        std::cout<<rods[1]->length()<<"\n";
-        std::cout<<rods[1]->getPRigidBody()<<"\n";
+        // std::cout<<"CMS: "<<rods[0]->centerOfMass()<<"\nPoint1:"<<actuators[3]->getAnchors_mod()[0]->getWorldPosition()<<"\nPoint2:"<<actuators[0]->getAnchors_mod()[0]->getWorldPosition()<<"\n";
+        // std::cout<<rods[1]->length()<<"\n";
+        // std::cout<<rods[1]->getPRigidBody()<<"\n";
       }
       /**
        * Observations:
@@ -155,65 +158,15 @@ void LengthController::onStep(JumperModel& subject, double dt)
           read_json = JSON_Structure::stringToJson(buffer);
         }
 
-        //set new targets
-        if(all_reached_target == true){
-          all_reached_target = false;
-          for(int i = 0; i < actuators.size(); i++){
-            // Discrete action space and for cotinous delta lengths
-            target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["Controllers_val"][i];
-            if (target_lengths[i] < 0.0) {
-              target_lengths[i] = 0.0;
-            }
+        if(LengthController::control_type == 0)
+          LengthController::controlRestLength(read_json, dt, globalTime);
+        else if(LengthController::control_type == 1)
+          LengthController::controlCurrentLength(read_json, dt, globalTime);
+        else if(LengthController::control_type == 2)
+          LengthController::controlRestLength_mod(read_json, dt, globalTime);
+        else if(LengthController::control_type == 3)
+          LengthController::controlCurrentLength_mod(read_json, dt, globalTime);
 
-            // Continuous action space for lengths
-            // target_lengths[i] = (double)read_json["Controllers_val"][i];
-
-          }
-        }
-
-        int counter = 0;
-        int reached_counter = 0;
-        for(int i = 0; i < actuators.size(); i++){
-          if(((double) read_json["Controllers_val"][i]) == 0)
-            continue;
-          
-          counter++;
-          double error_sign = actuators[i]->getRestLength() - target_lengths[i];
-          double error = fabs(error_sign);
-          // if(error == last_error[i]){
-          double stuck_err = last_error[i] - error;
-          // that the error is equal to the last_error and the last_error was greater than the current error and the error was decreasing and the target length is smaller than the current which means that it is going to decrease more
-          if( (actuators[i]->getRestLength() == 0.1  && target_lengths[i] <= actuators[i]->getRestLength()) ||(fabs(stuck_err) < SMALL_EPS(EPS) && stuck_err > 0 && error_sign > 0 )){ //changed
-            // while (1);
-            printf("!!!!Stuck: %d\n",i);
-            // all_reached_target = true;  //TODO: This is wrong, it should just flag the controller reach flag not all
-            reached_counter++;
-            printf("Controller#%d\tError: %lf\n", i, error);
-            std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
-            continue;
-          }
-          printf("Controller#%d\tError: %lf\n", i, error);
-          std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
-
-          // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
-          m_controllers[i]->control(dt, target_lengths[i]);
-          actuators[i]->moveMotors(dt);
-          // printf("%d\n", actuators.size());
-          // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
-          // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
-          if(error <= EPS){
-            // all_reached_target = true;
-            reached_counter++;
-            read_json["Controllers_val"][i] = 0;
-            printf("Reached%d\n", i);
-          }
-          last_error[i] = error;
-        }
-
-        if(reached_counter == counter)
-          all_reached_target = true;
-        if(counter == 0)
-          all_reached_target = true;
 
 
         if(all_reached_target == true){
@@ -245,8 +198,219 @@ void LengthController::onStep(JumperModel& subject, double dt)
           LengthController::tcp_com->write_TCP((void*) json_string.c_str());
         }
       }
+
+      
     }
   }
+
+}
+
+void LengthController::controlRestLength(json read_json, double dt, double time){
+
+  //set new targets
+  if(all_reached_target == true){
+    all_reached_target = false;
+    for(int i = 0; i < actuators.size(); i++){
+      // Discrete action space and for cotinous delta lengths
+      target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["Controllers_val"][i];
+      if (target_lengths[i] < 0.0) {
+        target_lengths[i] = 0.0;
+      }
+
+      // Continuous action space for lengths
+      // target_lengths[i] = (double)read_json["Controllers_val"][i];
+
+    }
+  }
+
+  int counter = 0;
+  int reached_counter = 0;
+  for(int i = 0; i < actuators.size(); i++){
+    if(((double) read_json["Controllers_val"][i]) == 0)
+      continue;
+    
+    counter++;
+    double error_sign = actuators[i]->getRestLength() - target_lengths[i];
+    double error = fabs(error_sign);
+    // if(error == last_error[i]){
+    double stuck_err = last_error[i] - error;
+    // that the error is equal to the last_error and the last_error was greater than the current error and the error was decreasing and the target length is smaller than the current which means that it is going to decrease more
+    if( (actuators[i]->getRestLength() == 0.1  && target_lengths[i] <= actuators[i]->getRestLength()) ||(fabs(stuck_err) < SMALL_EPS(EPS) && stuck_err > 0 && error_sign > 0 ) || fabs(stuck_err) <= BIG_EPS(EPS)*10){ //changed
+      // while (1);
+      printf("!!!!Stuck: %d\n",i);
+      // all_reached_target = true;  //TODO: This is wrong, it should just flag the controller reach flag not all
+      reached_counter++;
+      printf("Controller#%d\tError: %lf\n", i, error);
+      std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+      continue;
+    }
+    printf("Controller#%d\tError: %lf\n", i, error);
+    std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+
+    // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
+    m_controllers[i]->control(dt, target_lengths[i]);
+    actuators[i]->moveMotors(dt);
+    // printf("%d\n", actuators.size());
+    // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
+    // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
+    if(error <= EPS){
+      // all_reached_target = true;
+      reached_counter++;
+      read_json["Controllers_val"][i] = 0;
+      printf("Reached%d\n", i);
+    }
+    last_error[i] = error;
+  }
+
+  if(reached_counter == counter)
+    all_reached_target = true;
+  if(counter == 0)
+    all_reached_target = true;
+  if(all_reached_target == true){
+      for(int i = 0; i < actuators.size(); i++)
+        last_error[i] = 0;
+  }
+}
+
+
+void LengthController::controlRestLength_mod(json read_json, double dt, double time){
+
+  //set new targets
+  if(all_reached_target == true){
+    // all_reached_target = false;
+    for(int i = 0; i < actuators.size(); i++){
+      // Discrete action space and for cotinous delta lengths
+      target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["Controllers_val"][i];
+      if (target_lengths[i] < 0.0) {
+        target_lengths[i] = 0.0;
+      }
+
+      // Continuous action space for lengths
+      // target_lengths[i] = (double)read_json["Controllers_val"][i];
+
+    }
+  }
+
+  for(int i = 0; i < actuators.size(); i++){
+    if(((double) read_json["Controllers_val"][i]) == 0)
+      continue;
+
+    std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+
+    // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
+    m_controllers[i]->control(dt, target_lengths[i]);
+    actuators[i]->moveMotors(dt);
+    // printf("%d\n", actuators.size());
+    // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
+    // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
+    printf("Reached%d\n", i);  
+  }
+
+}
+
+
+
+void LengthController::controlCurrentLength(json read_json, double dt, double time){
+  //set new targets
+  if(all_reached_target == true){
+    all_reached_target = false;
+    for(int i = 0; i < actuators.size(); i++){
+      // Discrete action space and for cotinous delta lengths
+      std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tController Length: "<<(double)read_json["Controllers_val"][i]<<std::endl;
+
+      target_lengths[i] = actuators[i]->getCurrentLength() + (double)read_json["Controllers_val"][i];
+      if (target_lengths[i] < 0.0) {
+        target_lengths[i] = 0.0;
+      }
+      // Continuous action space for lengths
+      // target_lengths[i] = (double)read_json["Controllers_val"][i];
+
+    }
+  }
+
+  int counter = 0;
+  int reached_counter = 0;
+  for(int i = 0; i < actuators.size(); i++){
+    if(((double) read_json["Controllers_val"][i]) == 0)
+      continue;
+    
+    counter++;
+    double error_sign = actuators[i]->getCurrentLength() - target_lengths[i];
+    double error = fabs(error_sign);
+    double stuck_err = last_error[i] - error;
+
+    // Stuck when on of them satisfied
+    //- Converge; The difference between the iteration in the error is less than epsilon (converge to specific length after a specific move)
+    //- Error is increasing; The current error is greater than the previous error + eps
+    if((fabs(last_error[i]) + BIG_EPS(EPS)*10 <= fabs(error) && last_error[i] != 0.0) || fabs(stuck_err) <= BIG_EPS(EPS)){
+      printf("!!!!Stuck: %d\n",i);
+      // all_reached_target = true;  //TODO: This is wrong, it should just flag the controller reach flag not all
+      reached_counter++;
+      printf("Controller#%d\tError: %lf\tlast Error: %lf\n", i, error_sign, last_error[i]);
+      std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+      continue;
+    }
+    printf("Controller#%d\tError: %lf\tlast Error: %lf\n", i, error_sign, last_error[i]);
+    std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+
+    // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
+    m_controllers[i]->control(dt, target_lengths[i]);
+    // printf("%d\n", actuators.size());
+    // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
+    // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
+    if(error <= EPS){
+      // all_reached_target = true;
+      reached_counter++;
+      read_json["Controllers_val"][i] = 0;
+      printf("Reached%d\n", i);
+    }
+    last_error[i] = error;
+  }
+  if(reached_counter == counter)
+    all_reached_target = true;
+
+  if(counter == 0)
+    all_reached_target = true;
+
+  if(all_reached_target == true){
+      for(int i = 0; i < actuators.size(); i++)
+        last_error[i] = 0;
+  }
+}
+
+
+
+
+void LengthController::controlCurrentLength_mod(json read_json, double dt, double time){
+  //set new targets
+  if(all_reached_target == true){
+    // all_reached_target = false;
+    for(int i = 0; i < actuators.size(); i++){
+      // Discrete action space and for cotinous delta lengths
+      std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tController Length: "<<(double)read_json["Controllers_val"][i]<<std::endl;
+
+      target_lengths[i] = actuators[i]->getCurrentLength() + (double)read_json["Controllers_val"][i];
+      if (target_lengths[i] < 0.0) {
+        target_lengths[i] = 0.0;
+      }
+      // Continuous action space for lengths
+      // target_lengths[i] = (double)read_json["Controllers_val"][i];
+
+    }
+  }
+
+  for(int i = 0; i < actuators.size(); i++){
+    if(((double) read_json["Controllers_val"][i]) == 0)
+      continue;
+    
+    std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+    m_controllers[i]->control(dt, target_lengths[i]);
+    // printf("%d\n", actuators.size());
+    // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
+    // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
+    printf("Reached%d\n", i);  
+  }
+  // all_reached_target = true;
 
 }
 

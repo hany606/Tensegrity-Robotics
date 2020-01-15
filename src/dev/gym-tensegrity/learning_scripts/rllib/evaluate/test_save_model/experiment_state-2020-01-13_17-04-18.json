@@ -1,0 +1,773 @@
+{
+  "checkpoints": [
+    {
+      "trainable_name": "ARS",
+      "trial_id": "be177134",
+      "config": {
+        "env": "jumper",
+        "num_workers": 10,
+        "noise_stdev": 0.02,
+        "num_rollouts": 30,
+        "rollouts_used": 30,
+        "sgd_stepsize": 0.01,
+        "noise_size": 250000000,
+        "eval_prob": 0.09
+      },
+      "local_dir": "/root/ray_results/test_save_model",
+      "evaluated_params": {},
+      "experiment_tag": "0",
+      "address": {
+        "_type": "CLOUDPICKLE_FALLBACK",
+        "value": "80049548000000000000008c0e7261792e74756e652e747269616c948c084c6f636174696f6e9493942981947d94288c08686f73746e616d65948c0a3137322e31382e302e36948c03706964944deb3575622e"
+      },
+      "resources": {
+        "cpu": 1,
+        "gpu": 0,
+        "memory": 0,
+        "object_store_memory": 0,
+        "extra_cpu": 10,
+        "extra_gpu": 0,
+        "extra_memory": 0,
+        "extra_object_store_memory": 0,
+        "custom_resources": {},
+        "extra_custom_resources": {}
+      },
+      "stopping_criterion": {
+        "timesteps_total": 10000
+      },
+      "loggers": "80044e2e",
+      "sync_to_driver_fn": "80044e2e",
+      "verbose": true,
+      "max_failures": 0,
+      "last_result": {
+        "episode_reward_mean": {
+          "_type": "CLOUDPICKLE_FALLBACK",
+          "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b00749462430400204f4394869452942e"
+        },
+        "episode_len_mean": NaN,
+        "timesteps_this_iter": {
+          "_type": "CLOUDPICKLE_FALLBACK",
+          "value": "8004956b000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026938944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624308cb0700000000000094869452942e"
+        },
+        "info": {
+          "weights_norm": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b0074946243048d11014494869452942e"
+          },
+          "weights_std": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624304b55eaf3d94869452942e"
+          },
+          "grad_norm": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b0074946243043282ce4594869452942e"
+          },
+          "update_ratio": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b0074946243047cab123d94869452942e"
+          },
+          "episodes_this_iter": 40,
+          "episodes_so_far": 240
+        },
+        "done": true,
+        "timesteps_total": {
+          "_type": "CLOUDPICKLE_FALLBACK",
+          "value": "8004956b000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026938944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624308332b00000000000094869452942e"
+        },
+        "episodes_total": null,
+        "training_iteration": 6,
+        "experiment_id": "616f7bfadbab433e8722e2347578a3c5",
+        "date": "2020-01-13_17-07-04",
+        "timestamp": 1578935224,
+        "time_this_iter_s": 17.691221237182617,
+        "time_total_s": 150.0996208190918,
+        "pid": 13803,
+        "hostname": "c221379d9cf3",
+        "node_ip": "172.18.0.6",
+        "config": {
+          "num_workers": 10,
+          "num_envs_per_worker": 1,
+          "sample_batch_size": 200,
+          "batch_mode": "truncate_episodes",
+          "num_gpus": 0,
+          "train_batch_size": 200,
+          "model": {
+            "conv_filters": null,
+            "conv_activation": "relu",
+            "fcnet_activation": "tanh",
+            "fcnet_hiddens": [
+              256,
+              256
+            ],
+            "free_log_std": false,
+            "no_final_linear": false,
+            "vf_share_layers": true,
+            "use_lstm": false,
+            "max_seq_len": 20,
+            "lstm_cell_size": 256,
+            "lstm_use_prev_action_reward": false,
+            "state_shape": null,
+            "framestack": true,
+            "dim": 84,
+            "grayscale": false,
+            "zero_mean": true,
+            "custom_preprocessor": null,
+            "custom_model": null,
+            "custom_action_dist": null,
+            "custom_options": {}
+          },
+          "optimizer": {},
+          "gamma": 0.99,
+          "horizon": null,
+          "soft_horizon": false,
+          "no_done_at_end": false,
+          "env_config": {},
+          "env": "jumper",
+          "clip_rewards": null,
+          "clip_actions": true,
+          "preprocessor_pref": "deepmind",
+          "lr": 0.0001,
+          "monitor": false,
+          "log_level": "WARN",
+          "callbacks": {
+            "on_episode_start": null,
+            "on_episode_step": null,
+            "on_episode_end": null,
+            "on_sample_end": null,
+            "on_train_result": null,
+            "on_postprocess_traj": null
+          },
+          "ignore_worker_failures": false,
+          "log_sys_usage": true,
+          "eager": false,
+          "eager_tracing": false,
+          "no_eager_on_workers": false,
+          "evaluation_interval": null,
+          "evaluation_num_episodes": 10,
+          "evaluation_config": {},
+          "sample_async": false,
+          "observation_filter": "MeanStdFilter",
+          "synchronize_filters": true,
+          "tf_session_args": {
+            "intra_op_parallelism_threads": 2,
+            "inter_op_parallelism_threads": 2,
+            "gpu_options": {
+              "allow_growth": true
+            },
+            "log_device_placement": false,
+            "device_count": {
+              "CPU": 1
+            },
+            "allow_soft_placement": true
+          },
+          "local_tf_session_args": {
+            "intra_op_parallelism_threads": 8,
+            "inter_op_parallelism_threads": 8
+          },
+          "compress_observations": false,
+          "collect_metrics_timeout": 180,
+          "metrics_smoothing_episodes": 100,
+          "remote_worker_envs": false,
+          "remote_env_batch_wait_ms": 0,
+          "min_iter_time_s": 0,
+          "timesteps_per_iteration": 0,
+          "seed": null,
+          "num_cpus_per_worker": 1,
+          "num_gpus_per_worker": 0,
+          "custom_resources_per_worker": {},
+          "num_cpus_for_driver": 1,
+          "memory": 0,
+          "object_store_memory": 0,
+          "memory_per_worker": 0,
+          "object_store_memory_per_worker": 0,
+          "input": "sampler",
+          "input_evaluation": [
+            "is",
+            "wis"
+          ],
+          "postprocess_inputs": false,
+          "shuffle_buffer_size": 0,
+          "output": null,
+          "output_compress_columns": [
+            "obs",
+            "new_obs"
+          ],
+          "output_max_file_size": 67108864,
+          "multiagent": {
+            "policies": {},
+            "policy_mapping_fn": null,
+            "policies_to_train": null
+          },
+          "noise_stdev": 0.02,
+          "num_rollouts": 30,
+          "rollouts_used": 30,
+          "sgd_stepsize": 0.01,
+          "noise_size": 250000000,
+          "eval_prob": 0.09,
+          "report_length": 10,
+          "offset": 0
+        },
+        "time_since_restore": 150.0996208190918,
+        "timesteps_since_restore": {
+          "_type": "CLOUDPICKLE_FALLBACK",
+          "value": "8004956b000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026938944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624308332b00000000000094869452942e"
+        },
+        "iterations_since_restore": 6,
+        "perf": {
+          "cpu_util_percent": 19.896153846153847,
+          "ram_util_percent": 9.7
+        },
+        "trial_id": "be177134",
+        "experiment_tag": "0"
+      },
+      "last_update_time": 1578935224.9512854,
+      "checkpoint_freq": 0,
+      "checkpoint_at_end": true,
+      "metric_analysis": {
+        "episode_reward_mean": {
+          "max": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b00749462430400c0ad4394869452942e"
+          },
+          "min": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b00749462430400204f4394869452942e"
+          },
+          "last": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b00749462430400204f4394869452942e"
+          }
+        },
+        "episode_len_mean": {
+          "max": NaN,
+          "min": NaN,
+          "last": NaN
+        },
+        "timesteps_this_iter": {
+          "max": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "8004956b000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026938944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624308080800000000000094869452942e"
+          },
+          "min": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "8004956b000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026938944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624308da0500000000000094869452942e"
+          },
+          "last": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "8004956b000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026938944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624308cb0700000000000094869452942e"
+          }
+        },
+        "done": {
+          "max": true,
+          "min": false,
+          "last": true
+        },
+        "timesteps_total": {
+          "max": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "8004956b000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026938944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624308332b00000000000094869452942e"
+          },
+          "min": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "8004956b000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026938944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624308da0500000000000094869452942e"
+          },
+          "last": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "8004956b000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026938944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624308332b00000000000094869452942e"
+          }
+        },
+        "training_iteration": {
+          "max": 6,
+          "min": 1,
+          "last": 6
+        },
+        "timestamp": {
+          "max": 1578935224,
+          "min": 1578935082,
+          "last": 1578935224
+        },
+        "time_this_iter_s": {
+          "max": 54.059420108795166,
+          "min": 7.626896381378174,
+          "last": 17.691221237182617
+        },
+        "time_total_s": {
+          "max": 150.0996208190918,
+          "min": 7.626896381378174,
+          "last": 150.0996208190918
+        },
+        "pid": {
+          "max": 13803,
+          "min": 13803,
+          "last": 13803
+        },
+        "time_since_restore": {
+          "max": 150.0996208190918,
+          "min": 7.626896381378174,
+          "last": 150.0996208190918
+        },
+        "timesteps_since_restore": {
+          "max": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "8004956b000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026938944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624308332b00000000000094869452942e"
+          },
+          "min": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "8004956b000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026938944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624308da0500000000000094869452942e"
+          },
+          "last": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "8004956b000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026938944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624308332b00000000000094869452942e"
+          }
+        },
+        "iterations_since_restore": {
+          "max": 6,
+          "min": 1,
+          "last": 6
+        },
+        "info/weights_norm": {
+          "max": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b0074946243048d11014494869452942e"
+          },
+          "min": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624304962b004494869452942e"
+          },
+          "last": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b0074946243048d11014494869452942e"
+          }
+        },
+        "info/weights_std": {
+          "max": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624304b55eaf3d94869452942e"
+          },
+          "min": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b00749462430446c2ae3d94869452942e"
+          },
+          "last": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624304b55eaf3d94869452942e"
+          }
+        },
+        "info/grad_norm": {
+          "max": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b00749462430444e5fe4594869452942e"
+          },
+          "min": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b0074946243048473be4594869452942e"
+          },
+          "last": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b0074946243043282ce4594869452942e"
+          }
+        },
+        "info/update_ratio": {
+          "max": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b0074946243049250233d94869452942e"
+          },
+          "min": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b007494624304bfed0c3d94869452942e"
+          },
+          "last": {
+            "_type": "CLOUDPICKLE_FALLBACK",
+            "value": "80049567000000000000008c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b0074946243047cab123d94869452942e"
+          }
+        },
+        "info/episodes_this_iter": {
+          "max": 40,
+          "min": 40,
+          "last": 40
+        },
+        "info/episodes_so_far": {
+          "max": 240,
+          "min": 40,
+          "last": 240
+        },
+        "config/num_workers": {
+          "max": 10,
+          "min": 10,
+          "last": 10
+        },
+        "config/num_envs_per_worker": {
+          "max": 1,
+          "min": 1,
+          "last": 1
+        },
+        "config/sample_batch_size": {
+          "max": 200,
+          "min": 200,
+          "last": 200
+        },
+        "config/num_gpus": {
+          "max": 0,
+          "min": 0,
+          "last": 0
+        },
+        "config/train_batch_size": {
+          "max": 200,
+          "min": 200,
+          "last": 200
+        },
+        "config/gamma": {
+          "max": 0.99,
+          "min": 0.99,
+          "last": 0.99
+        },
+        "config/soft_horizon": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/no_done_at_end": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/clip_actions": {
+          "max": true,
+          "min": true,
+          "last": true
+        },
+        "config/lr": {
+          "max": 0.0001,
+          "min": 0.0001,
+          "last": 0.0001
+        },
+        "config/monitor": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/ignore_worker_failures": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/log_sys_usage": {
+          "max": true,
+          "min": true,
+          "last": true
+        },
+        "config/eager": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/eager_tracing": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/no_eager_on_workers": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/evaluation_num_episodes": {
+          "max": 10,
+          "min": 10,
+          "last": 10
+        },
+        "config/sample_async": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/synchronize_filters": {
+          "max": true,
+          "min": true,
+          "last": true
+        },
+        "config/compress_observations": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/collect_metrics_timeout": {
+          "max": 180,
+          "min": 180,
+          "last": 180
+        },
+        "config/metrics_smoothing_episodes": {
+          "max": 100,
+          "min": 100,
+          "last": 100
+        },
+        "config/remote_worker_envs": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/remote_env_batch_wait_ms": {
+          "max": 0,
+          "min": 0,
+          "last": 0
+        },
+        "config/min_iter_time_s": {
+          "max": 0,
+          "min": 0,
+          "last": 0
+        },
+        "config/timesteps_per_iteration": {
+          "max": 0,
+          "min": 0,
+          "last": 0
+        },
+        "config/num_cpus_per_worker": {
+          "max": 1,
+          "min": 1,
+          "last": 1
+        },
+        "config/num_gpus_per_worker": {
+          "max": 0,
+          "min": 0,
+          "last": 0
+        },
+        "config/num_cpus_for_driver": {
+          "max": 1,
+          "min": 1,
+          "last": 1
+        },
+        "config/memory": {
+          "max": 0,
+          "min": 0,
+          "last": 0
+        },
+        "config/object_store_memory": {
+          "max": 0,
+          "min": 0,
+          "last": 0
+        },
+        "config/memory_per_worker": {
+          "max": 0,
+          "min": 0,
+          "last": 0
+        },
+        "config/object_store_memory_per_worker": {
+          "max": 0,
+          "min": 0,
+          "last": 0
+        },
+        "config/postprocess_inputs": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/shuffle_buffer_size": {
+          "max": 0,
+          "min": 0,
+          "last": 0
+        },
+        "config/output_max_file_size": {
+          "max": 67108864,
+          "min": 67108864,
+          "last": 67108864
+        },
+        "config/noise_stdev": {
+          "max": 0.02,
+          "min": 0.02,
+          "last": 0.02
+        },
+        "config/num_rollouts": {
+          "max": 30,
+          "min": 30,
+          "last": 30
+        },
+        "config/rollouts_used": {
+          "max": 30,
+          "min": 30,
+          "last": 30
+        },
+        "config/sgd_stepsize": {
+          "max": 0.01,
+          "min": 0.01,
+          "last": 0.01
+        },
+        "config/noise_size": {
+          "max": 250000000,
+          "min": 250000000,
+          "last": 250000000
+        },
+        "config/eval_prob": {
+          "max": 0.09,
+          "min": 0.09,
+          "last": 0.09
+        },
+        "config/report_length": {
+          "max": 10,
+          "min": 10,
+          "last": 10
+        },
+        "config/offset": {
+          "max": 0,
+          "min": 0,
+          "last": 0
+        },
+        "perf/cpu_util_percent": {
+          "max": 21.321428571428573,
+          "min": 15.238888888888889,
+          "last": 19.896153846153847
+        },
+        "perf/ram_util_percent": {
+          "max": 9.700000000000001,
+          "min": 9.518181818181818,
+          "last": 9.7
+        },
+        "config/model/free_log_std": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/model/no_final_linear": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/model/vf_share_layers": {
+          "max": true,
+          "min": true,
+          "last": true
+        },
+        "config/model/use_lstm": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/model/max_seq_len": {
+          "max": 20,
+          "min": 20,
+          "last": 20
+        },
+        "config/model/lstm_cell_size": {
+          "max": 256,
+          "min": 256,
+          "last": 256
+        },
+        "config/model/lstm_use_prev_action_reward": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/model/framestack": {
+          "max": true,
+          "min": true,
+          "last": true
+        },
+        "config/model/dim": {
+          "max": 84,
+          "min": 84,
+          "last": 84
+        },
+        "config/model/grayscale": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/model/zero_mean": {
+          "max": true,
+          "min": true,
+          "last": true
+        },
+        "config/tf_session_args/intra_op_parallelism_threads": {
+          "max": 2,
+          "min": 2,
+          "last": 2
+        },
+        "config/tf_session_args/inter_op_parallelism_threads": {
+          "max": 2,
+          "min": 2,
+          "last": 2
+        },
+        "config/tf_session_args/log_device_placement": {
+          "max": false,
+          "min": false,
+          "last": false
+        },
+        "config/tf_session_args/allow_soft_placement": {
+          "max": true,
+          "min": true,
+          "last": true
+        },
+        "config/local_tf_session_args/intra_op_parallelism_threads": {
+          "max": 8,
+          "min": 8,
+          "last": 8
+        },
+        "config/local_tf_session_args/inter_op_parallelism_threads": {
+          "max": 8,
+          "min": 8,
+          "last": 8
+        },
+        "config/tf_session_args/gpu_options/allow_growth": {
+          "max": true,
+          "min": true,
+          "last": true
+        },
+        "config/tf_session_args/device_count/CPU": {
+          "max": 1,
+          "min": 1,
+          "last": 1
+        }
+      },
+      "sync_on_checkpoint": true,
+      "checkpoint_manager": {
+        "_type": "CLOUDPICKLE_FALLBACK",
+        "value": "800495d90d0000000000008c1b7261792e74756e652e636865636b706f696e745f6d616e61676572948c11436865636b706f696e744d616e616765729493942981947d94288c146b6565705f636865636b706f696e74735f6e756d94477ff00000000000008c165f636865636b706f696e745f73636f72655f6465736394898c165f636865636b706f696e745f73636f72655f61747472948c12747261696e696e675f697465726174696f6e948c116e65776573745f636865636b706f696e749468008c0a436865636b706f696e749493942981947d94288c0773746f72616765948c046469736b948c0576616c7565948c6b2f726f6f742f7261795f726573756c74732f746573745f736176655f6d6f64656c2f4152535f6a756d7065725f62653137373133345f323032302d30312d31335f31372d30342d323175786466667575612f636865636b706f696e745f362f636865636b706f696e742d36948c06726573756c74947d94288c13657069736f64655f7265776172645f6d65616e948c156e756d70792e636f72652e6d756c74696172726179948c067363616c61729493948c056e756d7079948c0564747970659493948c026634944b004b0187945294284b038c013c944e4e4e4affffffff4affffffff4b00749462430400204f4394869452948c10657069736f64655f6c656e5f6d65616e946817681a8c026638944b004b0187945294284b03681e4e4e4e4affffffff4affffffff4b007494624308000000000000f8ff94869452948c1374696d6573746570735f746869735f69746572946817681a8c026938944b004b0187945294284b03681e4e4e4e4affffffff4affffffff4b007494624308cb0700000000000094869452948c04696e666f947d94288c0c776569676874735f6e6f726d946817681d43048d11014494869452948c0b776569676874735f737464946817681d4304b55eaf3d94869452948c09677261645f6e6f726d946817681d43043282ce4594869452948c0c7570646174655f726174696f946817681d43047cab123d94869452948c12657069736f6465735f746869735f69746572944b288c0f657069736f6465735f736f5f666172944bf0758c04646f6e6594888c0f74696d6573746570735f746f74616c946817682e4308332b00000000000094869452948c0e657069736f6465735f746f74616c944e8c12747261696e696e675f697465726174696f6e944b068c0d6578706572696d656e745f6964948c203631366637626661646261623433336538373232653233343735373861336335948c0464617465948c13323032302d30312d31335f31372d30372d3034948c0974696d657374616d70944ab8a31c5e8c1074696d655f746869735f697465725f7394474031b0f3e00000008c0c74696d655f746f74616c5f7394474062c330180000008c03706964944deb358c08686f73746e616d65948c0c633232313337396439636633948c076e6f64655f6970948c0a3137322e31382e302e36948c06636f6e666967947d94288c0b6e756d5f776f726b657273944b0a8c136e756d5f656e76735f7065725f776f726b6572944b018c1173616d706c655f62617463685f73697a65944bc88c0a62617463685f6d6f6465948c117472756e636174655f657069736f646573948c086e756d5f67707573944b008c10747261696e5f62617463685f73697a65944bc88c056d6f64656c947d94288c0c636f6e765f66696c74657273944e8c0f636f6e765f61637469766174696f6e948c0472656c75948c1066636e65745f61637469766174696f6e948c0474616e68948c0d66636e65745f68696464656e73945d94284d00014d0001658c0c667265655f6c6f675f73746494898c0f6e6f5f66696e616c5f6c696e65617294898c0f76665f73686172655f6c617965727394888c087573655f6c73746d94898c0b6d61785f7365715f6c656e944b148c0e6c73746d5f63656c6c5f73697a65944d00018c1b6c73746d5f7573655f707265765f616374696f6e5f72657761726494898c0b73746174655f7368617065944e8c0a6672616d65737461636b94888c0364696d944b548c09677261797363616c6594898c097a65726f5f6d65616e94888c13637573746f6d5f70726570726f636573736f72944e8c0c637573746f6d5f6d6f64656c944e8c12637573746f6d5f616374696f6e5f64697374944e8c0e637573746f6d5f6f7074696f6e73947d94758c096f7074696d697a6572947d948c0567616d6d6194473fefae147ae147ae8c07686f72697a6f6e944e8c0c736f66745f686f72697a6f6e94898c0e6e6f5f646f6e655f61745f656e6494898c0a656e765f636f6e666967947d948c03656e76948c066a756d706572948c0c636c69705f72657761726473944e8c0c636c69705f616374696f6e7394888c1170726570726f636573736f725f70726566948c08646565706d696e64948c026c7294473f1a36e2eb1c432d8c076d6f6e69746f7294898c096c6f675f6c6576656c948c045741524e948c0963616c6c6261636b73947d94288c106f6e5f657069736f64655f7374617274944e8c0f6f6e5f657069736f64655f73746570944e8c0e6f6e5f657069736f64655f656e64944e8c0d6f6e5f73616d706c655f656e64944e8c0f6f6e5f747261696e5f726573756c74944e8c136f6e5f706f737470726f636573735f7472616a944e758c1669676e6f72655f776f726b65725f6661696c7572657394898c0d6c6f675f7379735f757361676594888c05656167657294898c0d65616765725f74726163696e6794898c136e6f5f65616765725f6f6e5f776f726b65727394898c136576616c756174696f6e5f696e74657276616c944e8c176576616c756174696f6e5f6e756d5f657069736f646573944b0a8c116576616c756174696f6e5f636f6e666967947d948c0c73616d706c655f6173796e6394898c126f62736572766174696f6e5f66696c746572948c0d4d65616e53746446696c746572948c1373796e6368726f6e697a655f66696c7465727394888c0f74665f73657373696f6e5f61726773947d94288c1c696e7472615f6f705f706172616c6c656c69736d5f74687265616473944b028c1c696e7465725f6f705f706172616c6c656c69736d5f74687265616473944b028c0b6770755f6f7074696f6e73947d948c0c616c6c6f775f67726f7774689488738c146c6f675f6465766963655f706c6163656d656e7494898c0c6465766963655f636f756e74947d948c03435055944b01738c14616c6c6f775f736f66745f706c6163656d656e749488758c156c6f63616c5f74665f73657373696f6e5f61726773947d942868a64b0868a74b08758c15636f6d70726573735f6f62736572766174696f6e7394898c17636f6c6c6563745f6d6574726963735f74696d656f7574944bb48c1a6d6574726963735f736d6f6f7468696e675f657069736f646573944b648c1272656d6f74655f776f726b65725f656e767394898c1872656d6f74655f656e765f62617463685f776169745f6d73944b008c0f6d696e5f697465725f74696d655f73944b008c1774696d6573746570735f7065725f697465726174696f6e944b008c0473656564944e8c136e756d5f637075735f7065725f776f726b6572944b018c136e756d5f677075735f7065725f776f726b6572944b008c1b637573746f6d5f7265736f75726365735f7065725f776f726b6572947d948c136e756d5f637075735f666f725f647269766572944b018c066d656d6f7279944b008c136f626a6563745f73746f72655f6d656d6f7279944b008c116d656d6f72795f7065725f776f726b6572944b008c1e6f626a6563745f73746f72655f6d656d6f72795f7065725f776f726b6572944b008c05696e707574948c0773616d706c6572948c10696e7075745f6576616c756174696f6e945d94288c026973948c0377697394658c12706f737470726f636573735f696e7075747394898c1373687566666c655f6275666665725f73697a65944b008c066f7574707574944e8c176f75747075745f636f6d70726573735f636f6c756d6e73945d94288c036f6273948c076e65775f6f627394658c146f75747075745f6d61785f66696c655f73697a65944a000000048c0a6d756c74696167656e74947d94288c08706f6c6963696573947d948c11706f6c6963795f6d617070696e675f666e944e8c11706f6c69636965735f746f5f747261696e944e758c0b6e6f6973655f737464657694473f947ae147ae147b8c0c6e756d5f726f6c6c6f757473944b1e8c0d726f6c6c6f7574735f75736564944b1e8c0c7367645f7374657073697a6594473f847ae147ae147b8c0a6e6f6973655f73697a65944a80b2e60e8c096576616c5f70726f6294473fb70a3d70a3d70a8c0d7265706f72745f6c656e677468944b0a8c066f6666736574944b00758c1274696d655f73696e63655f726573746f726594474062c330180000008c1774696d6573746570735f73696e63655f726573746f7265946817682e4308332b00000000000094869452948c18697465726174696f6e735f73696e63655f726573746f7265944b068c0470657266947d94288c106370755f7574696c5f70657263656e7494681768264308576aa5566ae5334094869452948c1072616d5f7574696c5f70657263656e749468176826430866666666666623409486945294758c08747269616c5f6964948c086265313737313334948c0e6578706572696d656e745f746167948c0130947575628c115f626573745f636865636b706f696e7473945d9468008c0951756575654974656d9493942981947d94288c087072696f72697479944b066810680c7562618c0b5f6d656d62657273686970948f9428680c9075622e"
+      },
+      "export_formats": [],
+      "status": "TERMINATED",
+      "start_time": 1578935061.4093285,
+      "logdir": "/root/ray_results/test_save_model/ARS_jumper_be177134_2020-01-13_17-04-21uxdffuua",
+      "runner": null,
+      "result_logger": null,
+      "last_debug": 1578935224.951253,
+      "error_file": null,
+      "error_msg": null,
+      "num_failures": 0,
+      "custom_trial_name": null,
+      "results": "80044e2e",
+      "best_result": "80044e2e",
+      "param_config": "80044e2e",
+      "extra_arg": "80044e2e",
+      "_nonjson_fields": [
+        "checkpoint",
+        "loggers",
+        "sync_to_driver_fn",
+        "results",
+        "best_result",
+        "param_config",
+        "extra_arg"
+      ],
+      "checkpoint": "80044e2e",
+      "__logger_started__": false
+    }
+  ],
+  "runner_data": {
+    "_global_time_limit": Infinity,
+    "_total_time": 150.0996208190918,
+    "_iteration": 7,
+    "_verbose": true,
+    "_server_port": 4321,
+    "_local_checkpoint_dir": "/root/ray_results/test_save_model",
+    "_remote_checkpoint_dir": null,
+    "_resumed": false,
+    "_start_time": 1578935058.2723691,
+    "_last_checkpoint_time": 1578935224.9774387,
+    "_checkpoint_period": 10,
+    "_session_str": "2020-01-13_17-04-18",
+    "checkpoint_file": "/root/ray_results/test_save_model/experiment_state-2020-01-13_17-04-18.json",
+    "launch_web_server": false
+  },
+  "stats": {
+    "start_time": 1578935058.2723691,
+    "timestamp": 1578935224.9774387
+  }
+}
