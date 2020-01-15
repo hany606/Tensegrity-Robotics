@@ -62,12 +62,12 @@ LengthController::~LengthController()
 void LengthController::onSetup(JumperModel& subject)
 {
   // freopen("records_testing/record.txt","w",stdout); //For debugging
-  std::cout<<"\nStarting communication through TCP: "<<host_name<<port_num<<"\n";//DEBUG
+  // std::cout<<"\nStarting communication through TCP: "<<host_name<<port_num<<"\n";//DEBUG
   LengthController::tcp_com = new TCP(host_name, port_num);
   LengthController::tcp_com->setup();
   // std::cout<<"Finished Setup the communication\n";//DEBUG
 
-  printf("LengthController is working now\n");
+  // printf("LengthController is working now\n");
 
 
   JSON_Structure::setup();
@@ -112,7 +112,7 @@ void LengthController::onStep(JumperModel& subject, double dt)
     globalTime += dt;
     if(globalTime > 0){ //delay start of cable actuation
       if(toggle==0){    //print once when motors start moving
-        std::cout<<"Working...\n";
+        // std::cout<<"Working...\n";
         //DEBUG
         /*
         cout << endl << "Activating Cable Motors -------------------------------------" << endl;
@@ -157,8 +157,8 @@ void LengthController::onStep(JumperModel& subject, double dt)
           // std::cout<<"Waiting for the TCP to read\n";        //DEBUG
           // std::cout<<".\n";
           LengthController::tcp_com->read_TCP(buffer,MAX_BUFF_SIZE);
-          std::cout<<"Buffer ::";//DEBUG
-          std::cout<<buffer<<"\n";//DEBUG
+          // std::cout<<"Buffer ::";//DEBUG
+          // std::cout<<buffer<<"\n";//DEBUG
           read_json = JSON_Structure::stringToJson(buffer);
         }
 
@@ -198,7 +198,7 @@ void LengthController::onStep(JumperModel& subject, double dt)
           JSON_Structure::setTime(((int)(globalTime*1000)) /1000.0);
 
           std::string json_string = JSON_Structure::jsonToString();
-          std::cout<<"String to be sent"<<json_string<<std::endl;
+          // std::cout<<"String to be sent"<<json_string<<std::endl;
           LengthController::tcp_com->write_TCP((void*) json_string.c_str());
         }
       }
