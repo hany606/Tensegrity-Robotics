@@ -74,7 +74,8 @@ int main(int argc, char** argv)
 
     const char* host_name = argv[1];
     const long long  port_num = std::stoll(argv[2]);
-    LengthController* const myController = new LengthController(host_name, port_num);
+    const int control_type = std::stoi(argv[3]);
+    LengthController* const myController = new LengthController(host_name, port_num, control_type);
     myModel->attach(myController);
 
     // Add the model to the world

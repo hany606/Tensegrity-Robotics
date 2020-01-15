@@ -16,7 +16,7 @@ def create_environment(env_config):
     # create_environment.counter += 1
     import gym_tensegrity
     # return gym.make('gym_tensegrity:jumper-v0', config=config)
-    return gym.make('gym_tensegrity:jumper-v0')
+    return gym.make('gym_tensegrity:jumper-v0', config={'observation':'rest_length'})
 
 
 # Gives errors as env_config is empty but in the documentation it shouldn't
@@ -50,9 +50,9 @@ analysis = tune.run(
             "noise_stdev": 0.02,
             "num_rollouts": 30,
             "rollouts_used": 30,
-            "sgd_stepsize": 0.03,
+            "sgd_stepsize": 0.01,
             "noise_size": 250000000,
-            "eval_prob": 0.5,
+            "eval_prob": 0.09,
             # "num_envs_per_worker":1,
         },
     )

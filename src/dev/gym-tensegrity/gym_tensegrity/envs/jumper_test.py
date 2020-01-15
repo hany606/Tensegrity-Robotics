@@ -149,12 +149,42 @@ def main_cont_dlengths(config):
         print_observation(observation)
         print("angle:{:}".format(env.env.getLegAngle()*180/np.pi))
         print("Total Reward: {:}".format(tot_reward))
-        sleep(0.02)
+        # sleep(0.01)
     input("-> check point: WAIT for INPUT !!!!")
+
+    while True:
+        inp = "d"
+        inp = input("~~~~~~input: ")
+        action = env.action_space.sample()
+        observation, reward, done, _= env.step(action)
+
+        # if(inp == "w"):
+        #     flag = 1
+        # elif(inp == "s"):
+        #     flag = -1
+        # elif(inp == "d"):
+        #     flag = 0
+
+        # if(flag < 0):
+        #     action[0] = -0.1
+        #     observation, reward, done, _= env.step(action)
+        #     # action[0] = 0
+        #     # observation, reward, done, _= env.step(action)
+        # if(flag > 0):
+        #     action[0] = 0.1
+        #     observation, reward, done, _= env.step(action)
+        #     # action[0] = 0
+        #     # observation, reward, done, _= env.step(action)
+        # if(flag == 0):
+        #     action[0] = 0
+        #     observation, reward, done, _= env.step(action)
+
+        print(observation)
+        print("angle:{:}".format(env.env.getLegAngle()*180/np.pi))
     
 
 if __name__ == "__main__":
-    main_cont_dlengths({'observation':['end_points', 'rest_length']})
+    main_cont_dlengths({'observation':['current_length'], 'control_type': 'rest_length_mod'})
     # main_cont_lengths()
     # main()
     # forked_process_main()
