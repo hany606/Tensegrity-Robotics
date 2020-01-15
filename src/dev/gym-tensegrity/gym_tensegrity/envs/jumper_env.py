@@ -84,7 +84,7 @@ class JumperEnv(gym.Env):
         self.end_points_num = 6
         self.min_coordinate = -200
         self.max_coordinate = -self.min_coordinate
-        self.dl = self.config['dl']
+        self.dl = self.config['dl'] # This were used for discrete action space
         self.count_rewards_flag = False
         
         self.env = JumperModel(host_name=self.config['host_name'], port_num=self.config['port_num'], sim_exec=self.config['sim_exec'], dl=self.config['dl'], control_type= self.config['control_type'])
@@ -191,6 +191,8 @@ class JumperEnv(gym.Env):
         if action.shape != self.action_space.shape:
             raise Exception("The shape of the provided action does not match")
 
+        action = np.clip(action,-self.delta_length, self.delta_length)
+        # This is now useless after the value clipping
         if not self.action_space.contains(action):
             raise Exception("The provided action is out of allowed space.")
 

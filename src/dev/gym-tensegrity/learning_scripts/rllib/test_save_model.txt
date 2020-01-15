@@ -1,0 +1,1967 @@
+2020-01-13 17:04:17,824	INFO resource_spec.py:216 -- Starting Ray with 183.98 GiB memory available for workers and up to 18.63 GiB for objects. You can adjust these settings with ray.init(memory=<bytes>, object_store_memory=<bytes>).
+2020-01-13 17:04:18,078	WARNING services.py:1354 -- WARNING: The object store is using /tmp instead of /dev/shm because /dev/shm has only 8589934592 bytes available. This may slow down performance! You may be able to free up space by deleting files in /dev/shm or terminating any running plasma_store_server processes. If you are inside a Docker container, you may need to pass an argument with the flag '--shm-size' to 'docker run'.
+/usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+/usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+2020-01-13 17:04:21,411	ERROR log_sync.py:33 -- Log sync requires rsync to be installed.
+2020-01-13 17:04:21,411	ERROR log_sync.py:33 -- Log sync requires rsync to be installed.
+2020-01-13 17:04:21,413	INFO ray_trial_executor.py:121 -- Trial ARS_jumper_be177134: Setting up new remote runner.
+== Status ==
+Memory usage on this node: 22.2/251.4 GiB
+Using FIFO scheduling algorithm.
+Resources requested: 11/80 CPUs, 0/2 GPUs, 0.0/183.98 GiB heap, 0.0/12.84 GiB objects
+Result logdir: /root/ray_results/test_save_model
+Number of trials: 1 (1 RUNNING)
++---------------------+----------+-------+
+| Trial name          | status   | loc   |
+|---------------------+----------+-------|
+| ARS_jumper_be177134 | RUNNING  |       |
++---------------------+----------+-------+
+
+
+[2m[36m(pid=13803)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13803)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13803)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13803)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13803)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13803)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13803)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13803)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13803)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13803)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13803)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13803)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13803)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13803)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13803)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13803)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13803)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13803)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13803)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13803)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13803)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13803)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13803)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13803)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13803)[0m 2020-01-13 17:04:23,494	INFO trainer.py:371 -- Tip: set 'eager': true or the --eager flag to enable TensorFlow eager execution
+[2m[36m(pid=13803)[0m 2020-01-13 17:04:23,495	INFO trainer.py:512 -- Current log_level is WARN. For more information, set 'log_level': 'INFO' / 'DEBUG' or use the -v and -vv flags.
+[2m[36m(pid=13803)[0m #########
+[2m[36m(pid=13803)[0m starting up on ['localhost', 0]
+[2m[36m(pid=13803)[0m #########
+[2m[36m(pid=13803)[0m #########
+[2m[36m(pid=13803)[0m Connected to port: 43253
+[2m[36m(pid=13803)[0m #########
+[2m[36m(pid=13803)[0m #########
+[2m[36m(pid=13803)[0m Server binding is finished
+[2m[36m(pid=13803)[0m #########
+[2m[36m(pid=13803)[0m AppJumperModel
+[2m[36m(pid=13803)[0m Box Ground
+[2m[36m(pid=13803)[0m setup graphics
+[2m[36m(pid=13803)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13803)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13803)[0m 2020-01-13 17:04:34,762	INFO trainable.py:102 -- _setup took 11.267 seconds. If your trainable is slow to initialize, consider setting reuse_actors=True to reduce actor creation overheads.
+[2m[36m(pid=13803)[0m 2020-01-13 17:04:34,762	WARNING util.py:45 -- Install gputil for GPU system monitoring.
+[2m[36m(pid=13809)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13809)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13809)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13809)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13809)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13809)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13809)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13809)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13809)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13809)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13809)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13809)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13740)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13740)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13740)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13740)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13740)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13740)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13740)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13740)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13740)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13740)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13740)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13740)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13771)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13771)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13771)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13771)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13771)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13771)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13771)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13771)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13771)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13771)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13771)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13771)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13768)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13768)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13768)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13768)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13768)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13768)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13768)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13768)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13768)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13768)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13768)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13768)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13819)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13819)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13819)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13819)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13819)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13819)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13819)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13819)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13819)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13819)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13819)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13819)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13821)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13821)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13821)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13821)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13821)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13821)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13821)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13821)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13821)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13821)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13821)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13821)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13787)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13787)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13787)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13787)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13787)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13787)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13787)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13787)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13787)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13787)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13787)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13787)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13814)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13814)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13814)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13814)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13814)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13814)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13814)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13814)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13814)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13814)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13814)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13814)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13804)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13804)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13804)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13804)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13804)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13804)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13804)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13804)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13804)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13804)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13804)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13804)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13791)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:516: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13791)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13791)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:517: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13791)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13791)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:518: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13791)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13791)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:519: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13791)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13791)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:520: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13791)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13791)[0m /usr/local/lib/python3.6/dist-packages/tensorflow/python/framework/dtypes.py:525: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13791)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13768)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13768)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13768)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13768)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13768)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13768)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13768)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13768)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13768)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13768)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13768)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13768)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13809)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13809)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13809)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13809)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13809)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13809)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13809)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13809)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13809)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13809)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13809)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13809)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13740)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13740)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13740)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13740)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13740)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13740)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13740)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13740)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13740)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13740)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13740)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13740)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13771)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13771)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13771)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13771)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13771)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13771)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13771)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13771)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13771)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13771)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13771)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13771)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13821)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13821)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13821)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13821)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13821)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13821)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13821)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13821)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13821)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13821)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13821)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13821)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13787)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13787)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13787)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13787)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13787)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13787)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13787)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13787)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13787)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13787)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13787)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13787)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13814)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13814)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13814)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13814)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13814)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13814)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13814)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13814)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13814)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13814)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13814)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13814)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13819)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13819)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13819)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13819)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13819)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13819)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13819)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13819)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13819)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13819)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13819)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13819)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13804)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13804)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13804)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13804)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13804)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13804)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13804)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13804)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13804)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13804)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13804)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13804)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13791)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:541: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13791)[0m   _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+[2m[36m(pid=13791)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:542: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13791)[0m   _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+[2m[36m(pid=13791)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:543: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13791)[0m   _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+[2m[36m(pid=13791)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:544: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13791)[0m   _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+[2m[36m(pid=13791)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:545: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13791)[0m   _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+[2m[36m(pid=13791)[0m /usr/local/lib/python3.6/dist-packages/tensorboard/compat/tensorflow_stub/dtypes.py:550: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+[2m[36m(pid=13791)[0m   np_resource = np.dtype([("resource", np.ubyte, 1)])
+[2m[36m(pid=13740)[0m #########
+[2m[36m(pid=13740)[0m starting up on ['localhost', 0]
+[2m[36m(pid=13740)[0m #########
+[2m[36m(pid=13740)[0m #########
+[2m[36m(pid=13740)[0m Connected to port: 36289
+[2m[36m(pid=13740)[0m #########
+[2m[36m(pid=13740)[0m #########
+[2m[36m(pid=13740)[0m Server binding is finished
+[2m[36m(pid=13740)[0m #########
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13821)[0m #########
+[2m[36m(pid=13821)[0m starting up on ['localhost', 0]
+[2m[36m(pid=13821)[0m #########
+[2m[36m(pid=13821)[0m #########
+[2m[36m(pid=13821)[0m Connected to port: 41299
+[2m[36m(pid=13821)[0m #########
+[2m[36m(pid=13821)[0m #########
+[2m[36m(pid=13821)[0m Server binding is finished
+[2m[36m(pid=13821)[0m #########
+[2m[36m(pid=13809)[0m #########
+[2m[36m(pid=13809)[0m starting up on ['localhost', 0]
+[2m[36m(pid=13809)[0m #########
+[2m[36m(pid=13809)[0m #########
+[2m[36m(pid=13809)[0m Connected to port: 34805
+[2m[36m(pid=13809)[0m #########
+[2m[36m(pid=13809)[0m #########
+[2m[36m(pid=13809)[0m Server binding is finished
+[2m[36m(pid=13809)[0m #########
+[2m[36m(pid=13771)[0m #########
+[2m[36m(pid=13771)[0m starting up on ['localhost', 0]
+[2m[36m(pid=13771)[0m #########
+[2m[36m(pid=13771)[0m #########
+[2m[36m(pid=13771)[0m Connected to port: 44353
+[2m[36m(pid=13771)[0m #########
+[2m[36m(pid=13771)[0m #########
+[2m[36m(pid=13771)[0m Server binding is finished
+[2m[36m(pid=13771)[0m #########
+[2m[36m(pid=13787)[0m #########
+[2m[36m(pid=13787)[0m starting up on ['localhost', 0]
+[2m[36m(pid=13787)[0m #########
+[2m[36m(pid=13787)[0m #########
+[2m[36m(pid=13787)[0m Connected to port: 37047
+[2m[36m(pid=13787)[0m #########
+[2m[36m(pid=13787)[0m #########
+[2m[36m(pid=13787)[0m Server binding is finished
+[2m[36m(pid=13787)[0m #########
+[2m[36m(pid=13814)[0m #########
+[2m[36m(pid=13814)[0m starting up on ['localhost', 0]
+[2m[36m(pid=13814)[0m #########
+[2m[36m(pid=13814)[0m #########
+[2m[36m(pid=13814)[0m Connected to port: 42401
+[2m[36m(pid=13814)[0m #########
+[2m[36m(pid=13814)[0m #########
+[2m[36m(pid=13814)[0m Server binding is finished
+[2m[36m(pid=13814)[0m #########
+[2m[36m(pid=13768)[0m #########
+[2m[36m(pid=13768)[0m starting up on ['localhost', 0]
+[2m[36m(pid=13768)[0m #########
+[2m[36m(pid=13768)[0m #########
+[2m[36m(pid=13768)[0m Connected to port: 45465
+[2m[36m(pid=13768)[0m #########
+[2m[36m(pid=13768)[0m #########
+[2m[36m(pid=13768)[0m Server binding is finished
+[2m[36m(pid=13768)[0m #########
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m #########
+[2m[36m(pid=13819)[0m starting up on ['localhost', 0]
+[2m[36m(pid=13819)[0m #########
+[2m[36m(pid=13819)[0m #########
+[2m[36m(pid=13819)[0m Connected to port: 39889
+[2m[36m(pid=13819)[0m #########
+[2m[36m(pid=13819)[0m #########
+[2m[36m(pid=13819)[0m Server binding is finished
+[2m[36m(pid=13819)[0m #########
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13804)[0m #########
+[2m[36m(pid=13804)[0m starting up on ['localhost', 0]
+[2m[36m(pid=13804)[0m #########
+[2m[36m(pid=13804)[0m #########
+[2m[36m(pid=13804)[0m Connected to port: 38433
+[2m[36m(pid=13804)[0m #########
+[2m[36m(pid=13804)[0m #########
+[2m[36m(pid=13804)[0m Server binding is finished
+[2m[36m(pid=13804)[0m #########
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13791)[0m #########
+[2m[36m(pid=13791)[0m starting up on ['localhost', 0]
+[2m[36m(pid=13791)[0m #########
+[2m[36m(pid=13791)[0m #########
+[2m[36m(pid=13791)[0m Connected to port: 38933
+[2m[36m(pid=13791)[0m #########
+[2m[36m(pid=13791)[0m #########
+[2m[36m(pid=13791)[0m Server binding is finished
+[2m[36m(pid=13791)[0m #########
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+Result for ARS_jumper_be177134:
+  date: 2020-01-13_17-04-42
+  done: false
+  episode_len_mean: 558.5
+  episode_reward_mean: 347.5
+  experiment_id: 616f7bfadbab433e8722e2347578a3c5
+  experiment_tag: '0'
+  hostname: c221379d9cf3
+  info:
+    episodes_so_far: 40
+    episodes_this_iter: 40
+    grad_norm: 6345.28955078125
+    update_ratio: 0.03520387411117554
+    weights_norm: 512.6810302734375
+    weights_std: 0.08533148467540741
+  iterations_since_restore: 1
+  node_ip: 172.18.0.6
+  perf:
+    cpu_util_percent: 21.209090909090907
+    ram_util_percent: 9.518181818181818
+  pid: 13803
+  time_since_restore: 7.626896381378174
+  time_this_iter_s: 7.626896381378174
+  time_total_s: 7.626896381378174
+  timestamp: 1578935082
+  timesteps_since_restore: 1498
+  timesteps_this_iter: 1498
+  timesteps_total: 1498
+  training_iteration: 1
+  trial_id: be177134
+  
+== Status ==
+Memory usage on this node: 24.3/251.4 GiB
+Using FIFO scheduling algorithm.
+Resources requested: 11/80 CPUs, 0/2 GPUs, 0.0/183.98 GiB heap, 0.0/12.84 GiB objects
+Result logdir: /root/ray_results/test_save_model
+Number of trials: 1 (1 RUNNING)
++---------------------+----------+------------------+--------+------------------+-------------+----------+
+| Trial name          | status   | loc              |   iter |   total time (s) |   timesteps |   reward |
+|---------------------+----------+------------------+--------+------------------+-------------+----------|
+| ARS_jumper_be177134 | RUNNING  | 172.18.0.6:13803 |      1 |           7.6269 |        1498 |    347.5 |
++---------------------+----------+------------------+--------+------------------+-------------+----------+
+
+
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m Aborted
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+Result for ARS_jumper_be177134:
+  date: 2020-01-13_17-05-36
+  done: false
+  episode_len_mean: 147.0
+  episode_reward_mean: 247.25
+  experiment_id: 616f7bfadbab433e8722e2347578a3c5
+  experiment_tag: '0'
+  hostname: c221379d9cf3
+  info:
+    episodes_so_far: 80
+    episodes_this_iter: 40
+    grad_norm: 7653.287109375
+    update_ratio: 0.03863673284649849
+    weights_norm: 513.0758056640625
+    weights_std: 0.08536432683467865
+  iterations_since_restore: 2
+  node_ip: 172.18.0.6
+  perf:
+    cpu_util_percent: 15.493506493506494
+    ram_util_percent: 9.698701298701302
+  pid: 13803
+  time_since_restore: 61.68631649017334
+  time_this_iter_s: 54.059420108795166
+  time_total_s: 61.68631649017334
+  timestamp: 1578935136
+  timesteps_since_restore: 3115
+  timesteps_this_iter: 1617
+  timesteps_total: 3115
+  training_iteration: 2
+  trial_id: be177134
+  
+== Status ==
+Memory usage on this node: 24.3/251.4 GiB
+Using FIFO scheduling algorithm.
+Resources requested: 11/80 CPUs, 0/2 GPUs, 0.0/183.98 GiB heap, 0.0/12.84 GiB objects
+Result logdir: /root/ray_results/test_save_model
+Number of trials: 1 (1 RUNNING)
++---------------------+----------+------------------+--------+------------------+-------------+----------+
+| Trial name          | status   | loc              |   iter |   total time (s) |   timesteps |   reward |
+|---------------------+----------+------------------+--------+------------------+-------------+----------|
+| ARS_jumper_be177134 | RUNNING  | 172.18.0.6:13803 |      2 |          61.6863 |        3115 |   247.25 |
++---------------------+----------+------------------+--------+------------------+-------------+----------+
+
+
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+Result for ARS_jumper_be177134:
+  date: 2020-01-13_17-05-59
+  done: false
+  episode_len_mean: .nan
+  episode_reward_mean: 247.25
+  experiment_id: 616f7bfadbab433e8722e2347578a3c5
+  experiment_tag: '0'
+  hostname: c221379d9cf3
+  info:
+    episodes_so_far: 120
+    episodes_this_iter: 40
+    grad_norm: 8156.658203125
+    update_ratio: 0.039871759712696075
+    weights_norm: 513.9992065429688
+    weights_std: 0.08544106781482697
+  iterations_since_restore: 3
+  node_ip: 172.18.0.6
+  perf:
+    cpu_util_percent: 21.209090909090907
+    ram_util_percent: 9.696969696969695
+  pid: 13803
+  time_since_restore: 84.74918389320374
+  time_this_iter_s: 23.062867403030396
+  time_total_s: 84.74918389320374
+  timestamp: 1578935159
+  timesteps_since_restore: 5016
+  timesteps_this_iter: 1901
+  timesteps_total: 5016
+  training_iteration: 3
+  trial_id: be177134
+  
+== Status ==
+Memory usage on this node: 24.3/251.4 GiB
+Using FIFO scheduling algorithm.
+Resources requested: 11/80 CPUs, 0/2 GPUs, 0.0/183.98 GiB heap, 0.0/12.84 GiB objects
+Result logdir: /root/ray_results/test_save_model
+Number of trials: 1 (1 RUNNING)
++---------------------+----------+------------------+--------+------------------+-------------+----------+
+| Trial name          | status   | loc              |   iter |   total time (s) |   timesteps |   reward |
+|---------------------+----------+------------------+--------+------------------+-------------+----------|
+| ARS_jumper_be177134 | RUNNING  | 172.18.0.6:13803 |      3 |          84.7492 |        5016 |   247.25 |
++---------------------+----------+------------------+--------+------------------+-------------+----------+
+
+
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13803)[0m /usr/local/lib/python3.6/dist-packages/ray/rllib/agents/ars/ars.py:289: RuntimeWarning: Mean of empty slice.
+[2m[36m(pid=13803)[0m   episode_len_mean=eval_lengths.mean(),
+[2m[36m(pid=13803)[0m /usr/local/lib/python3.6/dist-packages/numpy/core/_methods.py:161: RuntimeWarning: invalid value encountered in double_scalars
+[2m[36m(pid=13803)[0m   ret = ret.dtype.type(ret / rcount)
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+Result for ARS_jumper_be177134:
+  date: 2020-01-13_17-06-37
+  done: false
+  episode_len_mean: 172.0
+  episode_reward_mean: 222.1666717529297
+  experiment_id: 616f7bfadbab433e8722e2347578a3c5
+  experiment_tag: '0'
+  hostname: c221379d9cf3
+  info:
+    episodes_so_far: 160
+    episodes_this_iter: 40
+    grad_norm: 6232.51806640625
+    update_ratio: 0.03482174500823021
+    weights_norm: 514.8192138671875
+    weights_std: 0.08550917357206345
+  iterations_since_restore: 4
+  node_ip: 172.18.0.6
+  perf:
+    cpu_util_percent: 15.238888888888889
+    ram_util_percent: 9.69814814814815
+  pid: 13803
+  time_since_restore: 122.22718024253845
+  time_this_iter_s: 37.47799634933472
+  time_total_s: 122.22718024253845
+  timestamp: 1578935197
+  timesteps_since_restore: 7072
+  timesteps_this_iter: 2056
+  timesteps_total: 7072
+  training_iteration: 4
+  trial_id: be177134
+  
+== Status ==
+Memory usage on this node: 24.3/251.4 GiB
+Using FIFO scheduling algorithm.
+Resources requested: 11/80 CPUs, 0/2 GPUs, 0.0/183.98 GiB heap, 0.0/12.84 GiB objects
+Result logdir: /root/ray_results/test_save_model
+Number of trials: 1 (1 RUNNING)
++---------------------+----------+------------------+--------+------------------+-------------+----------+
+| Trial name          | status   | loc              |   iter |   total time (s) |   timesteps |   reward |
+|---------------------+----------+------------------+--------+------------------+-------------+----------|
+| ARS_jumper_be177134 | RUNNING  | 172.18.0.6:13803 |      4 |          122.227 |        7072 |  222.167 |
++---------------------+----------+------------------+--------+------------------+-------------+----------+
+
+
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+Result for ARS_jumper_be177134:
+  date: 2020-01-13_17-06-47
+  done: false
+  episode_len_mean: 162.0
+  episode_reward_mean: 207.125
+  experiment_id: 616f7bfadbab433e8722e2347578a3c5
+  experiment_tag: '0'
+  hostname: c221379d9cf3
+  info:
+    episodes_so_far: 200
+    episodes_this_iter: 40
+    grad_norm: 6094.439453125
+    update_ratio: 0.03440641984343529
+    weights_norm: 515.3784790039062
+    weights_std: 0.08555558323860168
+  iterations_since_restore: 5
+  node_ip: 172.18.0.6
+  perf:
+    cpu_util_percent: 21.321428571428573
+    ram_util_percent: 9.700000000000001
+  pid: 13803
+  time_since_restore: 132.40839958190918
+  time_this_iter_s: 10.181219339370728
+  time_total_s: 132.40839958190918
+  timestamp: 1578935207
+  timesteps_since_restore: 9064
+  timesteps_this_iter: 1992
+  timesteps_total: 9064
+  training_iteration: 5
+  trial_id: be177134
+  
+== Status ==
+Memory usage on this node: 24.3/251.4 GiB
+Using FIFO scheduling algorithm.
+Resources requested: 11/80 CPUs, 0/2 GPUs, 0.0/183.98 GiB heap, 0.0/12.84 GiB objects
+Result logdir: /root/ray_results/test_save_model
+Number of trials: 1 (1 RUNNING)
++---------------------+----------+------------------+--------+------------------+-------------+----------+
+| Trial name          | status   | loc              |   iter |   total time (s) |   timesteps |   reward |
+|---------------------+----------+------------------+--------+------------------+-------------+----------|
+| ARS_jumper_be177134 | RUNNING  | 172.18.0.6:13803 |      5 |          132.408 |        9064 |  207.125 |
++---------------------+----------+------------------+--------+------------------+-------------+----------+
+
+
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13740)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13740)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m AppJumperModel
+[2m[36m(pid=13814)[0m Box Ground
+[2m[36m(pid=13814)[0m setup graphics
+[2m[36m(pid=13768)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13768)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13814)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13814)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13819)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13819)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13821)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13787)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13787)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13791)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13791)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13740)[0m AppJumperModel
+[2m[36m(pid=13740)[0m Box Ground
+[2m[36m(pid=13740)[0m setup graphics
+[2m[36m(pid=13771)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13771)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13821)[0m AppJumperModel
+[2m[36m(pid=13821)[0m Box Ground
+[2m[36m(pid=13821)[0m setup graphics
+[2m[36m(pid=13771)[0m AppJumperModel
+[2m[36m(pid=13771)[0m Box Ground
+[2m[36m(pid=13771)[0m setup graphics
+[2m[36m(pid=13787)[0m AppJumperModel
+[2m[36m(pid=13787)[0m Box Ground
+[2m[36m(pid=13787)[0m setup graphics
+[2m[36m(pid=13768)[0m AppJumperModel
+[2m[36m(pid=13768)[0m Box Ground
+[2m[36m(pid=13768)[0m setup graphics
+[2m[36m(pid=13819)[0m AppJumperModel
+[2m[36m(pid=13819)[0m Box Ground
+[2m[36m(pid=13819)[0m setup graphics
+[2m[36m(pid=13791)[0m AppJumperModel
+[2m[36m(pid=13791)[0m Box Ground
+[2m[36m(pid=13791)[0m setup graphics
+[2m[36m(pid=13809)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13809)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13809)[0m AppJumperModel
+[2m[36m(pid=13809)[0m Box Ground
+[2m[36m(pid=13809)[0m setup graphics
+[2m[36m(pid=13804)[0m AppJumperModel
+[2m[36m(pid=13804)[0m terminate called after throwing an instance of 'nlohmann::detail::parse_error'
+[2m[36m(pid=13804)[0m   what():  [json.exception.parse_error.101] parse error at line 1, column 1: syntax error while parsing value - unexpected end of input; expected '[', '{', or a literal
+[2m[36m(pid=13804)[0m Box Ground
+[2m[36m(pid=13804)[0m setup graphics
+Result for ARS_jumper_be177134:
+  date: 2020-01-13_17-07-04
+  done: true
+  episode_len_mean: .nan
+  episode_reward_mean: 207.125
+  experiment_id: 616f7bfadbab433e8722e2347578a3c5
+  experiment_tag: '0'
+  hostname: c221379d9cf3
+  info:
+    episodes_so_far: 240
+    episodes_this_iter: 40
+    grad_norm: 6608.2744140625
+    update_ratio: 0.03580807149410248
+    weights_norm: 516.2742309570312
+    weights_std: 0.08562985807657242
+  iterations_since_restore: 6
+  node_ip: 172.18.0.6
+  perf:
+    cpu_util_percent: 19.896153846153847
+    ram_util_percent: 9.7
+  pid: 13803
+  time_since_restore: 150.0996208190918
+  time_this_iter_s: 17.691221237182617
+  time_total_s: 150.0996208190918
+  timestamp: 1578935224
+  timesteps_since_restore: 11059
+  timesteps_this_iter: 1995
+  timesteps_total: 11059
+  training_iteration: 6
+  trial_id: be177134
+  
+== Status ==
+Memory usage on this node: 24.3/251.4 GiB
+Using FIFO scheduling algorithm.
+Resources requested: 0/80 CPUs, 0/2 GPUs, 0.0/183.98 GiB heap, 0.0/12.84 GiB objects
+Result logdir: /root/ray_results/test_save_model
+Number of trials: 1 (1 TERMINATED)
++---------------------+------------+-------+--------+------------------+-------------+----------+
+| Trial name          | status     | loc   |   iter |   total time (s) |   timesteps |   reward |
+|---------------------+------------+-------+--------+------------------+-------------+----------|
+| ARS_jumper_be177134 | TERMINATED |       |      6 |            150.1 |       11059 |  207.125 |
++---------------------+------------+-------+--------+------------------+-------------+----------+
+
+
+== Status ==
+Memory usage on this node: 24.3/251.4 GiB
+Using FIFO scheduling algorithm.
+Resources requested: 0/80 CPUs, 0/2 GPUs, 0.0/183.98 GiB heap, 0.0/12.84 GiB objects
+Result logdir: /root/ray_results/test_save_model
+Number of trials: 1 (1 TERMINATED)
++---------------------+------------+-------+--------+------------------+-------------+----------+
+| Trial name          | status     | loc   |   iter |   total time (s) |   timesteps |   reward |
+|---------------------+------------+-------+--------+------------------+-------------+----------|
+| ARS_jumper_be177134 | TERMINATED |       |      6 |            150.1 |       11059 |  207.125 |
++---------------------+------------+-------+--------+------------------+-------------+----------+
+
+2020-01-13 17:07:04,986	INFO tune.py:334 -- Returning an analysis object by default. You can call `analysis.trials` to retrieve a list of trials. This message will be removed in future versions of Tune.
+

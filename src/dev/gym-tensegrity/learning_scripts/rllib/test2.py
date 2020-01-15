@@ -38,11 +38,12 @@ ray.init()
 # tune.register_env("Jumper", lambda config: MultiEnvPorts(config))
 analysis = tune.run(
         "ARS",
-        name="long_Train",
+        name="test_save_model",
         stop={
-            "timesteps_total": 1000000,
+            "timesteps_total": 10000,
         },
         verbose=2,
+        checkpoint_at_end=True,
         reuse_actors= True,
         config={
             "env": "jumper",
@@ -56,6 +57,7 @@ analysis = tune.run(
             # "num_envs_per_worker":1,
         },
     )
+
 
 # print("*-*-*-*-*--*-**-*-*-*-*-*-*-*-*--*-*---*--*-*-*-*-*--*-*--*-*-*--*-")
 # for i in analysis.trials:
