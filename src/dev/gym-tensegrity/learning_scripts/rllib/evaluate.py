@@ -10,11 +10,16 @@ from ray import tune
 import ray.rllib.agents.ars as ars
 from ray.tune.logger import pretty_print
 
+def create_environment(env_config):
+	import gym_tensegrity
+	#return gym.make('gym_tensegrity:jumper-v0', config=env_config)
+	return gym.make('gym_tensegrity:jumper-v0')
+
 class Printer:
     def __init__(self,debug=1):
         self.debug_flag = debug
 
-    def all(self, returns, num_episdoes=None):
+    def all(self, returns, num_episdoes=50):
         if(self.debug_flag):
             if(returns["observation"] is not None):
                 self.observation(returns["observation"])
@@ -32,13 +37,13 @@ class Printer:
     def observation(self, observation):
         if(self.debug_flag):
             print("Observations:")
-            for obs in range(observation):
+            for obs in observation:
                 print("{:}".format(obs),end="\t")
     
     def action(self, action):
         if(self.debug_flag):
             print("Actions:")
-            for act in range(action):
+            for act in action:
                 print("{:}".format(act),end="\t")
     
     def reward(self, reward):
@@ -127,16 +132,11 @@ class Evaluater:
             "overrides any trial-specific options set via flags above.")
 
         return parser
-
-
-    def create_environment(self, env_config):
-        import gym_tensegrity
-        return gym.make('gym_tensegrity:jumper-v0', config=self.env_config)
         
 
     def run_episode(self, env, agent, random=False):
         observation = env.reset()
-        self.printer.observation(observation)
+        #self.printer.observation(observation)
         cumulative_reward = 0
         done  = False
         while not done:
@@ -145,30 +145,33 @@ class Evaluater:
             else:
                 action = env.action_space.sample()
             observation, reward, done, _ = env.step(action)
-            self.printer.observation(observation)
-            self.printer.reward(reward)
-            self.printer.action(action)
-            self.printer.done(done)
+            #self.printer.observation(observation)
+            #self.printer.reward(reward)
+            #self.printer.action(action)
+            #self.printer.done(done)
             cumulative_reward += reward
 
         return cumulative_reward
 
 
-    def evaluate(self, evaluation_config, agent_config, random=False):
+    def evaluate(self, evaluation_config, agent_config, env_config, random=False):
         config = ars.DEFAULT_CONFIG.copy()
-        for keys in config.keys():
-            config[keys] = agent_config[keys]
-        trained_agent = ars.ARSTrainer(config=config, env="jumper")
-        env = self.create_environment("")
+        for key in agent_config.keys():
+            config[key] = agent_config[key]
+        config["num_workers"] = 1
+        trained_agent = ars.ARSTrainer(config, env="jumper")
+        trained_agent.restore(evaluation_config["evaluation_file"])
+        env = create_environment("")
         cumulative_reward = 0
         history = []
         for _ in range(evaluation_config["num_episodes"]):
             reward = self.run_episode(env, trained_agent)
+            #self.printer.reward(reward)
             history.append(reward)
             cumulative_reward += reward
  
         self.printer.history(history)
-        self.printer.mean(cumulative_reward/evaluation_config["num_episdoes"])
+        self.printer.mean(cumulative_reward/evaluation_config["num_episodes"])
 
     def run(self, args, parser):
         if args.config_file:
@@ -185,14 +188,13 @@ class Evaluater:
                 "num_episodes": args.num_episodes,
             }
         self.env_config = {"observation": self.evaluation_config["observation_space_type"], "control_type": self.evaluation_config["controller_type"]}
-        print(self.evaluation_config)
-        tune.register_env("jumper", self.create_environment)
+        tune.register_env("jumper", create_environment)
         ray.init()
         if(self.evaluation_config["agent_config_file"] is None):
             raise Exception("The agent config file should be defined.\n--Hint: it is params.json")
         with open(self.evaluation_config["agent_config_file"]) as json_file:
             self.agent_config = json.load(json_file)
-        self.evaluate(self.evaluation_config, self.agent_config, random=self.evaluation_config["random_agent"])
+        self.evaluate(self.evaluation_config, self.agent_config, self.env_config, random=self.evaluation_config["random_agent"])
 
 if __name__ == "__main__":
     evaluate = Evaluater()
