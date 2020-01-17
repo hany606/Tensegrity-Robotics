@@ -9,6 +9,7 @@ import ray
 from ray import tune
 import ray.rllib.agents.ars as ars
 from ray.tune.logger import pretty_print
+import numpy as np
 
 def create_environment(env_config):
 	import gym_tensegrity
@@ -75,7 +76,7 @@ class Evaluater:
         self.evaluation_config = {}
         self.EXAMPLE_USAGE = """
             Usage example via RLlib CLI:
-            ./train.py --parameter=value
+            python3 evaluate.py --evaluation-file=trained_agents/train_default/ARS_jumper_3ba03d10_2020-01-17_19-40-36wgy3fy8a/checkpoint_15/checkpoint-15 --agent-config-file=trained_agents/train_default/ARS_jumper_3ba03d10_2020-01-17_19-40-36wgy3fy8a/params.json
             """
 
     def create_parser(self, parser_creator=None):
@@ -144,6 +145,7 @@ class Evaluater:
                 action = agent.compute_action(observation)
             else:
                 action = env.action_space.sample()
+                #action = np.zeros(8)
             observation, reward, done, _ = env.step(action)
             #self.printer.observation(observation)
             #self.printer.reward(reward)
@@ -165,7 +167,7 @@ class Evaluater:
         cumulative_reward = 0
         history = []
         for _ in range(evaluation_config["num_episodes"]):
-            reward = self.run_episode(env, trained_agent)
+            reward = self.run_episode(env, trained_agent, random=random)
             #self.printer.reward(reward)
             history.append(reward)
             cumulative_reward += reward
@@ -180,7 +182,7 @@ class Evaluater:
         else:
             self.evaluation_config = {
                 "random_agent": args.random_agent,
-                "evaluation_file": args.evaluation_file,
+                "evaluation_file": args.evaluation_file,	
                 "agent_config_file": args.agent_config_file,
                 "observation_space_type": args.observation_space_type,
                 "controller_type": args.controller_type,

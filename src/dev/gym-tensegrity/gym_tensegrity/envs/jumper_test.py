@@ -214,13 +214,13 @@ def test(config=None):
         print_observation(observation)
         print("angle:{:}".format(env.env.getLegAngle()*180/np.pi))
         print("Total Reward: {:}".format(tot_reward))
-        input("-> check point: WAIT for INPUT !!!!")
+        # input("-> check point: WAIT for INPUT !!!!")
 
         # sleep(0.01)
     input("-> check point: WAIT for INPUT !!!!")
 
+    flag = 0
     while True:
-        flag = 0
         inp = input("~~~~~~input: ")
         #action = env.action_space.sample()
         #observation, reward, done, _= env.step(action)
@@ -242,8 +242,8 @@ def test(config=None):
             action[0] = 0
 
         observation, reward, done, _= env.step(action)
-
-        print(observation)
+        print(action)
+        print_observation(observation)
         print("angle:{:}".format(env.env.getLegAngle()*180/np.pi))
 
 if __name__ == "__main__":

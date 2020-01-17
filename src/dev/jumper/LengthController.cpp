@@ -134,6 +134,7 @@ void LengthController::onStep(JumperModel& subject, double dt)
 
         for(int i = 0; i < 8; i++){
           std::cout<< "String #"<<i<<": "<<((int) (actuators[i]->getRestLength()*10000)/10000.0)<<"\n";
+          std::cout<< "Max length: "<<max_lengths[i]<<"\n";
 
         }
         
@@ -257,8 +258,10 @@ void LengthController::calcTargetLengths(json read_json){
         target_lengths[i] = 0.0;
       }
       // Only this clamping while controlling the rest_lengths
-      if ((LengthController::control_type == 0 || LengthController::control_type == 2) && target_lengths[i] > max_lengths[i])
+      if ((LengthController::control_type == 0 || LengthController::control_type == 2) && target_lengths[i] > max_lengths[i]){
         target_lengths[i] = max_lengths[i];
+        printf("Reached the limit\n");
+      }
 
       // Continuous action space for lengths
       // target_lengths[i] = (double)read_json["Controllers_val"][i];
@@ -300,7 +303,7 @@ void LengthController::controlRestLength(json read_json, double dt, double time)
 
     // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
     m_controllers[i]->control(dt, target_lengths[i]);
-    // actuators[i]->moveMotors(dt);
+    actuators[i]->moveMotors(dt);
     // printf("%d\n", actuators.size());
     // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
     // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
@@ -340,11 +343,10 @@ void LengthController::controlRestLength_mod(json read_json, double dt, double t
 
     // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
     m_controllers[i]->control(dt, target_lengths[i]);
-    // actuators[i]->moveMotors(dt);
+    actuators[i]->moveMotors(dt);
     // printf("%d\n", actuators.size());
     // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
     // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
-    printf("Reached%d\n", i);  
   }
 
 }
