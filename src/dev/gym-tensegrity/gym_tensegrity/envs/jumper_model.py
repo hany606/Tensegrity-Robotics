@@ -32,9 +32,14 @@ class JumperModel():
                         [0,0,0,0,0,0,0,0],
                         "Current_cables_lengths":
                         [0,0,0,0,0,0,0,0],
-                         "End_points":
+                        "End_points":
                         [[0.,0.,0.], [0.,0.,0.], [0.,0.,0.], [0.,0.,0.], 
                          [0.,0.,0.],[0.,0.,0.]],
+                        "End_points_velocities":
+                        [[0.,0.,0.], [0.,0.,0.], [0.,0.,0.], [0.,0.,0.], 
+                         [0.,0.,0.],[0.,0.,0.]],
+                        "Leg_end_points_world":
+                        [[0.,0.,0.], [0.,0.,0.]],
                         "Time": 0.,
                         "ZFinished": 1,
                         "Flags":[1,0,0]}
@@ -171,8 +176,15 @@ class JumperModel():
             end_points.append(self.sim_json["End_points"][i])
         return end_points
 
+    def getEndPointsVelocities(self):
+        end_points_velocities = []
+        # Notice that the end_points are in the form (y,z,x) as it is coming from the simulator like this
+        for i in range(self.end_points_num):
+            end_points_velocities.append(self.sim_json["End_points_velocities"][i])
+        return end_points_velocities
+
     def getLegEndPoints(self):
-        return [self.sim_json["End_points"][self.leg_end_points[0]], self.sim_json["End_points"][self.leg_end_points[1]]]
+        return [self.sim_json["Leg_end_points_world"][0], self.sim_json["Leg_end_points_world"][1]]
 
     # point_a: is the end point of the leg from down
     # point_b: is the end point of the virtual horizontal leg from up

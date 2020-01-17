@@ -56,6 +56,8 @@ public:
      */
     virtual void onStep(JumperModel& subject, double dt);
 
+    virtual void calcTargetLengths(nlohmann::json read_json);
+
     virtual void controlRestLength(nlohmann::json read_json, double dt, double time);
     virtual void controlRestLength_mod(nlohmann::json read_json, double dt, double time);
     virtual void controlCurrentLength(nlohmann::json read_json, double dt, double time);
@@ -64,7 +66,7 @@ public:
 
 
     std::vector<tgBasicController*> m_controllers; //instantiate vector of controllers
-    std::vector<double> start_lengths; //instantiate vector of random restlengths
+    std::vector<double> max_lengths; //instantiate vector of random restlengths
     std::vector<tgBasicActuator*> actuators;
     std::vector<tgRod*> rods;
     std::vector<double> target_lengths;
