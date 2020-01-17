@@ -26,6 +26,8 @@
 #define EPS 0.00001  
 #define SMALL_EPS(eps) eps/1000.0
 #define BIG_EPS(eps) eps*10.0
+#define MAX_LENGTH_PERCENT 1
+
 using namespace std;
 using json = nlohmann::json;
 
@@ -33,6 +35,7 @@ json read_json;
 bool all_reached_target = true;
 // double last_all_reached_time = 0;   // This is used to indicate if there is a stuck or not in the length of the cable
 vector <double> last_error;  //actuators.size()
+vector <btVector3> last_positions;
 
 
 // It has been extracted by some nodes that connect betwee nthe controllers of the cabels
@@ -62,23 +65,23 @@ LengthController::~LengthController()
 void LengthController::onSetup(JumperModel& subject)
 {
   // freopen("records_testing/record.txt","w",stdout); //For debugging
-  std::cout<<"Starting communication through TCP: "<<host_name<<port_num<<"\n";
+  std::cout<<"\nStarting communication through TCP: "<<host_name<<port_num<<"\n";//DEBUG
   LengthController::tcp_com = new TCP(host_name, port_num);
   LengthController::tcp_com->setup();
-  std::cout<<"Finished Setup the communication\n";
+  std::cout<<"Finished Setup the communication\n";//DEBUG
 
-  printf("LengthController is working now\n");
+  // printf("LengthController is working now\n");
 
 
   JSON_Structure::setup();
   m_controllers.clear(); //clear vector of controllers
-  start_lengths.clear(); //vector of randomized restlengths
+  max_lengths.clear(); //vector of randomized restlengths
     
   //get all of the tensegrity structure's cables
   actuators = subject.getAllActuators();
   rods = subject.getAllRods();
 
-  printf("Number of actuators: %d , Number of Rods: %d\n", (int) actuators.size(), (int) rods.size());
+  printf("Number of actuators: %d , Number of Rods: %d\n", (int) actuators.size(), (int) rods.size());//DEBUG
   // std::cout<<rods[1]->getTags()[0][1]<<"\n";
 
   //Attach a tgBasicController to each actuator
@@ -90,15 +93,22 @@ void LengthController::onSetup(JumperModel& subject)
     tgBasicController* m_lenController = new tgBasicController(pActuator);
     //add controller to vector
     m_controllers.push_back(m_lenController);
-    //generate random end restlength
-    double start_length = actuators[i]->getStartLength();
-    printf("Actutor of string #%d -> start Lenght: %lf\n", (int) i, start_length);
-    start_lengths.push_back(start_length);
+    // getStartLength
+    double start_length = actuators[i]->getRestLength();
+    printf("Actutor of string #%d -> start Lenght: %lf\n", (int) i, start_length);//DEBUG
+    max_lengths.push_back(MAX_LENGTH_PERCENT*start_length);
     actuators_states.push_back(0);
     target_lengths.push_back(0);
     last_error.push_back(0);
   }
+  btVector3 end_point = actuators[0]->getAnchors_mod()[1]->getWorldPosition();
+  last_positions.push_back(end_point);
+  for(int i = 1; i < 6; i++){
+    btVector3 end_point = actuators[end_points_map[i]]->getAnchors_mod()[0]->getWorldPosition();
+    last_positions.push_back(end_point);
+  }
 
+  
 }
 
 //This function is being activated each step
@@ -113,7 +123,8 @@ void LengthController::onStep(JumperModel& subject, double dt)
     if(globalTime > 0){ //delay start of cable actuation
       if(toggle==0){    //print once when motors start moving
         std::cout<<"Working...\n";
-
+        //DEBUG
+        
         cout << endl << "Activating Cable Motors -------------------------------------" << endl;
         std::cout<<"End Point"<<0<<"\nPoint:"<<actuators[0]->getAnchors_mod()[1]->getWorldPosition()<<"\n----------------------\n";
         for(int i = 1; i < 6; i++){
@@ -125,6 +136,8 @@ void LengthController::onStep(JumperModel& subject, double dt)
           std::cout<< "String #"<<i<<": "<<((int) (actuators[i]->getRestLength()*10000)/10000.0)<<"\n";
 
         }
+        
+
         // std::cout<<"CMS: "<<rods[0]->centerOfMass()<<"\tPoint1:"<<actuators[3]->getAnchors_mod()[0]->getWorldPosition()<<"or:"<<actuators[3]->getAnchors_mod()[1]->getWorldPosition()<<"\tPoint2:"<<actuators[0]->getAnchors_mod()[0]->getWorldPosition()<<"or:"<<actuators[0]->getAnchors_mod()[1]->getWorldPosition()<<"\n";
         // std::cout<<rods[1]->length()<<"\n";
         toggle = 1;   //is used like a state flag ---- set it to 2 to disable the movement
@@ -145,12 +158,13 @@ void LengthController::onStep(JumperModel& subject, double dt)
        *    3 - Time
        * */
       
-      else if(toggle == 1){
+      if(toggle == 1){
 
         // Part 1: Read the upcoming orders from the python module
         if(all_reached_target == true){
           char buffer[MAX_BUFF_SIZE];
           bzero(&buffer,MAX_BUFF_SIZE);
+          // std::cout<<"Waiting for the TCP to read\n";        //DEBUG
           // std::cout<<".\n";
           LengthController::tcp_com->read_TCP(buffer,MAX_BUFF_SIZE);
           // std::cout<<"Buffer ::";//DEBUG
@@ -170,12 +184,43 @@ void LengthController::onStep(JumperModel& subject, double dt)
 
 
         if(all_reached_target == true){
-          printf("\n--------------------------------------------------------\n");
+
+          //If the getRelativePosition is not working properly
+          // double total_mass = 0;
+          // btVector3 first_moment_system;
+          // //Calculate the center of the mass of the whole strucutre
+          // for(int i = 0; i < rods.size(); i++){
+          //   std::cout<<"CoM: "<<i<<":"<<rods[i]->centerOfMass()<<"\n";
+          //   first_moment_system = rods[i]->mass()*rods[i]->centerOfMass();
+          //   total_mass += rods[i]->mass();
+          // }
+          // btVector3 CoM = first_moment_system/total_mass;
+          btVector3 CoM = rods[0]->centerOfMass();
+          // std::cout<<"CoM: "<<CoM<<"\n";
+          // If the relative position is not working: actuators[0]->getAnchors_mod()[1]-CoM;
+
+          // printf("\n--------------------------------------------------------\n");//DEBUG
           // (1) Get the end-points
-          JSON_Structure::setEndPoints(0,actuators[0]->getAnchors_mod()[1]->getWorldPosition());
+          // getWorldPosition()
+          
+          btVector3 end_point = actuators[0]->getAnchors_mod()[1]->getWorldPosition();
+          
+          btVector3 end_point_relative = end_point - CoM;
+          JSON_Structure::setEndPoints(0,end_point_relative);
+          btVector3 end_point_velocity = (end_point - last_positions[0])/dt;
+          JSON_Structure::setEndPointVelocity(0,end_point_velocity);
+          last_positions[0] = end_point;
+
           for(int i = 1; i < 6; i++){
             btVector3 end_point = actuators[end_points_map[i]]->getAnchors_mod()[0]->getWorldPosition();
-            JSON_Structure::setEndPoints(i,end_point);
+            if(i == 4 || i == 5)
+              JSON_Structure::setLegEndPoints(i-4, end_point);
+            btVector3 end_point_relative = end_point - CoM;
+            JSON_Structure::setEndPoints(i,end_point_relative);
+            // Calculate the velocities of the end points (nodes of the rods)
+            btVector3 end_point_velocity = (end_point - last_positions[i])/dt;
+            JSON_Structure::setEndPointVelocity(i,end_point_velocity);
+            last_positions[i] = end_point;
             // std::cout<<"End Point"<<i<<"\nPoint:"<<end_point<<"\n----------------------\n";
           }
 
@@ -184,7 +229,6 @@ void LengthController::onStep(JumperModel& subject, double dt)
           for(int i = 0; i < actuators.size(); i++){
             JSON_Structure::setRestCableLength(i, (int) (actuators[i]->getRestLength()*10000) /10000.0);
             JSON_Structure::setCurrentCableLength(i, (int) (actuators[i]->getCurrentLength()*10000) /10000.0);
-
           }
 
           // (3) Get the reached flag
@@ -205,22 +249,29 @@ void LengthController::onStep(JumperModel& subject, double dt)
 
 }
 
-void LengthController::controlRestLength(json read_json, double dt, double time){
-
-  //set new targets
-  if(all_reached_target == true){
-    all_reached_target = false;
-    for(int i = 0; i < actuators.size(); i++){
+void LengthController::calcTargetLengths(json read_json){
+  for(int i = 0; i < actuators.size(); i++){
       // Discrete action space and for cotinous delta lengths
       target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["Controllers_val"][i];
       if (target_lengths[i] < 0.0) {
         target_lengths[i] = 0.0;
       }
+      // Only this clamping while controlling the rest_lengths
+      if ((LengthController::control_type == 0 || LengthController::control_type == 2) && target_lengths[i] > max_lengths[i])
+        target_lengths[i] = max_lengths[i];
 
       // Continuous action space for lengths
       // target_lengths[i] = (double)read_json["Controllers_val"][i];
 
     }
+}
+
+void LengthController::controlRestLength(json read_json, double dt, double time){
+
+  //set new targets
+  if(all_reached_target == true){
+    all_reached_target = false;
+    LengthController::calcTargetLengths(read_json);
   }
 
   int counter = 0;
@@ -235,7 +286,7 @@ void LengthController::controlRestLength(json read_json, double dt, double time)
     // if(error == last_error[i]){
     double stuck_err = last_error[i] - error;
     // that the error is equal to the last_error and the last_error was greater than the current error and the error was decreasing and the target length is smaller than the current which means that it is going to decrease more
-    if( (actuators[i]->getRestLength() == 0.1  && target_lengths[i] <= actuators[i]->getRestLength()) ||(fabs(stuck_err) < SMALL_EPS(EPS) && stuck_err > 0 && error_sign > 0 ) || fabs(stuck_err) <= BIG_EPS(EPS)*10){ //changed
+    if( (actuators[i]->getRestLength() == 0.1  && target_lengths[i] <= actuators[i]->getRestLength()) ||(fabs(stuck_err) < SMALL_EPS(EPS) && stuck_err > 0 && error_sign > 0 )){ //changed
       // while (1);
       printf("!!!!Stuck: %d\n",i);
       // all_reached_target = true;  //TODO: This is wrong, it should just flag the controller reach flag not all
@@ -249,7 +300,7 @@ void LengthController::controlRestLength(json read_json, double dt, double time)
 
     // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
     m_controllers[i]->control(dt, target_lengths[i]);
-    actuators[i]->moveMotors(dt);
+    // actuators[i]->moveMotors(dt);
     // printf("%d\n", actuators.size());
     // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
     // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
@@ -278,17 +329,7 @@ void LengthController::controlRestLength_mod(json read_json, double dt, double t
   //set new targets
   if(all_reached_target == true){
     // all_reached_target = false;
-    for(int i = 0; i < actuators.size(); i++){
-      // Discrete action space and for cotinous delta lengths
-      target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["Controllers_val"][i];
-      if (target_lengths[i] < 0.0) {
-        target_lengths[i] = 0.0;
-      }
-
-      // Continuous action space for lengths
-      // target_lengths[i] = (double)read_json["Controllers_val"][i];
-
-    }
+    LengthController::calcTargetLengths(read_json);
   }
 
   for(int i = 0; i < actuators.size(); i++){
@@ -299,7 +340,7 @@ void LengthController::controlRestLength_mod(json read_json, double dt, double t
 
     // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
     m_controllers[i]->control(dt, target_lengths[i]);
-    actuators[i]->moveMotors(dt);
+    // actuators[i]->moveMotors(dt);
     // printf("%d\n", actuators.size());
     // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
     // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
@@ -314,18 +355,7 @@ void LengthController::controlCurrentLength(json read_json, double dt, double ti
   //set new targets
   if(all_reached_target == true){
     all_reached_target = false;
-    for(int i = 0; i < actuators.size(); i++){
-      // Discrete action space and for cotinous delta lengths
-      std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tController Length: "<<(double)read_json["Controllers_val"][i]<<std::endl;
-
-      target_lengths[i] = actuators[i]->getCurrentLength() + (double)read_json["Controllers_val"][i];
-      if (target_lengths[i] < 0.0) {
-        target_lengths[i] = 0.0;
-      }
-      // Continuous action space for lengths
-      // target_lengths[i] = (double)read_json["Controllers_val"][i];
-
-    }
+    LengthController::calcTargetLengths(read_json);
   }
 
   int counter = 0;
@@ -385,18 +415,7 @@ void LengthController::controlCurrentLength_mod(json read_json, double dt, doubl
   //set new targets
   if(all_reached_target == true){
     // all_reached_target = false;
-    for(int i = 0; i < actuators.size(); i++){
-      // Discrete action space and for cotinous delta lengths
-      std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tController Length: "<<(double)read_json["Controllers_val"][i]<<std::endl;
-
-      target_lengths[i] = actuators[i]->getCurrentLength() + (double)read_json["Controllers_val"][i];
-      if (target_lengths[i] < 0.0) {
-        target_lengths[i] = 0.0;
-      }
-      // Continuous action space for lengths
-      // target_lengths[i] = (double)read_json["Controllers_val"][i];
-
-    }
+    LengthController::calcTargetLengths(read_json);
   }
 
   for(int i = 0; i < actuators.size(); i++){

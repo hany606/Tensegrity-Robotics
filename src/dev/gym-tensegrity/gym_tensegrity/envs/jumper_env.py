@@ -55,8 +55,8 @@ class JumperEnv(gym.Env):
                             'port_num':None if 'port_num' not in config.keys() else config['port_num'],
                             'sim_exec':sim_exec if 'sim_exec' not in config.keys() else config['sim_exec'],
                             'dl':0.1 if 'dl' not in config.keys() else config['dl'],
-                            'observation': 'end_points' if 'observation' not in config.keys() else config['observation'],
-                            'control_type': 'rest_length' if 'control_type' not in config.keys() else config['control_type'],
+                            'observation': ['end_points', 'end_points_velocities'] if 'observation' not in config.keys() else config['observation'],
+                            'control_type': 'rest_length_mod' if 'control_type' not in config.keys() else config['control_type'],
                             }
         else:
             self.config =  {
@@ -64,17 +64,17 @@ class JumperEnv(gym.Env):
                             'port_num':None,
                             'sim_exec':sim_exec,
                             'dl':0.1,
-                            'observation':'end_points',
-                            'control_type': 'rest_length'
+                            'observation': ['end_points', 'end_points_velocities'],
+                            'control_type': 'rest_length_mod'
                             }
 
         super(JumperEnv, self).__init__()
 
-        if('end_points' not in self.config['observation'] and 'rest_length' not in self.config['observation'] and 'current_length'  not in self.config['observation']):
-            raise Exception("Wrong choice for the type of the observation, you should choose one of these [end_points(default), rest_length, current_length] or any option from them together in a form of list")
+        if('end_points' not in self.config['observation'] and 'rest_length' not in self.config['observation'] and 'current_length'  not in self.config['observation'] and 'end_points_velocities' not in self.config['observation']):
+            raise Exception("Wrong choice for the type of the observation, you should choose one of these [end_points, rest_length, current_length, end_points_velocities] or any option from them together in a form of list")
 
         if('rest_length' not in self.config['control_type'] and 'current_length' not in self.config['control_type'] and 'rest_length_mod'  not in self.config['control_type'] and 'current_length_mod'  not in self.config['control_type']):
-            raise Exception("Wrong choice for the type of the control_type, you should choose one of these [rest_length(default), current_length, rest_length_mod, current_length_mod]")
+            raise Exception("Wrong choice for the type of the control_type, you should choose one of these [rest_length, current_length, rest_length_mod, current_length_mod]")
 
         # Agent self variables
         self.max_time = 200
@@ -103,7 +103,10 @@ class JumperEnv(gym.Env):
         # self.action_space = spaces.Box(low=low, high=high, dtype=np.float32)
 
         # Continuous Action space for the delta lengths
-        self.delta_length = 2 
+        self.delta_length = 2
+
+        self.min_end_point_velocity = -600
+        self.max_end_point_velocity = -self.min_end_point_velocity
 
         # low = np.array(-1*self.delta_length*self.env.controllers_num)
         # high = np.array(-1*low)
@@ -121,6 +124,11 @@ class JumperEnv(gym.Env):
 
             high = np.append(high, np.full((1,self.end_points_num*3), self.max_coordinate))
 
+        if('end_points_velocities' in self.config['observation']):
+            low = np.append(low, np.full((1,self.end_points_num*3), self.min_end_point_velocity))
+
+            high = np.append(high, np.full((1,self.end_points_num*3), self.max_end_point_velocity))
+
         
         if('rest_length' in self.config['observation']):
             low = np.append(low, self.min_leg_angle)
@@ -135,6 +143,7 @@ class JumperEnv(gym.Env):
 
             high = np.append(high, self.max_leg_angle)
             high = np.append(high, np.full((1,self.env.controllers_num), self.max_cable_length))            
+
 
         self.observation_space = spaces.Box(low= low, high= high, dtype=np.float32)
         # To randomize the initial state of the strings
@@ -220,6 +229,9 @@ class JumperEnv(gym.Env):
         if('end_points' in self.config['observation']):
             for i in self.env.getEndPoints():
                 observation = np.append(observation, i)
+
+        if('end_points_velocities' in self.config['observation']):
+            observation = np.append(observation, self.env.getEndPointsVelocities())
 
         if('rest_length' in self.config['observation']):
             observation = np.append(observation, self.env.getLegAngle())

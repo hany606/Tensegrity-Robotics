@@ -20,6 +20,14 @@ void JSON_Structure::setup(){
             ,{0.,0.,0.},{0.,0.,0.}
             ,{0.,0.,0.},{0.,0.,0.}}
         },
+        {"End_points_velocities",
+            {{0.,0.,0.},{0.,0.,0.}
+            ,{0.,0.,0.},{0.,0.,0.}
+            ,{0.,0.,0.},{0.,0.,0.}}
+        },
+        {"Leg_end_points_world",
+            {{0.,0.,0.},{0.,0.,0.}}
+        },
         {"Flags", {1,0,0}},
         {"Time", 0.},
         {"ZFinished", 1}
@@ -42,6 +50,18 @@ void JSON_Structure::setEndPoints(int num, btVector3 end_point){
     JSON_Structure::jsonFile["End_points"][num][0] = end_point[0];
     JSON_Structure::jsonFile["End_points"][num][1] = end_point[1];
     JSON_Structure::jsonFile["End_points"][num][2] = end_point[2];
+}
+
+void JSON_Structure::setLegEndPoints(int num, btVector3 end_point){
+    JSON_Structure::jsonFile["Leg_end_points_world"][num][0] = end_point[0];
+    JSON_Structure::jsonFile["Leg_end_points_world"][num][1] = end_point[1];
+    JSON_Structure::jsonFile["Leg_end_points_world"][num][2] = end_point[2];
+}
+
+void JSON_Structure::setEndPointVelocity(int num, btVector3 end_point_velocity){
+    JSON_Structure::jsonFile["End_points_velocities"][num][0] = end_point_velocity[0];
+    JSON_Structure::jsonFile["End_points_velocities"][num][1] = end_point_velocity[1];
+    JSON_Structure::jsonFile["End_points_velocities"][num][2] = end_point_velocity[2];
 }
 
 void JSON_Structure::setFlags(int index, int value){

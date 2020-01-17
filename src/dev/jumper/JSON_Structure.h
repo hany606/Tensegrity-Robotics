@@ -18,6 +18,9 @@ namespace JSON_Structure
     // void setCenterOfMass(int num, double x, double y, double z);
     // void setOrientation(int num, double i, double j, double k, double w);
     void setEndPoints(int num, btVector3 end_point);
+    void setLegEndPoints(int num, btVector3 end_point);
+    void setEndPointVelocity(int num, btVector3 end_point_velocity);
+
     void setFlags(int index, int value);
     void setTime(double t);
     std::string jsonToString();
