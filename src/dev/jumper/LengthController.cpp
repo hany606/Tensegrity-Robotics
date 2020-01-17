@@ -288,15 +288,15 @@ void LengthController::controlRestLength(json read_json, double dt, double time)
     // that the error is equal to the last_error and the last_error was greater than the current error and the error was decreasing and the target length is smaller than the current which means that it is going to decrease more
     if( (actuators[i]->getRestLength() == 0.1  && target_lengths[i] <= actuators[i]->getRestLength()) ||(fabs(stuck_err) < SMALL_EPS(EPS) && stuck_err > 0 && error_sign > 0 )){ //changed
       // while (1);
-      printf("!!!!Stuck: %d\n",i);
+      // printf("!!!!Stuck: %d\n",i);
       // all_reached_target = true;  //TODO: This is wrong, it should just flag the controller reach flag not all
       reached_counter++;
-      printf("Controller#%d\tError: %lf\n", i, error);
-      std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+      // printf("Controller#%d\tError: %lf\n", i, error);
+      // std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
       continue;
     }
-    printf("Controller#%d\tError: %lf\n", i, error);
-    std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+    // printf("Controller#%d\tError: %lf\n", i, error);
+    // std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
 
     // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
     m_controllers[i]->control(dt, target_lengths[i]);
@@ -308,7 +308,7 @@ void LengthController::controlRestLength(json read_json, double dt, double time)
       // all_reached_target = true;
       reached_counter++;
       read_json["Controllers_val"][i] = 0;
-      printf("Reached%d\n", i);
+      // printf("Reached%d\n", i);
     }
     last_error[i] = error;
   }
@@ -336,7 +336,7 @@ void LengthController::controlRestLength_mod(json read_json, double dt, double t
     if(((double) read_json["Controllers_val"][i]) == 0)
       continue;
 
-    std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+    // std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
 
     // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
     m_controllers[i]->control(dt, target_lengths[i]);
@@ -344,7 +344,7 @@ void LengthController::controlRestLength_mod(json read_json, double dt, double t
     // printf("%d\n", actuators.size());
     // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
     // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
-    printf("Reached%d\n", i);  
+    // printf("Reached%d\n", i);  
   }
 
 }
@@ -373,15 +373,15 @@ void LengthController::controlCurrentLength(json read_json, double dt, double ti
     //- Converge; The difference between the iteration in the error is less than epsilon (converge to specific length after a specific move)
     //- Error is increasing; The current error is greater than the previous error + eps
     if((fabs(last_error[i]) + BIG_EPS(EPS)*10 <= fabs(error) && last_error[i] != 0.0) || fabs(stuck_err) <= BIG_EPS(EPS)){
-      printf("!!!!Stuck: %d\n",i);
+      // printf("!!!!Stuck: %d\n",i);
       // all_reached_target = true;  //TODO: This is wrong, it should just flag the controller reach flag not all
       reached_counter++;
-      printf("Controller#%d\tError: %lf\tlast Error: %lf\n", i, error_sign, last_error[i]);
-      std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+      // printf("Controller#%d\tError: %lf\tlast Error: %lf\n", i, error_sign, last_error[i]);
+      // std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
       continue;
     }
-    printf("Controller#%d\tError: %lf\tlast Error: %lf\n", i, error_sign, last_error[i]);
-    std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+    // printf("Controller#%d\tError: %lf\tlast Error: %lf\n", i, error_sign, last_error[i]);
+    // std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
 
     // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
     m_controllers[i]->control(dt, target_lengths[i]);
@@ -392,7 +392,7 @@ void LengthController::controlCurrentLength(json read_json, double dt, double ti
       // all_reached_target = true;
       reached_counter++;
       read_json["Controllers_val"][i] = 0;
-      printf("Reached%d\n", i);
+      // printf("Reached%d\n", i);
     }
     last_error[i] = error;
   }
@@ -427,7 +427,7 @@ void LengthController::controlCurrentLength_mod(json read_json, double dt, doubl
     // printf("%d\n", actuators.size());
     // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
     // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
-    printf("Reached%d\n", i);  
+    // printf("Reached%d\n", i);  
   }
   // all_reached_target = true;
 
