@@ -57,6 +57,7 @@ class JumperEnv(gym.Env):
                             'dl':0.1 if 'dl' not in config.keys() else config['dl'],
                             'observation': ['end_points', 'end_points_velocities'] if 'observation' not in config.keys() else config['observation'],
                             'control_type': 'rest_length_mod' if 'control_type' not in config.keys() else config['control_type'],
+                            'num_repeated_action': 1 if 'num_repeated_action' not in config.keys() else config['num_repeated_action'],
                             }
         else:
             self.config =  {
@@ -65,7 +66,8 @@ class JumperEnv(gym.Env):
                             'sim_exec':sim_exec,
                             'dl':0.1,
                             'observation': ['end_points', 'end_points_velocities'],
-                            'control_type': 'rest_length_mod'
+                            'control_type': 'rest_length_mod',
+                            'num_repeated_action': 1,
                             }
 
         super(JumperEnv, self).__init__()
@@ -105,7 +107,7 @@ class JumperEnv(gym.Env):
         # Continuous Action space for the delta lengths
         self.delta_length = 2
 
-        self.min_end_point_velocity = -600
+        self.min_end_point_velocity = -800
         self.max_end_point_velocity = -self.min_end_point_velocity
 
         # low = np.array(-1*self.delta_length*self.env.controllers_num)
@@ -131,10 +133,10 @@ class JumperEnv(gym.Env):
 
         
         if('rest_length' in self.config['observation']):
-            low = np.append(low, self.min_leg_angle)
+            # low = np.append(low, self.min_leg_angle)
             low = np.append(low, np.zeros(self.env.controllers_num))
 
-            high = np.append(high, self.max_leg_angle)
+            # high = np.append(high, self.max_leg_angle)
             high = np.append(high, np.full((1,self.env.controllers_num), self.max_cable_length))
 
         if('current_length' in self.config['observation']):
@@ -157,9 +159,23 @@ class JumperEnv(gym.Env):
         self.env.closeSimulator()
             
     def step(self, action):
-        self._takeAction(action)
+        # This modification of multiple steps of actions was adapted from Atari environment: https://github.com/openai/gym/blob/master/gym/envs/atari/atari_env.py
+        num_steps = 0
+        num_repeated_action = self.config['num_repeated_action']
+        rewards = 0
+        
+        if isinstance(num_repeated_action, int):
+            num_steps = num_repeated_action
+        else:
+            num_steps = randint(num_repeated_action[0], num_repeated_action[1])
+        
+        for _ in range(num_steps):
+            self._takeAction(action)
+            observation = self._getObservation()
+            rewards += self._getReward(observation)
+
         observation = self._getObservation()
-        reward = self._getReward(observation)
+        reward = rewards
         done = self._isDone()
         return observation, reward, done, {}
 
@@ -234,11 +250,11 @@ class JumperEnv(gym.Env):
             observation = np.append(observation, self.env.getEndPointsVelocities())
 
         if('rest_length' in self.config['observation']):
-            observation = np.append(observation, self.env.getLegAngle())
+            # observation = np.append(observation, self.env.getLegAngle())
             observation = np.append(observation, self.env.getRestCablesLengths())
 
         if('current_length' in self.config['observation']):
-            observation = np.append(observation, self.env.getLegAngle())
+            # observation = np.append(observation, self.env.getLegAngle())
             observation = np.append(observation, self.env.getCurrentCablesLengths())
 
         return np.array(observation)
