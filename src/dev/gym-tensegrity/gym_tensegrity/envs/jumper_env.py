@@ -140,10 +140,10 @@ class JumperEnv(gym.Env):
             high = np.append(high, np.full((1,self.env.controllers_num), self.max_cable_length))
 
         if('current_length' in self.config['observation']):
-            low = np.append(low, self.min_leg_angle)
+            # low = np.append(low, self.min_leg_angle)
             low = np.append(low, np.zeros(self.env.controllers_num))
 
-            high = np.append(high, self.max_leg_angle)
+            # high = np.append(high, self.max_leg_angle)
             high = np.append(high, np.full((1,self.env.controllers_num), self.max_cable_length))            
 
 
@@ -281,7 +281,8 @@ class JumperEnv(gym.Env):
         #  The criteria for finish will be either
         #   - Fall "The angle is more than theta_max"
         # if the angle is greater than 20 degrees this will mean that the episode is done and the agent failed to balance
-        if abs(self.env.getLegAngle()) > np.pi/9:
+        squre_sides_angles = self.env.getSquareSidesAngles()
+        if abs(self.env.getLegAngle()) > np.pi/9 or abs(squre_sides_angles[0]) > np.pi/4 or abs(squre_sides_angles[1]) > np.pi/4:
             return True
         return False
 

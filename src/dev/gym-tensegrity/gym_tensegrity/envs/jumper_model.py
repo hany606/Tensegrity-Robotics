@@ -212,6 +212,62 @@ class JumperModel():
         angle = np.arccos(dot_product/(v1_mag*v2_mag))
         # print("angle", angle)
         return angle
+
+    """
+    (b)|
+       |
+    (a)|_____(c)
+    """
+    def getSquareSidesAngles(self):
+        point_a = np.array(self.sim_json["End_points"][1])
+        point_b = np.array(self.sim_json["End_points"][2])
+        point_c = np.array(self.sim_json["End_points"][0])
+
+        point_d = [0,0,0]
+        point_e = [0,0,0]
+
+        point_d[:] = point_b[:]
+        point_e[:] = point_c[:]
+
+        point_d[1] = point_a[1]
+        point_e[1] = point_a[1]
+
+        # print("point_a: {:}".format(point_a))
+        # print("point_b: {:}".format(point_b))
+        # print("point_c: {:}".format(point_c))
+        # print("point_d: {:}".format(point_d))
+        # print("point_e: {:}".format(point_e))
+
+        v_ab = point_b - point_a
+        v_ac = point_c - point_a
+        v_ad = point_d - point_a
+        v_ae = point_e - point_a
+
+        # print("v_ab: {:}".format(v_ab))
+        # print("v_ac: {:}".format(v_ac))
+        # print("v_ad: {:}".format(v_ad))
+        # print("v_ae: {:}".format(v_ae))
+
+        dot_v_ad_v_ab = np.dot(v_ad, v_ab)
+        dot_v_ae_v_ac = np.dot(v_ae, v_ac)
+
+        # print("v_ad . v_ab: {:}".format(dot_v_ad_v_ab))
+        # print("v_ae . v_ac: {:}".format(dot_v_ae_v_ac))
+
+        mag_v_ab = np.linalg.norm(v_ab)
+        mag_v_ac = np.linalg.norm(v_ac)
+        mag_v_ad = np.linalg.norm(v_ad)
+        mag_v_ae = np.linalg.norm(v_ae)
+
+        # print("mag_v_ab: {:}".format(mag_v_ab))
+        # print("mag_v_ac: {:}".format(mag_v_ac))
+        # print("mag_v_ad: {:}".format(mag_v_ad))
+        # print("mag_v_ae: {:}".format(mag_v_ae))
+
+        angle_x = np.arccos(dot_v_ad_v_ab/(mag_v_ad*mag_v_ab))
+        angle_y = np.arccos(dot_v_ae_v_ac/(mag_v_ae*mag_v_ac))
+        
+        return [angle_x, angle_y]
     
     def getTime(self):
         return self.sim_json["Time"]

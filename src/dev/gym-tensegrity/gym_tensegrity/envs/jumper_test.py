@@ -191,6 +191,11 @@ def test(config=None):
         print("---")
         for i in range(6):
             print("#{:} End point velocity: {:}".format(i+1, [obs[3*(i+6):3*(i+1+6)]]))
+
+        print("Leg angle:{:}".format(env.env.getLegAngle()*180/np.pi))
+        squre_sides_angles = env.env.getSquareSidesAngles()
+        print("Square side angle1:{:}".format(squre_sides_angles[0]*180/np.pi))
+        print("Square side angle2:{:}".format(squre_sides_angles[1]*180/np.pi))
         print("----------------------------------")
     if(config is not None):
         env = gym.make('gym_tensegrity:jumper-v0', config=config)
@@ -244,7 +249,7 @@ def test(config=None):
         observation, reward, done, _= env.step(action)
         print(action)
         print_observation(observation)
-        print("angle:{:}".format(env.env.getLegAngle()*180/np.pi))
+
 
 if __name__ == "__main__":
     test()

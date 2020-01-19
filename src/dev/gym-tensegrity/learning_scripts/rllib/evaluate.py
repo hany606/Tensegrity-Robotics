@@ -12,9 +12,11 @@ from ray.tune.logger import pretty_print
 import numpy as np
 
 def create_environment(env_config):
-	import gym_tensegrity
-	#return gym.make('gym_tensegrity:jumper-v0', config=env_config)
-	return gym.make('gym_tensegrity:jumper-v0')
+    print("Creation Envirnoment...")
+    print("Environment Configuration: {:}".format(env_config))
+    import gym_tensegrity
+    return gym.make('gym_tensegrity:jumper-v0', config=env_config)
+    # return gym.make('gym_tensegrity:jumper-v0')
 
 class Printer:
     def __init__(self,debug=1):
@@ -67,6 +69,18 @@ class Printer:
     def mean(self, mean, num_episodes=None):
         if(self.debug_flag):
             print("The mean for the rewards for {:} episodes is {:}".format(num_episodes, mean))
+
+    def config(self, data, tag=None):
+        if(tag is None):
+            print("Configuration: {:}".format(data))
+        else:
+            print("{:} Configuration: {:}".format(tag, data))
+
+    def separator(self, separator=None):
+        if(separator is None):
+            print("--------------------------------------")
+        else:
+            print(separator)
 
 class Evaluater:
     def __init__(self):
@@ -163,7 +177,7 @@ class Evaluater:
         config["num_workers"] = 1
         trained_agent = ars.ARSTrainer(config, env="jumper")
         trained_agent.restore(evaluation_config["evaluation_file"])
-        env = create_environment("")
+        env = create_environment(env_config)
         cumulative_reward = 0
         history = []
         for _ in range(evaluation_config["num_episodes"]):
@@ -190,12 +204,21 @@ class Evaluater:
                 "num_episodes": args.num_episodes,
             }
         self.env_config = {"observation": self.evaluation_config["observation_space_type"], "control_type": self.evaluation_config["controller_type"]}
-        tune.register_env("jumper", create_environment)
-        ray.init()
         if(self.evaluation_config["agent_config_file"] is None):
             raise Exception("The agent config file should be defined.\n--Hint: it is params.json")
         with open(self.evaluation_config["agent_config_file"]) as json_file:
             self.agent_config = json.load(json_file)
+            if("env_config" in self.agent_config.keys()):
+                self.env_config = self.agent_config["env_config"]
+        
+        self.printer.separator()
+        self.printer.config(self.env_config, tag="Environment")
+        self.printer.config(self.agent_config, tag="Agent")
+        self.printer.config(self.evaluation_config, tag="Evaluation")
+        self.printer.separator()
+
+        tune.register_env("jumper", create_environment)
+        ray.init()
         self.evaluate(self.evaluation_config, self.agent_config, self.env_config, random=self.evaluation_config["random_agent"])
 
 if __name__ == "__main__":
