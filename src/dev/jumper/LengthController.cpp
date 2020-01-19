@@ -260,7 +260,7 @@ void LengthController::calcTargetLengths(json read_json){
       // Only this clamping while controlling the rest_lengths
       if ((LengthController::control_type == 0 || LengthController::control_type == 2) && target_lengths[i] > max_lengths[i]){
         target_lengths[i] = max_lengths[i];
-        printf("Reached the limit\n");
+        // printf("Reached the limit\n");
       }
 
       // Continuous action space for lengths
@@ -425,7 +425,7 @@ void LengthController::controlCurrentLength_mod(json read_json, double dt, doubl
     if(((double) read_json["Controllers_val"][i]) == 0)
       continue;
     
-    std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+    // std::cout<<"Current Length: "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
     m_controllers[i]->control(dt, target_lengths[i]);
     // printf("%d\n", actuators.size());
     // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
