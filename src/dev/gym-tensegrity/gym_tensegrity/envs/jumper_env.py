@@ -118,7 +118,7 @@ class JumperEnv(gym.Env):
         # Continuous Action space for the delta lengths
         self.delta_length = 2
 
-        self.min_end_point_velocity = -800
+        self.min_end_point_velocity = -2000
         self.max_end_point_velocity = -self.min_end_point_velocity
 
         # low = np.array(-1*self.delta_length*self.env.controllers_num)
@@ -296,6 +296,7 @@ class JumperEnv(gym.Env):
         squre_sides_angles = self.env.getSquareSidesAngles()
         if abs(self.env.getLegAngle()) > np.pi/9 or abs(squre_sides_angles[0]) > np.pi/4 or abs(squre_sides_angles[1]) > np.pi/4 or self.num_steps > self.max_num_steps:
                 self.num_steps = 0
+                print(self.env.getLegAngle())
                 return True
         return False
 
@@ -317,3 +318,9 @@ class JumperEnv(gym.Env):
 
     def close(self):
         self.env.closeSimulator()
+
+    def setStartingHeight(self, height):
+        self.env.starting_height = height
+
+    def setStartingAngle(self, angle):
+        self.env.starting_angle = angle
