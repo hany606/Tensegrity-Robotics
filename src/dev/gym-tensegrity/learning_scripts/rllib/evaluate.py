@@ -10,6 +10,7 @@ from ray import tune
 import ray.rllib.agents.ars as ars
 from ray.tune.logger import pretty_print
 import numpy as np
+from random import randint
 
 def create_environment(env_config):
     print("Creation Envirnoment...")
@@ -177,6 +178,8 @@ class Evaluater:
         config["num_workers"] = 1
         trained_agent = ars.ARSTrainer(config, env="jumper")
         trained_agent.restore(evaluation_config["evaluation_file"])
+        # starting_height = randint(10,1000)
+        #env_config["starting_height"] = starting_height
         env = create_environment(env_config)
         cumulative_reward = 0
         history = []

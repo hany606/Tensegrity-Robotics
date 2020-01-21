@@ -70,13 +70,18 @@ int main(int argc, char** argv)
 
     // Fourth create the models with their controllers and add the models to the
     // simulation
-    JumperModel* const myModel = new JumperModel();
+    const int height = std::stoi(argv[4]);
+    btVector3 starting_coordinates (0,height,0);
+    double starting_angle = std::stod(argv[5]);
+    JumperModel* const myModel = new JumperModel(starting_coordinates,starting_angle);
 
     const char* host_name = argv[1];
     const long long  port_num = std::stoll(argv[2]);
     const int control_type = std::stoi(argv[3]);
+    printf("host_name: %s\t port_num: %s\t control_type: %s\n starting_coordinates: %s\t starting_angle: %s\n", argv[1], argv[2], argv[3], argv[4], argv[5]);
     LengthController* const myController = new LengthController(host_name, port_num, control_type);
     myModel->attach(myController);
+
 
     // Add the model to the world
     simulation.addModel(myModel);

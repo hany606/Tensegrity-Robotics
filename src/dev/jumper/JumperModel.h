@@ -55,7 +55,7 @@ public:
      * The only constructor. Configuration parameters are within the
      * .cpp file in this case, not passed in. 
      */
-    JumperModel();
+    JumperModel(btVector3 pos, double  angle);
     
     /**
      * Destructor. Deletes controllers, if any were added during setup.
@@ -119,7 +119,7 @@ private:
      * @param[in] width: the Z distance of the base triangle
      * @param[in] height: the Y distance along the axis of the prism
      */
-    static void addNodes(tgStructure& s);
+    static void addNodes(tgStructure& s, double angle);
     
     /**
      * A function called during setup that creates rods from the
@@ -134,6 +134,9 @@ private:
      * @param[in] s A tgStructure that we're building into
      */
     static void addMuscles(tgStructure& s);
+
+    btVector3 starting_coordinates;
+    double starting_angle;
 
 public:    
     /**

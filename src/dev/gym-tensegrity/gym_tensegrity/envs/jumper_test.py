@@ -226,6 +226,7 @@ def test(config=None):
 
     flag = 0
     while True:
+        # inp = 'd'
         inp = input("~~~~~~input: ")
         #action = env.action_space.sample()
         #observation, reward, done, _= env.step(action)
@@ -252,7 +253,7 @@ def test(config=None):
 
 
 if __name__ == "__main__":
-    test()
+    test({'starting_height':10, "max_num_steps":1000, "starting_angle":np.pi/4})
     # main_cont_dlengths({'observation':['end_points'], 'control_type': 'current_length_mod'})
     # main_cont_lengths()
     # main()
