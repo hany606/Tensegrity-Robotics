@@ -20,7 +20,9 @@ sim_exec = "gnome-terminal -e {}".format(path_to_model)
 
 class JumperModel():
     def __init__(self, host_name='localhost', port_num=10040, packet_size=5000,
-                 sim_exec=sim_exec, dl=0.1, controllers_num=8, control_type="rest_length"):
+                 sim_exec=sim_exec, dl=0.1, controllers_num=8, control_type="rest_length", 
+                 starting_height=100, starting_angle=0):
+        self.starting_height = starting_height
         self.host_name = host_name
         self.port_num = port_num
         self.packet_size = packet_size
@@ -75,7 +77,7 @@ class JumperModel():
         self.leg_length = 20
         self.port_num = self.sock.getsockname()[1]
         control_type_index = {"rest_length": 0, "current_length": 1, "rest_length_mod": 2, "current_length_mod": 3}
-        self.sim_exec = sim_exec + ' {:} {:} {:}'.format(host_name, self.port_num, control_type_index[control_type])
+        self.sim_exec = sim_exec + ' {:} {:} {:} {:} {:}'.format(host_name, self.port_num, control_type_index[control_type], starting_height, starting_angle)
 
 
     def __del__(self):

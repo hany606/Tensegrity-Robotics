@@ -10,6 +10,7 @@ from ray import tune
 import ray.rllib.agents.ars as ars
 from ray.tune.logger import pretty_print
 import numpy as np
+from random import randint
 
 def create_environment(env_config):
     print("Creation Envirnoment...")
@@ -64,7 +65,7 @@ class Printer:
             for i in range(len(history)):
                 rewards += history[i]
                 print("#Episode {:} -> {:}".format(i+1, history[i]),end="\n")
-            self.mean(rewards/len(history))
+            self.mean(rewards/len(history),num_episodes=len(history))
 
     def mean(self, mean, num_episodes=None):
         if(self.debug_flag):
@@ -177,6 +178,8 @@ class Evaluater:
         config["num_workers"] = 1
         trained_agent = ars.ARSTrainer(config, env="jumper")
         trained_agent.restore(evaluation_config["evaluation_file"])
+        # starting_height = randint(10,1000)
+        #env_config["starting_height"] = starting_height
         env = create_environment(env_config)
         cumulative_reward = 0
         history = []
@@ -187,7 +190,7 @@ class Evaluater:
             cumulative_reward += reward
  
         self.printer.history(history)
-        self.printer.mean(cumulative_reward/evaluation_config["num_episodes"])
+        # self.printer.mean(cumulative_reward/evaluation_config["num_episodes"])
 
     def run(self, args, parser):
         if args.config_file:

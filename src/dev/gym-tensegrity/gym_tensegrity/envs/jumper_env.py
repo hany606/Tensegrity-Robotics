@@ -58,6 +58,9 @@ class JumperEnv(gym.Env):
                             'observation': ['end_points', 'end_points_velocities'] if 'observation' not in config.keys() else config['observation'],
                             'control_type': 'rest_length_mod' if 'control_type' not in config.keys() else config['control_type'],
                             'num_repeated_action': 1 if 'num_repeated_action' not in config.keys() else config['num_repeated_action'],
+                            'max_num_steps': 20000 if 'max_num_steps' not in config.keys() else config['max_num_steps'],
+                            'starting_height': 100 if 'starting_height' not in config.keys() else config['starting_height'],
+                            'starting_angle': 0 if 'starting_angle' not in config.keys() else config['starting_angle'],
                             }
         else:
             self.config =  {
@@ -68,6 +71,9 @@ class JumperEnv(gym.Env):
                             'observation': ['end_points', 'end_points_velocities'],
                             'control_type': 'rest_length_mod',
                             'num_repeated_action': 1,
+                            'max_num_steps': 20000,
+                            'starting_height': 100,
+                            'starting_angle': 0,
                             }
 
         super(JumperEnv, self).__init__()
@@ -79,7 +85,6 @@ class JumperEnv(gym.Env):
             raise Exception("Wrong choice for the type of the control_type, you should choose one of these [rest_length, current_length, rest_length_mod, current_length_mod]")
 
         # Agent self variables
-        self.max_time = 200
         self.max_cable_length = 50
         self.min_leg_angle = -np.pi/2
         self.max_leg_angle =  np.pi/2
@@ -88,8 +93,14 @@ class JumperEnv(gym.Env):
         self.max_coordinate = -self.min_coordinate
         self.dl = self.config['dl'] # This were used for discrete action space
         self.count_rewards_flag = False
+        self.starting_height = self.config['starting_height']
+        self.starting_angle = self.config['starting_angle']
         
-        self.env = JumperModel(host_name=self.config['host_name'], port_num=self.config['port_num'], sim_exec=self.config['sim_exec'], dl=self.config['dl'], control_type= self.config['control_type'])
+        self.num_steps = 0
+        self.max_num_steps = self.config['max_num_steps']
+
+
+        self.env = JumperModel(host_name=self.config['host_name'], port_num=self.config['port_num'], sim_exec=self.config['sim_exec'], dl=self.config['dl'], control_type= self.config['control_type'], starting_height=self.config['starting_height'], starting_angle=self.config['starting_angle'])
         self.env.startSimulator()
 
         # Discrete Action space
@@ -159,6 +170,7 @@ class JumperEnv(gym.Env):
         self.env.closeSimulator()
             
     def step(self, action):
+        self.num_steps += 1
         # This modification of multiple steps of actions was adapted from Atari environment: https://github.com/openai/gym/blob/master/gym/envs/atari/atari_env.py
         num_steps = 0
         num_repeated_action = self.config['num_repeated_action']
@@ -282,12 +294,14 @@ class JumperEnv(gym.Env):
         #   - Fall "The angle is more than theta_max"
         # if the angle is greater than 20 degrees this will mean that the episode is done and the agent failed to balance
         squre_sides_angles = self.env.getSquareSidesAngles()
-        if abs(self.env.getLegAngle()) > np.pi/9 or abs(squre_sides_angles[0]) > np.pi/4 or abs(squre_sides_angles[1]) > np.pi/4:
-            return True
+        if abs(self.env.getLegAngle()) > np.pi/9 or abs(squre_sides_angles[0]) > np.pi/4 or abs(squre_sides_angles[1]) > np.pi/4 or self.num_steps > self.max_num_steps:
+                self.num_steps = 0
+                return True
         return False
 
     def reset(self):
         # Reset the state of the environment to an initial state, and the self vars to the initial values
+        self.num_steps = 0
         # Reset the environment and the simulator
         self.env.reset()
         self.env.step()
