@@ -63,8 +63,12 @@ class Printer:
             print("History for {:} episodes:".format(len(history)))
             rewards = 0
             for i in range(len(history)):
-                rewards += history[i]
-                print("#Episode {:} -> {:}".format(i+1, history[i]),end="\n")
+                rewards += history[i]["reward"]
+                print("#Episode {:} -> ".format(i+1),end="")
+                for key in history[i].keys():
+                    print("{:}: {:}".format(key, history[i][key]), end="\t")
+                print("")
+                #print("#Episode {:} -> {:}".format(i+1, history[i]),end="\n")
             self.mean(rewards/len(history),num_episodes=len(history))
 
     def mean(self, mean, num_episodes=None):
@@ -178,16 +182,22 @@ class Evaluater:
         config["num_workers"] = 1
         trained_agent = ars.ARSTrainer(config, env="jumper")
         trained_agent.restore(evaluation_config["evaluation_file"])
-        # starting_height = randint(10,1000)
-        #env_config["starting_height"] = starting_height
+        starting_height = randint(10,50)	#min:10
+        env_config["starting_height"] = starting_height
+        starting_angle = randint(0,1745)/10000  #1745/10000 = 0.1745 radian = 10 degree angle
+        env_config["starting_angle"] = starting_angle
         env = create_environment(env_config)
         cumulative_reward = 0
         history = []
         for _ in range(evaluation_config["num_episodes"]):
             reward = self.run_episode(env, trained_agent, random=random)
             #self.printer.reward(reward)
-            history.append(reward)
+            history.append({"reward":reward, "height": starting_height, "angle in degree": starting_angle*180/np.pi})
             cumulative_reward += reward
+            starting_height = randint(10,50)
+            env.setStartingHeight(starting_height)
+            starting_angle = randint(0,1745)/10000
+            env.setStartingAngle(starting_angle)
  
         self.printer.history(history)
         # self.printer.mean(cumulative_reward/evaluation_config["num_episodes"])
