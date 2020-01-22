@@ -182,9 +182,9 @@ class Evaluater:
         config["num_workers"] = 1
         trained_agent = ars.ARSTrainer(config, env="jumper")
         trained_agent.restore(evaluation_config["evaluation_file"])
-        starting_height = randint(10,50)	#min:10
+        starting_height = randint(100,100)	#min:10
         env_config["starting_height"] = starting_height
-        starting_angle = randint(0,1745)/10000  #1745/10000 = 0.1745 radian = 10 degree angle
+        starting_angle = randint(0,0)/10000  #1745/10000 = 0.1745 radian = 10 degree angle
         env_config["starting_angle"] = starting_angle
         env = create_environment(env_config)
         cumulative_reward = 0
@@ -194,9 +194,9 @@ class Evaluater:
             #self.printer.reward(reward)
             history.append({"reward":reward, "height": starting_height, "angle in degree": starting_angle*180/np.pi})
             cumulative_reward += reward
-            starting_height = randint(10,50)
+            starting_height = randint(100,100)
             env.setStartingHeight(starting_height)
-            starting_angle = randint(0,1745)/10000
+            starting_angle = randint(0,0)/10000
             env.setStartingAngle(starting_angle)
  
         self.printer.history(history)
