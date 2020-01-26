@@ -70,9 +70,10 @@ int main(int argc, char** argv)
 
     // Fourth create the models with their controllers and add the models to the
     // simulation
-    const int height = std::stoi(argv[4]);
-    btVector3 starting_coordinates (0,height,0);
-    double starting_angle = std::stod(argv[5]);
+    const int z = std::stoi(argv[4]);
+
+    btVector3 starting_coordinates (std::stoi(argv[4]),std::stoi(argv[5]),std::stoi(argv[6]));
+    double starting_angle = std::stod(argv[7]);
     JumperModel* const myModel = new JumperModel(starting_coordinates,starting_angle);
 
     const char* host_name = argv[1];
