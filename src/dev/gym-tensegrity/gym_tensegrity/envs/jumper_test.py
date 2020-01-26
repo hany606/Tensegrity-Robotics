@@ -255,8 +255,3 @@ def test(config=None):
 
 if __name__ == "__main__":
     test({'starting_coordinates':(0,10,0), "max_num_steps":1000, "starting_angle":1.0001*np.pi/180})
-    # main_cont_dlengths({'observation':['end_points'], 'control_type': 'current_length_mod'})
-    # main_cont_lengths()
-    # main()
-    # forked_process_main()
-    # threaded_main()
