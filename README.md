@@ -43,6 +43,7 @@ It is in [src/dev/legz](https://github.com/hany606/Tensegrity-Robotics/tree/mast
 	The simulator should be appeared now.
 
 Note: step 5 is not needed any more as the library is installed and build from source, no need to install it into the system
+
 5. Install [nlohmann-json library](https://github.com/nlohmann/json). 
 
 You can install it by linuxbrew, but you need to install first from [here](https://docs.brew.sh/Homebrew-on-Linux).
