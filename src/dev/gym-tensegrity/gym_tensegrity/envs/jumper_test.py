@@ -210,6 +210,7 @@ def test(config=None):
     input("-> check point: WAIT for INPUT !!!!")
 
     while not done:
+        #inp = input("INPUT")
         # action = env.action_space.sample()
         print("Action: {:}".format(action))
         observation, reward, done, _= env.step(action)
@@ -226,8 +227,8 @@ def test(config=None):
 
     flag = 0
     while True:
-        # inp = 'd'
-        inp = input("~~~~~~input: ")
+        inp = 'd'
+        # inp = input("~~~~~~input: ")
         #action = env.action_space.sample()
         #observation, reward, done, _= env.step(action)
 
@@ -253,7 +254,7 @@ def test(config=None):
 
 
 if __name__ == "__main__":
-    test({'starting_height':10, "max_num_steps":1000, "starting_angle":np.pi/4})
+    test({'starting_coordinates':(0,10,0), "max_num_steps":1000, "starting_angle":1.0001*np.pi/180})
     # main_cont_dlengths({'observation':['end_points'], 'control_type': 'current_length_mod'})
     # main_cont_lengths()
     # main()

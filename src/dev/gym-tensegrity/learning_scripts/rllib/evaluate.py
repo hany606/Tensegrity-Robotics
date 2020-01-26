@@ -182,21 +182,28 @@ class Evaluater:
         config["num_workers"] = 1
         trained_agent = ars.ARSTrainer(config, env="jumper")
         trained_agent.restore(evaluation_config["evaluation_file"])
-        starting_height = randint(100,100)	#min:10
-        env_config["starting_height"] = starting_height
-        starting_angle = randint(0,0)/10000  #1745/10000 = 0.1745 radian = 10 degree angle
+        min_coordinates = [0,10,0]
+        max_coordinates = [0,10,0]
+        min_angle = int(-1*np.pi/180*1000)
+        max_angle = int(-min_angle)
+        starting_coordinates =  (randint(min_coordinates[0],max_coordinates[0]), randint(min_coordinates[1],max_coordinates[1]), randint(min_coordinates[2],max_coordinates[2]))	#min:10
+        env_config["starting_coordinates"] = starting_coordinates
+        #starting_angle = randint(min_angle,max_angle)/10000  #1745/10000 = 0.1745 radian = 10 degree angle
+        starting_angle = 0.95*np.pi/180
         env_config["starting_angle"] = starting_angle
         env = create_environment(env_config)
         cumulative_reward = 0
         history = []
         for _ in range(evaluation_config["num_episodes"]):
+            print("starting_angle: {:}".format(starting_angle*180/np.pi))
             reward = self.run_episode(env, trained_agent, random=random)
             #self.printer.reward(reward)
-            history.append({"reward":reward, "height": starting_height, "angle in degree": starting_angle*180/np.pi})
+            history.append({"reward":reward, "coordiantes": starting_coordinates, "angle in degree": starting_angle*180/np.pi})
             cumulative_reward += reward
-            starting_height = randint(100,100)
-            env.setStartingHeight(starting_height)
-            starting_angle = randint(0,0)/10000
+            starting_coordinates =  (randint(min_coordinates[0],max_coordinates[0]), randint(min_coordinates[1],max_coordinates[1]), randint(min_coordinates[2],max_coordinates[2]))	#min:10
+            env.setStartingCoordinates(starting_coordinates)
+            starting_angle = 0.95*np.pi/180
+            #starting_angle = randint(min_angle,max_angle)/10000
             env.setStartingAngle(starting_angle)
  
         self.printer.history(history)
@@ -229,6 +236,7 @@ class Evaluater:
         self.printer.config(self.agent_config, tag="Agent")
         self.printer.config(self.evaluation_config, tag="Evaluation")
         self.printer.separator()
+        self.env_config["max_num_steps"] = 100000
 
         tune.register_env("jumper", create_environment)
         ray.init()

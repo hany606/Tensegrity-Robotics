@@ -185,7 +185,7 @@ void JumperModel::setup(tgWorld& world)
     // s.move(btVector3(0, 50, 0));
     s.move(starting_coordinates);
     const btVector3 fixed_point (0,-c.leg_length,0);
-    const btVector3 axis_rotation (1,0,0);
+    const btVector3 axis_rotation (0,0,1);
     s.addRotation(fixed_point, axis_rotation, starting_angle);
 
 

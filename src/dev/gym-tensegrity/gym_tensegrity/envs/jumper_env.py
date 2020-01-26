@@ -59,7 +59,7 @@ class JumperEnv(gym.Env):
                             'control_type': 'rest_length_mod' if 'control_type' not in config.keys() else config['control_type'],
                             'num_repeated_action': 1 if 'num_repeated_action' not in config.keys() else config['num_repeated_action'],
                             'max_num_steps': 20000 if 'max_num_steps' not in config.keys() else config['max_num_steps'],
-                            'starting_height': 100 if 'starting_height' not in config.keys() else config['starting_height'],
+                            'starting_coordinates': (0,100,0) if 'starting_coordinates' not in config.keys() else config['starting_coordinates'],
                             'starting_angle': 0 if 'starting_angle' not in config.keys() else config['starting_angle'],
                             }
         else:
@@ -72,10 +72,10 @@ class JumperEnv(gym.Env):
                             'control_type': 'rest_length_mod',
                             'num_repeated_action': 1,
                             'max_num_steps': 20000,
-                            'starting_height': 100,
+                            'starting_coordinates': (0,100,0),
                             'starting_angle': 0,
                             }
-
+        # starting_coordinates: (y,z,x)
         super(JumperEnv, self).__init__()
 
         if('end_points' not in self.config['observation'] and 'rest_length' not in self.config['observation'] and 'current_length'  not in self.config['observation'] and 'end_points_velocities' not in self.config['observation']):
@@ -93,14 +93,14 @@ class JumperEnv(gym.Env):
         self.max_coordinate = -self.min_coordinate
         self.dl = self.config['dl'] # This were used for discrete action space
         self.count_rewards_flag = False
-        self.starting_height = self.config['starting_height']
+        self.starting_coordinates = self.config['starting_coordinates']
         self.starting_angle = self.config['starting_angle']
         
         self.num_steps = 0
         self.max_num_steps = self.config['max_num_steps']
 
 
-        self.env = JumperModel(host_name=self.config['host_name'], port_num=self.config['port_num'], sim_exec=self.config['sim_exec'], dl=self.config['dl'], control_type= self.config['control_type'], starting_height=self.config['starting_height'], starting_angle=self.config['starting_angle'])
+        self.env = JumperModel(host_name=self.config['host_name'], port_num=self.config['port_num'], sim_exec=self.config['sim_exec'], dl=self.config['dl'], control_type= self.config['control_type'], starting_coordinates=self.config['starting_coordinates'], starting_angle=self.config['starting_angle'])
         self.env.startSimulator()
 
         # Discrete Action space
@@ -319,8 +319,8 @@ class JumperEnv(gym.Env):
     def close(self):
         self.env.closeSimulator()
 
-    def setStartingHeight(self, height):
-        self.env.starting_height = height
+    def setStartingCoordinates(self, coordinates):
+        self.env.starting_coordinates = coordinates
 
     def setStartingAngle(self, angle):
         self.env.starting_angle = angle
