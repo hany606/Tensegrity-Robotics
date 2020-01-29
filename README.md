@@ -65,3 +65,22 @@ Sometimes there are errors regarding this library, hence, you can comment [this 
 	cd src/dev/legz/gym-leg/gym_leg/envs/
 	python3 jumper_test.py
 	```
+## Running in Headless mode (without xserver display):
+
+This step can be done only when you are in the headless_server branch because the files are configured to run without the extra terminal for the debugging. It is based on using Xvfb tool.
+
+```bash
+ git checkout headless_server
+```
+
+Example how to use it:
+
+```bash
+ xvfb-run -a python3 jumper_test.py
+```
+
+Or to specify the server number
+
+```bash
+ xvfb-run --server-num=10 python3 jumper_test.py
+```
