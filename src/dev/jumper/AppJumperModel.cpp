@@ -73,13 +73,15 @@ int main(int argc, char** argv)
     const int z = std::stoi(argv[4]);
 
     btVector3 starting_coordinates (std::stoi(argv[4]),std::stoi(argv[5]),std::stoi(argv[6]));
-    double starting_angle = std::stod(argv[7]);
+    double starting_angle[] = {0,0};
+    starting_angle[0] = std::stod(argv[7]);
+    starting_angle[1] = std::stod(argv[8]);
     JumperModel* const myModel = new JumperModel(starting_coordinates,starting_angle);
 
     const char* host_name = argv[1];
     const long long  port_num = std::stoll(argv[2]);
     const int control_type = std::stoi(argv[3]);
-    printf("host_name: %s\t port_num: %s\t control_type: %s\n starting_coordinates: %s\t starting_angle: %s\n", argv[1], argv[2], argv[3], argv[4], argv[5]);
+    printf("host_name: %s\t port_num: %s\t control_type: %s\n starting_coordinates: (y,z,x): (%s, %s, %s)\t starting_angle: (x,y): (%s, %s) \n", argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8]);
     LengthController* const myController = new LengthController(host_name, port_num, control_type);
     myModel->attach(myController);
 

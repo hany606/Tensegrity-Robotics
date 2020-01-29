@@ -44,7 +44,8 @@ class JumperEnv(gym.Env):
                             'num_repeated_action': 1 if 'num_repeated_action' not in config.keys() else config['num_repeated_action'],
                             'max_num_steps': 20000 if 'max_num_steps' not in config.keys() else config['max_num_steps'],
                             'starting_coordinates': (0,100,0) if 'starting_coordinates' not in config.keys() else config['starting_coordinates'],
-                            'starting_angle': 0 if 'starting_angle' not in config.keys() else config['starting_angle'],
+                            'starting_angle': (0,0) if 'starting_angle' not in config.keys() else config['starting_angle'],
+                            'randomized_starting': False if 'randomized_starting' not in config.keys() else config['randomized_starting'],
                             }
         else:
             self.config =  {
@@ -57,7 +58,8 @@ class JumperEnv(gym.Env):
                             'num_repeated_action': 1,
                             'max_num_steps': 20000,
                             'starting_coordinates': (0,100,0),
-                            'starting_angle': 0,
+                            'starting_angle': (0,0),
+                            'randomized_starting': False,
                             }
         super(JumperEnv, self).__init__()
 
@@ -77,12 +79,20 @@ class JumperEnv(gym.Env):
         self.dl = self.config['dl'] # This were used for discrete action space
         self.count_rewards_flag = False
         self.starting_coordinates = self.config['starting_coordinates']    # starting_coordinates: (y,z,x)
-        self.starting_angle = self.config['starting_angle']
+        self.starting_angle = self.config['starting_angle'] # (angle around x-axis, angle around y-axis)
         self.num_steps = 0
         self.max_num_steps = self.config['max_num_steps']
 
+        # The angles here in degree but when it is passed to the simulator it should be in radians
+        min_angle = -3
+        max_angle = -min_angle
+        if(self.config["randomized_starting"]):
+            self.starting_angle = np.random.uniform(min_angle, max_angle,2)
+            self.starting_angle[1] = 0
+            # self.starting_coordinates = (0,10,0)    # To start from the ground
 
-        self.env = JumperModel(host_name=self.config['host_name'], port_num=self.config['port_num'], sim_exec=self.config['sim_exec'], dl=self.config['dl'], control_type= self.config['control_type'], starting_coordinates=self.config['starting_coordinates'], starting_angle=self.config['starting_angle'])
+
+        self.env = JumperModel(host_name=self.config['host_name'], port_num=self.config['port_num'], sim_exec=self.config['sim_exec'], dl=self.config['dl'], control_type= self.config['control_type'], starting_coordinates=self.starting_coordinates, starting_angle=self.starting_angle)
         self.env.startSimulator()
 
         # Continuous Action space for the delta lengths

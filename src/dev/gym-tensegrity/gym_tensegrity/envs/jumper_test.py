@@ -254,4 +254,6 @@ def test(config=None):
 
 
 if __name__ == "__main__":
-    test({'starting_coordinates':(0,10,0), "max_num_steps":1000, "starting_angle":1.0001*np.pi/180})
+    # test({'starting_coordinates':(0,10,0), "max_num_steps":1000, "starting_angle":(1.0001*np.pi/180,0)})
+    test({'starting_coordinates':(0,10,0), "max_num_steps":1000, "starting_angle":(1.0001*np.pi/180,0), "randomized_starting": True})
+

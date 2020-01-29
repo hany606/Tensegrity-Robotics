@@ -80,15 +80,17 @@ namespace
     };
 }
 
-JumperModel::JumperModel(btVector3 pos, double angle) : tgModel(), starting_coordinates(pos), starting_angle(angle)
+JumperModel::JumperModel(btVector3 pos, double angle[2]) : tgModel(), starting_coordinates(pos)
 {
+    starting_angle[0] = angle[0];
+    starting_angle[1] = angle[1];
 }
 
 JumperModel::~JumperModel()
 {
 }
 
-void JumperModel::addNodes(tgStructure& s, double angle)
+void JumperModel::addNodes(tgStructure& s)
 {
     // y z x
 
@@ -97,11 +99,7 @@ void JumperModel::addNodes(tgStructure& s, double angle)
     s.addNode(-c.squar_side_length/2.0,0,-c.squar_side_length/2.0);
     s.addNode(c.squar_side_length/2.0,0,-c.squar_side_length/2.0);
 
-    double y_offset = sin(angle*180.0/M_PI)*(2*c.leg_length);
-    double z_offset = cos(angle*180.0/M_PI)*(2*c.leg_length);
-
     s.addNode(0,-c.leg_length,0);
-    // s.addNode(0+y_offset,c.leg_length+z_offset,0);
     s.addNode(0,c.leg_length,0);
 
     // s.addNode(c.squar_side_length/2.0,-c.leg_length-5,c.squar_side_length/2.0);
@@ -173,7 +171,7 @@ void JumperModel::setup(tgWorld& world)
 
 
     // Add nodes to the structure
-    addNodes(s, starting_angle);
+    addNodes(s);
     
     // Add rods to the structure
     addRods(s);
@@ -185,9 +183,10 @@ void JumperModel::setup(tgWorld& world)
     // s.move(btVector3(0, 50, 0));
     s.move(starting_coordinates);
     const btVector3 fixed_point (0,-c.leg_length,0);
-    const btVector3 axis_rotation (0,0,1);
-    s.addRotation(fixed_point, axis_rotation, starting_angle);
-
+    const btVector3 axis_rotation_x (0,0,1);
+    s.addRotation(fixed_point, axis_rotation_x, starting_angle[0]);
+    const btVector3 axis_rotation_y (0,0,1);
+    s.addRotation(fixed_point, axis_rotation_y, starting_angle[1]);
 
     // Create the build spec that uses tags to turn the structure into a real model
     tgBuildSpec spec;
