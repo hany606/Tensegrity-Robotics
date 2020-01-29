@@ -71,23 +71,23 @@ class JumperEnv(gym.Env):
 
         # Agent self variables
         self.max_cable_length = 50
-        self.min_leg_angle = -np.pi/2
-        self.max_leg_angle =  np.pi/2
+        self.min_leg_angle = -np.pi/2 # in radian
+        self.max_leg_angle =  np.pi/2 # in radian
         self.end_points_num = 6
         self.min_coordinate = -200
         self.max_coordinate = -self.min_coordinate
         self.dl = self.config['dl'] # This were used for discrete action space
         self.count_rewards_flag = False
         self.starting_coordinates = self.config['starting_coordinates']    # starting_coordinates: (y,z,x)
-        self.starting_angle = self.config['starting_angle'] # (angle around x-axis, angle around y-axis)
+        self.starting_angle = self.config['starting_angle'] # (angle around x-axis, angle around y-axis) in radian
         self.num_steps = 0
         self.max_num_steps = self.config['max_num_steps']
 
-        # The angles here in degree but when it is passed to the simulator it should be in radians
+        # The angles for min and max here for the randomization in degree but when it is passed to the simulator it should be in radians
         min_angle = -3
         max_angle = -min_angle
         if(self.config["randomized_starting"]):
-            self.starting_angle = np.random.uniform(min_angle, max_angle,2)
+            self.starting_angle = np.random.uniform(min_angle, max_angle,2)*np.pi/180 # in radian
             self.starting_angle[1] = 0
             # self.starting_coordinates = (0,10,0)    # To start from the ground
 
