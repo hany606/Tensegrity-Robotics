@@ -14,7 +14,7 @@ from random import randint
 
 # Usage example via RLlib CLI:
 # python3 evaluate.py --evaluation-file=trained_agents/train_default/ARS_jumper_3ba03d10_2020-01-17_19-40-36wgy3fy8a/checkpoint_15/checkpoint-15 --agent-config-file=trained_agents/train_default/ARS_jumper_3ba03d10_2020-01-17_19-40-36wgy3fy8a/params.json
-            
+# OR python3 evaluate.py --agent-path=trained_agents/train_default/ARS_jumper_3ba03d10_2020-01-17_19-40-36wgy3fy8a/ --checkpoint-num=120
 
 def create_environment(env_config):
     print("Creation Envirnoment...")
@@ -121,6 +121,18 @@ class Evaluater:
             type=str,
             help="Path to the object file of the trained model." 
             "The file should be in the following format: checkpoint_<NUM>/checkpoint-<NUM>")
+        
+        parser.add_argument(
+            "--agent-path",
+            default=None,
+            type=str,
+            help="Path to the agent folder")
+
+        parser.add_argument(
+            "--checkpoint-num",
+            default=None,
+            type=int,
+            help="Number of the checkpoint")
 
         parser.add_argument(
             "--agent-config-file",
@@ -186,29 +198,30 @@ class Evaluater:
         config["num_workers"] = 1
         trained_agent = ars.ARSTrainer(config, env="jumper")
         trained_agent.restore(evaluation_config["evaluation_file"])
-        min_coordinates = [0,10,0]
-        max_coordinates = [0,10,0]
-        min_angle = int(-1*np.pi/180*1000)
-        max_angle = int(-min_angle)
-        starting_coordinates =  (randint(min_coordinates[0],max_coordinates[0]), randint(min_coordinates[1],max_coordinates[1]), randint(min_coordinates[2],max_coordinates[2]))	#min:10
-        env_config["starting_coordinates"] = starting_coordinates
+        #min_coordinates = [0,10,0]
+        #max_coordinates = [0,10,0]
+        #min_angle = int(-1*np.pi/180*1000)
+        #max_angle = int(-min_angle)
+        #starting_coordinates =  (randint(min_coordinates[0],max_coordinates[0]), randint(min_coordinates[1],max_coordinates[1]), randint(min_coordinates[2],max_coordinates[2]))	#min:10
+        #env_config["starting_coordinates"] = starting_coordinates
         #starting_angle = randint(min_angle,max_angle)/10000  #1745/10000 = 0.1745 radian = 10 degree angle
-        starting_angle = 0.95*np.pi/180
-        env_config["starting_angle"] = starting_angle
+        #starting_angle = 0.95*np.pi/180
+        #env_config["starting_angle"] = starting_angle
         env = create_environment(env_config)
         cumulative_reward = 0
         history = []
         for _ in range(evaluation_config["num_episodes"]):
-            print("starting_angle: {:}".format(starting_angle*180/np.pi))
+            #print("starting_angle: {:}".format(starting_angle*180/np.pi))
             reward = self.run_episode(env, trained_agent, random=random)
             #self.printer.reward(reward)
-            history.append({"reward":reward, "coordiantes": starting_coordinates, "angle in degree": starting_angle*180/np.pi})
+            #history.append({"reward":reward, "coordiantes": starting_coordinates, "angle in degree": starting_angle*180/np.pi})
+            history.append({"reward":reward})
             cumulative_reward += reward
-            starting_coordinates =  (randint(min_coordinates[0],max_coordinates[0]), randint(min_coordinates[1],max_coordinates[1]), randint(min_coordinates[2],max_coordinates[2]))	#min:10
-            env.setStartingCoordinates(starting_coordinates)
-            starting_angle = 0.95*np.pi/180
+            #starting_coordinates =  (randint(min_coordinates[0],max_coordinates[0]), randint(min_coordinates[1],max_coordinates[1]), randint(min_coordinates[2],max_coordinates[2]))	#min:10
+            #env.setStartingCoordinates(starting_coordinates)
+            #starting_angle = 0.95*np.pi/180
             #starting_angle = randint(min_angle,max_angle)/10000
-            env.setStartingAngle(starting_angle)
+            #env.setStartingAngle(starting_angle)
  
         self.printer.history(history)
         # self.printer.mean(cumulative_reward/evaluation_config["num_episodes"])
@@ -220,14 +233,16 @@ class Evaluater:
         else:
             self.evaluation_config = {
                 "random_agent": args.random_agent,
-                "evaluation_file": args.evaluation_file,	
-                "agent_config_file": args.agent_config_file,
+                "evaluation_file": args.evaluation_file if args.evaluation_file is not None else args.agent_path+"checkpoint_{:}/checkpoint-{:}".format(args.checkpoint_num, args.checkpoint_num),	
+                "agent_config_file": args.agent_config_file if args.evaluation_file is not None else args.agent_path+"params.json",
                 "observation_space_type": args.observation_space_type,
                 "controller_type": args.controller_type,
                 "config_file": args.config_file,
                 "num_episodes": args.num_episodes,
             }
+        
         self.env_config = {"observation": self.evaluation_config["observation_space_type"], "control_type": self.evaluation_config["controller_type"]}
+        
         if(self.evaluation_config["agent_config_file"] is None):
             raise Exception("The agent config file should be defined.\n--Hint: it is params.json")
         with open(self.evaluation_config["agent_config_file"]) as json_file:
@@ -240,7 +255,7 @@ class Evaluater:
         self.printer.config(self.agent_config, tag="Agent")
         self.printer.config(self.evaluation_config, tag="Evaluation")
         self.printer.separator()
-        self.env_config["max_num_steps"] = 100000
+        self.env_config["max_num_steps"] = 10000
 
         tune.register_env("jumper", create_environment)
         ray.init()

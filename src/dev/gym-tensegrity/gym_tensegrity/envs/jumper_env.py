@@ -84,11 +84,12 @@ class JumperEnv(gym.Env):
         self.max_num_steps = self.config['max_num_steps']
 
         # The angles for min and max here for the randomization in degree but when it is passed to the simulator it should be in radians
-        min_angle = -3
-        max_angle = -min_angle
+        self.min_starting_angle = -3
+        self.max_starting_angle = -self.min_starting_angle
         if(self.config["randomized_starting"]):
-            self.starting_angle = np.random.uniform(min_angle, max_angle,2)*np.pi/180 # in radian
+            self.starting_angle = np.random.uniform(self.min_starting_angle, self.max_starting_angle,2)*np.pi/180 # in radian
             self.starting_angle[1] = 0
+            print("Starting Angle: {:} in degree".format(self.starting_angle*180/np.pi))
             # self.starting_coordinates = (0,10,0)    # To start from the ground
 
 
@@ -235,13 +236,19 @@ class JumperEnv(gym.Env):
         squre_sides_angles = self.env.getSquareSidesAngles()
         if abs(self.env.getLegAngle()) > np.pi/9 or abs(squre_sides_angles[0]) > np.pi/4 or abs(squre_sides_angles[1]) > np.pi/4 or self.num_steps > self.max_num_steps:
                 self.num_steps = 0
-                print(self.env.getLegAngle())
+                #print(self.env.getLegAngle())
                 return True
         return False
 
     def reset(self):
         # Reset the state of the environment to an initial state, and the self vars to the initial values
         self.num_steps = 0
+        if(self.config["randomized_starting"]):
+            self.starting_angle = np.random.uniform(self.min_starting_angle, self.max_starting_angle,2)*np.pi/180 # in radian
+            self.starting_angle[1] = 0
+            print("Starting Angle (from reset): {:} in degree".format(self.starting_angle*180/np.pi))
+            # self.starting_coordinates = (0,10,0)    # To start from the ground
+            self.setStartingAngle(self.starting_angle)
         # Reset the environment and the simulator
         self.env.reset()
         self.env.step()
@@ -262,4 +269,4 @@ class JumperEnv(gym.Env):
         self.env.starting_coordinates = coordinates
 
     def setStartingAngle(self, angle):
-        self.env.starting_angle = angle
+        self.env.setStartingAngle(angle)
