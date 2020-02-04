@@ -79,11 +79,13 @@ class JumperModel():
         self.port_num = self.sock.getsockname()[1]
         self.control_type = control_type
         self.control_type_index = {"rest_length": 0, "current_length": 1, "rest_length_mod": 2, "current_length_mod": 3}
-        self.set_sim_exec()
+        self.orginal_sim_exec = sim_exec
+        self.set_sim_exec(self.orginal_sim_exec)
 
 
-    def set_sim_exec(self):
+    def set_sim_exec(self, sim_exec):
         self.sim_exec = sim_exec + ' {:} {:} {:} {:} {:} {:} {:} {:}'.format(self.host_name, self.port_num, self.control_type_index[self.control_type], self.starting_coordinates[0], self.starting_coordinates[1], self.starting_coordinates[2] , self.starting_angle[0], self.starting_angle[1])
+        print("EXEC: {:}".format(self.sim_exec))
 
     def __del__(self):
         self.closeSimulator()
@@ -281,7 +283,7 @@ class JumperModel():
     
     def setStartingAngle(self, angle):
         self.starting_angle = angle
-        self.set_sim_exec()
+        self.set_sim_exec(self.orginal_sim_exec)
         
 
 # This function for testing the model by itself

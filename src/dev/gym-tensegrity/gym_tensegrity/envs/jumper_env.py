@@ -79,18 +79,16 @@ class JumperEnv(gym.Env):
         self.dl = self.config['dl'] # This were used for discrete action space
         self.count_rewards_flag = False
         self.starting_coordinates = self.config['starting_coordinates']    # starting_coordinates: (y,z,x)
-        self.starting_angle = self.config['starting_angle'] # (angle around x-axis, angle around y-axis) in radian
+        self.starting_angle = self.config['starting_angle'] # (angle around x-axis, angle around y-axis) in degree as in parsing the angles in radian to cmd command as parameter is giving errors
         self.num_steps = 0
         self.max_num_steps = self.config['max_num_steps']
 
-        # The angles for min and max here for the randomization in degree but when it is passed to the simulator it should be in radians
+        # The angles for min and max here for the randomization in degree
         self.min_starting_angle = -3
         self.max_starting_angle = -self.min_starting_angle
-        if(self.config["randomized_starting"]):
-            self.starting_angle = np.random.uniform(self.min_starting_angle, self.max_starting_angle,2)*np.pi/180 # in radian
-            self.starting_angle[1] = 0
-            print("Starting Angle: {:} in degree".format(self.starting_angle*180/np.pi))
-            # self.starting_coordinates = (0,10,0)    # To start from the ground
+        random_starting_conditions = self.randomizStartingConditions()
+        if(random_starting_conditions is not None):
+            self.starting_angle = random_starting_conditions["starting_angle"]
 
 
         self.env = JumperModel(host_name=self.config['host_name'], port_num=self.config['port_num'], sim_exec=self.config['sim_exec'], dl=self.config['dl'], control_type= self.config['control_type'], starting_coordinates=self.starting_coordinates, starting_angle=self.starting_angle)
@@ -142,6 +140,29 @@ class JumperEnv(gym.Env):
         # self.env.step()
 
 
+    def randomizStartingConditions(self, min_angle=None, max_angle=None, min_coordinates=None, max_coordinates=None):
+        if(min_angle is None):
+            min_angle = self.min_starting_angle
+        if(max_angle is None):
+            max_angle = self.max_starting_angle
+
+        # if(min_coordinates is None):
+            # min_coordinates = self.min_starting_coordinates
+        # if(max_coordinates is None):
+            # max_coordinates = self.max_starting_coordinates
+
+        if(self.config["randomized_starting"]):
+            floating_precision = 0
+            starting_angle = np.random.uniform(self.min_starting_angle, self.max_starting_angle,2) # in degree
+            starting_angle[1] = 0
+            if(floating_precision > 0):
+                for i in range(len(starting_angle)):
+                     starting_angle[i] = int(starting_angle[i]*(10**floating_precision))/(10**floating_precision) 
+            print("Starting Angle: {:} in degree".format(starting_angle))
+            random_starting_conditions = {"starting_angle": starting_angle}
+            # self.starting_coordinates = (0,10,0)    # To start from the ground
+            return random_starting_conditions
+        return None
 
     def __del__(self):
         self.env.closeSimulator()
@@ -243,11 +264,9 @@ class JumperEnv(gym.Env):
     def reset(self):
         # Reset the state of the environment to an initial state, and the self vars to the initial values
         self.num_steps = 0
-        if(self.config["randomized_starting"]):
-            self.starting_angle = np.random.uniform(self.min_starting_angle, self.max_starting_angle,2)*np.pi/180 # in radian
-            self.starting_angle[1] = 0
-            print("Starting Angle (from reset): {:} in degree".format(self.starting_angle*180/np.pi))
-            # self.starting_coordinates = (0,10,0)    # To start from the ground
+        random_starting_conditions = self.randomizStartingConditions()
+        if(random_starting_conditions is not None):
+            self.starting_angle = random_starting_conditions["starting_angle"]
             self.setStartingAngle(self.starting_angle)
         # Reset the environment and the simulator
         self.env.reset()
