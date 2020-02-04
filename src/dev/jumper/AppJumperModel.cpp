@@ -73,7 +73,7 @@ int main(int argc, char** argv)
     const int z = std::stoi(argv[4]);
 
     btVector3 starting_coordinates (std::stoi(argv[4]),std::stoi(argv[5]),std::stoi(argv[6]));
-    double starting_angle[] = {0,0};
+    double starting_angle[] = {0,0};	// The angles are coming in degree from the simulator
     starting_angle[0] = std::stod(argv[7]);
     starting_angle[1] = std::stod(argv[8]);
     JumperModel* const myModel = new JumperModel(starting_coordinates,starting_angle);
