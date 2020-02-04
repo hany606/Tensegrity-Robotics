@@ -184,9 +184,9 @@ void JumperModel::setup(tgWorld& world)
     s.move(starting_coordinates);
     const btVector3 fixed_point (0,-c.leg_length,0);
     const btVector3 axis_rotation_x (0,0,1);
-    s.addRotation(fixed_point, axis_rotation_x, starting_angle[0]);
+    s.addRotation(fixed_point, axis_rotation_x, starting_angle[0]*M_PI/180.0);
     const btVector3 axis_rotation_y (0,0,1);
-    s.addRotation(fixed_point, axis_rotation_y, starting_angle[1]);
+    s.addRotation(fixed_point, axis_rotation_y, starting_angle[1]*M_PI/180.0);
 
     // Create the build spec that uses tags to turn the structure into a real model
     tgBuildSpec spec;
