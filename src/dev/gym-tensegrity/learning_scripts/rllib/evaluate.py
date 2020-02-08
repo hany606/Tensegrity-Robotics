@@ -255,7 +255,7 @@ class Evaluater:
         self.printer.config(self.agent_config, tag="Agent")
         self.printer.config(self.evaluation_config, tag="Evaluation")
         self.printer.separator()
-        self.env_config["max_num_steps"] = 10000
+        self.env_config["max_num_steps"] = 20000
 
         tune.register_env("jumper", create_environment)
         ray.init()
