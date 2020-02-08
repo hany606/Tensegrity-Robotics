@@ -139,8 +139,7 @@ class JumperEnv(gym.Env):
         # self.env.actions_json["Controllers_val"][:] = random_init_lengths
         # self.env.step()
 
-
- def randomizStartingConditions(self, min_angle=None, max_angle=None, min_coordinates=None, max_coordinates=None):
+    def randomizStartingConditions(self, min_angle=None, max_angle=None, min_coordinates=None, max_coordinates=None):
         if(min_angle is None):
             min_angle = self.min_starting_angle
         if(max_angle is None):
