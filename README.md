@@ -9,8 +9,11 @@ This work is not an individual, this work is part from a research work in roboti
 Mainly, this work will concentrate on using RL to control the movements of the tensegrity structure using NTRTsim for now.
 
 ## Active Projects:
-1. Tensegrity Leg:
+1. Tensegrity Leg: (Stopped)
 It is in [src/dev/legz](https://github.com/hany606/Tensegrity-Robotics/tree/master/src/dev/legz)
+
+2. Tensegrity Jumper:
+It is in [src/dev/jumper](https://github.com/hany606/Tensegrity-Robotics/tree/master/src/dev/jumper)
 
 
 ## How to start working with the repository?:
