@@ -86,6 +86,8 @@ void tgSimViewGraphics::teardown()
 
 void tgSimViewGraphics::render()
 {
+    extra_mod();
+
     if (m_pSimulation && m_pModelVisitor)
     {
         
@@ -150,6 +152,7 @@ void tgSimViewGraphics::clientMoveAndDisplay()
             // Doesn't appear to do anything yet...
             m_dynamicsWorld->debugDrawWorld();
             renderme();     
+            extra_mod();
             // Camera is updated in renderme
             glFlush();
             swapBuffers();      
@@ -164,6 +167,7 @@ void tgSimViewGraphics::displayCallback()
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
         renderme();
+        extra_mod();
         // optional but useful: debug drawing to detect problems
         if (m_dynamicsWorld)
         {
@@ -181,4 +185,17 @@ void tgSimViewGraphics::clientResetScene()
 
     tgWorld& world = m_pSimulation->getWorld();
     tgBulletUtil::worldToDynamicsWorld(world).setDebugDrawer(gDebugDrawer);
+}
+
+void tgSimViewGraphics::extra_mod(){
+    // setCameraForwardAxis(1);
+
+    // btVector3 vec(0.7,0.5,0.5);
+    // setCameraUp(vec);
+    // setCameraForwardAxis(3);
+    // glTranslatef(m_cameraPosition[0],m_cameraPosition[0],m_cameraPosition[0]);
+    // glm::translate(model, glm::vec3(position.x, position.y, position.z));
+    // gluLookAt(m_cameraPosition[0], m_cameraPosition[1], m_cameraPosition[2], 
+	// 		m_cameraTargetPosition[0], m_cameraTargetPosition[1], m_cameraTargetPosition[2], 
+	// 		m_cameraUp.getX(),m_cameraUp.getY(),m_cameraUp.getZ());
 }

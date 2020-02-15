@@ -792,15 +792,15 @@
   ],
   "runner_data": {
     "_global_time_limit": Infinity,
-    "_total_time": 85505.7956662178,
-    "_iteration": 210,
+    "_total_time": 85910.33376526833,
+    "_iteration": 211,
     "_verbose": true,
     "_server_port": 4321,
     "_local_checkpoint_dir": "/root/ray_results/train2_hp_mod_repact3",
     "_remote_checkpoint_dir": null,
     "_resumed": false,
     "_start_time": 1581164735.2619212,
-    "_last_checkpoint_time": 1581250267.705657,
+    "_last_checkpoint_time": 1581250672.2683778,
     "_checkpoint_period": 10,
     "_session_str": "2020-02-08_12-25-35",
     "checkpoint_file": "/root/ray_results/train2_hp_mod_repact3/experiment_state-2020-02-08_12-25-35.json",
@@ -808,6 +808,6 @@
   },
   "stats": {
     "start_time": 1581164735.2619212,
-    "timestamp": 1581250267.705657
+    "timestamp": 1581250672.2683778
   }
 }
