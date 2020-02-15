@@ -21,9 +21,10 @@ sim_exec = "gnome-terminal -e {}".format(path_to_model)
 class JumperModel():
     def __init__(self, host_name='localhost', port_num=10040, packet_size=5000,
                  sim_exec=sim_exec, dl=0.1, controllers_num=8, control_type="rest_length", 
-                 starting_coordinates=(0,100,0), starting_angle=(0,0)):
+                 starting_coordinates=(0,100,0), starting_angle=(0,0), starting_leg_angle=(0,0)):
         self.starting_coordinates = starting_coordinates
         self.starting_angle = starting_angle
+        self.starting_leg_angle = starting_leg_angle
         self.host_name = host_name
         self.port_num = port_num
         self.packet_size = packet_size
@@ -84,7 +85,7 @@ class JumperModel():
 
 
     def set_sim_exec(self, sim_exec):
-        self.sim_exec = sim_exec + ' {:} {:} {:} {:} {:} {:} {:} {:}'.format(self.host_name, self.port_num, self.control_type_index[self.control_type], self.starting_coordinates[0], self.starting_coordinates[1], self.starting_coordinates[2] , self.starting_angle[0], self.starting_angle[1])
+        self.sim_exec = sim_exec + ' {:} {:} {:} {:} {:} {:} {:} {:} {:} {:}'.format(self.host_name, self.port_num, self.control_type_index[self.control_type], self.starting_coordinates[0], self.starting_coordinates[1], self.starting_coordinates[2] , self.starting_angle[0], self.starting_angle[1], self.starting_leg_angle[0], self.starting_leg_angle[1])
         print("EXEC: {:}".format(self.sim_exec))
 
     def __del__(self):
@@ -285,6 +286,9 @@ class JumperModel():
         self.starting_angle = angle
         self.set_sim_exec(self.orginal_sim_exec)
         
+    def setStartingLegAngle(self, angle):
+        self.starting_leg_angle = angle
+        self.set_sim_exec(self.orginal_sim_exec)
 
 # This function for testing the model by itself
 def main():

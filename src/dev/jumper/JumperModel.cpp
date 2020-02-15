@@ -80,17 +80,19 @@ namespace
     };
 }
 
-JumperModel::JumperModel(btVector3 pos, double angle[2]) : tgModel(), starting_coordinates(pos)
+JumperModel::JumperModel(btVector3 pos, double angle[2], double leg_angle[2]) : tgModel(), starting_coordinates(pos)
 {
     starting_angle[0] = angle[0];
     starting_angle[1] = angle[1];
+    starting_leg_angle[0] = leg_angle[0];
+    starting_leg_angle[1] = leg_angle[1];
 }
 
 JumperModel::~JumperModel()
 {
 }
 
-void JumperModel::addNodes(tgStructure& s)
+void JumperModel::addNodes(tgStructure& s, double leg_angle[2])
 {
     // y z x
 
@@ -99,8 +101,13 @@ void JumperModel::addNodes(tgStructure& s)
     s.addNode(-c.squar_side_length/2.0,0,-c.squar_side_length/2.0);
     s.addNode(c.squar_side_length/2.0,0,-c.squar_side_length/2.0);
 
+    double y_offset = sin(leg_angle[0]*M_PI/180.0)*(2*c.leg_length);
+    double x_offset = sin(leg_angle[1]*M_PI/180.0)*(2*c.leg_length); 
+    double z_offset = sqrt(4*pow(c.leg_length,2)-pow(y_offset,2)-pow(x_offset, 2));
+
+    // s.addNode(0,-c.leg_length,0);
     s.addNode(0,-c.leg_length,0);
-    s.addNode(0,c.leg_length,0);
+    s.addNode(0+y_offset,-c.leg_length+z_offset,0+x_offset);
 
     // s.addNode(c.squar_side_length/2.0,-c.leg_length-5,c.squar_side_length/2.0);
     // s.addNode(-c.squar_side_length/2.0,-c.leg_length-5,c.squar_side_length/2.0);
@@ -171,7 +178,7 @@ void JumperModel::setup(tgWorld& world)
 
 
     // Add nodes to the structure
-    addNodes(s);
+    addNodes(s, starting_leg_angle);
     
     // Add rods to the structure
     addRods(s);

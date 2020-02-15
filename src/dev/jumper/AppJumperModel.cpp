@@ -72,11 +72,11 @@ int main(int argc, char** argv)
     // simulation
     const int z = std::stoi(argv[4]);
 
-    btVector3 starting_coordinates (std::stoi(argv[4]),std::stoi(argv[5]),std::stoi(argv[6]));
-    double starting_angle[] = {0,0};	// The angles are coming in degree from the simulator
-    starting_angle[0] = std::stod(argv[7]);
-    starting_angle[1] = std::stod(argv[8]);
-    JumperModel* const myModel = new JumperModel(starting_coordinates,starting_angle);
+    btVector3 starting_coordinates (std::stod(argv[4]),std::stod(argv[5]),std::stod(argv[6]));
+    double starting_angle[] = {std::stod(argv[7]), std::stod(argv[8])};	// The angles are coming in degree from the gym environment
+    double starting_leg_angle[] = {std::stod(argv[9]), std::stod(argv[10])}; // The angles are coming in degree from the gym environment. This is only for the rotation of the leg rod
+
+    JumperModel* const myModel = new JumperModel(starting_coordinates,starting_angle, starting_leg_angle);
 
     const char* host_name = argv[1];
     const long long  port_num = std::stoll(argv[2]);
