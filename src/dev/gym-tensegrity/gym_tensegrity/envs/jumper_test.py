@@ -207,7 +207,7 @@ def test(config=None):
     tot_reward = 0
     action = np.array([0. for i in range(8)])
     done = False
-    input("-> check point: WAIT for INPUT !!!!")
+    #input("-> check point: WAIT for INPUT !!!!")
 
     while not done:
         #inp = input("INPUT")
@@ -223,7 +223,7 @@ def test(config=None):
         # input("-> check point: WAIT for INPUT !!!!")
 
         # sleep(0.01)
-    input("-> check point: WAIT for INPUT !!!!")
+    #input("-> check point: WAIT for INPUT !!!!")
 
     flag = 0
     while True:
@@ -255,5 +255,5 @@ def test(config=None):
 
 if __name__ == "__main__":
     # test({'starting_coordinates':(0,10,0), "max_num_steps":1000, "starting_angle":(1.0001*np.pi/180,0)})
-    test({'starting_coordinates':(0,10,0), "max_num_steps":1000, "starting_angle":(3,0), "randomized_starting": False})
+    test({'starting_coordinates':(0,10,0), "max_num_steps":1000, "starting_angle":(0,0), "randomized_starting": False})
 

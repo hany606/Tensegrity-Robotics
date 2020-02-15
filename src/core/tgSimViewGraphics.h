@@ -97,6 +97,7 @@ public:
      * Clears the openGL buffer and dispatches a tgBulletRenderer to the world
      */
     void render();
+    void extra_mod();
     
     /**
      * Run for a specified number of steps. Currently performs the
