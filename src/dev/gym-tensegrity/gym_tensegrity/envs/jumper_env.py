@@ -98,7 +98,7 @@ class JumperEnv(gym.Env):
             # self.starting_angle = random_starting_conditions["starting_angle"]
             self.starting_leg_angle = self.starting_leg_angle if "starting_angle" not in random_starting_conditions.keys() else random_starting_conditions["starting_angle"]  # This will randomize the leg_angle not the whole structure(model) angle
             self.starting_height = self.starting_coordinates[1] if "starting_height" not in random_starting_conditions.keys() else random_starting_conditions["starting_height"]
-            self.starting_coordinates[1] = 50 # starting_coordinates [y,z,x]
+            self.starting_coordinates[1] = self.starting_height # starting_coordinates [y,z,x]
 
         # self.starting_coordinates[1] = 10.535 # starting_coordinates [y,z,x]
         self.env = JumperModel(host_name=self.config['host_name'], port_num=self.config['port_num'],
