@@ -43,9 +43,9 @@ class JumperEnv(gym.Env):
                             'control_type': 'rest_length_mod' if 'control_type' not in config.keys() else config['control_type'],
                             'num_repeated_action': 1 if 'num_repeated_action' not in config.keys() else config['num_repeated_action'],
                             'max_num_steps': 20000 if 'max_num_steps' not in config.keys() else config['max_num_steps'],
-                            'starting_coordinates': (0,100,0) if 'starting_coordinates' not in config.keys() else config['starting_coordinates'],
+                            'starting_coordinates': [0,100,0] if 'starting_coordinates' not in config.keys() else config['starting_coordinates'],
                             'starting_angle': (0,0) if 'starting_angle' not in config.keys() else config['starting_angle'],
-                            'randomized_starting': False if 'randomized_starting' not in config.keys() else config['randomized_starting'],
+                            'randomized_starting': {"angle":[False, 0, 0], "height":[False, 100,100]} if 'randomized_starting' not in config.keys() else config['randomized_starting'],
                             'starting_leg_angle' : (0,0) if 'starting_leg_angle' not in config.keys() else config['starting_leg_angle'],
                             }
         else:
@@ -58,9 +58,9 @@ class JumperEnv(gym.Env):
                             'control_type': 'rest_length_mod',
                             'num_repeated_action': 1,
                             'max_num_steps': 20000,
-                            'starting_coordinates': (0,100,0),
+                            'starting_coordinates': [0,100,0],
                             'starting_angle': (0,0),
-                            'randomized_starting': False,
+                            'randomized_starting': {"angle":[False, 0, 0], "height":[False, 100,100]},
                             'starting_leg_angle' : (0,0)
                             }
         super(JumperEnv, self).__init__()
@@ -87,13 +87,20 @@ class JumperEnv(gym.Env):
         self.max_num_steps = self.config['max_num_steps']
 
         # The angles for min and max here for the randomization in degree
-        self.min_starting_angle = -3 if self.config["randomized_starting"] is not list else self.config["randomized_starting"][0]
-        self.max_starting_angle = -self.min_starting_angle if self.config["randomized_starting"] is not list else self.config["randomized_starting"][1]
-        random_starting_conditions = self.randomizStartingConditions()
-        if(random_starting_conditions is not None):
+        self.min_starting_angle = -3 if len(self.config["randomized_starting"]["angle"]) < 2 else self.config["randomized_starting"]["angle"][1]
+        self.max_starting_angle = -self.min_starting_angle if len(self.config["randomized_starting"]["angle"]) < 3 else self.config["randomized_starting"]["angle"][2]
+        
+        self.min_starting_coordinates = 10 if len(self.config["randomized_starting"]["height"]) < 2 else self.config["randomized_starting"]["height"][1]
+        self.max_starting_coordinates = 100 if len(self.config["randomized_starting"]["height"]) < 3 else self.config["randomized_starting"]["height"][2]
+        
+        random_flag, random_starting_conditions = self.randomizStartingConditions()
+        if(random_flag > 0):
             # self.starting_angle = random_starting_conditions["starting_angle"]
-            self.starting_leg_angle = random_starting_conditions["starting_angle"]  # This will randomize the leg_angle not the whole structure(model) angle
+            self.starting_leg_angle = self.starting_leg_angle if "starting_angle" not in random_starting_conditions.keys() else random_starting_conditions["starting_angle"]  # This will randomize the leg_angle not the whole structure(model) angle
+            self.starting_height = self.starting_coordinates[1] if "starting_height" not in random_starting_conditions.keys() else random_starting_conditions["starting_height"]
+            self.starting_coordinates[1] = 50 # starting_coordinates [y,z,x]
 
+        # self.starting_coordinates[1] = 10.535 # starting_coordinates [y,z,x]
         self.env = JumperModel(host_name=self.config['host_name'], port_num=self.config['port_num'],
                                sim_exec=self.config['sim_exec'], dl=self.config['dl'], 
                                control_type= self.config['control_type'], starting_coordinates=self.starting_coordinates,
@@ -149,28 +156,39 @@ class JumperEnv(gym.Env):
         self.env.closeSimulator()
     
     def randomizStartingConditions(self, min_angle=None, max_angle=None, min_coordinates=None, max_coordinates=None):
+        random_starting_conditions = {}
+        flag = 0
         if(min_angle is None):
             min_angle = self.min_starting_angle
         if(max_angle is None):
             max_angle = self.max_starting_angle
 
-        # if(min_coordinates is None):
-            # min_coordinates = self.min_starting_coordinates
-        # if(max_coordinates is None):
-            # max_coordinates = self.max_starting_coordinates
+        if(min_coordinates is None):
+            min_coordinates = self.min_starting_coordinates
+        if(max_coordinates is None):
+            max_coordinates = self.max_starting_coordinates
 
-        if(self.config["randomized_starting"] != False):
+        if(self.config["randomized_starting"]["angle"][0] != False):
+            flag += 1
             floating_precision = 0
-            starting_angle = np.random.uniform(self.min_starting_angle, self.max_starting_angle,2) # in degree
+            starting_angle = np.random.uniform(min_angle, max_angle,2) # in degree
             starting_angle[1] = 0
             if(floating_precision > 0):
                 for i in range(len(starting_angle)):
                      starting_angle[i] = int(starting_angle[i]*(10**floating_precision))/(10**floating_precision) 
             print("Starting Angle: {:} in degree".format(starting_angle))
-            random_starting_conditions = {"starting_angle": starting_angle}
-            # self.starting_coordinates = (0,10,0)    # To start from the ground
-            return random_starting_conditions
-        return None
+            random_starting_conditions["starting_angle"] = starting_angle
+        
+        if(self.config["randomized_starting"]["height"][0] != False):
+            flag += 1
+            floating_precision = 0
+            starting_height = np.random.uniform(min_coordinates, max_coordinates,1) # in degree
+            if(floating_precision > 0):
+                starting_height[0] = int(starting_height[0]*(10**floating_precision))/(10**floating_precision) 
+            print("Starting Height: {:}".format(starting_height))
+            random_starting_conditions["starting_height"] = int(starting_height)
+
+        return flag, random_starting_conditions
     
     def step(self, action):
         self.num_steps += 1
@@ -269,13 +287,15 @@ class JumperEnv(gym.Env):
     def reset(self):
         # Reset the state of the environment to an initial state, and the self vars to the initial values
         self.num_steps = 0
-        random_starting_conditions = self.randomizStartingConditions()
-        if(random_starting_conditions is not None):
+        random_flag, random_starting_conditions = self.randomizStartingConditions()
+        if(random_flag > 0):
             # self.starting_angle = random_starting_conditions["starting_angle"]
             # self.setStartingAngle(self.starting_angle)
-            self.starting_leg_angle = random_starting_conditions["starting_angle"]  # This will randomize the leg_angle not the whole structure(model) angle
+            self.starting_leg_angle = self.starting_leg_angle if "starting_angle" not in random_starting_conditions.keys() else random_starting_conditions["starting_angle"]  # This will randomize the leg_angle not the whole structure(model) angle
+            self.starting_height = self.starting_coordinates[1] if "starting_height" not in random_starting_conditions.keys() else random_starting_conditions["starting_height"]
             self.setStartingLegAngle(self.starting_leg_angle)
-
+            self.setStartingHeight(self.starting_height)
+        
         # Reset the environment and the simulator
         self.env.reset()
         self.env.step()
@@ -300,3 +320,6 @@ class JumperEnv(gym.Env):
 
     def setStartingLegAngle(self, angle):
         self.env.setStartingLegAngle(angle)
+
+    def setStartingHeight(self, height):
+        self.env.setStartingHeight(height)
