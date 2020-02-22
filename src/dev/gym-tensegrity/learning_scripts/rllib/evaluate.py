@@ -258,8 +258,8 @@ class Evaluater:
         self.printer.config(self.evaluation_config, tag="Evaluation")
         self.printer.separator()
         self.env_config["max_num_steps"] = 20000
-        self.env_config["starting_leg_angle"] =  [1.1,0]
-        self.env_config["starting_coordinates"] = [0,10,0]
+        self.env_config["starting_leg_angle"] =  [4,0]
+        # self.env_config["starting_coordinates"] = [0,10,0]
 
         tune.register_env("jumper", create_environment)
         ray.init()
