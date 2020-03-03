@@ -21,7 +21,7 @@ sim_exec = "gnome-terminal -e {}".format(path_to_model)
 class JumperModel():
     def __init__(self, host_name='localhost', port_num=10040, packet_size=5000,
                  sim_exec=sim_exec, dl=0.1, controllers_num=8, control_type="rest_length", 
-                 starting_coordinates=[0,100,0], starting_angle=(0,0), starting_leg_angle=(0,0)):
+                 starting_coordinates=[0,100,0], starting_angle=[0,0], starting_leg_angle=[0,0]):
         self.starting_coordinates = starting_coordinates
         self.starting_angle = starting_angle
         self.starting_leg_angle = starting_leg_angle
