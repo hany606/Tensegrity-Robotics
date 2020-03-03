@@ -217,7 +217,8 @@ class Evaluater:
             reward = self.run_episode(env, trained_agent, random=random)
             #self.printer.reward(reward)
             #history.append({"reward":reward, "coordiantes": starting_coordinates, "angle in degree": starting_angle*180/np.pi})
-            history.append({"reward":reward, "starting_leg_angle": env.starting_leg_angle, "starting_height": env.starting_height})
+            history.append({"reward":reward})
+            #, "starting_leg_angle": env.starting_leg_angle, "starting_height": env.starting_height})
             cumulative_reward += reward
             #starting_coordinates =  (randint(min_coordinates[0],max_coordinates[0]), randint(min_coordinates[1],max_coordinates[1]), randint(min_coordinates[2],max_coordinates[2]))	#min:10
             #env.setStartingCoordinates(starting_coordinates)
@@ -258,9 +259,11 @@ class Evaluater:
         self.printer.config(self.evaluation_config, tag="Evaluation")
         self.printer.separator()
         #self.env_config["max_num_steps"] = 1000
-        #self.env_config["starting_leg_angle"] =  [1.5,0]
+        #self.env_config["starting_leg_angle"] =  [2.99350029,0]
+        # 2.96693712
         # self.env_config["starting_coordinates"] = [0,10,0]
         #self.env_config["randomized_starting"] = {"angle":[False], "height":[False]}
+        #self.evaluation_config["num_episodes"] = 50
         tune.register_env("jumper", create_environment)
         ray.init()
         self.evaluate(self.evaluation_config, self.agent_config, self.env_config, random=self.evaluation_config["random_agent"])
