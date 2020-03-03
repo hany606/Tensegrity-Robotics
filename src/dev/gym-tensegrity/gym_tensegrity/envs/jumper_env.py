@@ -87,7 +87,7 @@ class JumperEnv(gym.Env):
         self.max_num_steps = self.config['max_num_steps']
 
         # The angles for min and max here for the randomization in degree
-        self.min_starting_angle = -3 if len(self.config["randomized_starting"]["angle"]) < 2 else self.config["randomized_starting"]["angle"][1]
+        self.min_starting_angle = [-3, -3] if len(self.config["randomized_starting"]["angle"]) < 2 else self.config["randomized_starting"]["angle"][1]
         self.max_starting_angle = -self.min_starting_angle if len(self.config["randomized_starting"]["angle"]) < 3 else self.config["randomized_starting"]["angle"][2]
         
         self.min_starting_coordinates = 10 if len(self.config["randomized_starting"]["height"]) < 2 else self.config["randomized_starting"]["height"][1]
@@ -168,11 +168,25 @@ class JumperEnv(gym.Env):
         if(max_coordinates is None):
             max_coordinates = self.max_starting_coordinates
 
+
+        if(type(min_angle) is list and len(min_angle) < 2):
+            min_angle.append(min_angle[0])
+        if(type(max_angle) is list and len(max_angle) < 2):
+            max_angle.append(max_angle[0])
+
+        if(type(min_angle) is not list):
+            min_angle = [min_angle, min_angle]
+        if(type(max_angle) is not list):
+            max_angle = [max_angle, max_angle]
+
+
         if(self.config["randomized_starting"]["angle"][0] != False):
             flag += 1
             floating_precision = 0
-            starting_angle = np.random.uniform(min_angle, max_angle,2) # in degree
-            starting_angle[1] = 0
+            starting_angle = [0,0]
+            starting_angle[0] = np.random.uniform(min_angle[0], max_angle[0]) # in degree
+            starting_angle[1] = np.random.uniform(min_angle[1], max_angle[1]) # in degree
+            
             if(floating_precision > 0):
                 for i in range(len(starting_angle)):
                      starting_angle[i] = int(starting_angle[i]*(10**floating_precision))/(10**floating_precision) 
