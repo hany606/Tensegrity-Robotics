@@ -44,9 +44,9 @@ class JumperEnv(gym.Env):
                             'num_repeated_action': 1 if 'num_repeated_action' not in config.keys() else config['num_repeated_action'],
                             'max_num_steps': 20000 if 'max_num_steps' not in config.keys() else config['max_num_steps'],
                             'starting_coordinates': [0,100,0] if 'starting_coordinates' not in config.keys() else config['starting_coordinates'],
-                            'starting_angle': (0,0) if 'starting_angle' not in config.keys() else config['starting_angle'],
+                            'starting_angle': [0,0] if 'starting_angle' not in config.keys() else config['starting_angle'],
                             'randomized_starting': {"angle":[False, 0, 0], "height":[False, 100,100]} if 'randomized_starting' not in config.keys() else config['randomized_starting'],
-                            'starting_leg_angle' : (0,0) if 'starting_leg_angle' not in config.keys() else config['starting_leg_angle'],
+                            'starting_leg_angle' : [0,0] if 'starting_leg_angle' not in config.keys() else config['starting_leg_angle'],
                             }
         else:
             self.config =  {
@@ -59,9 +59,9 @@ class JumperEnv(gym.Env):
                             'num_repeated_action': 1,
                             'max_num_steps': 20000,
                             'starting_coordinates': [0,100,0],
-                            'starting_angle': (0,0),
+                            'starting_angle': [0,0],
                             'randomized_starting': {"angle":[False, 0, 0], "height":[False, 100,100]},
-                            'starting_leg_angle' : (0,0)
+                            'starting_leg_angle' : [0,0]
                             }
         super(JumperEnv, self).__init__()
 
@@ -179,14 +179,21 @@ class JumperEnv(gym.Env):
         if(type(max_angle) is not list):
             max_angle = [max_angle, max_angle]
 
-
-        if(self.config["randomized_starting"]["angle"][0] != False):
+        # The argument is list of True/False of 2 componenets for the angles or it is just True
+        if((type(self.config["randomized_starting"]["angle"][0]) is not list and self.config["randomized_starting"]["angle"][0] == True)
+             or True in self.config["randomized_starting"]["angle"][0]):
             flag += 1
             floating_precision = 0
             starting_angle = [0,0]
             starting_angle[0] = np.random.uniform(min_angle[0], max_angle[0]) # in degree
             starting_angle[1] = np.random.uniform(min_angle[1], max_angle[1]) # in degree
             
+            if(type(self.config["randomized_starting"]["angle"][0]) is list and self.config["randomized_starting"]["angle"][0][0] == False):
+                starting_angle[0] = self.starting_leg_angle[0]
+
+            if(type(self.config["randomized_starting"]["angle"][0]) is list and self.config["randomized_starting"]["angle"][0][1] == False):
+                starting_angle[1] = self.starting_leg_angle[1]
+
             if(floating_precision > 0):
                 for i in range(len(starting_angle)):
                      starting_angle[i] = int(starting_angle[i]*(10**floating_precision))/(10**floating_precision) 
