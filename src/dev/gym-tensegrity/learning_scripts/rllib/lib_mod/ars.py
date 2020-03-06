@@ -18,6 +18,8 @@ from ray.rllib.utils.annotations import override
 from ray.rllib.utils.memory import ray_get_and_free
 from ray.rllib.utils import FilterManager
 
+from math import ceil
+
 logger = logging.getLogger(__name__)
 
 Result = namedtuple("Result", [
@@ -51,6 +53,26 @@ def create_shared_noise(count):
     return noise
 
 
+
+# e.g. configs = {"starting_leg_angle":{"min":[<min_val_ang1>,<min_val_ang2>], "max":[<max_val_ang1>,<max_val_ang2>]}}
+@ray.remote
+def create_random_env_configs(count, configs):
+    """Create an array with random configurations for environments."""
+    random_configs = []
+    for key in configs.keys():
+        num_params = len(configs[key]["min"])   # e.g. number of angles
+        params = []
+        for i in range(num_params):
+            params.append(np.random.uniform(configs[key]["min"][i], configs[key]["max"][i],size=(count,)))
+        
+        for x in range(count):
+            env_config = []
+            for i in range(num_params):
+                env_config.append(params[i][x])
+            random_configs.append({key:np.array(env_config)})            
+
+    return np.array(random_configs)
+
 class SharedNoiseTable:
     def __init__(self, noise):
         self.noise = noise
@@ -65,6 +87,20 @@ class SharedNoiseTable:
     def get_delta(self, dim):
         idx = self.sample_index(dim)
         return idx, self.get(idx, dim)
+
+class SharedRandomEnvConfigsTable:
+    def __init__(self, config):
+        self.config = config
+
+    def get(self, i=None):
+        if(i is None):
+            return self.config[int(np.random.uniform(0,self.len()-1))]
+
+        return self.config[i]
+        
+    def len(self):
+        return len(self.config)
+
 
 
 @ray.remote
@@ -82,6 +118,10 @@ class Worker:
         self.policy = policies.GenericPolicy(
             self.sess, self.env.action_space, self.env.observation_space,
             self.preprocessor, config["observation_filter"], config["model"])
+
+
+    def setRandomEnvConfig(self, random_env_configs):
+        self.random_env_config = SharedRandomEnvConfigsTable(random_env_configs)
 
     @property
     def filters(self):
@@ -119,6 +159,10 @@ class Worker:
         while (len(noise_indices) == 0):
             if np.random.uniform() < self.config["eval_prob"]:
                 # Do an evaluation run with no perturbation.
+                # Select the configurations for the environments randomly from the vector of radnom environment configurations
+                # Set the new configuration for the environment
+                randomized_env_config = self.random_env_config.get()    
+                self.env.setConfig(randomized_env_config)
                 self.policy.set_weights(params)
                 rewards, length = self.rollout(timestep_limit, add_noise=False)
                 eval_returns.append(rewards.sum())
@@ -130,20 +174,28 @@ class Worker:
                 perturbation = self.config["noise_stdev"] * self.noise.get(
                     noise_index, self.policy.num_params)
 
+
                 # These two sampling steps could be done in parallel on
                 # different actors letting us update twice as frequently.
-                self.policy.set_weights(params + perturbation)
-                rewards_pos, lengths_pos = self.rollout(timestep_limit)
 
-                self.policy.set_weights(params - perturbation)
-                rewards_neg, lengths_neg = self.rollout(timestep_limit)
+                for i in range(self.random_env_config.len()):
+                    # Select the configurations for the environments
+                    # Set the new configuration for the environment
+                    randomized_env_config = self.random_env_config.get(i)
+                    self.env.setConfig(randomized_env_config)
 
-                noise_indices.append(noise_index)
-                returns.append([rewards_pos.sum(), rewards_neg.sum()])
-                sign_returns.append(
-                    [np.sign(rewards_pos).sum(),
-                     np.sign(rewards_neg).sum()])
-                lengths.append([lengths_pos, lengths_neg])
+                    self.policy.set_weights(params + perturbation)
+                    rewards_pos, lengths_pos = self.rollout(timestep_limit)
+
+                    self.policy.set_weights(params - perturbation)
+                    rewards_neg, lengths_neg = self.rollout(timestep_limit)
+
+                    noise_indices.append(noise_index)
+                    returns.append([rewards_pos.sum(), rewards_neg.sum()])
+                    sign_returns.append(
+                        [np.sign(rewards_pos).sum(),
+                        np.sign(rewards_neg).sum()])
+                    lengths.append([lengths_pos, lengths_neg])
 
         return Result(
             noise_indices=noise_indices,
@@ -163,6 +215,7 @@ class ARSTrainer(Trainer):
     @override(Trainer)
     def _init(self, config, env_creator):
         # PyTorch check.
+        config["use_pytorch"] = False
         if config["use_pytorch"]:
             raise ValueError(
                 "ARS does not support PyTorch yet! Use tf instead."
@@ -187,12 +240,31 @@ class ARSTrainer(Trainer):
         noise_id = create_shared_noise.remote(config["noise_size"])
         self.noise = SharedNoiseTable(ray.get(noise_id))
 
+        self.extra_config = config["env_config"]["extra_trainer_configs"]
+        self.domain_randomization_config = self.extra_config["domain_randomization"]
+        
+        
+        self.domain_randomization_flag = False
+        if(self.extra_config is not None):
+            if("domain_randomization" in self.extra_config.keys()):
+                domain_randomization = self.extra_config["domain_randomization"]
+                self.domain_randomization_flag = True
+                if("angle" in domain_randomization.keys()):
+                    self.min_random_angles = [0,0]
+                    self.max_random_angles = [0,0]
+                    for i,flag in enumerate(domain_randomization["angle"][0]):
+                        if(flag == True):
+                            self.min_random_angles[i] = domain_randomization["angle"][1]
+                            self.max_random_angles[i] = domain_randomization["angle"][2]
+
         # Create the actors.
+        # TODO: Change Worker and add the config
         logger.info("Creating actors.")
         self.workers = [
             Worker.remote(config, env_creator, noise_id)
             for _ in range(config["num_workers"])
         ]
+
 
         self.episodes_so_far = 0
         self.reward_list = []
@@ -201,6 +273,20 @@ class ARSTrainer(Trainer):
     @override(Trainer)
     def _train(self):
         config = self.config
+        # Here the iteration starts
+        # Create the random environments configurations for each iteration
+        logger.info("Creating random environment configurations")
+
+
+        # ceil(config["num_rollouts"]/config["num_workers"]*2)*config["num_workers"]
+        #   is the exact number of environments created per iteration as the iteration is incremently
+        #   increase by 2 (one for positive and one for negative perturbation) for each worker
+        #   For each positive and negative perturbation, the same environment
+        #   But if we do this it will be corrolated with number of rollouts and we will have less number of rollouts with different perturbations
+        random_env_config_id = create_random_env_configs.remote(self.extra_config["num_randomized_envs"], self.domain_randomization_config)
+        self.random_env_config = SharedRandomEnvConfigsTable(ray.get(random_env_config_id))
+        for worker in self.workers:
+            worker.setRandomEnvConfig.remote(random_env_config_id)
 
         theta = self.policy.get_weights()
         assert theta.dtype == np.float32
@@ -252,7 +338,7 @@ class ARSTrainer(Trainer):
         noise_idx = noise_indices[idx]
         noisy_returns = noisy_returns[idx, :]
 
-        # Compute and take a step.
+        # Compute and take a step.          It means take a step in changing the theta not take an action
         g, count = utils.batched_weighted_sum(
             noisy_returns[:, 0] - noisy_returns[:, 1],
             (self.noise.get(index, self.policy.num_params)
@@ -323,7 +409,6 @@ class ARSTrainer(Trainer):
                 num_episodes += sum(len(pair) for pair in result.noisy_lengths)
                 num_timesteps += sum(
                     sum(pair) for pair in result.noisy_lengths)
-
         return results, num_episodes, num_timesteps
 
     def __getstate__(self):

@@ -344,3 +344,9 @@ class JumperEnv(gym.Env):
 
     def setStartingHeight(self, height):
         self.env.setStartingHeight(height)
+    
+    def setConfig(self, config):
+        if "starting_leg_angle" in config.keys():
+            self.setStartingLegAngle(config["starting_leg_angle"])
+        if "height" in config.keys():
+            self.setStartingHeight(config["height"])

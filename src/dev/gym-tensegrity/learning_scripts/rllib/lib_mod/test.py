@@ -4,8 +4,11 @@ import ray
 from ray import tune
 from ars import ARSTrainer
 
+# The old number of episodes per iteration: ceil(config["num_rollouts"]/config["num_workers"]*2)*config["num_workers"]*2
+# The new number of episodes per iteration: ceil(config["num_rollouts"]/config["extra_trainer_configs"]["num_randomized_envs"]*config["num_workers"]*2)*config["extra_trainer_configs"]["num_randomized_envs"]*config["num_workers"]*2
 
-env_config = {'observation': ['end_points', 'end_points_velocities', 'rest_length'], 'control_type': 'rest_length_mod', 'starting_coordinates':[0,10,0], "randomized_starting": {"angle":[True, -3, 3], "height":[False]}}
+
+env_config = {'observation': ['end_points', 'end_points_velocities', 'rest_length'], 'control_type': 'rest_length_mod', 'starting_coordinates':[0,10,0], "extra_trainer_configs": {"domain_randomization":{"starting_leg_angle":{"min":[-3,5], "max":[3,10]}}}}
 
 def create_environment(_):
     import gym_tensegrity
@@ -15,6 +18,10 @@ def create_environment(_):
 
 tune.register_env("jumper", create_environment)
 ray.init()
+
+env_config["extra_trainer_configs"].update(
+                {"num_randomized_envs":6})
+
 tune.run(
         ARSTrainer,
         name="test",
@@ -22,21 +29,21 @@ tune.run(
         stop={
             # "timesteps_total": 10000000,
             # 5000
-            "episode_reward_mean": 200,
+            "episode_reward_mean": 10000,
         },
         checkpoint_freq=5,
         checkpoint_at_end=True,
         reuse_actors= True,
         config={
             "env": "jumper",
-            "num_workers": 1,
+            "num_workers": 2,
             "ignore_worker_failures": True,
             "noise_stdev": 0.025,
-            "num_rollouts": 250,
-            "rollouts_used": 200,
+            "num_rollouts": 100,
+            "rollouts_used": 5,
             "sgd_stepsize": 0.03,
             "noise_size": 250000000,
             "eval_prob": 0.5,
-            "env_config": env_config
+            "env_config": env_config,
         },
     )
