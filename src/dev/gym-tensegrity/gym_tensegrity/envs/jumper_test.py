@@ -257,5 +257,6 @@ if __name__ == "__main__":
     # test({'starting_coordinates':(0,10,0), "max_num_steps":1000, "starting_angle":(1.0001*np.pi/180,0)})
     # test({'starting_coordinates':(0,100,0), "max_num_steps":10000, "starting_angle":(0,0), "starting_leg_angle": (0,0), "randomized_starting": False})
     # test({"max_num_steps":10000, "randomized_starting": {"angle":[False], "height":[True, 10,100]}})
-    test({'starting_coordinates':[0,10,0], "max_num_steps":10000, "randomized_starting": {"angle":[[True, True], [4,1],[10,3]], "height":[False]}})
+    # test({'starting_coordinates':[0,10,0], "max_num_steps":10000, "randomized_starting": {"angle":[[True, True], [4,1],[10,3]], "height":[False]}})
+    test({'starting_coordinates':[0,10,0], "max_num_steps":10000, 'starting_leg_angle':[1,2]})
 

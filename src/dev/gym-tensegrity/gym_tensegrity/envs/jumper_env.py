@@ -45,7 +45,7 @@ class JumperEnv(gym.Env):
                             'max_num_steps': 20000 if 'max_num_steps' not in config.keys() else config['max_num_steps'],
                             'starting_coordinates': [0,100,0] if 'starting_coordinates' not in config.keys() else config['starting_coordinates'],
                             'starting_angle': [0,0] if 'starting_angle' not in config.keys() else config['starting_angle'],
-                            'randomized_starting': {"angle":[False, 0, 0], "height":[False, 100,100]} if 'randomized_starting' not in config.keys() else config['randomized_starting'],
+                            'randomized_starting': {"angle":[[False,False], [0,0], [0,0]], "height":[False, 100,100]} if 'randomized_starting' not in config.keys() else config['randomized_starting'],
                             'starting_leg_angle' : [0,0] if 'starting_leg_angle' not in config.keys() else config['starting_leg_angle'],
                             }
         else:
@@ -60,7 +60,7 @@ class JumperEnv(gym.Env):
                             'max_num_steps': 20000,
                             'starting_coordinates': [0,100,0],
                             'starting_angle': [0,0],
-                            'randomized_starting': {"angle":[False, 0, 0], "height":[False, 100,100]},
+                            'randomized_starting': {"angle":[[False,False], [0,0], [0,0]], "height":[False, 100,100]},
                             'starting_leg_angle' : [0,0]
                             }
         super(JumperEnv, self).__init__()
