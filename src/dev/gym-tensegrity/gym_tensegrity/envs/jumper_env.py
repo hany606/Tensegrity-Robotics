@@ -47,6 +47,7 @@ class JumperEnv(gym.Env):
                             'starting_angle': [0,0] if 'starting_angle' not in config.keys() else config['starting_angle'],
                             'randomized_starting': {"angle":[[False,False], [0,0], [0,0]], "height":[False, 100,100]} if 'randomized_starting' not in config.keys() else config['randomized_starting'],
                             'starting_leg_angle' : [0,0] if 'starting_leg_angle' not in config.keys() else config['starting_leg_angle'],
+                            'observation_noise': None if 'observation_noise' not in config.keys() else config['observation_noise']
                             }
         else:
             self.config =  {
@@ -61,7 +62,8 @@ class JumperEnv(gym.Env):
                             'starting_coordinates': [0,100,0],
                             'starting_angle': [0,0],
                             'randomized_starting': {"angle":[[False,False], [0,0], [0,0]], "height":[False, 100,100]},
-                            'starting_leg_angle' : [0,0]
+                            'starting_leg_angle' : [0,0],
+                            'observation_noise': None
                             }
         super(JumperEnv, self).__init__()
 
@@ -85,6 +87,7 @@ class JumperEnv(gym.Env):
         self.starting_leg_angle = self.config['starting_leg_angle']
         self.num_steps = 0
         self.max_num_steps = self.config['max_num_steps']
+        self.observation_noise = self.config['observation_noise']
 
         # The angles for min and max here for the randomization in degree
         self.min_starting_angle = [-3, -3] if len(self.config["randomized_starting"]["angle"]) < 2 else self.config["randomized_starting"]["angle"][1]
@@ -155,61 +158,6 @@ class JumperEnv(gym.Env):
     def __del__(self):
         self.env.closeSimulator()
     
-    def randomizStartingConditions(self, min_angle=None, max_angle=None, min_coordinates=None, max_coordinates=None):
-        random_starting_conditions = {}
-        flag = 0
-        if(min_angle is None):
-            min_angle = self.min_starting_angle
-        if(max_angle is None):
-            max_angle = self.max_starting_angle
-
-        if(min_coordinates is None):
-            min_coordinates = self.min_starting_coordinates
-        if(max_coordinates is None):
-            max_coordinates = self.max_starting_coordinates
-
-
-        if(type(min_angle) is list and len(min_angle) < 2):
-            min_angle.append(min_angle[0])
-        if(type(max_angle) is list and len(max_angle) < 2):
-            max_angle.append(max_angle[0])
-
-        if(type(min_angle) is not list):
-            min_angle = [min_angle, min_angle]
-        if(type(max_angle) is not list):
-            max_angle = [max_angle, max_angle]
-
-        # The argument is list of True/False of 2 componenets for the angles or it is just True
-        if((type(self.config["randomized_starting"]["angle"][0]) is not list and self.config["randomized_starting"]["angle"][0] == True)
-             or True in self.config["randomized_starting"]["angle"][0]):
-            flag += 1
-            floating_precision = 0
-            starting_angle = [0,0]
-            starting_angle[0] = np.random.uniform(min_angle[0], max_angle[0]) # in degree
-            starting_angle[1] = np.random.uniform(min_angle[1], max_angle[1]) # in degree
-            
-            if(type(self.config["randomized_starting"]["angle"][0]) is list and self.config["randomized_starting"]["angle"][0][0] == False):
-                starting_angle[0] = self.starting_leg_angle[0]
-
-            if(type(self.config["randomized_starting"]["angle"][0]) is list and self.config["randomized_starting"]["angle"][0][1] == False):
-                starting_angle[1] = self.starting_leg_angle[1]
-
-            if(floating_precision > 0):
-                for i in range(len(starting_angle)):
-                     starting_angle[i] = int(starting_angle[i]*(10**floating_precision))/(10**floating_precision) 
-            print("Starting Angle: {:} in degree".format(starting_angle))
-            random_starting_conditions["starting_angle"] = starting_angle
-        
-        if(self.config["randomized_starting"]["height"][0] != False):
-            flag += 1
-            floating_precision = 0
-            starting_height = np.random.uniform(min_coordinates, max_coordinates,1) # in degree
-            if(floating_precision > 0):
-                starting_height[0] = int(starting_height[0]*(10**floating_precision))/(10**floating_precision) 
-            print("Starting Height: {:}".format(starting_height))
-            random_starting_conditions["starting_height"] = int(starting_height)
-
-        return flag, random_starting_conditions
     
     def step(self, action):
         self.num_steps += 1
@@ -223,12 +171,19 @@ class JumperEnv(gym.Env):
         else:
             num_steps = randint(num_repeated_action[0], num_repeated_action[1])
         
-        for _ in range(num_steps):
+        
+        for _ in range(num_steps):    
             self._takeAction(action)
             observation = self._getObservation()
             rewards += self._getReward(observation)
 
+
+        if(self.observation_noise is not None):
+            self.uncorrelated_noise = np.random.normal(self.observation_noise["uncorrelated"]["mean"],
+                                                       self.observation_noise["uncorrelated"]["stdev"],
+                                                       self.observation_space.shape[0])
         observation = self._getObservation()
+        noisy_observation = observation + + self.uncorrelated_noise + self.correlated_noise
         reward = rewards
         done = self._isDone()
         return observation, reward, done, {}
@@ -317,6 +272,11 @@ class JumperEnv(gym.Env):
             self.setStartingLegAngle(self.starting_leg_angle)
             self.setStartingHeight(self.starting_height)
         
+        if(self.observation_noise is not None):
+            self.correlated_noise = np.random.normal(self.observation_noise["correlated"]["mean"],
+                                                     self.observation_noise["correlated"]["stdev"],
+                                                     self.observation_space.shape[0])
+
         # Reset the environment and the simulator
         self.env.reset()
         self.env.step()
@@ -332,6 +292,62 @@ class JumperEnv(gym.Env):
 
     def close(self):
         self.env.closeSimulator()
+
+    def randomizStartingConditions(self, min_angle=None, max_angle=None, min_coordinates=None, max_coordinates=None):
+        random_starting_conditions = {}
+        flag = 0
+        if(min_angle is None):
+            min_angle = self.min_starting_angle
+        if(max_angle is None):
+            max_angle = self.max_starting_angle
+
+        if(min_coordinates is None):
+            min_coordinates = self.min_starting_coordinates
+        if(max_coordinates is None):
+            max_coordinates = self.max_starting_coordinates
+
+
+        if(type(min_angle) is list and len(min_angle) < 2):
+            min_angle.append(min_angle[0])
+        if(type(max_angle) is list and len(max_angle) < 2):
+            max_angle.append(max_angle[0])
+
+        if(type(min_angle) is not list):
+            min_angle = [min_angle, min_angle]
+        if(type(max_angle) is not list):
+            max_angle = [max_angle, max_angle]
+
+        # The argument is list of True/False of 2 componenets for the angles or it is just True
+        if((type(self.config["randomized_starting"]["angle"][0]) is not list and self.config["randomized_starting"]["angle"][0] == True)
+             or True in self.config["randomized_starting"]["angle"][0]):
+            flag += 1
+            floating_precision = 0
+            starting_angle = [0,0]
+            starting_angle[0] = np.random.uniform(min_angle[0], max_angle[0]) # in degree
+            starting_angle[1] = np.random.uniform(min_angle[1], max_angle[1]) # in degree
+            
+            if(type(self.config["randomized_starting"]["angle"][0]) is list and self.config["randomized_starting"]["angle"][0][0] == False):
+                starting_angle[0] = self.starting_leg_angle[0]
+
+            if(type(self.config["randomized_starting"]["angle"][0]) is list and self.config["randomized_starting"]["angle"][0][1] == False):
+                starting_angle[1] = self.starting_leg_angle[1]
+
+            if(floating_precision > 0):
+                for i in range(len(starting_angle)):
+                     starting_angle[i] = int(starting_angle[i]*(10**floating_precision))/(10**floating_precision) 
+            print("Starting Angle: {:} in degree".format(starting_angle))
+            random_starting_conditions["starting_angle"] = starting_angle
+        
+        if(self.config["randomized_starting"]["height"][0] != False):
+            flag += 1
+            floating_precision = 0
+            starting_height = np.random.uniform(min_coordinates, max_coordinates,1) # in degree
+            if(floating_precision > 0):
+                starting_height[0] = int(starting_height[0]*(10**floating_precision))/(10**floating_precision) 
+            print("Starting Height: {:}".format(starting_height))
+            random_starting_conditions["starting_height"] = int(starting_height)
+
+        return flag, random_starting_conditions
 
     def setStartingCoordinates(self, coordinates):
         self.env.starting_coordinates = coordinates
