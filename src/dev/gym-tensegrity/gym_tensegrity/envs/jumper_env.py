@@ -89,9 +89,10 @@ class JumperEnv(gym.Env):
         self.max_num_steps = self.config['max_num_steps']
         self.observation_noise = self.config['observation_noise']
 
+
         # The angles for min and max here for the randomization in degree
         self.min_starting_angle = [-3, -3] if len(self.config["randomized_starting"]["angle"]) < 2 else self.config["randomized_starting"]["angle"][1]
-        self.max_starting_angle = -self.min_starting_angle if len(self.config["randomized_starting"]["angle"]) < 3 else self.config["randomized_starting"]["angle"][2]
+        self.max_starting_angle = -1*self.min_starting_angle if len(self.config["randomized_starting"]["angle"]) < 3 else self.config["randomized_starting"]["angle"][2]
         
         self.min_starting_coordinates = 10 if len(self.config["randomized_starting"]["height"]) < 2 else self.config["randomized_starting"]["height"][1]
         self.max_starting_coordinates = 100 if len(self.config["randomized_starting"]["height"]) < 3 else self.config["randomized_starting"]["height"][2]
@@ -147,9 +148,12 @@ class JumperEnv(gym.Env):
 
             # high = np.append(high, self.max_leg_angle)
             high = np.append(high, np.full((1,self.env.controllers_num), self.max_cable_length))            
+        
 
 
         self.observation_space = spaces.Box(low= low, high= high, dtype=np.float32)
+        self.uncorrelated_noise = [0 for i in range(self.observation_space.shape[0])]
+        self.correlated_noise = [0 for i in range(self.observation_space.shape[0])]
         # To randomize the initial state of the strings
         # random_init_lengths = [((1 if randint(1,10)%2 else -1)*uniform(self.delta_length-1, self.delta_length)) for i in range(self.env.controllers_num)]
         # self.env.actions_json["Controllers_val"][:] = random_init_lengths
@@ -183,7 +187,7 @@ class JumperEnv(gym.Env):
                                                        self.observation_noise["uncorrelated"]["stdev"],
                                                        self.observation_space.shape[0])
         observation = self._getObservation()
-        noisy_observation = observation + + self.uncorrelated_noise + self.correlated_noise
+        noisy_observation = observation + self.uncorrelated_noise + self.correlated_noise
         reward = rewards
         done = self._isDone()
         return observation, reward, done, {}
@@ -296,6 +300,7 @@ class JumperEnv(gym.Env):
     def randomizStartingConditions(self, min_angle=None, max_angle=None, min_coordinates=None, max_coordinates=None):
         random_starting_conditions = {}
         flag = 0
+
         if(min_angle is None):
             min_angle = self.min_starting_angle
         if(max_angle is None):

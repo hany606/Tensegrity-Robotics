@@ -285,7 +285,7 @@ class Evaluater:
         #self.env_config["starting_leg_angle"] =  [2.99350029,0]
         # 2.96693712
         # self.env_config["starting_coordinates"] = [0,10,0]
-        self.env_config["randomized_starting"] = {"angle":[False], "height":[False]}
+        self.env_config["randomized_starting"] = {"angle":[[False,False],[0,0],[0,0]], "height":[False]}
         self.evaluation_config["num_episodes"] = 50
         # When domain_bukcet is enabled (not None) num_episodes is used for each bucket
         self.evaluation_config["domain_buckets"] = {"step": 0.01, "min": -3, "max": 3}
