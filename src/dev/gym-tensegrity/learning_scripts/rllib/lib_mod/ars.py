@@ -175,27 +175,47 @@ class Worker:
                     noise_index, self.policy.num_params)
 
 
+                # Select the configurations for the environments
+                # Set the new configuration for the environment
+                randomized_env_config = self.random_env_config.get(0)
+                self.env.setConfig(randomized_env_config)
+
+                self.policy.set_weights(params + perturbation)
+                reward_pos, length_pos = self.rollout(timestep_limit)
+                
+                rewards_pos = reward_pos
+                lengths_pos = length_pos
+
+                self.policy.set_weights(params - perturbation)
+                reward_neg, length_neg = self.rollout(timestep_limit)
+                rewards_neg = reward_neg
+                lengths_neg = length_neg
+
                 # These two sampling steps could be done in parallel on
                 # different actors letting us update twice as frequently.
-
-                for i in range(self.random_env_config.len()):
+                for i in range(1,self.random_env_config.len()):
                     # Select the configurations for the environments
                     # Set the new configuration for the environment
                     randomized_env_config = self.random_env_config.get(i)
                     self.env.setConfig(randomized_env_config)
 
                     self.policy.set_weights(params + perturbation)
-                    rewards_pos, lengths_pos = self.rollout(timestep_limit)
+                    reward_pos, length_pos = self.rollout(timestep_limit)
+                    
+                    rewards_pos = np.append(rewards_pos, reward_pos)
+                    lengths_pos = np.append(lengths_pos, length_pos)
 
                     self.policy.set_weights(params - perturbation)
-                    rewards_neg, lengths_neg = self.rollout(timestep_limit)
+                    reward_neg, length_neg = self.rollout(timestep_limit)
+                    rewards_neg = np.append(rewards_neg, reward_neg)
+                    lengths_neg = np.append(lengths_neg, length_neg)
 
-                    noise_indices.append(noise_index)
-                    returns.append([rewards_pos.sum(), rewards_neg.sum()])
-                    sign_returns.append(
-                        [np.sign(rewards_pos).sum(),
-                        np.sign(rewards_neg).sum()])
-                    lengths.append([lengths_pos, lengths_neg])
+
+                returns.append([rewards_pos.sum()/self.random_env_config.len(), rewards_neg.sum()/self.random_env_config.len()])
+                sign_returns.append(
+                    [np.sign(rewards_pos).sum()/self.random_env_config.len(),
+                    np.sign(rewards_neg).sum()/self.random_env_config.len()])
+                lengths.append([lengths_pos.sum()/self.random_env_config.len(), lengths_neg.sum()/self.random_env_config.len()])
 
         return Result(
             noise_indices=noise_indices,
