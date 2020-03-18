@@ -20,7 +20,7 @@ tune.register_env("jumper", create_environment)
 ray.init()
 
 env_config["extra_trainer_configs"].update(
-                {"num_randomized_envs":6})
+                {"num_randomized_envs":2})
 
 tune.run(
         ARSTrainer,
@@ -36,13 +36,13 @@ tune.run(
         reuse_actors= True,
         config={
             "env": "jumper",
-            "num_workers": 2,
+            "num_workers": 1,
             "ignore_worker_failures": True,
             "noise_stdev": 0.025,
-            "num_rollouts": 100,
+            "num_rollouts": 10,
             "rollouts_used": 5,
             "sgd_stepsize": 0.03,
-            "noise_size": 250000000,
+            "noise_size": 250000,
             "eval_prob": 0.5,
             "env_config": env_config,
         },

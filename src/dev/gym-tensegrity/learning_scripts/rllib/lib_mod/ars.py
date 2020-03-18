@@ -149,6 +149,7 @@ class Worker:
         return rollout_rewards, rollout_length
 
     def do_rollouts(self, params, timestep_limit=None):
+        print("!!!!!!!!!!@!@ Mod Do rollouts")
         # Set the network weights.
         self.policy.set_weights(params)
 
@@ -182,18 +183,26 @@ class Worker:
 
                 self.policy.set_weights(params + perturbation)
                 reward_pos, length_pos = self.rollout(timestep_limit)
-                
-                rewards_pos = reward_pos
-                lengths_pos = length_pos
+                rewards_pos = np.empty(reward_pos.shape)
+                lengths_pos = np.array([])
+
+                rewards_pos = np.append(rewards_pos, reward_pos)
+                lengths_pos = np.append(lengths_pos, length_pos)
+
 
                 self.policy.set_weights(params - perturbation)
                 reward_neg, length_neg = self.rollout(timestep_limit)
-                rewards_neg = reward_neg
-                lengths_neg = length_neg
+                rewards_neg = np.empty(reward_neg.shape)
+                lengths_neg = np.array([])
+
+                rewards_neg = np.append(rewards_neg, reward_neg)
+                lengths_neg = np.append(lengths_neg, length_neg)
 
                 # These two sampling steps could be done in parallel on
                 # different actors letting us update twice as frequently.
+                print("!!!!!!!!!!@!@ Mod Train on randomized envs")
                 for i in range(1,self.random_env_config.len()):
+                    print("!!!!!!!!!!@!@ Mod Random env------------------")
                     # Select the configurations for the environments
                     # Set the new configuration for the environment
                     randomized_env_config = self.random_env_config.get(i)
@@ -210,7 +219,7 @@ class Worker:
                     rewards_neg = np.append(rewards_neg, reward_neg)
                     lengths_neg = np.append(lengths_neg, length_neg)
 
-
+                noise_indices.append(noise_index)
                 returns.append([rewards_pos.sum()/self.random_env_config.len(), rewards_neg.sum()/self.random_env_config.len()])
                 sign_returns.append(
                     [np.sign(rewards_pos).sum()/self.random_env_config.len(),
@@ -222,7 +231,7 @@ class Worker:
             noisy_returns=returns,
             sign_noisy_returns=sign_returns,
             noisy_lengths=lengths,
-            eval_returns=eval_returns,
+            eval_returns=eval_returns,          
             eval_lengths=eval_lengths)
 
 
@@ -294,6 +303,7 @@ class ARSTrainer(Trainer):
     def _train(self):
         config = self.config
         # Here the iteration starts
+        print("!!!!!!!!!!@!@ Mod Iteration starts here")
         # Create the random environments configurations for each iteration
         logger.info("Creating random environment configurations")
 
@@ -315,6 +325,7 @@ class ARSTrainer(Trainer):
         theta_id = ray.put(theta)
         # Use the actors to do rollouts, note that we pass in the ID of the
         # policy weights.
+        print("!!!!!!!!!!@!@ Mod Collect Results")
         results, num_episodes, num_timesteps = self._collect_results(
             theta_id, config["num_rollouts"])
 
@@ -358,6 +369,9 @@ class ARSTrainer(Trainer):
         noise_idx = noise_indices[idx]
         noisy_returns = noisy_returns[idx, :]
 
+
+        # BUG HERE IN ASSERTION STATE IN utils.batched_weighted_sum()!
+        # REASON: UNKNOWN
         # Compute and take a step.          It means take a step in changing the theta not take an action
         g, count = utils.batched_weighted_sum(
             noisy_returns[:, 0] - noisy_returns[:, 1],
@@ -414,6 +428,7 @@ class ARSTrainer(Trainer):
         num_episodes, num_timesteps = 0, 0
         results = []
         while num_episodes < min_episodes:
+            print("!!!!!!!!!!@!@ Mod Still collecting results")
             logger.debug(
                 "Collected {} episodes {} timesteps so far this iter".format(
                     num_episodes, num_timesteps))
@@ -426,9 +441,11 @@ class ARSTrainer(Trainer):
                 # Update the number of episodes and the number of timesteps
                 # keeping in mind that result.noisy_lengths is a list of lists,
                 # where the inner lists have length 2.
+                print("!!!!!!!!!!@!@ Mod Number{:}".format(sum(len(pair) for pair in result.noisy_lengths)))
                 num_episodes += sum(len(pair) for pair in result.noisy_lengths)
                 num_timesteps += sum(
                     sum(pair) for pair in result.noisy_lengths)
+            print("!!!!!!!!!!@!@ Mod Finish one Iteration: Number of finished rollouts {:}".format(num_episodes))
         return results, num_episodes, num_timesteps
 
     def __getstate__(self):
