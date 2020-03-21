@@ -174,26 +174,14 @@ class Worker:
                 perturbation = self.config["noise_stdev"] * self.noise.get(
                     noise_index, self.policy.num_params)
 
-
-                # Select the configurations for the environments
-                # Set the new configuration for the environment
-                randomized_env_config = self.random_env_config.get(0)
-                self.env.setConfig(randomized_env_config)
-
-                self.policy.set_weights(params + perturbation)
-                reward_pos, length_pos = self.rollout(timestep_limit)
-                
-                rewards_pos = reward_pos
-                lengths_pos = length_pos
-
-                self.policy.set_weights(params - perturbation)
-                reward_neg, length_neg = self.rollout(timestep_limit)
-                rewards_neg = reward_neg
-                lengths_neg = length_neg
+                rewards_pos = np.array([])
+                lengths_pos = np.array([])
+                rewards_neg = np.array([])
+                lengths_neg = np.array([])
 
                 # These two sampling steps could be done in parallel on
                 # different actors letting us update twice as frequently.
-                for i in range(1,self.random_env_config.len()):
+                for i in range(self.random_env_config.len()):
                     # Select the configurations for the environments
                     # Set the new configuration for the environment
                     randomized_env_config = self.random_env_config.get(i)
@@ -201,7 +189,6 @@ class Worker:
 
                     self.policy.set_weights(params + perturbation)
                     reward_pos, length_pos = self.rollout(timestep_limit)
-                    
                     rewards_pos = np.append(rewards_pos, reward_pos)
                     lengths_pos = np.append(lengths_pos, length_pos)
 
@@ -209,8 +196,8 @@ class Worker:
                     reward_neg, length_neg = self.rollout(timestep_limit)
                     rewards_neg = np.append(rewards_neg, reward_neg)
                     lengths_neg = np.append(lengths_neg, length_neg)
-
-
+                    
+                noise_indices.append(noise_index)
                 returns.append([rewards_pos.sum()/self.random_env_config.len(), rewards_neg.sum()/self.random_env_config.len()])
                 sign_returns.append(
                     [np.sign(rewards_pos).sum()/self.random_env_config.len(),
@@ -222,7 +209,7 @@ class Worker:
             noisy_returns=returns,
             sign_noisy_returns=sign_returns,
             noisy_lengths=lengths,
-            eval_returns=eval_returns,
+            eval_returns=eval_returns,          
             eval_lengths=eval_lengths)
 
 
@@ -259,10 +246,10 @@ class ARSTrainer(Trainer):
         logger.info("Creating shared noise table.")
         noise_id = create_shared_noise.remote(config["noise_size"])
         self.noise = SharedNoiseTable(ray.get(noise_id))
-
+        
+        # Getting the configurations of the random environments
         self.extra_config = config["env_config"]["extra_trainer_configs"]
         self.domain_randomization_config = self.extra_config["domain_randomization"]
-        
         
         self.domain_randomization_flag = False
         if(self.extra_config is not None):
@@ -296,8 +283,6 @@ class ARSTrainer(Trainer):
         # Here the iteration starts
         # Create the random environments configurations for each iteration
         logger.info("Creating random environment configurations")
-
-
         # ceil(config["num_rollouts"]/config["num_workers"]*2)*config["num_workers"]
         #   is the exact number of environments created per iteration as the iteration is incremently
         #   increase by 2 (one for positive and one for negative perturbation) for each worker
@@ -357,6 +342,7 @@ class ARSTrainer(Trainer):
             max_rewards >= np.percentile(max_rewards, percentile)]
         noise_idx = noise_indices[idx]
         noisy_returns = noisy_returns[idx, :]
+
 
         # Compute and take a step.          It means take a step in changing the theta not take an action
         g, count = utils.batched_weighted_sum(
