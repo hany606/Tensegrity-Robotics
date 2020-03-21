@@ -2,7 +2,7 @@ import gym
 import gym_tensegrity
 import ray
 from ray import tune
-from ars import ARSTrainer
+from ars_original import ARSTrainer
 
 # The old number of episodes per iteration: ceil(config["num_rollouts"]/config["num_workers"]*2)*config["num_workers"]*2
 # The new number of episodes per iteration: ceil(config["num_rollouts"]/config["extra_trainer_configs"]["num_randomized_envs"]*config["num_workers"]*2)*config["extra_trainer_configs"]["num_randomized_envs"]*config["num_workers"]*2
@@ -20,7 +20,7 @@ tune.register_env("jumper", create_environment)
 ray.init()
 
 env_config["extra_trainer_configs"].update(
-                {"num_randomized_envs":16})
+                {"num_randomized_envs":2})
 
 tune.run(
         ARSTrainer,
@@ -36,7 +36,7 @@ tune.run(
         reuse_actors= True,
         config={
             "env": "jumper",
-            "num_workers": 2,
+            "num_workers": 1,
             "ignore_worker_failures": True,
             "noise_stdev": 0.025,
             "num_rollouts": 10,
