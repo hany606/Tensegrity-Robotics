@@ -198,6 +198,7 @@ class Evaluater:
         for key in agent_config.keys():
             config[key] = agent_config[key]
         config["num_workers"] = 1
+        config["noise_size"] = 250000
         trained_agent = ars.ARSTrainer(config, env="jumper")
         trained_agent.restore(evaluation_config["evaluation_file"])
         #min_coordinates = [0,10,0]
