@@ -1,18 +1,18 @@
 # Tensegrity-Robotics
 
-This repository for my works in the Tensegrity Robotics. It is extension for the work that done in [my university's internship Summer19](https://github.com/hany606/Tensegrity-Robot-IU-Internship19). The work of the simulator is from [NTRTsim](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim).
+This repository is for the Tensegrity Robotics works.
+The work of the simulator is from [NTRTsim](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim).
 
-There is a google doc who contain a lot of data related to the project that I have collected during my internship: [Link](https://docs.google.com/document/d/19-lCDq4gPtaQ6hCJNI77qi1bIzHJGaliu4Yrh53H7hs/edit?usp=sharing)
 
-This work is not an individual, this work is part from a research work in robotics lab at Innopolis University.
+This work is not an individual, this work is part from a research work in the robotics lab at Innopolis University.
 
-Mainly, this work will concentrate on using RL to control the movements of the tensegrity structure using NTRTsim for now.
+Mainly, this work will concentrate on using Reinforcement Learning methods to control the movements of the tensegrity structure using NTRTsim as a simulator for now.
+
+## Publications:
+* [Learning Stabilizing Control Policies for a Tensegrity Hopper with Augmented Random Search](https://www.researchgate.net/publication/340475125_Learning_Stabilizing_Control_Policies_for_a_Tensegrity_Hopper_with_Augmented_Random_Search)
 
 ## Active Projects:
-1. Tensegrity Leg: (Stopped)
-It is in [src/dev/legz](https://github.com/hany606/Tensegrity-Robotics/tree/master/src/dev/legz)
-
-2. Tensegrity Jumper:
+1. Tensegrity Jumper:
 It is in [src/dev/jumper](https://github.com/hany606/Tensegrity-Robotics/tree/master/src/dev/jumper)
 
 
@@ -32,7 +32,7 @@ It is in [src/dev/jumper](https://github.com/hany606/Tensegrity-Robotics/tree/ma
 	 ```
 	If you have any problems or issues check the original documentation of installing the simulator: [Link](https://raw.githubusercontent.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim/master/INSTALL).
 	
-	If the setup.sh has failed, try first to run it again. (It worked for me)
+	If the setup.sh has failed, try first to run it again. (It worked for me in the third time)
 
 4. Test the simulator environment
 	 a. Run build.sh
@@ -60,14 +60,22 @@ Sometimes there are errors regarding this library, hence, you can comment [this 
 	cd Model_name
 	./App_Name_Model
 	```
-7. To run the openAI gym custom environment and test it. You need first to export the directory folder, then you can run the test for the environment or just install the gym_tensegrity library as it is described in this [README](https://github.com/hany606/Tensegrity-Robotics/blob/master/src/dev/gym-tensegrity/README.md)
+7. To use RL algorithms a custom environment has been created in the same format of OpenAI gym environments to be able to be used with the libraries that conforms with OpenAI Gym. To run the environment and test it. You need first to export the directory folder, then you can run the test for the environment or just install the gym_tensegrity library as it is described in this [README](https://github.com/hany606/Tensegrity-Robotics/blob/master/src/dev/gym-tensegrity/README.md)
+
+	put this into .bashrc or run it every time
 	```bash
 	export TENSEGRITY_HOME="absolute/path/to/the/root/folder"
 	```
+
 	```bash
 	cd src/dev/legz/gym-leg/gym_leg/envs/
 	python3 jumper_test.py
 	```
+
+## Use it with Docker:
+
+There is a Dockerfile inside docker directory that can be used, it is by default use the headless-server branch to be used with headless servers.
+
 ## Running in Headless mode (without xserver display):
 
 This step can be done only when you are in the headless_server branch because the files are configured to run without the extra terminal for the debugging. It is based on using Xvfb tool.
