@@ -1,5 +1,16 @@
 # Tensegrity-Robotics
 
+
+## Current TODO:
+
+1. Clean the repo from the uncessary files and folder
+2. Follow the [following structure](Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper) from the branch
+3. Add the link for the branch in the main branch 
+4. Add the link of the branch to the paper
+5. Clean the main branch as well
+
+
+
 This repository is for the Tensegrity Robotics works.
 The work of the simulator is from [NTRTsim](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim).
 
