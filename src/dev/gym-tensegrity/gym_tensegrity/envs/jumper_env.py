@@ -32,6 +32,12 @@ sim_exec = "gnome-terminal -e {}".format(path_to_model)
 class JumperEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
+    # Tasks
+    TASK_VERTICAL_STABILITY  = "vertical_stability"
+    TASK_JUMPING_UP_AND_DOWN = "jumping_up_and_down"
+    TASK_DEFAULT             = TASK_VERTICAL_STABILITY
+    TASKS_ALL                = [TASK_VERTICAL_STABILITY, TASK_JUMPING_UP_AND_DOWN]
+
     def __init__(self, config=None):
         if(config is not None):    
             self.config =  {
@@ -47,7 +53,8 @@ class JumperEnv(gym.Env):
                             'starting_angle': [0,0] if 'starting_angle' not in config.keys() else config['starting_angle'],
                             'randomized_starting': {"angle":[[False,False], [0,0], [0,0]], "height":[False, 100,100]} if 'randomized_starting' not in config.keys() else config['randomized_starting'],
                             'starting_leg_angle' : [0,0] if 'starting_leg_angle' not in config.keys() else config['starting_leg_angle'],
-                            'observation_noise': None if 'observation_noise' not in config.keys() else config['observation_noise']
+                            'observation_noise': None if 'observation_noise' not in config.keys() else config['observation_noise'],
+                            'task': JumperEnv.TASK_DEFAULT if 'task' not in config.keys() else config['task'] 
                             }
         else:
             self.config =  {
@@ -63,7 +70,8 @@ class JumperEnv(gym.Env):
                             'starting_angle': [0,0],
                             'randomized_starting': {"angle":[[False,False], [0,0], [0,0]], "height":[False, 100,100]},
                             'starting_leg_angle' : [0,0],
-                            'observation_noise': None
+                            'observation_noise': None,
+                            'task': TASK_DEFAULT
                             }
         super(JumperEnv, self).__init__()
 
@@ -72,6 +80,9 @@ class JumperEnv(gym.Env):
 
         if('rest_length' not in self.config['control_type'] and 'current_length' not in self.config['control_type'] and 'rest_length_mod'  not in self.config['control_type'] and 'current_length_mod'  not in self.config['control_type']):
             raise Exception("Wrong choice for the type of the control_type, you should choose one of these [rest_length, current_length, rest_length_mod, current_length_mod]")
+
+        if(self.config["task"] not in JumperEnv.TASKS_ALL):
+            raise Exception("No such task available.")
 
         # Agent self variables
         self.max_cable_length = 50
@@ -87,6 +98,7 @@ class JumperEnv(gym.Env):
         self.starting_leg_angle = self.config['starting_leg_angle']
         self.num_steps = 0
         self.max_num_steps = self.config['max_num_steps']
+        self.task = self.config["task"]
         self.observation_noise = self.config['observation_noise']
 
 
@@ -154,15 +166,7 @@ class JumperEnv(gym.Env):
         self.observation_space = spaces.Box(low= low, high= high, dtype=np.float32)
         self.uncorrelated_noise = [0 for i in range(self.observation_space.shape[0])]
         self.correlated_noise = [0 for i in range(self.observation_space.shape[0])]
-        # To randomize the initial state of the strings
-        # random_init_lengths = [((1 if randint(1,10)%2 else -1)*uniform(self.delta_length-1, self.delta_length)) for i in range(self.env.controllers_num)]
-        # self.env.actions_json["Controllers_val"][:] = random_init_lengths
-        # self.env.step()
-
-    def __del__(self):
-        self.env.closeSimulator()
-    
-    
+     
     def step(self, action):
         self.num_steps += 1
         # This modification of multiple steps of actions was adapted from Atari environment: https://github.com/openai/gym/blob/master/gym/envs/atari/atari_env.py
@@ -190,79 +194,8 @@ class JumperEnv(gym.Env):
         noisy_observation = observation + self.uncorrelated_noise + self.correlated_noise
         reward = rewards
         done = self._isDone()
+
         return observation, reward, done, {}
-
-    # Continuous delta length
-    # action is number that represents the length and the index of the controller
-    # For example imaging that the delta_length = 10
-    # Then if the action belongs to (-10,0]U[0,10) -- controller 0
-    # action belongs to (-50,-40]U[40,50) -- controller 1
-    def _takeAction(self, action):
-        if (not isinstance(action, np.ndarray)):
-            raise Exception("The action space should be an np.array")
-        if action.shape != self.action_space.shape:
-            raise Exception("The shape of the provided action does not match")
-
-        action = np.clip(action,-self.delta_length, self.delta_length)
-        # This is now useless after the value clipping
-        if not self.action_space.contains(action):
-            raise Exception("The provided action is out of allowed space.")
-
-        self.env.actions_json["Controllers_val"][:] = action.tolist()
-        self.env.step()
-
-    # Observations:
-    #   - The dimensions is specified above and their min. and max. values
-    #   1- Angle of the leg
-    #   2- Cables' lengths
-    def _getObservation(self):
-        observation = np.empty((1,0))
-
-        if('end_points' in self.config['observation']):
-            for i in self.env.getEndPoints():
-                observation = np.append(observation, i)
-
-        if('end_points_velocities' in self.config['observation']):
-            observation = np.append(observation, self.env.getEndPointsVelocities())
-
-        if('rest_length' in self.config['observation']):
-            # observation = np.append(observation, self.env.getLegAngle())
-            observation = np.append(observation, self.env.getRestCablesLengths())
-
-        if('current_length' in self.config['observation']):
-            # observation = np.append(observation, self.env.getLegAngle())
-            observation = np.append(observation, self.env.getCurrentCablesLengths())
-
-        return np.array(observation)
-
-    def _getReward(self, observation):
-        # Reward Criteria will depend on:
-        # Survival rewards with the time
-
-        leg_end_points_lower_z = self.env.getLegEndPoints()[0][1]
-        if(leg_end_points_lower_z < 2):
-                self.count_rewards_flag = True
-
-        # Due to problem in counting the rewards while dropping from the sky, it is better to start
-        #   giving rewards when it lands to the ground
-        if(self.count_rewards_flag):
-            # Positive survival rewards
-            reward = 1
-        else:
-            reward = 0
-
-        return reward
-
-    def _isDone(self):
-        #  The criteria for finish will be either
-        #   - Fall "The angle is more than theta_max"
-        # if the angle is greater than 20 degrees this will mean that the episode is done and the agent failed to balance
-        squre_sides_angles = self.env.getSquareSidesAngles()
-        if abs(self.env.getLegAngle()) > np.pi/9 or abs(squre_sides_angles[0]) > np.pi/4 or abs(squre_sides_angles[1]) > np.pi/4 or self.num_steps > self.max_num_steps:
-                self.num_steps = 0
-                #print(self.env.getLegAngle())
-                return True
-        return False
 
     def reset(self):
         # Reset the state of the environment to an initial state, and the self vars to the initial values
@@ -282,8 +215,9 @@ class JumperEnv(gym.Env):
                                                      self.observation_space.shape[0])
 
         # Reset the environment and the simulator
-        self.env.reset()
-        self.env.step()
+        self._resetInternalEnvironment()
+        self._stepInternalEnvironment()
+
         # Not necessary as long as we didn't comment it in the _takeAction above
         for i in range(self.env.controllers_num):
             self.env.actions_json["Controllers_val"][i] = 0
@@ -371,3 +305,91 @@ class JumperEnv(gym.Env):
             self.setStartingLegAngle(config["starting_leg_angle"])
         if "height" in config.keys():
             self.setStartingHeight(config["height"])
+
+    # Continuous delta length
+    # action is number that represents the length and the index of the controller
+    # For example imaging that the delta_length = 10
+    # Then if the action belongs to (-10,0]U[0,10) -- controller 0
+    # action belongs to (-50,-40]U[40,50) -- controller 1
+    def _takeAction(self, action):
+        if (not isinstance(action, np.ndarray)):
+            raise Exception("The action space should be an np.array")
+        if action.shape != self.action_space.shape:
+            raise Exception("The shape of the provided action does not match")
+
+        action = np.clip(action,-self.delta_length, self.delta_length)
+        # This is now useless after the value clipping
+        if not self.action_space.contains(action):
+            raise Exception("The provided action is out of allowed space.")
+
+        self.env.actions_json["Controllers_val"][:] = action.tolist()
+        self._stepInternalEnvironment()
+
+    # Observations:
+    #   - The dimensions is specified above and their min. and max. values
+    #   1- Angle of the leg
+    #   2- Cables' lengths
+    def _getObservation(self):
+        observation = np.empty((1,0))
+
+        if('end_points' in self.config['observation']):
+            for i in self.env.getEndPoints():
+                observation = np.append(observation, i)
+
+        if('end_points_velocities' in self.config['observation']):
+            observation = np.append(observation, self.env.getEndPointsVelocities())
+
+        if('rest_length' in self.config['observation']):
+            # observation = np.append(observation, self.env.getLegAngle())
+            observation = np.append(observation, self.env.getRestCablesLengths())
+
+        if('current_length' in self.config['observation']):
+            # observation = np.append(observation, self.env.getLegAngle())
+            observation = np.append(observation, self.env.getCurrentCablesLengths())
+
+        return np.array(observation)
+
+    def _getReward(self, observation):
+        # Reward Criteria will depend on:
+        # Survival rewards with the time
+
+        leg_end_points_lower_z = self.env.getLegEndPoints()[0][1]
+        if(leg_end_points_lower_z < 2):
+                self.count_rewards_flag = True
+
+        # Due to problem in counting the rewards while dropping from the sky, it is better to start
+        #   giving rewards when it lands to the ground
+        if(self.count_rewards_flag):
+            if self.task == JumperEnv.TASK_VERTICAL_STABILITY:
+                # Positive survival rewards
+                reward = 1
+            elif self.task == JumperEnv.TASK_JUMPING_UP_AND_DOWN:
+                reward = np.abs(self.prev_com[0] - self.cur_com[0])
+            else:
+                raise NotImplementedError()
+        else:
+            reward = 0
+
+        return reward
+
+    def _isDone(self):
+        #  The criteria for finish will be either
+        #   - Fall "The angle is more than theta_max"
+        # if the angle is greater than 20 degrees this will mean that the episode is done and the agent failed to balance
+        squre_sides_angles = self.env.getSquareSidesAngles()
+        if abs(self.env.getLegAngle()) > np.pi/9 or abs(squre_sides_angles[0]) > np.pi/4 or abs(squre_sides_angles[1]) > np.pi/4 or self.num_steps > self.max_num_steps:
+                self.num_steps = 0
+                #print(self.env.getLegAngle())
+                return True
+        return False
+
+    def _resetInternalEnvironment(self):
+        self.env.reset()
+
+    def _stepInternalEnvironment(self):
+        self.prev_com = self.env.getCenterOfMass()
+        self.env.step()
+        self.cur_com  = self.env.getCenterOfMass()
+
+    def __del__(self):
+        self.env.closeSimulator()

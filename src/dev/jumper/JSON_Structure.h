@@ -20,6 +20,7 @@ namespace JSON_Structure
     void setEndPoints(int num, btVector3 end_point);
     void setLegEndPoints(int num, btVector3 end_point);
     void setEndPointVelocity(int num, btVector3 end_point_velocity);
+    void setCenterOfMass(btVector3 centerOfMass);
 
     void setFlags(int index, int value);
     void setTime(double t);

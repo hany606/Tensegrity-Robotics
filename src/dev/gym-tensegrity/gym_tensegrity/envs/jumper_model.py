@@ -46,7 +46,8 @@ class JumperModel():
                         [[0.,0.,0.], [0.,0.,0.]],
                         "Time": 0.,
                         "ZFinished": 1,
-                        "Flags":[1,0,0]}
+                        "Flags":[1,0,0],
+                        "CenterOfMass": [0.0, 0.0, 0.0]}
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -171,8 +172,7 @@ class JumperModel():
     def getRestCablesLengths(self, i=None):
         if(i is None):
             return self.sim_json["Rest_cables_lengths"]
-        return self.sim_json["Rest_cables_lengths"][i]
-        
+        return self.sim_json["Rest_cables_lengths"][i]        
     
     def getCurrentCablesLengths(self, i=None):
         if(i is None):
@@ -195,6 +195,14 @@ class JumperModel():
 
     def getLegEndPoints(self):
         return [self.sim_json["Leg_end_points_world"][0], self.sim_json["Leg_end_points_world"][1]]
+
+    def getCenterOfMass(self):
+        """
+        Return:
+            (y, z, x)
+        """
+        print(self.sim_json)
+        return self.sim_json["CenterOfMass"]
 
     # point_a: is the end point of the leg from down
     # point_b: is the end point of the virtual horizontal leg from up

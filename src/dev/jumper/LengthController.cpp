@@ -184,28 +184,20 @@ void LengthController::onStep(JumperModel& subject, double dt)
 
 
 
-        if(all_reached_target == true){
+        if(all_reached_target == true) {
+          //Calculate the center of the mass of the whole strucutre
+          double total_mass = 0;
+          btVector3 first_moment_system;
+          for(int i = 0; i < rods.size(); i++) {
+            first_moment_system = rods[i]->mass() * rods[i]->centerOfMass();
+            total_mass         += rods[i]->mass();
+          }
+          btVector3 trueCoM = first_moment_system / total_mass;
+          JSON_Structure::setCenterOfMass(trueCoM);
 
-          //If the getRelativePosition is not working properly
-          // double total_mass = 0;
-          // btVector3 first_moment_system;
-          // //Calculate the center of the mass of the whole strucutre
-          // for(int i = 0; i < rods.size(); i++){
-          //   std::cout<<"CoM: "<<i<<":"<<rods[i]->centerOfMass()<<"\n";
-          //   first_moment_system = rods[i]->mass()*rods[i]->centerOfMass();
-          //   total_mass += rods[i]->mass();
-          // }
-          // btVector3 CoM = first_moment_system/total_mass;
-          btVector3 CoM = rods[0]->centerOfMass();
-          // std::cout<<"CoM: "<<CoM<<"\n";
-          // If the relative position is not working: actuators[0]->getAnchors_mod()[1]-CoM;
-
-          // printf("\n--------------------------------------------------------\n");//DEBUG
-          // (1) Get the end-points
-          // getWorldPosition()
-          
+          // Calculate relative (to the first rod) position of every endpoint
+          btVector3 CoM = rods[0]->centerOfMass();          
           btVector3 end_point = actuators[0]->getAnchors_mod()[1]->getWorldPosition();
-          
           btVector3 end_point_relative = end_point - CoM;
           JSON_Structure::setEndPoints(0,end_point_relative);
           btVector3 end_point_velocity = (end_point - last_positions[0])/dt;

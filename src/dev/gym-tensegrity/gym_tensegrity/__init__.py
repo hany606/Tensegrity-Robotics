@@ -10,3 +10,5 @@ register(
     id='jumper-v0',
     entry_point='gym_tensegrity.envs:JumperEnv',
 )
+
+import gym_tensegrity.envs
