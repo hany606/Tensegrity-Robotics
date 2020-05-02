@@ -13,14 +13,17 @@ RUN apt-get update -y
 
 # Install the required dependencies
 RUN apt-get install -qy git nano g++ libglib2.0-dev curl freeglut3 freeglut3-dev cmake build-essential unzip g++-4.8 python python3-pip xvfb
-RUN apt-get install -qy psmisc screen x11-xserver-utils lsof
+RUN apt-get install -qy psmisc screen x11-xserver-utils lsof gnome-terminal
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.8
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 40 --slave /usr/bin/g++ g++ /usr/bin/g++-7
+RUN pip3 install --upgrade setuptools
+RUN pip3 install --upgrade pip
 RUN pip3 install gym
 RUN pip3 install tqdm
 RUN pip3 install torch torchvision
 RUN pip3 install tensorflow-gpu
 RUN pip3 install ray[rllib]
+RUN pip3 install ray[tune]
 RUN pip3 install ray[debug]
 RUN pip3 install pandas
 
@@ -38,5 +41,13 @@ RUN export DISPLAY=:3
 
 CMD ["/home/Tensegrity/Tensegrity-Robotics/bin/build.sh" ]
 
-RUN export TENSEGRITY_HOME="/home/Tensegrity/Tensegrity-Robotics/"
+RUN export TENSEGRITY_HOME='/home/Tensegrity/Tensegrity-Robotics/'
+
+RUN echo "export TENSEGRITY_HOME='/home/Tensegrity/Tensegrity-Robotics/'" >> ~/.bashrc
+RUN echo "alias tensegrityBuild='/home/Tensegrity/Tensegrity-Robotics/bin/build.sh'" >> ~/.bashrc
+
+RUN /bin/bash -c "source ~/.bashrc"
+
+
+
 
