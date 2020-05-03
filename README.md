@@ -1,5 +1,7 @@
 
-# Tensegrity-Robotics: Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper 
+# Tensegrity-Robotics: 
+
+# *“Learning Stabilizing Control Policies for a Tensegrity Hopper with Augmented Random Search paper”*
 
 ## Introduction
 
@@ -286,7 +288,11 @@ Inside "src/dev/gym-tensegrity/learning_scripts/rllib/trained_agents", there is 
 
 ## Results
 
-TODO: Add results or just from the paper
+![Stable Hopper](https://github.com/hany606/Tensegrity-Robotics/blob/Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper/src/dev/jumper/media/stable_hopper.gif)
+
+![Unstable Hopper](https://github.com/hany606/Tensegrity-Robotics/blob/Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper/src/dev/jumper/media/unstable_hopper.gif)
+
+
 
 ## Citation
 
