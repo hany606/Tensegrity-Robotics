@@ -24,7 +24,7 @@ This work is a part of the research that is being done in the Robotics Center at
 
 *  [Installation](#installation)
 
-*  [Folders' structure](#folders'-structure)
+*  [Folders structure](#folders-structure)
 
 *  [Parameters](#parameters)
 
@@ -80,6 +80,7 @@ A. Through installing the specific packages and the libraries:
 	```
 
 3. Install the dependencies:
+	
 	3.1 Install NTRTsim dependencies
 	```bash
 	sudo apt-get install g++ libglib2.0-dev curl freeglut3 freeglut3-dev cmake build-essential unzip g++-4.8 python python3-pip
@@ -108,41 +109,41 @@ A. Through installing the specific packages and the libraries:
 
 5. Test the simulator environment
 
-a. Run build.sh to build the executable files for the structures
+	a. Run build.sh to build the executable files for the structures
 
-```bash
-./bin/build.sh
-```
+	```bash
+	./bin/build.sh
+	```
 
-b. Run an example to test the simulator
+	b. Run an example to test the simulator
 
-```bash
-./build/examples/3_prism/AppPrismModel
-```
+	```bash
+	./build/examples/3_prism/AppPrismModel
+	```
 
 7. Prepare the environment
 
-a. Put the following into .bashrc or run it every time to define the home directory for the repository directory
+	a. Put the following into .bashrc or run it every time to define the home directory for the repository directory
 
-```bash
-export TENSEGRITY_HOME="absolute/path/to/the/root/folder"
-```
+	```bash
+	export TENSEGRITY_HOME="absolute/path/to/the/root/folder"
+	```
 
-For example:
-```bash
-export TENSEGRITY_HOME="/home/Tensegrity-Robotics"
-```
+	For example:
+	```bash
+	export TENSEGRITY_HOME="/home/Tensegrity-Robotics"
+	```
 
-b. To make the command of building the structure faster and easier, put the following into .bashrc to create an alias for the command which is responsible to build the structures executable files:
+	b. To make the command of building the structure faster and easier, put the following into .bashrc to create an alias for the command which is responsible to build the structures executable files:
 
-```bash
-alias tensegrityBuild="absolute/path/to/the/bin/folder/build.sh"
-```
+	```bash
+	alias tensegrityBuild="absolute/path/to/the/bin/folder/build.sh"
+	```
 
-For example:
-```bash
-alias tensegrityBuild="/home/Tensegrity-Robotics/bin/build.sh'
-```
+	For example:
+	```bash
+	alias tensegrityBuild="/home/Tensegrity-Robotics/bin/build.sh'
+	```
 
 8. Install the custom gym environment for Tensegrity
 
