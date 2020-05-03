@@ -9,7 +9,7 @@ This work is not an individual, this work is part from a research work in the ro
 Mainly, this work will concentrate on using Reinforcement Learning methods to control the movements of the tensegrity structure using NTRTsim as a simulator for now.
 
 ## Publications:
-* [Learning Stabilizing Control Policies for a Tensegrity Hopper with Augmented Random Search](https://www.researchgate.net/publication/340475125_Learning_Stabilizing_Control_Policies_for_a_Tensegrity_Hopper_with_Augmented_Random_Search)
+* [Learning Stabilizing Control Policies for a Tensegrity Hopper with Augmented Random Search](https://www.researchgate.net/publication/340475125_Learning_Stabilizing_Control_Policies_for_a_Tensegrity_Hopper_with_Augmented_Random_Search)	[[Code](https://github.com/hany606/Tensegrity-Robotics/tree/Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper)]
 
 ## Active Projects:
 1. Tensegrity Jumper:
