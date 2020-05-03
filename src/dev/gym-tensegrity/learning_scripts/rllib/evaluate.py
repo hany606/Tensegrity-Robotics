@@ -189,7 +189,9 @@ class Evaluater:
         #self.printer.observation(observation)
         cumulative_reward = 0
         done  = False
+        #input("Check-point: Press Enter!!!!!!!!!!!!!")
         while not done:
+            #sleep(0.01)
             if(not random):
                 action = agent.compute_action(observation)
             else:
