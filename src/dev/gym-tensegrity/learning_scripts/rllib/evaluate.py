@@ -17,12 +17,25 @@ from time import sleep
 # python3 evaluate.py --evaluation-file=trained_agents/train_default/ARS_jumper_3ba03d10_2020-01-17_19-40-36wgy3fy8a/checkpoint_15/checkpoint-15 --agent-config-file=trained_agents/train_default/ARS_jumper_3ba03d10_2020-01-17_19-40-36wgy3fy8a/params.json
 # OR python3 evaluate.py --agent-path=trained_agents/train_default/ARS_jumper_3ba03d10_2020-01-17_19-40-36wgy3fy8a/ --checkpoint-num=120
 
+
+# ```bash
+# python3 evaluate.py --evaluation-file=<path-to-trained-agent-training-checkpoint-xx> --agent-config-file=<path-to-config-file-for-trained-agent.json>
+# ```
+
+# --evaluation-file: is the path to the checkpoint for the trained agent that will be used to restore the trained model to be evaluated
+
+# --agent-config-file: is the path to the json file which include all the configurations and parameters to the trained agent
+
+# Example:
+# ```bash
+# python3 evaluate.py --evaluation-file=trained_agents/train_default/ARS_jumper_3ba03d10_2020-01-17_19-40-36wgy3fy8a/checkpoint_60/checkpoint-60 --agent-config-file=trained_agents/train_default/ARS_jumper_3ba03d10_2020-01-17_19-40-36wgy3fy8a/params.json
+# ```
+  
 def create_environment(env_config):
     print("Creation Envirnoment...")
     print("Environment Configuration: {:}".format(env_config))
     import gym_tensegrity
     return gym.make('gym_tensegrity:jumper-v0', config=env_config)
-    # return gym.make('gym_tensegrity:jumper-v0')
 
 class Printer:
     def __init__(self,debug=1):
@@ -201,53 +214,17 @@ class Evaluater:
         config["noise_size"] = 250000
         trained_agent = ars.ARSTrainer(config, env="jumper")
         trained_agent.restore(evaluation_config["evaluation_file"])
-        #min_coordinates = [0,10,0]
-        #max_coordinates = [0,10,0]
-        #min_angle = int(-1*np.pi/180*1000)
-        #max_angle = int(-min_angle)
-        #starting_coordinates =  (randint(min_coordinates[0],max_coordinates[0]), randint(min_coordinates[1],max_coordinates[1]), randint(min_coordinates[2],max_coordinates[2]))	#min:10
-        #env_config["starting_coordinates"] = starting_coordinates
-        #starting_angle = randint(min_angle,max_angle)/10000  #1745/10000 = 0.1745 radian = 10 degree angle
-        #starting_angle = 0.95*np.pi/180
-        #env_config["starting_angle"] = starting_angle
-        domain_buckets = evaluation_config["domain_buckets"]
         num_episodes = evaluation_config["num_episodes"]
-        print(domain_buckets)
-        if(domain_buckets is not None):
-            # The num_episodes is used for each bucket
-            num_buckets = int((domain_buckets["max"] - domain_buckets["min"])/domain_buckets["step"])
-            starting_leg_angles = []
-            for i in range(num_buckets):
-                starting_leg_angles.append(np.random.uniform(low=domain_buckets["min"]+domain_buckets["step"]*i,
-                                                        high=domain_buckets["min"]+domain_buckets["step"]*(i+1),
-                                                        size=(evaluation_config["num_episodes"],)))
-                print(domain_buckets["min"]+domain_buckets["step"]*i, domain_buckets["min"]+domain_buckets["step"]*(i+1))
-            num_episodes *=  num_buckets
         env = create_environment(env_config)
         cumulative_reward = 0
         history = []
-        print(starting_leg_angles)
         for i in range(num_episodes):
-            min_history_dict = {}
-            bucket_index = i//evaluation_config["num_episodes"]
-            episode_bucket_index = i%evaluation_config["num_episodes"]
-            starting_leg_angle = [starting_leg_angles[bucket_index][episode_bucket_index], 0]
-            #print("starting_angle: {:}".format(starting_leg_angle))
-            env.setStartingLegAngle(starting_leg_angle)
             reward = self.run_episode(env, trained_agent, random=random)
-            #self.printer.reward(reward)
-            #history.append({"reward":reward, "coordiantes": starting_coordinates, "angle in degree": starting_angle*180/np.pi})
+            self.printer.reward(reward)
             min_history_dict = {"reward":reward}
-            if(domain_buckets is not None):
-                min_history_dict.update({"bucket_index": bucket_index, "episode_bucket_index": episode_bucket_index, "starting_leg_angle": starting_leg_angle})
-            #, "starting_leg_angle": env.starting_leg_angle, "starting_height": env.starting_height})
             history.append(min_history_dict)
             cumulative_reward += reward
-            #starting_coordinates =  (randint(min_coordinates[0],max_coordinates[0]), randint(min_coordinates[1],max_coordinates[1]), randint(min_coordinates[2],max_coordinates[2]))	#min:10
-            #env.setStartingCoordinates(starting_coordinates)
-            #starting_angle = 0.95*np.pi/180
-            #starting_angle = randint(min_angle,max_angle)/10000
-            #env.setStartingAngle(starting_angle)
+
  
         self.printer.history(history)
         # self.printer.mean(cumulative_reward/evaluation_config["num_episodes"])
@@ -283,13 +260,7 @@ class Evaluater:
         self.printer.config(self.evaluation_config, tag="Evaluation")
         self.printer.separator()
         self.env_config["max_num_steps"] = 20000
-        #self.env_config["starting_leg_angle"] =  [2.99350029,0]
-        # 2.96693712
-        # self.env_config["starting_coordinates"] = [0,10,0]
-        self.env_config["randomized_starting"] = {"angle":[[False,False],[0,0],[0,0]], "height":[False]}
         self.evaluation_config["num_episodes"] = 50
-        # When domain_bukcet is enabled (not None) num_episodes is used for each bucket
-        self.evaluation_config["domain_buckets"] = {"step": 0.01, "min": -3, "max": 3}
         tune.register_env("jumper", create_environment)
         ray.init()
         self.evaluate(self.evaluation_config, self.agent_config, self.env_config, random=self.evaluation_config["random_agent"])

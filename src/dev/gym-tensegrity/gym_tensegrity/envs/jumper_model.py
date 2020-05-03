@@ -1,9 +1,9 @@
 """Jumper_model.py: Create the agent of model of the one legged jumping tensegrity robot and provide an easy interface to be used with RL algorithms"""
 __author__ = "Hany Hamed"
-__credits__ = ["Hany Hamed", "Vlad Kurenkov", "Prof. Sergie Savin", "Oleg Balakhnov"]
+__credits__ = ["Hany Hamed", "Vlad Kurenkov", "Sergie Savin"]
 __version__ = "1.0.0"
 __email__ = "h.hamed.elanwar@gmail.com / h.hamed@innopolis.university"
-__status__ = "Developing"
+__status__ = "Paper Result"
 
 
 import socket
@@ -94,7 +94,6 @@ class JumperModel():
 
     # function for writing data into TCP connection
     def write(self, data):
-        # print('sending data to the client:"{}"'.format(data))
         try:
             self.connection.sendall(data.encode())
         except Exception as e:
@@ -109,7 +108,6 @@ class JumperModel():
             # Receive the data in small chunks and retransmit it
             while True:
                 data.append(self.connection.recv(self.packet_size).decode("utf-8"))         #reading part
-                # print('{} received "{}"'.format(counter,data[-1]))
                 if 'ZFinished' in str(data[-1][-14:-1]):
                     break
                 counter += 1
@@ -125,14 +123,8 @@ class JumperModel():
         self.reset_flag = False
         if(self.sim_exec == sim_exec):
             print("#Warning: Starting an old version")
-        # sleep(0.5)
-        # subprocess_args = [self.sim_exec[:14], self.sim_exec[15:]]
-        #Machine with Xscreen
-        subprocess_args = self.sim_exec.split(" ")
-        subprocess_args[2] = " ".join(subprocess_args[2:])
-        self.child_process = subprocess.Popen(subprocess_args[:3])  
         #Headless
-        # self.child_process = subprocess.Popen(self.sim_exec, shell=True)  
+        self.child_process = subprocess.Popen(self.sim_exec, shell=True)  
         #print('#########\nwaiting for a connection\n#########')
         self.connection, self.clientAddress = self.sock.accept()  #wait until it get a client
         #print('connection from', self.clientAddress)
@@ -151,8 +143,6 @@ class JumperModel():
     def reset(self):
         self.reset_flag = True
         self.closeSimulator()
-        # os.kill(self.child_process.pid, signal.SIGTERM)
-        # sleep(1)
         self.startSimulator()
 
     def step(self):
@@ -162,7 +152,6 @@ class JumperModel():
             
             self.write(json.dumps(self.actions_json))   # Write to the simulator module the json object with the required info
             sim_raw_data = self.read()
-            # print(sim_raw_data)
             if(sim_raw_data is not None):
                 self.sim_json = json.loads(sim_raw_data)  # Parse the data from string to json
         else:
@@ -210,17 +199,7 @@ class JumperModel():
         dot_product = np.dot(v1,v2)
         v1_mag = np.linalg.norm(v1)
         v2_mag = np.linalg.norm(v2)
-        # print("pointa", point_a)
-        # print("pointb",point_b)
-        # print("pointc", point_c)
-        # print("v1", v1)
-        # print("v2", v2)
-        # print("dot_product", dot_product)
-        # print("1 mag", v1_mag)
-        # print("2 mag", v2_mag)
-        # print("arccos", np.arccos(dot_product/(v1_mag*v2_mag)))
         angle = np.arccos(dot_product/(v1_mag*v2_mag))
-        # print("angle", angle)
         return angle
 
     """
@@ -242,37 +221,18 @@ class JumperModel():
         point_d[1] = point_a[1]
         point_e[1] = point_a[1]
 
-        # print("point_a: {:}".format(point_a))
-        # print("point_b: {:}".format(point_b))
-        # print("point_c: {:}".format(point_c))
-        # print("point_d: {:}".format(point_d))
-        # print("point_e: {:}".format(point_e))
-
         v_ab = point_b - point_a
         v_ac = point_c - point_a
         v_ad = point_d - point_a
         v_ae = point_e - point_a
 
-        # print("v_ab: {:}".format(v_ab))
-        # print("v_ac: {:}".format(v_ac))
-        # print("v_ad: {:}".format(v_ad))
-        # print("v_ae: {:}".format(v_ae))
-
         dot_v_ad_v_ab = np.dot(v_ad, v_ab)
         dot_v_ae_v_ac = np.dot(v_ae, v_ac)
-
-        # print("v_ad . v_ab: {:}".format(dot_v_ad_v_ab))
-        # print("v_ae . v_ac: {:}".format(dot_v_ae_v_ac))
 
         mag_v_ab = np.linalg.norm(v_ab)
         mag_v_ac = np.linalg.norm(v_ac)
         mag_v_ad = np.linalg.norm(v_ad)
         mag_v_ae = np.linalg.norm(v_ae)
-
-        # print("mag_v_ab: {:}".format(mag_v_ab))
-        # print("mag_v_ac: {:}".format(mag_v_ac))
-        # print("mag_v_ad: {:}".format(mag_v_ad))
-        # print("mag_v_ae: {:}".format(mag_v_ae))
 
         angle_x = np.arccos(dot_v_ad_v_ab/(mag_v_ad*mag_v_ab))
         angle_y = np.arccos(dot_v_ae_v_ac/(mag_v_ae*mag_v_ac))
@@ -293,50 +253,3 @@ class JumperModel():
     def setStartingHeight(self, height):
         self.starting_coordinates[1] = height
         self.set_sim_exec(self.orginal_sim_exec)
-
-# This function for testing the model by itself
-def main():
-    jumper = JumperModel()
-    jumper.actions_json["Controllers_val"][2] = 0
-    jumper.actions_json["Controllers_val"][5] = 0
-    def cleanExit(signal, frame):
-        print("HANDLER")
-        jumper.__del__()
-        exit()
-    # signal.signal(signal.SIGTERM, cleanExit) 
-    signal.signal(signal.SIGINT, cleanExit) # Activate the listen to the Ctrl+C
-
-    jumper.startSimulator()
-    sleep(1)
-    jumper.reset()
-    # sleep(3)
-    # jumper.reset()
-    sleep(1)
-    jumper.closeSimulator()
-    sleep(5)
-
-    # start_time = time()
-    # print(start_time)
-    # reset = False
-    # # input()   
-    # while(True):
-    #     jumper.step()
-    #     # input("input now")
-    #     # sleep(0.01)
-    #     if(time() - start_time > 20):
-    #         # jumper.closeSimulator()
-    #         pass    
-    #         # jumper.close_flag = True
-    #     if( time() - start_time > 5 and reset == False):
-    #         reset = True
-    #         # jumper.reset()
-    #         # jumper.reset_flag = True
-
-
-
-
-
-if __name__ == "__main__":
-
-    main()
-

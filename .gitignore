@@ -36,3 +36,5 @@ src/.settings/org.eclipse.cdt.codan.core.prefs
 
 *_ignore.txt
 
+
+.vscode

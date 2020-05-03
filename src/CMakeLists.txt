@@ -6,7 +6,6 @@ PROJECT(NASA_Tensegrity_Robotics_Toolkit)
 subdirs(
     core
     helpers
-    # learning
     util
     sensors
     tgcreator

@@ -3,8 +3,6 @@
 #include<iostream>
 #include<string>
 
-
-
 using json = nlohmann::json;
 
 void JSON_Structure::setup(){

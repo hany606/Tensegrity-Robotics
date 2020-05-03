@@ -15,8 +15,6 @@ namespace JSON_Structure
     void setRestCableLength(int num, double val);
     void setCurrentCableLength(int num, double val);
 
-    // void setCenterOfMass(int num, double x, double y, double z);
-    // void setOrientation(int num, double i, double j, double k, double w);
     void setEndPoints(int num, btVector3 end_point);
     void setLegEndPoints(int num, btVector3 end_point);
     void setEndPointVelocity(int num, btVector3 end_point_velocity);

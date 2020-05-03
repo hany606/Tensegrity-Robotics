@@ -1,9 +1,9 @@
 """jumper_env.py: Create the gym custom environment of tensegrity one legged jumpeing robot"""
 __author__ = "Hany Hamed"
-__credits__ = ["Hany Hamed", "Vlad Kurenkov", "Prof. Sergie Savin", "Oleg Balakhnov"]
-__version__ = "0.1.1"
+__credits__ = ["Hany Hamed", "Vlad Kurenkov", "Sergie Savin"]
+__version__ = "1.0.0"
 __email__ = "h.hamed.elanwar@gmail.com / h.hamed@innopolis.university"
-__status__ = "Developing"
+__status__ = "Paper Results"
 
 # This file will contain all the information about the agent and the environment starting from the rendering of the GUI to the rewards,... etc.
 import os
@@ -22,12 +22,13 @@ import numpy as np
 import math
 from gym_tensegrity.envs.jumper_model import JumperModel
 
-# Machine with Xscreen
 path_to_model = os.path.join(os.environ["TENSEGRITY_HOME"], "build/dev/jumper/AppJumperModel")
-sim_exec = "gnome-terminal -e {}".format(path_to_model)
+
+# Machine with Xscreen
+# sim_exec = "gnome-terminal -e {}".format(path_to_model)
 
 #Headless
-# sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
+sim_exec = "{}".format(path_to_model)
 
 class JumperEnv(gym.Env):
     metadata = {'render.modes': ['human']}
@@ -213,8 +214,6 @@ class JumperEnv(gym.Env):
 
     # Observations:
     #   - The dimensions is specified above and their min. and max. values
-    #   1- Angle of the leg
-    #   2- Cables' lengths
     def _getObservation(self):
         observation = np.empty((1,0))
 

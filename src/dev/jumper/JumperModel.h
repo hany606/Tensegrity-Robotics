@@ -1,30 +1,10 @@
-/*
- * Copyright © 2012, United States Government, as represented by the
- * Administrator of the National Aeronautics and Space Administration.
- * All rights reserved.
- * 
- * The NASA Tensegrity Robotics Toolkit (NTRT) v1 platform is licensed
- * under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0.
- * 
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- * either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
-*/
-
 #ifndef JUMPER_MODEL_H
 #define JUMPER_MODEL_H
 
 /**
  * @file JumperModel.h
- * @brief Defines a 3 strut 9 string tensegrity model
- * @author Brian Mirletz
- * @version 1.1.0
- * $Id$
+ * @brief Defines a tensegrity model for a jumper
+  * @author Hany Hamed
  */
 
 // This library
@@ -41,26 +21,13 @@ class tgModelVisitor;
 class tgStructure;
 class tgWorld;
 
-/**
- * A class that constructs a three bar tensegrity prism using the tools
- * in tgcreator. This iteration avoids using a controller and instead
- * uses the new (to v1.1) ability to define pretension in a
- * tgBasicActuator's constructor
- */
 class JumperModel : public tgSubject<JumperModel>, public tgModel
 {
 public: 
     
-    /**
-     * The only constructor. Configuration parameters are within the
-     * .cpp file in this case, not passed in. 
-     */
     JumperModel(btVector3 pos, double  angle[2], double leg_angle[2]);
     
-    /**
-     * Destructor. Deletes controllers, if any were added during setup.
-     * Teardown handles everything else.
-     */
+    
     virtual ~JumperModel();
     
     /**
@@ -110,15 +77,6 @@ public:
 
 private:
     
-    /**
-     * A function called during setup that determines the positions of
-     * the nodes based on construction parameters. Rewrite this function
-     * for your own models
-     * @param[in] s: A tgStructure that we're building into
-     * @param[in] edge: the X distance of the base points
-     * @param[in] width: the Z distance of the base triangle
-     * @param[in] height: the Y distance along the axis of the prism
-     */
     static void addNodes(tgStructure& s, double leg_angle[2]);
     
     /**
@@ -152,7 +110,6 @@ public:
      */
     std::vector<tgRod*> allRods;
 
-    
 };
 
 #endif

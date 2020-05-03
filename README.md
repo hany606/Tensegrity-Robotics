@@ -1,41 +1,22 @@
 
-# Tensegrity-Robotics
-
-  
-  
-
-## Current TODO:
-
-  
-
-1. Clean the repo from the uncessary files and folder
-
-2. Follow the [following structure](Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper) from the branch
-
-3. Add the link for the branch in the main branch
-
-4. Add the link of the branch to the paper
-
-5. Clean the main branch as well
-
-  
+# Tensegrity-Robotics: Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper 
 
 ## Introduction
 
-  
-
 This repository is for the implementation of "[Learning Stabilizing Control Policies for a Tensegrity Hopper with Augmented Random Search Paper](https://arxiv.org/abs/2004.02641)"
 
+This repository includes parts of the source code of the Tensegrity simulator is part of [NASA NTRTsim](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim), source codes for training and evaluation scripts that were used in the paper, and the gym environment for the tensegrity structure that is used in the paper.
   
 
-This work concentrates on the using of Augmented Random Search to learn stabilize the control policy for a Tensegrity Hopper. The work of the Tensegrity simulator is part from [NASA NTRTsim](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim).
+This work concentrates on the using of Augmented Random Search to learn a stabilizing control policy for a Tensegrity Hopper. 
 
-  
+* The used RL algorithm which is Augmented Random Search (ARS) is the implementation from [Ray/RLlib](https://docs.ray.io/en/latest/rllib.html)
 
-This work is a part of a research that is being done in the Robotics Center at Innopolis Univeristy.
+* The used simulator for the tensegrity structure is [NTRTsim from NASA](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim)
 
-  
-  
+This work is a part of the research that is being done in the Robotics Center at Innopolis University.
+
+
 
 ## Table of contents
 
@@ -43,13 +24,15 @@ This work is a part of a research that is being done in the Robotics Center at I
 
 *  [Installation](#installation)
 
+*  [Folders' structure](#folders'-structure)
+
 *  [Parameters](#parameters)
 
 *  [Train it!](#train-it)
 
 *  [Evaluate it!](evaluate-it)
 
-*  [Pretrained models](#pretrained-models)
+*  [Pretrained Agents](#pretrained-agents)
 
 *  [Results](#results)
 
@@ -63,13 +46,13 @@ This work is a part of a research that is being done in the Robotics Center at I
 
   
 
-* NTRTsim Dependencies: [here](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim/blob/master/INSTALL)
+* NTRTsim and its dependencies: [here](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim/blob/master/INSTALL)
 
 * Python3, Pip3
 
 *  [Open AI Gym python library](https://github.com/openai/gym)
 
-*  [Ray/RLlib](https://ray.readthedocs.io/en/latest/rllib.html)
+*  [Ray/RLlib](https://ray.readthedocs.io/en/latest/rllib.html) and its dependency ([Tensorflow](https://www.tensorflow.org/))
 
 <!-- *  [Tensorflow](https://www.tensorflow.org/) for RLlib -->
 
@@ -79,8 +62,7 @@ This work is a part of a research that is being done in the Robotics Center at I
 
 ## Installation
 
-  
-
+A. Through installing the specific packages and the libraries:
 1. Clone the repository and checkout to the paper branch:
 
 	```bash
@@ -117,232 +99,208 @@ This work is a part of a research that is being done in the Robotics Center at I
 4. Running the setup.sh to install NTRTsim
 
 	```bash
-
 	./setup.sh
-
 	```
 
 	If some problems appeared for using NTRTsim related to g++, check [this](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim/blob/1a671cca257632200197d369b5382ca490dbd6f2/INSTALL#L62)
 
-	If the setup.sh has failed, try first to run it again. (Usually in the third time works)
+	If the setup.sh has failed, try first to run it again. (Usually in the third time it works)
 
 5. Test the simulator environment
 
-a. Run build.sh
+a. Run build.sh to build the executable files for the structures
 
 ```bash
-
 ./bin/build.sh
-
 ```
 
-b. Run an Example
+b. Run an example to test the simulator
 
 ```bash
-
 ./build/examples/3_prism/AppPrismModel
-
 ```
 
-  
+7. Prepare the environment
 
-## Parameters
-
-  
-  
-
-## Train it!
-
-  
-  
-
-## Evaluate it!
-
-  
-  
-
-## Pretrained Models
-
-  
-
-## Results
-
-  
-  
-
-## Citation
-
-  
-
-## Contact for Issues
-
-  
-
-## References
-
-  
-  
-  
-
-## Active Projects:
-
-1. Tensegrity Jumper:
-
-It is in [src/dev/jumper](https://github.com/hany606/Tensegrity-Robotics/tree/master/src/dev/jumper)
-
-  
-  
-
-## How to start working with the repository?:
-
-1. Clone the repo:
+a. Put the following into .bashrc or run it every time to define the home directory for the repository directory
 
 ```bash
-
-git clone https://github.com/hany606/Tensegrity-Robot-IU-Internship19.git
-
-```
-
-2. Go to the folder:
-
-```bash
-
-cd Tensegrity-Robotics
-
-```
-
-3. Running the setup.sh
-
-```bash
-
-./setup.sh
-
-```
-
-If you have any problems or issues check the original documentation of installing the simulator: [Link](https://raw.githubusercontent.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim/master/INSTALL).
-
-If the setup.sh has failed, try first to run it again. (It worked for me in the third time)
-
-  
-
-4. Test the simulator environment
-
-a. Run build.sh
-
-```bash
-
-./bin/build.sh
-
-```
-
-b. Run an Example
-
-```bash
-
-./build/examples/3_prism/AppPrismModel
-
-```
-
-The simulator should be appeared now.
-
-  
-
-Note: step 5 is not needed any more as the library is installed and build from source, no need to install it into the system
-
-  
-
-5. Install [nlohmann-json library](https://github.com/nlohmann/json).
-
-  
-
-You can install it by linuxbrew, but you need to install first from [here](https://docs.brew.sh/Homebrew-on-Linux).
-
-  
-
-Sometimes there are errors regarding this library, hence, you can comment [this line](https://github.com/hany606/Tensegrity-Robotics/blob/7ced260c976b223864f59208bfcef89499cf10e8/src/dev/CMakeLists.txt#L7) and ensure to delete the folder of json_build in the directory of build.
-
-  
-
-6. To Open any stimulation for a structure, you should build the codes then run it from build directory
-
-```bash
-
-./bin/build.sh
-
-cd build/dev
-
-cd Model_name
-
-./App_Name_Model
-
-```
-
-7. To use RL algorithms a custom environment has been created in the same format of OpenAI gym environments to be able to be used with the libraries that conforms with OpenAI Gym. To run the environment and test it. You need first to export the directory folder, then you can run the test for the environment or just install the gym_tensegrity library as it is described in this [README](https://github.com/hany606/Tensegrity-Robotics/blob/master/src/dev/gym-tensegrity/README.md)
-
-  
-
-put this into .bashrc or run it every time
-
-```bash
-
 export TENSEGRITY_HOME="absolute/path/to/the/root/folder"
-
 ```
 
-  
+For example:
+```bash
+export TENSEGRITY_HOME="/home/Tensegrity-Robotics"
+```
+
+b. To make the command of building the structure faster and easier, put the following into .bashrc to create an alias for the command which is responsible to build the structures executable files:
 
 ```bash
-
-cd src/dev/legz/gym-leg/gym_leg/envs/
-
-python3 jumper_test.py
-
+alias tensegrityBuild="absolute/path/to/the/bin/folder/build.sh"
 ```
 
-  
+For example:
+```bash
+alias tensegrityBuild="/home/Tensegrity-Robotics/bin/build.sh'
+```
 
-## Use it with Docker:
-
-  
-
-There is a Dockerfile inside docker directory that can be used, it is by default use the headless-server branch to be used with headless servers.
-
-  
-
-## Running in Headless mode (without xserver display):
-
-  
-
-This step can be done only when you are in the headless_server branch because the files are configured to run without the extra terminal for the debugging. It is based on using Xvfb tool.
-
-  
+8. Install the custom gym environment for Tensegrity
 
 ```bash
-
-git checkout headless_server
-
+./bin/setup_gym_env.sh
 ```
 
-  
-
-Example how to use it:
-
-  
+Note: instead of running step 4 and step 8, it is possible just to run:
 
 ```bash
-
-xvfb-run -a python3 jumper_test.py
-
+./bin/setup_helper.sh
 ```
 
+B. Using the Docker image for this environment:
+
+```bash
+docker pull hany606/tensegrity_headless_server:v0.3
+```
+
+Note: the current docker image works with the headless_server branch which is under development for other experiments, headless_server branch is related to training on servers without GUI.
+
+To work with the docker image that works with the current branch (Paper's branch): it is in "docker" directory
+
+```bash
+docker build -t tensegrity_img docker/.
+```
+
+Note: to run scripts in headless mode (with xserver display/GUI), it is possible to use Xvfb tool
   
+Example of how to use it:
+
+```bash
+xvfb-run -a python3 src/dev/gym-tensegrity/gym_tensegrity/envs/jumper_test.py
+```
 
 Or to specify the server number
 
+```bash
+xvfb-run --server-num=10 python3 src/dev/gym-tensegrity/gym_tensegrity/envs/jumper_test.py
+```
+
+## Folders' structure
+
+- bin (NTRTsim): includes the utilities to setup the NTRTsim
+
+- conf (NTRTsim): includes the configuration files that related to the NTRTsim
+
+- build (NTRTsim): includes the executable files for the models after building it using NTRTsim scripts
+
+- env (NTRTsim): includes the libraries that are installed for NTRTsim
+
+- resources (NTRTsim): includes the sources for the libraries for NTRTsim
+
+- src (NTRTsim): includes the source codes for the tensegrity structures and the source codes for the paper
+
+	a. dev: includes the source codes for the paper, gym environment, and the used tensegrity structure.
+
+	* gym-tensegrity: includes the gym environment inside gym_tensegrity directory
+
+	* learning_scripts: includes the scripts for training and evaluation for this paper
+	
+	b. examples (NTRTsim): includes examples for testing the simulator
+
+	c. other (NTRTsim): related to the simulator
+
+## Parameters
+
+Parameters are split into two parts, a part which is related to the parameters for the tensegrity structure and the other part which is related to the ARS parameters and parameters for the gym_tensegrity environment
+
+a. Tensegrity Hopper/Jumper Structure (In dev/jumper/JumperModel.cpp)
+
+* Density (5kg/cm^3)
+* Rod Radius for leg rod and the square side rod (0.20cm)
+* Stiffness (3000.0kg/sec^2)
+* Damping (30.0kg/sec)
+* Pretension (12000.0kg*cm/sec^2)
+* Leg Rod length (10.0cm)
+* Square Side Rod (10.0cm) 
+* Max tension (30000kg*cm/sec^2)
+* Target Velocity for the actuators (30 cm/sec)
   
+b. gym_tensegrity parameters
+
+* Observation: Endpoints of rods, Velocities of the rods' endpoints, and Cables' rest lengths
+* Actions: Continuos control in the rest length of the cables
+* Reward: +1 each time step the structure stays alive without termination
+* Termination: The angle between the leg link and the ground should stay in the interval of [-20, 20] degrees and the angle between the frame link and the ground should stay in the interval of [-40, 40] degrees
+* Starting configurations: Starting from above the ground with height 100cm
+
+c. Augmented Random Search Algorithm parameters
+
+* [Full description for the parameters](https://docs.ray.io/en/latest/rllib-algorithms.html#augmented-random-search-ars), the used parameters are written in the training script
+
+## Train it!
+
+Inside "src/dev/gym-tensegrity/learning_scripts/rllib/training_scripts/", there is the script which has been used for training
 
 ```bash
-
-xvfb-run --server-num=10 python3 jumper_test.py
-
+python3 training.py
 ```
+
+This is the successful training script that has been used to get out this paper's results.
+
+## Evaluate it!
+
+Inside "src/dev/gym-tensegrity/learning_scripts/rllib", there is the script which has been used for evaluating the trained model
+
+```bash
+python3 evaluate.py --agent-path=<path-to-trained-agent> --checkpoint-num=xx
+```
+
+--agent-path: is the path to the trained agent
+
+-- checkpoint-num: is the number of the checkpoint to restore the agent in that checkpoint
+
+Example:
+```bash
+python3 evaluate.py --agent-path=trained_agents/train_025_rep_act1_restL/ARS_jumper_29224120_2020-01-21_19-35-20j61sj43o/ --checkpoint-num=605
+```
+
+Or for different models checkpoints and different configuration files
+```bash
+python3 evaluate.py --evaluation-file=<path-to-trained-agent-training-checkpoint-xx> --agent-config-file=<path-to-config-file-for-trained-agent.json>
+```
+
+--evaluation-file: is the path to the checkpoint for the trained agent that will be used to restore the trained model to be evaluated
+
+--agent-config-file: is the path to the json file which includes all the configurations and parameters to the trained agent
+
+Example:
+```bash
+python3 evaluate.py --evaluation-file=trained_agents/train_025_rep_act1_restL/ARS_jumper_29224120_2020-01-21_19-35-20j61sj43o/checkpoint_60/checkpoint-60 --agent-config-file=trained_agents/train_025_rep_act1_restL/ARS_jumper_29224120_2020-01-21_19-35-20j61sj43o/params.json
+```
+  
+## Pretrained Agents
+
+Inside "src/dev/gym-tensegrity/learning_scripts/rllib/trained_agents", there is the successful agent that has been trained with the checkpoints, tfevents file, the parameters for the training and the progress log
+
+- train_025_rep_act1_restL/ARS_jumper_29224120_2020-01-21_19-35-20j61sj43o: The configuration of the gym_tensegrity and the parameters for ARS are included in params.json
+
+## Results
+
+TODO: Add results or just from the paper
+
+## Citation
+
+TODO: https://arxiv.org/pdf/2004.02641.pdf (@inproceedings/@conference ??)
+
+## Contact for Issues
+
+Hany Hamed: h.hamed.elanwar@gmail.com / h.hamed@innopolis.university
+
+Vlad Kurenkov: v.kurenkov@innopolis.ru
+
+## References
+
+* [NASA Tensegrity Robotics Toolkit Simulator (NTRTsim)](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim)
+
+* [Ray/RLlib](https://docs.ray.io/en/latest/rllib.html)
+
+* [ML Code Completeness Checklist](https://medium.com/paperswithcode/ml-code-completeness-checklist-e9127b168501)
