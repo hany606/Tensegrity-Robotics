@@ -288,9 +288,12 @@ Inside "src/dev/gym-tensegrity/learning_scripts/rllib/trained_agents", there is 
 
 ## Results
 
-![Stable Hopper](https://github.com/hany606/Tensegrity-Robotics/blob/Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper/src/dev/jumper/media/stable_hopper.gif)
-
+### Before training:
 ![Unstable Hopper](https://github.com/hany606/Tensegrity-Robotics/blob/Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper/src/dev/jumper/media/unstable_hopper.gif)
+
+
+### After training:
+![Stable Hopper](https://github.com/hany606/Tensegrity-Robotics/blob/Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper/src/dev/jumper/media/stable_hopper.gif)
 
 
 
