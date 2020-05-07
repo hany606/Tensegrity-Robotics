@@ -1,10 +1,10 @@
-### Learning Stabilizing Control Policies for a Tensegrity Hopper with Augmented Random Search
+## Learning Stabilizing Control Policies for a Tensegrity Hopper with Augmented Random Search
 
 Before Learning             |  After Learning
 :-------------------------:|:-------------------------:
 ![Unstable Hopper](https://github.com/hany606/Tensegrity-Robotics/blob/Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper/src/dev/jumper/media/unstable_hopper.gif)  | ![Stable Hopper](https://github.com/hany606/Tensegrity-Robotics/blob/Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper/src/dev/jumper/media/stable_hopper.gif)
 
-This repository contains an original source code for the "[Learning Stabilizing Control Policies for a Tensegrity Hopper with Augmented Random Search](https://arxiv.org/abs/2004.02641)" paper.
+This repository contains an original source code for the [Learning Stabilizing Control Policies for a Tensegrity Hopper with Augmented Random Search](https://arxiv.org/abs/2004.02641) paper.
 
 * Augmented Random Search (ARS) implementation is taken from [Ray/RLlib](https://docs.ray.io/en/latest/rllib.html)
 * Tensegrity Simulator is based on [NTRTsim from NASA](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim)
@@ -92,11 +92,11 @@ A. Through installing the specific packages and the libraries:
 	./setup.sh
 	```
 
-	If some problems appeared for using NTRTsim related to g++, check [this](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim/blob/1a671cca257632200197d369b5382ca490dbd6f2/INSTALL#L62)
+	If any problem appeared using NTRTsim related to g++, check [this](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim/blob/1a671cca257632200197d369b5382ca490dbd6f2/INSTALL#L62)
 
-	If the setup.sh has failed, try first to run it again. (Usually in the third time it works)
+	If the setup.sh has failed, try to run it again. (Repeating for three times usually works well)
 
-5. Test the simulator environment
+5. Test the simulator
 
 	a. Run build.sh to build the executable files for the structures
 
@@ -123,7 +123,7 @@ A. Through installing the specific packages and the libraries:
 	export TENSEGRITY_HOME="/home/Tensegrity-Robotics"
 	```
 
-	b. To make the command of building the structure faster and easier, put the following into .bashrc to create an alias for the command which is responsible to build the structures executable files:
+	b. To make the command of building the structure faster and easier, put the following into .bashrc to create an alias for the command which is responsible for building the structures executable files:
 
 	```bash
 	alias tensegrityBuild="absolute/path/to/the/bin/folder/build.sh"
@@ -152,7 +152,7 @@ B. Using the Docker image for this environment:
 docker pull hany606/tensegrity_headless_server:v0.3
 ```
 
-Note: the current docker image works with the headless_server branch which is under development for other experiments, headless_server branch is related to training on servers without GUI.
+Note: the current docker image works with the headless_server branch, which is under development for other experiments, headless_server branch is related to training on servers without GUI.
 
 To work with the docker image that works with the current branch (Paper's branch): it is in "docker" directory
 
@@ -186,9 +186,9 @@ xvfb-run --server-num=10 python3 src/dev/gym-tensegrity/gym_tensegrity/envs/jump
 
 - resources (NTRTsim): includes the sources for the libraries for NTRTsim
 
-- src (NTRTsim): includes the source codes for the tensegrity structures and the source codes for the paper
+- src (NTRTsim): includes the source code of tensegrity structures/the paper
 
-	a. dev: includes the source codes for the paper, gym environment, and the used tensegrity structure.
+	a. dev: includes the source code of the paper, gym environment, and the used tensegrity structure.
 
 	* gym-tensegrity: includes the gym environment inside gym_tensegrity directory
 
@@ -200,9 +200,9 @@ xvfb-run --server-num=10 python3 src/dev/gym-tensegrity/gym_tensegrity/envs/jump
 
 ## Parameters
 
-Parameters are split into two parts, a part which is related to the parameters for the tensegrity structure and the other part which is related to the ARS parameters and parameters for the gym_tensegrity environment
+Parameters are split into two parts. First, a part related to the physical parameters of the tensegrity structure. Second, the part related to the ARS parameters and parameters of the gym_tensegrity environment.
 
-a. Tensegrity Hopper/Jumper Structure (In dev/jumper/JumperModel.cpp)
+a. Tensegrity Hopper/Jumper Structure and Physical Parameters (In dev/jumper/JumperModel.cpp)
 
 * Density (5kg/cm^3)
 * Rod Radius for leg rod and the square side rod (0.20cm)
@@ -216,25 +216,25 @@ a. Tensegrity Hopper/Jumper Structure (In dev/jumper/JumperModel.cpp)
   
 b. gym_tensegrity parameters
 
-* Observation: Endpoints of rods, Velocities of the rods' endpoints, and Cables' rest lengths
-* Actions: Continuos control in the rest length of the cables
+* Observation Space: Endpoints of rods (3 * 6); Velocities of the rods' endpoints (3 * 6); Cables' rest lengths (8); 44 dimensions
+* Action Space: Delta rest lengths of the cables (continuous); 8 dimensions
 * Reward: +1 each time step the structure stays alive without termination
-* Termination: The angle between the leg link and the ground should stay in the interval of [-20, 20] degrees and the angle between the frame link and the ground should stay in the interval of [-40, 40] degrees
-* Starting configurations: Starting from above the ground with height 100cm
+* Termination Condition: The angle between the leg link and the ground should stay in the interval of [-20, 20] degrees, and the angle between the frame link and the ground should stay in the interval of [-40, 40] degrees
+* Initial State: Starting from above the ground with height 100cm
 
-c. Augmented Random Search Algorithm parameters
+c. Augmented Random Search hyperparameters
 
-* [Full description for the parameters](https://docs.ray.io/en/latest/rllib-algorithms.html#augmented-random-search-ars), the used parameters are written in the training script
+* Check the training script. For a detailed description of the hyperparameters, see the [RLLib documentation](https://docs.ray.io/en/latest/rllib-algorithms.html#augmented-random-search-ars).
 
 ## Train it!
 
-Inside "src/dev/gym-tensegrity/learning_scripts/rllib/training_scripts/", there is the script which has been used for training
+Inside "src/dev/gym-tensegrity/learning_scripts/rllib/training_scripts/", there is a script that has been used for training.
 
 ```bash
 python3 training.py
 ```
 
-This is the successful training script that has been used to get out this paper's results.
+This is the exact script that was used to obtain the results presented here.
 
 ## Evaluate it!
 
@@ -246,7 +246,7 @@ python3 evaluate.py --agent-path=<path-to-trained-agent> --checkpoint-num=xx
 
 --agent-path: is the path to the trained agent
 
--- checkpoint-num: is the number of the checkpoint to restore the agent in that checkpoint
+--checkpoint-num: is the number of the checkpoint to restore the agent in that checkpoint
 
 Example:
 ```bash
@@ -280,6 +280,7 @@ TODO: https://arxiv.org/pdf/2004.02641.pdf (@inproceedings/@conference ??)
 ## Contact for Issues
 
 Hany Hamed: h.hamed.elanwar@gmail.com / h.hamed@innopolis.university
+
 Vlad Kurenkov: v.kurenkov@innopolis.ru
 
 ## References
