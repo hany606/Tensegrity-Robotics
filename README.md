@@ -1,24 +1,13 @@
+### Learning Stabilizing Control Policies for a Tensegrity Hopper with Augmented Random Search
 
-# Tensegrity-Robotics: 
+Before Learning             |  After Learning
+:-------------------------:|:-------------------------:
+![Unstable Hopper](https://github.com/hany606/Tensegrity-Robotics/blob/Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper/src/dev/jumper/media/unstable_hopper.gif)  | ![Stable Hopper](https://github.com/hany606/Tensegrity-Robotics/blob/Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper/src/dev/jumper/media/stable_hopper.gif)
 
-# *“Learning Stabilizing Control Policies for a Tensegrity Hopper with Augmented Random Search paper”*
+This repository contains an original source code for the "[Learning Stabilizing Control Policies for a Tensegrity Hopper with Augmented Random Search](https://arxiv.org/abs/2004.02641)" paper.
 
-## Introduction
-
-This repository is for the implementation of "[Learning Stabilizing Control Policies for a Tensegrity Hopper with Augmented Random Search Paper](https://arxiv.org/abs/2004.02641)"
-
-This repository includes parts of the source code of the Tensegrity simulator is part of [NASA NTRTsim](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim), source codes for training and evaluation scripts that were used in the paper, and the gym environment for the tensegrity structure that is used in the paper.
-  
-
-This work concentrates on the using of Augmented Random Search to learn a stabilizing control policy for a Tensegrity Hopper. 
-
-* The used RL algorithm which is Augmented Random Search (ARS) is the implementation from [Ray/RLlib](https://docs.ray.io/en/latest/rllib.html)
-
-* The used simulator for the tensegrity structure is [NTRTsim from NASA](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim)
-
-This work is a part of the research that is being done in the Robotics Center at Innopolis University.
-
-
+* Augmented Random Search (ARS) implementation is taken from [Ray/RLlib](https://docs.ray.io/en/latest/rllib.html)
+* Tensegrity Simulator is based on [NTRTsim from NASA](https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim)
 
 ## Table of contents
 
@@ -35,8 +24,6 @@ This work is a part of the research that is being done in the Robotics Center at
 *  [Evaluate it!](evaluate-it)
 
 *  [Pretrained Agents](#pretrained-agents)
-
-*  [Results](#results)
 
 *  [Citation](#citation)
 
@@ -286,17 +273,6 @@ Inside "src/dev/gym-tensegrity/learning_scripts/rllib/trained_agents", there is 
 
 - train_025_rep_act1_restL/ARS_jumper_29224120_2020-01-21_19-35-20j61sj43o: The configuration of the gym_tensegrity and the parameters for ARS are included in params.json
 
-## Results
-
-### Before training:
-![Unstable Hopper](https://github.com/hany606/Tensegrity-Robotics/blob/Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper/src/dev/jumper/media/unstable_hopper.gif)
-
-
-### After training:
-![Stable Hopper](https://github.com/hany606/Tensegrity-Robotics/blob/Learning-Stabilizing-Control-Policies-for-a-Tensegrity-Hopper-with-Augmented-Random-Search-paper/src/dev/jumper/media/stable_hopper.gif)
-
-
-
 ## Citation
 
 TODO: https://arxiv.org/pdf/2004.02641.pdf (@inproceedings/@conference ??)
@@ -304,7 +280,6 @@ TODO: https://arxiv.org/pdf/2004.02641.pdf (@inproceedings/@conference ??)
 ## Contact for Issues
 
 Hany Hamed: h.hamed.elanwar@gmail.com / h.hamed@innopolis.university
-
 Vlad Kurenkov: v.kurenkov@innopolis.ru
 
 ## References
