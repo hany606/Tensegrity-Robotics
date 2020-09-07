@@ -35,12 +35,15 @@
 
 tgSimViewGraphics::tgSimViewGraphics(tgWorld& world,
                      double stepSize,
-                     double renderRate, char windowName[100]) : 
-  tgSimView(world, stepSize, renderRate)
+                     double renderRate, char windowName[100], bool render_flag) : 
+  tgSimView(world, stepSize, renderRate, render_flag)
 {
     /// @todo figure out a good time to delete this
-    gDebugDrawer = new tgGLDebugDrawer();
+    if(m_render_flag){
+        gDebugDrawer = new tgGLDebugDrawer();
+    }
     strcpy(tgSimViewGraphics::windowName, windowName);
+
     // tgSimViewGraphics::windowName = windowName;
     // Supress compiler warning for bullet's unused variable
     (void) btInfinityMask;
@@ -61,20 +64,25 @@ void tgSimViewGraphics::setup()
         tgSimView::setup();
 
         // Cache a pointer to the btSoftRigidDynamicsWorld
-        tgWorld& world = m_pSimulation->getWorld();
-        btDynamicsWorld& dynamicsWorld =
-                tgBulletUtil::worldToDynamicsWorld(world);
-        // Store a pointer to the btSoftRigidDynamicsWorld
-        // This class is not taking ownership of it
-        /// @todo Can this pointer become invalid if a reset occurs?
-        m_dynamicsWorld = &dynamicsWorld;
+        if(m_render_flag){
 
-        // Give the pointer to demoapplication for rendering
-        dynamicsWorld.setDebugDrawer(gDebugDrawer);
-        
-        // @todo Valgrind thinks this is a leak. Perhaps its a GLUT issue?
-        m_pModelVisitor = new tgBulletRenderer(world);
-        std::cout << "setup graphics" << std::endl;
+            tgWorld& world = m_pSimulation->getWorld();
+
+            btDynamicsWorld& dynamicsWorld =
+                    tgBulletUtil::worldToDynamicsWorld(world);
+            // Store a pointer to the btSoftRigidDynamicsWorld
+            // This class is not taking ownership of it
+            // / @todo Can this pointer become invalid if a reset occurs?
+            m_dynamicsWorld = &dynamicsWorld;
+
+            // Give the pointer to demoapplication for rendering
+            dynamicsWorld.setDebugDrawer(gDebugDrawer);
+            
+            // @todo Valgrind thinks this is a leak. Perhaps its a GLUT issue?
+            m_pModelVisitor = new tgBulletRenderer(world);
+
+            std::cout << "setup graphics" << std::endl;
+        }
 }
 
 void tgSimViewGraphics::teardown()
@@ -86,22 +94,24 @@ void tgSimViewGraphics::teardown()
 
 void tgSimViewGraphics::render()
 {
-    extra_mod();
+    if(m_render_flag){
+        extra_mod();
 
-    if (m_pSimulation && m_pModelVisitor)
-    {
-        
-        glClear(GL_COLOR_BUFFER_BIT |
-            GL_DEPTH_BUFFER_BIT |
-            GL_STENCIL_BUFFER_BIT);
-        
-        m_pSimulation->onVisit(*m_pModelVisitor);
+        if (m_pSimulation && m_pModelVisitor)
+        {
+            
+            glClear(GL_COLOR_BUFFER_BIT |
+                GL_DEPTH_BUFFER_BIT |
+                GL_STENCIL_BUFFER_BIT);
+            
+            m_pSimulation->onVisit(*m_pModelVisitor);
 
-        //Freeglut code
-#if (0)
-        clientMoveAndDisplay();
-        tgGlutMainEventLoop();
-#endif
+            //Freeglut code
+            #if (0)
+                    clientMoveAndDisplay();
+                    tgGlutMainEventLoop();
+            #endif
+        }
     }
 }
 
@@ -144,47 +154,54 @@ void tgSimViewGraphics::reset()
 void tgSimViewGraphics::clientMoveAndDisplay()
 {
     if (isInitialzed()){
-        m_pSimulation->step(m_stepSize);    
-        m_renderTime += m_stepSize; 
-        if (m_renderTime >= m_renderRate)
-        {
-            render();
-            // Doesn't appear to do anything yet...
-            m_dynamicsWorld->debugDrawWorld();
-            renderme();     
-            extra_mod();
-            // Camera is updated in renderme
-            glFlush();
-            swapBuffers();      
-            m_renderTime = 0;
+        m_pSimulation->step(m_stepSize);
+        if(m_render_flag){
+            m_renderTime += m_stepSize; 
+            if (m_renderTime >= m_renderRate)
+            {
+                render();
+                // Doesn't appear to do anything yet...
+                m_dynamicsWorld->debugDrawWorld();
+                renderme();     
+                extra_mod();
+                // Camera is updated in renderme
+                glFlush();
+                swapBuffers();      
+                m_renderTime = 0;
+            }
         }
     }
 }
 
 void tgSimViewGraphics::displayCallback()
 {
-    if (isInitialzed())
-    {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
-        renderme();
-        extra_mod();
-        // optional but useful: debug drawing to detect problems
-        if (m_dynamicsWorld)
+    if(m_render_flag){
+        if (isInitialzed())
         {
-            m_dynamicsWorld->debugDrawWorld();
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
+            renderme();
+            extra_mod();
+            // optional but useful: debug drawing to detect problems
+            if (m_dynamicsWorld)
+            {
+                m_dynamicsWorld->debugDrawWorld();
+            }
+            glFlush();
+            swapBuffers();
         }
-        glFlush();
-        swapBuffers();
     }
 }
 
 void tgSimViewGraphics::clientResetScene()
 {
-    reset();
-    assert(isInitialzed());
+    if(m_render_flag){
 
-    tgWorld& world = m_pSimulation->getWorld();
-    tgBulletUtil::worldToDynamicsWorld(world).setDebugDrawer(gDebugDrawer);
+        reset();
+        assert(isInitialzed());
+
+        tgWorld& world = m_pSimulation->getWorld();
+        tgBulletUtil::worldToDynamicsWorld(world).setDebugDrawer(gDebugDrawer);
+    }
 }
 
 void tgSimViewGraphics::extra_mod(){

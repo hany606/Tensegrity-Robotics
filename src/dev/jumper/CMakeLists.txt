@@ -10,10 +10,10 @@ link_libraries(tgcreator
                 tgOpenGLSupport)
 
 #add_subdirectory(json)
-set(JSON_BuildTests OFF CACHE INTERNAL "")
+#set(JSON_BuildTests OFF CACHE INTERNAL "")
 
-add_subdirectory(json)
-include_directories(/json/include/nlohmann)
+#add_subdirectory(json)
+#include_directories(/json/include/nlohmann)
 
 add_executable(AppJumperModel
     JumperModel.cpp

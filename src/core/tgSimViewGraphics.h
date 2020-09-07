@@ -67,7 +67,7 @@ public:
      */
     tgSimViewGraphics(tgWorld& world,
               double stepSize = 1.0/120.0,
-              double renderRate = 1.0/60.0, char windowName[100] = "Tensegrity Demo");
+              double renderRate = 1.0/60.0, char windowName[100] = "Tensegrity Demo", bool render_flag = true);
     
     //Exit physics should have already been called
         //exitPhysics();

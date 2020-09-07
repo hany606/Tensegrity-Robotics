@@ -1,4 +1,8 @@
 Project(Dev)
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+
+add_subdirectory(json)
+include_directories(/json/include/nlohmann)
 
 # Add additional dev directories here.
 subdirs(
@@ -7,5 +11,6 @@ subdirs(
 	#json_build
 	#legz
 	jumper
+	boxCube
 
 )

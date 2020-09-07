@@ -35,12 +35,13 @@
 
 tgSimView::tgSimView(tgWorld& world,
              double stepSize,
-             double renderRate) :
+             double renderRate, bool render_flag) :
   m_world(world),
   m_pSimulation(NULL),
   m_pModelVisitor(NULL),
   m_stepSize(stepSize),
-  m_renderRate(renderRate),         
+  m_renderRate(renderRate),  
+  m_render_flag(render_flag),      
   m_renderTime(0.0),
   m_initialized(false)
 {

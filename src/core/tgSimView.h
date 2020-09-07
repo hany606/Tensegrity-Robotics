@@ -54,7 +54,7 @@ public:
      */
     tgSimView(tgWorld& world,
           double stepSize = 1.0/1000.0,
-          double renderRate = 1.0/60.0);
+          double renderRate = 1.0/60.0, bool render_flag = true);
 
     virtual ~tgSimView();
 
@@ -171,6 +171,7 @@ protected:
      */
     tgSimulation* m_pSimulation;
 
+
     /**
      * An object that knows how to visit the various models for
      * rendering or data logging.
@@ -203,6 +204,9 @@ protected:
      * It must be non-negative.
      */
     double m_renderTime;
+
+    bool m_render_flag;
+
     
 private:
 
@@ -216,6 +220,7 @@ private:
 
     /** Ensures the world has been initialized before running */
     bool m_initialized;
+
 };
 
 #endif  // TG_SIM_VIEW_H
