@@ -39,9 +39,14 @@
 // The C++ Standard Library
 #include <iostream>
 #include <string>
+#include <boost/program_options.hpp>
+namespace po = boost::program_options;
+#include <iterator>
 
 
-#define RENDER_FLAG true
+tgSimView* view;
+bool render_flag = false;
+
 
 /**
  * The entry point.
@@ -51,6 +56,18 @@
  */
 int main(int argc, char** argv)
 {
+    po::options_description desc("Allowed options");
+    desc.add_options()
+        ("render", "set the flag for rendering flag to true to enable rendering")
+    ;
+
+    po::variables_map vm;        
+    po::store(po::parse_command_line(argc, argv, desc), vm);
+    po::notify(vm);    
+
+    if (vm.count("render"))
+        render_flag = true;
+
     std::cout << "AppBoxCubeModel" << std::endl;
 
     // First create the ground and world. Specify ground rotation in radians
@@ -67,10 +84,14 @@ int main(int argc, char** argv)
     // Second create the view
     const double timestep_physics = 0.001; // seconds
     const double timestep_graphics = 1.f/60.f; // seconds
-    tgSimViewGraphics view(world, timestep_physics, timestep_graphics, "Tensegrity Jumping Robot", RENDER_FLAG);
+    const long long simulation_time = 10000; // in seconds
+    if(render_flag)
+        view = new tgSimViewGraphics(world, timestep_physics, timestep_graphics, "Tensegrity Jumping Robot", render_flag);
+    else
+        view = new tgSimView(world, timestep_physics, timestep_graphics, render_flag);
 
     // Third create the simulation
-    tgSimulation simulation(view);
+    tgSimulation simulation(*view);
 
     // Fourth create the models with their controllers and add the models to the
     // simulation
@@ -91,8 +112,15 @@ int main(int argc, char** argv)
     // Add the model to the world
     simulation.addModel(myModel);
     
-    simulation.run();
 
+    if(render_flag)
+        // With GUI, no exact number of steps until the user press q
+        simulation.run();
+    else
+        // Without GUI
+        //for example simulation_time/timestep_physics = 10,000,000 timestep of simulation
+        simulation.run(simulation_time/timestep_physics);    // for tgSimView -- without window, without rendering, without any graphics
+    
     //Teardown is handled by delete, so that should be automatic
     return 0;
 }

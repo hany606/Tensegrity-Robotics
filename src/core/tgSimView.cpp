@@ -96,11 +96,11 @@ void tgSimView::bindToSimulation(tgSimulation& simulation)
 
 void tgSimView::releaseFromSimulation()
 {
-        // The destructor that calls this must not fail, so don't assert or throw
-        // on a precondition
-        m_pSimulation = NULL;
-    // The destructor that calls this must not fail, so don't assert a
-    // postcondition
+  // The destructor that calls this must not fail, so don't assert or throw
+  // on a precondition
+  m_pSimulation = NULL;
+  // The destructor that calls this must not fail, so don't assert a
+  // postcondition
 }
 
 void tgSimView::bindToWorld(tgWorld& world)
@@ -131,31 +131,31 @@ void tgSimView::teardown()
 }
 
 void tgSimView::run()
-    {
-        // This would normally run forever, but this is just for testing
-        // run(10);
-    }
+{
+  // This would normally run forever, but this is just for testing
+  // run(10);
+}
 
 void tgSimView::run(int steps) 
 {
     if (m_pSimulation != NULL)
     {
-            // The tgSimView has been passed to a tgSimulation
-        std::cout << "SimView::run("<<steps<<")" << std::endl;
-        // This would normally run forever, but this is just for testing
-        m_renderTime = 0;
-        double totalTime = 0.0;
-        for (int i = 0; i < steps; i++) {
-            m_pSimulation->step(m_stepSize);    
-            m_renderTime += m_stepSize;
-            totalTime += m_stepSize;
-            
-            if (m_renderTime >= m_renderRate) {
-                // render();
-                //std::cout << totalTime << std::endl;
-                m_renderTime = 0;
-            }
+      // The tgSimView has been passed to a tgSimulation
+      std::cout << "SimView::run("<<steps<<")" << std::endl;
+      // This would normally run forever, but this is just for testing
+      m_renderTime = 0;
+      double totalTime = 0.0;
+      for (int i = 0; i < steps; i++) {
+        m_pSimulation->step(m_stepSize);    
+        m_renderTime += m_stepSize;
+        totalTime += m_stepSize;
+        
+        if (m_renderTime >= m_renderRate) {
+          // render();
+          //std::cout << totalTime << std::endl;
+          m_renderTime = 0;
         }
+      }
     }
 }
 
@@ -163,7 +163,7 @@ void tgSimView::render() const
 {
 	if ((m_pSimulation != NULL) && (m_pModelVisitor != NULL))
     {
-            // The tgSimView has been passed to a tgSimulation
+        // The tgSimView has been passed to a tgSimulation
         m_pSimulation->onVisit(*m_pModelVisitor);
     }
 }
@@ -172,7 +172,7 @@ void tgSimView::render(const tgModelVisitor& r) const
 {
     if (m_pSimulation != NULL)
     {
-            // The tgSimView has been passed to a tgSimulation
+        // The tgSimView has been passed to a tgSimulation
         m_pSimulation->onVisit(r);
     }
 }
@@ -181,8 +181,8 @@ void tgSimView::reset()
 {
 	if (m_pSimulation != NULL)
     {
-            // The tgSimView has been passed to a tgSimulation
-            m_pSimulation->reset();
+      // The tgSimView has been passed to a tgSimulation
+      m_pSimulation->reset();
     }
 }
     
@@ -190,8 +190,8 @@ void tgSimView::setRenderRate(double renderRate)
 {
 	m_renderRate = (renderRate > m_stepSize) ? renderRate : m_stepSize;
 
-    // Postcondition
-    assert(invariant());
+  // Postcondition
+  assert(invariant());
 }
     
 void tgSimView::setStepSize(double stepSize)
@@ -202,9 +202,9 @@ void tgSimView::setStepSize(double stepSize)
   }
   else
   {
-      m_stepSize = stepSize;
-      // Assure that the render rate is no less than the new step size
-      setRenderRate(m_renderRate);
+    m_stepSize = stepSize;
+    // Assure that the render rate is no less than the new step size
+    setRenderRate(m_renderRate);
   }
 
   // Postcondition

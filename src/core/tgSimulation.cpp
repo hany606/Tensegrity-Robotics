@@ -269,7 +269,7 @@ void tgSimulation::run() const
     m_view.run();
 }
 
-void tgSimulation::run(int steps) const
+void tgSimulation::run(long long steps) const
 {    
     m_view.run(steps);
 }

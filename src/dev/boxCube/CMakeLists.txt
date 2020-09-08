@@ -25,4 +25,7 @@ add_executable(AppBoxCubeModel
 ) 
 
 
-target_link_libraries(AppBoxCubeModel PRIVATE nlohmann_json::nlohmann_json)
+FIND_PACKAGE(Boost COMPONENTS program_options REQUIRED)
+INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+
+target_link_libraries(AppBoxCubeModel PRIVATE nlohmann_json::nlohmann_json ${Boost_LIBRARIES})

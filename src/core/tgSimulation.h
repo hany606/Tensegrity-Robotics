@@ -72,7 +72,7 @@ public:
      * @param[in] steps the number of steps to update the graphics
      * @todo Make steps of type size_t.
      */
-    void run(int steps) const;
+    void run(long long steps) const;
 
     /**
      * Add a Tensegrity to the simulation.
