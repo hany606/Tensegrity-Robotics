@@ -42,6 +42,7 @@
 #include <boost/program_options.hpp>
 namespace po = boost::program_options;
 #include <iterator>
+#include <string>
 
 
 tgSimView* view;
@@ -97,7 +98,7 @@ int main(int argc, char** argv)
     // simulation
 
     BoxCubeModel* const myModel = new BoxCubeModel();
-
+    
     // const char* host_name = argv[1];
     // const long long  port_num = std::stoll(argv[2]);
     // const int control_type = std::stoi(argv[3]);
@@ -112,6 +113,25 @@ int main(int argc, char** argv)
     // Add the model to the world
     simulation.addModel(myModel);
     
+    std::vector<tgRod*> rods = myModel->getAllRods();
+    for(int i = 0; i < rods.size(); i++){
+        // https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=11690
+        std::string rodTag = rods[i]->getTags().getTags()[0];
+        if (rodTag.compare("box_rod") == 0) {
+            std::cout << i<<"found!" << '\n';
+            rods[i]->getPRigidBody()->setCollisionFlags(rods[i]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+        }
+        if (rodTag.compare("cube_rod") == 0) {
+            std::cout << i<<"found!" << '\n';
+            // to make static object
+            // rods[i]->getPRigidBody()->setCollisionFlags(rods[i]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+            // to make no contact object
+            rods[i]->getPRigidBody()->setCollisionFlags(rods[i]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+        }
+
+    }
+    
+    // return 0;
 
     if(render_flag)
         // With GUI, no exact number of steps until the user press q

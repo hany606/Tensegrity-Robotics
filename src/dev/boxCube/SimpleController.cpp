@@ -73,9 +73,9 @@ void SimpleController::onStep(BoxCubeModel& subject, double dt)
       if(toggle==0){    //print once when motors start moving        
         
         std::cout<<"End Points:\n";
-        for(int i = 0; i < 8; i++){
-            btVector3 end_point1 = actuators[0]->getAnchors_mod()[0]->getWorldPosition();
-            btVector3 end_point2 = actuators[0]->getAnchors_mod()[0]->getWorldPosition();
+        for(int i = 0; i < actuators.size(); i++){
+            btVector3 end_point1 = actuators[i]->getAnchors_mod()[0]->getWorldPosition();
+            btVector3 end_point2 = actuators[i]->getAnchors_mod()[1]->getWorldPosition();
             
             std::cout<<"Cable"<<i<<"-anchor-1: "<<end_point1<<"\n";
             std::cout<<"Cable"<<i<<"-anchor-2: "<<end_point2<<"\n";

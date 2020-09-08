@@ -56,29 +56,41 @@ namespace
         double cube_density;
         double box_radius;
         double cube_radius;
-        double stiffness;
-        double damping;
-        double pretension;
+        double box_cube_stiffness;
+        double box_cube_damping;
+        double box_cube_pretension;
+        double box_cube_maxTension;
+        double box_cube_targetVelocity;
+        double cube_cube_stiffness;
+        double cube_cube_damping;
+        double cube_cube_pretension;
+        double cube_cube_maxTension;
+        double cube_cube_targetVelocity;
+
         double box_side_lengths[3];
         double cube_side_lengths[3];
         bool hist;
-        double maxTension;
-        double targetVelocity;
 
     }c = {
 
        20.0,     // density (mass / length^3)
-       0.2,
+       0.4,
        0.20,     // radius (length)
        0.20,
        1000.0,   // stiffness (mass / sec^2)
-       30.0,     // damping (mass / sec)
-       5000.0,     // pretension (mass * length / sec^2)
+       20.0,     // damping (mass / sec)
+       500.0,     // pretension (mass * length / sec^2)
+       30000,       // max tension
+       3,           // target velocity
+       1000.0,   // stiffness (mass / sec^2)
+       20.0,     // damping (mass / sec)
+       100.0,     // pretension (mass * length / sec^2)
+       30000,       // max tension
+       3,           // target velocity
        {50.0, 50.0, 50.0},        //length of a side of the box
        {20.0, 20.0, 20.0},        //lenght of a side of the cube 
        0,           // history logging (boolean)
-       30000,       // max tension
-       30           // target velocity
+       
     };
 }
 
@@ -95,7 +107,8 @@ void BoxCubeModel::addNodes(tgStructure& s)
 {
     // y z x
 
-    double offset = c.box_radius+10;
+    double offset =  1.8346;
+
     // Box
     // The bottom base
     s.addNode(c.box_side_lengths[1]/2.0, offset, c.box_side_lengths[0]/2.0);
@@ -103,8 +116,6 @@ void BoxCubeModel::addNodes(tgStructure& s)
     s.addNode(-c.box_side_lengths[1]/2.0, offset, -c.box_side_lengths[0]/2.0);
     s.addNode(c.box_side_lengths[1]/2.0, offset, -c.box_side_lengths[0]/2.0); 
     
-       10.0,     // damping (mass / sec)
-
     // The top base
     s.addNode(c.box_side_lengths[1]/2.0, c.box_side_lengths[2]+offset, c.box_side_lengths[0]/2.0);
     s.addNode(-c.box_side_lengths[1]/2.0, c.box_side_lengths[2]+offset, c.box_side_lengths[0]/2.0);
@@ -112,7 +123,7 @@ void BoxCubeModel::addNodes(tgStructure& s)
     s.addNode(c.box_side_lengths[1]/2.0, c.box_side_lengths[2]+offset, -c.box_side_lengths[0]/2.0); 
     
     // Cube
-    double cube_center[] = {0.0, 0.0, (c.box_side_lengths[2]/2.0)+offset, }; //x y z
+    double cube_center[] = {0.0, 0.0, (c.box_side_lengths[2]/2.0)+offset}; //x y z
     
     // s.addNode(cube_center[1], cube_center[2], cube_center[0]);
     
@@ -157,17 +168,17 @@ void BoxCubeModel::addRods(tgStructure& s)
     
 
     //Cube  +8 indecies
-    // Bottom base
-    s.addPair(8,9,"cube_rod");
-    s.addPair(9,10,"cube_rod");
-    s.addPair(10,11,"cube_rod");
-    s.addPair(11,8,"cube_rod");
+    // // Bottom base
+    // s.addPair(8,9,"cube_rod");
+    // s.addPair(9,10,"cube_rod");
+    // s.addPair(10,11,"cube_rod");
+    // s.addPair(11,8,"cube_rod");
     
-    // Top base
-    s.addPair(12,13,"cube_rod");
-    s.addPair(13,14,"cube_rod");
-    s.addPair(14,15,"cube_rod");
-    s.addPair(15,12,"cube_rod");
+    // // Top base
+    // s.addPair(12,13,"cube_rod");
+    // s.addPair(13,14,"cube_rod");
+    // s.addPair(14,15,"cube_rod");
+    // s.addPair(15,12,"cube_rod");
     
     // Sides
     s.addPair(8,12,"cube_rod");
@@ -192,8 +203,21 @@ void BoxCubeModel::addMuscles(tgStructure& s)
     // s.addPair(7,15, "muscle");
 
     for(int i = 0; i <= 7; i++){
-        s.addPair(i, i+8, "muscle");
+        s.addPair(i, i+8, "box_cube_muscle");
     }
+
+    // Bottom base
+    s.addPair(8,9,"cube_cube_muscle");
+    s.addPair(9,10,"cube_cube_muscle");
+    s.addPair(10,11,"cube_cube_muscle");
+    s.addPair(11,8,"cube_cube_muscle");
+    
+    // Top base
+    s.addPair(12,13,"cube_cube_muscle");
+    s.addPair(13,14,"cube_cube_muscle");
+    s.addPair(14,15,"cube_cube_muscle");
+    s.addPair(15,12,"cube_cube_muscle");
+
 
     // For the center of the cube (but not worked as there is no object of sphere)
     // for(int i = 0; i <= 7; i++){
@@ -213,8 +237,11 @@ void BoxCubeModel::setup(tgWorld& world)
 
     
     // const tgSpringCableActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension);
-    const tgBasicActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension,
-        c.hist, c.maxTension, c.targetVelocity);
+    const tgBasicActuator::Config box_cube_muscleConfig(c.box_cube_stiffness, c.box_cube_damping, c.box_cube_pretension,
+        c.hist, c.box_cube_maxTension, c.box_cube_targetVelocity);
+    
+    const tgBasicActuator::Config cube_cube_muscleConfig(c.cube_cube_stiffness, c.cube_cube_damping, c.cube_cube_pretension,
+        c.hist, c.cube_cube_maxTension, c.cube_cube_targetVelocity);
 
     
     // Create a structure that will hold the details of this model
@@ -239,8 +266,10 @@ void BoxCubeModel::setup(tgWorld& world)
     spec.addBuilder("box_rod", new tgRodInfo(box_rod_config));
     spec.addBuilder("cube_rod", new tgRodInfo(cube_rod_config));
 
-    spec.addBuilder("muscle", new tgBasicActuatorInfo(muscleConfig));
+    spec.addBuilder("box_cube_muscle", new tgBasicActuatorInfo(box_cube_muscleConfig));
     
+    spec.addBuilder("cube_cube_muscle", new tgBasicActuatorInfo(cube_cube_muscleConfig));
+
     // Create your structureInfo
     tgStructureInfo structureInfo(s, spec);
 
@@ -251,6 +280,8 @@ void BoxCubeModel::setup(tgWorld& world)
     // models (e.g. muscles) that we want to control. 
     allActuators = tgCast::filter<tgModel, tgBasicActuator> (getDescendants());
     allRods = tgCast::filter<tgModel, tgRod> (getDescendants());
+
+    
 
     // Notify controllers that setup has finished.
     notifySetup();

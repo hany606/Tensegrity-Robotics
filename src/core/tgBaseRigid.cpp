@@ -45,7 +45,6 @@ tgBaseRigid::tgBaseRigid(btRigidBody* pRigidBody,
     {
             throw std::invalid_argument("Pointer to btRigidBody is NULL");
     }
-
     // Postcondition
     assert(invariant());
     assert(m_pRigidBody == pRigidBody);
