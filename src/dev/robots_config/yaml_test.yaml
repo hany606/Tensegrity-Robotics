@@ -1,0 +1,134 @@
+# In units configuratio you specify the factors with respect to SI units
+# For example: 1 in length means it is in meters 1 in mass means it is in Kg 0.01 in length means it is in cm
+# Why choosing YAML as there is commenting and the aliasing part but not needed anymore
+
+
+units_config:
+    length: 0.01
+    mass: 1
+    time: 1
+
+variables:
+    box_side_length_x: 50
+    box_side_length_y: 50
+    box_side_length_z: 50
+
+    cube_side_length_x: 20
+    cube_side_length_y: 20
+    cube_side_length_z: 20
+    
+    offset: 1.8346
+
+    cube_center_x: 0.0
+    cube_center_y: 0.0
+    cube_center_z: (box_side_length_z/2.0)+offset
+
+rods_config:
+    [
+        {
+            name: "box_rod",
+            radius: 0.20,
+            density: 20.0
+        },
+        {
+            name": "cube_rod",
+            radius: 0.20,
+            density: 0.4
+        }
+    ]
+
+cables_config: 
+    [
+        {
+            name: "box_cube",
+            stiffness: 1000.0,
+            pretension: 500.0,
+            damping: 20.0,
+            maxTension: 30000,
+            targetVelocity: 3
+        },
+        {
+            name: "cube_cube",
+            stiffness: 1000.0,
+            pretension: 100.0,
+            damping: 20.0,
+            maxTension: 30000,
+            targetVelocity: 3
+        }
+    ]
+
+nodes:
+    [
+        {name: "box_bottom_base1", pos:[box_side_length_x/2.0, box_side_length_y/2.0, offset]},
+        {name: "box_bottom_base2", pos:[box_side_length_x/2.0, -box_side_length_y/2.0, offset]},
+        {name: "box_bottom_base3", pos:[-box_side_length_x/2.0, -box_side_length_y/2.0, offset]},
+        {name: "box_bottom_base4", pos:[-box_side_length_x/2.0, box_side_length_y/2.0, offset]},
+    
+
+        {name: "box_top_base1", pos:[box_side_length_x/2.0, box_side_length_y/2.0, box_side_length_z+offset]},
+        {name: "box_top_base2", pos:[box_side_length_x/2.0, -box_side_length_y/2.0, box_side_length_z+offset]},
+        {name: "box_top_base3", pos:[-box_side_length_x/2.0, -box_side_length_y/2.0, box_side_length_z+offset]},
+        {name: "box_top_base4", pos:[-box_side_length_x/2.0, box_side_length_y/2.0, box_side_length_z+offset]},
+        
+        {name: "cube_bottom_base1", pos:[cube_center_x+cube_side_length_x/2.0, cube_center_y+cube_side_length_y/2.0, cube_center_z-cube_center_z/2.0]},
+        {name: "cube_bottom_base2", pos:[cube_center_x+cube_side_length_x/2.0, cube_center_y-cube_side_length_y/2.0, cube_center_z-cube_center_z/2.0]},
+        {name: "cube_bottom_base3", pos:[cube_center_x-cube_side_length_x/2.0, cube_center_y-cube_side_length_y/2.0, cube_center_z-cube_center_z/2.0]},
+        {name: "cube_bottom_base4", pos:[cube_center_x-cube_side_length_x/2.0, cube_center_y+cube_side_length_y/2.0, cube_center_z-cube_center_z/2.0]},
+
+
+        {name: "cube_bottom_base1", pos:[cube_center_x+cube_side_length_x/2.0, cube_center_y+cube_side_length_y/2.0, cube_center_z+cube_center_z/2.0]},
+        {name: "cube_bottom_base2", pos:[cube_center_x+cube_side_length_x/2.0, cube_center_y-cube_side_length_y/2.0, cube_center_z+cube_center_z/2.0]},
+        {name: "cube_bottom_base3", pos:[cube_center_x-cube_side_length_x/2.0, cube_center_y-cube_side_length_y/2.0, cube_center_z+cube_center_z/2.0]},
+        {name: "cube_bottom_base4", pos:[cube_center_x-cube_side_length_x/2.0, cube_center_y+cube_side_length_y/2.0, cube_center_z+cube_center_z/2.0]}
+
+    ]
+
+rods:
+    [
+        {name: "box_bottom_base1", config: "box_rod", node1: 0, node2: 1},
+        {name: "box_bottom_base2", config: "box_rod", node1: 1, node2: 2},
+        {name: "box_bottom_base3", config: "box_rod", node1: 2, node2: 3},
+        {name: "box_bottom_base4", config: "box_rod", node1: 3, node2: 4},
+
+
+        {name: "box_top_base1", config: "box_rod", node1: 4, node2: 5},
+        {name: "box_top_base2", config: "box_rod", node1: 5, node2: 6},
+        {name: "box_top_base3", config: "box_rod", node1: 6, node2: 7},
+        {name: "box_top_base4", config: "box_rod", node1: 7, node2: 4},
+
+        {name: "box_side1", config: "box_rod", node1: 0, node2: 4},
+        {name: "box_side2", config: "box_rod", node1: 1, node2: 5},
+        {name: "box_side3", config: "box_rod", node1: 2, node2: 6},
+        {name: "box_side4", config: "box_rod", node1: 3, node2: 7},
+
+        {name: "cube_side1", config: "cube_rod", node1: 8, node2: 12},
+        {name: "cube_side2", config: "cube_rod", node1: 9, node2: 13},
+        {name: "cube_side3", config: "cube_rod", node1: 10, node2: 14},
+        {name: "cube_side4", config: "cube_rod", node1: 11, node2: 15},
+         
+    ]
+
+cables:
+    [
+        {name: "box_cube1", config: "box_cube", node1: 0, node2: 1},
+        {name: "box_cube2", config: "box_cube", node1: 1, node2: 2},
+        {name: "box_cube3", config: "box_cube", node1: 2, node2: 3},
+        {name: "box_cube4", config: "box_cube", node1: 3, node2: 4},
+        {name: "box_cube5", config: "box_cube", node1: 4, node2: 5},
+        {name: "box_cube6", config: "box_cube", node1: 5, node2: 6},
+        {name: "box_cube7", config: "box_cube", node1: 6, node2: 7},
+        {name: "box_cube8", config: "box_cube", node1: 7, node2: 8},
+    
+        {name: "cube_cube_bottom_base1", config: "cube_cube", node1: 8, node2: 9},
+        {name: "cube_cube_bottom_base2", config: "cube_cube", node1: 9, node2: 10},
+        {name: "cube_cube_bottom_base3", config: "cube_cube", node1: 10, node2: 11},
+        {name: "cube_cube_bottom_base4", config: "cube_cube", node1: 11, node2: 8},
+
+
+        {name: "cube_cube_top_base1", config: "cube_cube", node1: 12, node2: 13},
+        {name: "cube_cube_top_base2", config: "cube_cube", node1: 13, node2: 14},
+        {name: "cube_cube_top_base3", config: "cube_cube", node1: 14, node2: 15},
+        {name: "cube_cube_top_base4", config: "cube_cube", node1: 15, node2: 12},
+
+    ]
+    
