@@ -13,4 +13,5 @@ subdirs(
 	jumper
 	#boxCube
 	twiceCube
+	simpleModelConverted
 )

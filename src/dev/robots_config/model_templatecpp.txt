@@ -1,0 +1,178 @@
+/*
+ * Copyright © 2012, United States Government, as represented by the
+ * Administrator of the National Aeronautics and Space Administration.
+ * All rights reserved.
+ * 
+ * The NASA Tensegrity Robotics Toolkit (NTRT) v1 platform is licensed
+ * under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0.
+ * 
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+*/
+
+/**
+ * @file {{ ModelName }}Model.cpp
+ * @brief Contains the definition of the members of the class {{ ModelName }}Model.
+ * $Id$
+ */
+
+// This module
+#include "{{ ModelName }}Model.h"
+// This library
+#include "core/tgBasicActuator.h"
+#include "core/tgRod.h"
+#include "tgcreator/tgBuildSpec.h"
+#include "tgcreator/tgBasicActuatorInfo.h"
+#include "tgcreator/tgRodInfo.h"
+#include "tgcreator/tgStructure.h"
+#include "tgcreator/tgStructureInfo.h"
+// The Bullet Physics library
+#include "LinearMath/btVector3.h"
+// The C++ Standard Library
+#include <stdexcept>
+
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+
+// Note: "Box" is meant to be the outer cube, "Cube" is meant to be the innner cube
+
+/**
+ * Anonomous namespace so we don't have to declare the config in
+ * the header.
+ */
+namespace
+{
+    /**
+     * Configuration parameters so they're easily accessable.
+     * All parameters must be positive.
+     */
+    const struct Config
+    {
+        {{ConfigurationVars}}
+
+    }c = {
+
+        {{ConfigurationValues}}
+       
+    };
+}
+
+{{ ModelName }}Model::{{ ModelName }}Model() : tgModel()
+{
+
+}
+
+{{ ModelName }}Model::~{{ ModelName }}Model()
+{
+}
+
+void {{ ModelName }}Model::addNodes(tgStructure& s)
+{
+    // y z x
+    {{AddNodes}}
+}
+
+
+void {{ ModelName }}Model::addRods(tgStructure& s)
+{
+    {{AddRods}}
+}
+
+void {{ ModelName }}Model::addMuscles(tgStructure& s)
+{
+    {{AddCables}}    
+}
+
+void {{ ModelName }}Model::setup(tgWorld& world)
+{
+    // Create the build spec that uses tags to turn the structure into a real model
+    tgBuildSpec spec;
+    
+    // Define the configurations of the rods and strings
+    {{ConfigurationObjects}}
+
+    
+    // Create a structure that will hold the details of this model
+    tgStructure s;
+    
+
+    //Note!!!: we can add different tension for the strings by adding the rods with different tags
+    //  and add another Builder for that tag
+
+    // Add nodes to the structure
+    addNodes(s);
+    
+    // Add rods to the structure
+    addRods(s);
+    
+    // Add muscles to the structure
+    addMuscles(s);
+    
+    
+
+    // Create your structureInfo
+    tgStructureInfo structureInfo(s, spec);
+
+    // Use the structureInfo to build ourselves
+    structureInfo.buildInto(*this, world);
+
+    // We could now use tgCast::filter or similar to pull out the
+    // models (e.g. muscles) that we want to control. 
+    allActuators = tgCast::filter<tgModel, tgBasicActuator> (getDescendants());
+    allRods = tgCast::filter<tgModel, tgRod> (getDescendants());
+
+    
+
+    // Notify controllers that setup has finished.
+    notifySetup();
+    
+    // Actually setup the children
+    tgModel::setup(world);
+}
+
+void {{ ModelName }}Model::step(double dt)
+{
+    // Precondition
+    if (dt <= 0.0)
+    {
+        throw std::invalid_argument("dt is not positive");
+    }
+    else
+    {
+        // Notify observers (controllers) of the step so that they can take action
+        notifyStep(dt);
+        tgModel::step(dt);  // Step any children
+    }
+}
+
+void {{ ModelName }}Model::onVisit(tgModelVisitor& r)
+{
+    // Example: m_rod->getRigidBody()->dosomething()...
+    tgModel::onVisit(r);
+}
+
+std::vector<tgBasicActuator*>& {{ ModelName }}Model::getAllActuators()
+{
+    return allActuators;
+}
+
+std::vector<tgRod*>& {{ ModelName }}Model::getAllRods()
+{
+    return allRods;
+}
+
+
+
+
+void {{ ModelName }}Model::teardown()
+{
+    notifyTeardown();
+    tgModel::teardown();
+}

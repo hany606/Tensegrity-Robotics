@@ -25,7 +25,7 @@
  */
 
 // This application
-#include "TwiceCubeModel.h"
+#include "SimpleModel.h"
 #include "SimpleController.h"
 // This library
 #include "core/terrain/tgBoxGround.h"
@@ -68,7 +68,7 @@ int main(int argc, char** argv)
     if (vm.count("render"))
         render_flag = true;
 
-    std::cout << "AppTwiceCubeModel" << std::endl;
+    std::cout << "AppSimpleModelConverted" << std::endl;
 
     // First create the ground and world. Specify ground rotation in radians
     const double yaw = 0.0;
@@ -96,7 +96,7 @@ int main(int argc, char** argv)
     // Fourth create the models with their controllers and add the models to the
     // simulation
 
-    TwiceCubeModel* const myModel = new TwiceCubeModel();
+    SimpleModel* const myModel = new SimpleModel();
     
     // const char* host_name = argv[1];
     // const long long  port_num = std::stoll(argv[2]);
@@ -132,13 +132,13 @@ int main(int argc, char** argv)
     
     // return 0;
 
-    // if(render_flag)
-    //     // With GUI, no exact number of steps until the user press q
-    //     simulation.run();
-    // else
-    //     // Without GUI
-    //     //for example simulation_time/timestep_physics = 10,000,000 timestep of simulation
-    //     simulation.run(simulation_time/timestep_physics);    // for tgSimView -- without window, without rendering, without any graphics
+    if(render_flag)
+        // With GUI, no exact number of steps until the user press q
+        simulation.run();
+    else
+        // Without GUI
+        //for example simulation_time/timestep_physics = 10,000,000 timestep of simulation
+        simulation.run(simulation_time/timestep_physics);    // for tgSimView -- without window, without rendering, without any graphics
     
     //Teardown is handled by delete, so that should be automatic
     return 0;

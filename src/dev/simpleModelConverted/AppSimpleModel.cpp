@@ -17,7 +17,7 @@
 */
 
 /**
- * @file AppTwiceCubeModel.cpp
+ * @file AppSimpleModel.cpp
  * @brief Contains the definition function main() for the Three strut
  * tensegrity TwiceCube example application
  * @author Brian Tietz
@@ -25,7 +25,7 @@
  */
 
 // This application
-#include "TwiceCubeModel.h"
+#include "SimpleModel.h"
 #include "SimpleController.h"
 // This library
 #include "core/terrain/tgBoxGround.h"
@@ -68,7 +68,7 @@ int main(int argc, char** argv)
     if (vm.count("render"))
         render_flag = true;
 
-    std::cout << "AppTwiceCubeModel" << std::endl;
+    std::cout << "AppSimpleModel" << std::endl;
 
     // First create the ground and world. Specify ground rotation in radians
     const double yaw = 0.0;
@@ -96,7 +96,7 @@ int main(int argc, char** argv)
     // Fourth create the models with their controllers and add the models to the
     // simulation
 
-    TwiceCubeModel* const myModel = new TwiceCubeModel();
+    SimpleModel* const myModel = new SimpleModel();
     
     // const char* host_name = argv[1];
     // const long long  port_num = std::stoll(argv[2]);
@@ -113,32 +113,35 @@ int main(int argc, char** argv)
     simulation.addModel(myModel);
     
     std::vector<tgRod*> rods = myModel->getAllRods();
-    for(int i = 0; i < rods.size(); i++){
-        // https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=11690
-        std::string rodTag = rods[i]->getTags().getTags()[0];
-        if (rodTag.compare("box_rod") == 0) {
-            std::cout << i<<"found!" << '\n';
-            rods[i]->getPRigidBody()->setCollisionFlags(rods[i]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
-        }
-        if (rodTag.compare("cube_rod") == 0) {
-            std::cout << i<<"found!" << '\n';
-            // to make static object
-            // rods[i]->getPRigidBody()->setCollisionFlags(rods[i]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
-            // to make no contact object
-            rods[i]->getPRigidBody()->setCollisionFlags(rods[i]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
-        }
+    // https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=11690
+    rods[0]->getPRigidBody()->setCollisionFlags(rods[0]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+	rods[1]->getPRigidBody()->setCollisionFlags(rods[1]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+	rods[2]->getPRigidBody()->setCollisionFlags(rods[2]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+	rods[3]->getPRigidBody()->setCollisionFlags(rods[3]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+	rods[4]->getPRigidBody()->setCollisionFlags(rods[4]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+	rods[5]->getPRigidBody()->setCollisionFlags(rods[5]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+	rods[6]->getPRigidBody()->setCollisionFlags(rods[6]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+	rods[7]->getPRigidBody()->setCollisionFlags(rods[7]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+	rods[8]->getPRigidBody()->setCollisionFlags(rods[8]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+	rods[9]->getPRigidBody()->setCollisionFlags(rods[9]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+	rods[10]->getPRigidBody()->setCollisionFlags(rods[10]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+	rods[11]->getPRigidBody()->setCollisionFlags(rods[11]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+	rods[12]->getPRigidBody()->setCollisionFlags(rods[12]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	rods[13]->getPRigidBody()->setCollisionFlags(rods[13]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	rods[14]->getPRigidBody()->setCollisionFlags(rods[14]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	rods[15]->getPRigidBody()->setCollisionFlags(rods[15]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	
 
-    }
     
     // return 0;
 
-    // if(render_flag)
-    //     // With GUI, no exact number of steps until the user press q
-    //     simulation.run();
-    // else
-    //     // Without GUI
-    //     //for example simulation_time/timestep_physics = 10,000,000 timestep of simulation
-    //     simulation.run(simulation_time/timestep_physics);    // for tgSimView -- without window, without rendering, without any graphics
+    if(render_flag)
+        // With GUI, no exact number of steps until the user press q
+        simulation.run();
+    else
+        // Without GUI
+        //for example simulation_time/timestep_physics = 10,000,000 timestep of simulation
+        simulation.run(simulation_time/timestep_physics);    // for tgSimView -- without window, without rendering, without any graphics
     
     //Teardown is handled by delete, so that should be automatic
     return 0;

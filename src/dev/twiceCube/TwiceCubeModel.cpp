@@ -120,6 +120,8 @@ void TwiceCubeModel::addNodes(tgStructure& s)
     s.addNode(-c.box_side_lengths[1]/2.0, offset, c.box_side_lengths[0]/2.0);
     s.addNode(-c.box_side_lengths[1]/2.0, offset, -c.box_side_lengths[0]/2.0);
     s.addNode(c.box_side_lengths[1]/2.0, offset, -c.box_side_lengths[0]/2.0); 
+
+    
     
     // The top base
     s.addNode(c.box_side_lengths[1]/2.0, c.box_side_lengths[2]+offset, c.box_side_lengths[0]/2.0);
@@ -127,6 +129,8 @@ void TwiceCubeModel::addNodes(tgStructure& s)
     s.addNode(-c.box_side_lengths[1]/2.0, c.box_side_lengths[2]+offset, -c.box_side_lengths[0]/2.0);
     s.addNode(c.box_side_lengths[1]/2.0, c.box_side_lengths[2]+offset, -c.box_side_lengths[0]/2.0); 
     
+
+
     // Cube
     double cube_center[] = {0.0, 0.0, (c.box_side_lengths[2]/2.0)+offset}; //x y z
     
@@ -139,11 +143,19 @@ void TwiceCubeModel::addNodes(tgStructure& s)
     s.addNode(cube_center[1]+c.cube_side_lengths[1]/2.0, cube_center[2]-c.cube_side_lengths[2]/2.0, cube_center[0]-c.cube_side_lengths[0]/2.0); 
     
 
+
+    
+
     // The top base
     s.addNode(cube_center[1]+c.cube_side_lengths[1]/2.0, cube_center[2]+c.cube_side_lengths[2]/2.0, cube_center[0]+c.cube_side_lengths[0]/2.0);
     s.addNode(cube_center[1]-c.cube_side_lengths[1]/2.0, cube_center[2]+c.cube_side_lengths[2]/2.0, cube_center[0]+c.cube_side_lengths[0]/2.0);
     s.addNode(cube_center[1]-c.cube_side_lengths[1]/2.0, cube_center[2]+c.cube_side_lengths[2]/2.0, cube_center[0]-c.cube_side_lengths[0]/2.0);
     s.addNode(cube_center[1]+c.cube_side_lengths[1]/2.0, cube_center[2]+c.cube_side_lengths[2]/2.0, cube_center[0]-c.cube_side_lengths[0]/2.0); 
+
+    std::cout<<cube_center[1]+c.cube_side_lengths[1]/2.0<<", "<<cube_center[2]+c.cube_side_lengths[2]/2.0<<", "<<cube_center[0]+c.cube_side_lengths[0]/2.0<<"\n";
+    std::cout<<cube_center[1]-c.cube_side_lengths[1]/2.0<<", "<<cube_center[2]+c.cube_side_lengths[2]/2.0<<", "<<cube_center[0]+c.cube_side_lengths[0]/2.0<<"\n";
+    std::cout<<cube_center[1]-c.cube_side_lengths[1]/2.0<<", "<<cube_center[2]+c.cube_side_lengths[2]/2.0<<", "<<cube_center[0]-c.cube_side_lengths[0]/2.0<<"\n";
+    std::cout<<cube_center[1]+c.cube_side_lengths[1]/2.0<<", "<<cube_center[2]+c.cube_side_lengths[2]/2.0<<", "<<cube_center[0]-c.cube_side_lengths[0]/2.0<<"\n";
 
 
 }
