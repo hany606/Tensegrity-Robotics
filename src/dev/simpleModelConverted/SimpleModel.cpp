@@ -147,7 +147,7 @@ void SimpleModel::addRods(tgStructure& s)
 
 void SimpleModel::addMuscles(tgStructure& s)
 {
-    s.addPair(0, 8, "box_cube_muscle");
+    s.addPair(1-1, 8, "box_cube_muscle");
 	s.addPair(1, 9, "box_cube_muscle");
 	s.addPair(2, 10, "box_cube_muscle");
 	s.addPair(3, 11, "box_cube_muscle");

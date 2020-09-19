@@ -42,6 +42,8 @@
 namespace po = boost::program_options;
 #include <iterator>
 #include <string>
+#include <time.h>
+
 
 
 tgSimView* view;
@@ -56,6 +58,7 @@ bool render_flag = false;
  */
 int main(int argc, char** argv)
 {
+
     po::options_description desc("Allowed options");
     desc.add_options()
         ("render", "set the flag for rendering flag to true to enable rendering")
@@ -129,16 +132,27 @@ int main(int argc, char** argv)
         }
 
     }
-    
-    // return 0;
 
-    // if(render_flag)
-    //     // With GUI, no exact number of steps until the user press q
-    //     simulation.run();
-    // else
-    //     // Without GUI
-    //     //for example simulation_time/timestep_physics = 10,000,000 timestep of simulation
-    //     simulation.run(simulation_time/timestep_physics);    // for tgSimView -- without window, without rendering, without any graphics
+    // clock_t t;
+    // t = clock();
+    // printf("Timer starts\n");
+    
+    // for(int i = 0; i < 200000; i++){
+    //                 std::cout << i<<"found!" << '\n';
+
+    // }
+    // printf("Timer ends \n");
+    // t = clock() - t;
+    // double time_taken = ((double)t)/CLOCKS_PER_SEC; // calculate the elapsed time
+    // printf("The program took %f seconds to execute", time_taken);
+
+    if(render_flag)
+        // With GUI, no exact number of steps until the user press q
+        simulation.run();
+    else
+        // Without GUI
+        //for example simulation_time/timestep_physics = 10,000,000 timestep of simulation
+        simulation.run(simulation_time/timestep_physics);    // for tgSimView -- without window, without rendering, without any graphics
     
     //Teardown is handled by delete, so that should be automatic
     return 0;

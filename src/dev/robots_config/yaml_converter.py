@@ -20,11 +20,20 @@ class TensegrityFomratConverter():
 		self.cables = config_vals["cables"]
 
 
-		self._config_name_to_idx = {}
+		self._evaluate_configs()
 		self._evaluate_constants()
 		self._evaluate_nodes()
 		self._evaluate_cables()
 
+
+
+	def _evaluate_configs(self):
+		self._config_name_to_idx = {"rod":{}, "cable":{}}
+		for i, rc in enumerate(self.rods_config):
+			self._config_name_to_idx["rod"][rc["name"]] = i
+
+		for i, cc in enumerate(self.cables_config):
+			self._config_name_to_idx["cable"][cc["name"]] = i
 
 	def _evaluate_constants(self):
 		for i,v in enumerate(self.constants.keys()):
@@ -35,12 +44,11 @@ class TensegrityFomratConverter():
 			new_var = "".join(splitted)
 			new_var = eval(new_var)
 			self.constants[v] = new_var
-			self._config_name_to_idx[v] = i
 
 	def _evaluate_nodes(self):
 		for i in range(len(self.nodes)):
 			for p in range(len(self.nodes[i]["pos"])):
-				splitted_pos = re.split(r'(\W)', self.nodes[i]["pos"][p])
+				splitted_pos = re.split(r'(\W)', str(self.nodes[i]["pos"][p]))
 				for w in range(len(splitted_pos)):
 					if(splitted_pos[w] in self.constants.keys()):
 						splitted_pos[w] = str(self.constants[splitted_pos[w]])
@@ -50,13 +58,31 @@ class TensegrityFomratConverter():
 
 	def _evaluate_cables(self):
 		for i in range(len(self.cables)):
-			splitted_length = re.split(r'(\W)', self.cables[i]["length"])
+			splitted_length = re.split(r'(\W)', str(self.cables[i]["length"]))
 			for w in range(len(splitted_length)):
 				if(splitted_length[w] in self.constants.keys()):
 					splitted_length[w] = str(self.constants[splitted_length[w]])
 			new_length = "".join(splitted_length)
 			new_length = eval(new_length)
 			self.cables[i]["length"] = new_length
+
+		for i in range(len(self.cables)):
+			splitted_node1 = re.split(r'(\W)', str(self.cables[i]["node1"]))
+			for w in range(len(splitted_node1)):
+				if(splitted_node1[w] in self.constants.keys()):
+					splitted_node1[w] = str(self.constants[splitted_node1[w]])
+			new_node1 = "".join(splitted_node1)
+			new_node1 = eval(new_node1)
+			self.cables[i]["node1"] = new_node1
+
+		for i in range(len(self.cables)):
+			splitted_node2 = re.split(r'(\W)', str(self.cables[i]["node2"]))
+			for w in range(len(splitted_node2)):
+				if(splitted_node2[w] in self.constants.keys()):
+					splitted_node2[w] = str(self.constants[splitted_node2[w]])
+			new_node2 = "".join(splitted_node2)
+			new_node2 = eval(new_node2)
+			self.cables[i]["node2"] = new_node2
 
 
 
@@ -183,15 +209,15 @@ class TensegrityFomratConverter():
 			nodes.append(Node(x=pos[0], y=pos[1], z=pos[2], act=n["actuation"]))
 
 		for r in self.rods:
-			rods.append(Rod(a=r["node1"], b=r["node2"]))
+			rods.append(Rod(a=r["node1"], b=r["node2"], stiffness=self.rods_config[self._config_name_to_idx["rod"][r["config"]]]["stiffness"]))
 
 		for c in self.cables:
 			# In order not to have an extra parameter in the yaml file
 			# pos1 = c["node1"]
 			# pos2 = c["node2"]
 			# original_length = sqrt((pos1[0]-pos2[0])**2 + (pos1[1]-pos2[1])**2 + (pos1[2]-pos2[2])**2)
-			# length = (original_length) + (self.cables_config[self._config_name_to_idx(c["config"])]["pretension"]/self.cables_config[self._config_name_to_idx(c["config"])]["stiffness"])
-			springs.append(Spring(a=c["node1"], b=c["node2"], length=c["length"]))
+			# length = (original_length) + (self.cables_config[self._config_name_to_idx["cable"][c["config"]]]["pretension"]/self.cables_config[self._config_name_to_idx(c["config"])]["stiffness"])
+			springs.append(Spring(a=c["node1"], b=c["node2"], length=c["length"], stiffness=self.cables_config[self._config_name_to_idx["cable"][c["config"]]]["stiffness"]))
 			
 		return nodes, rods, springs
 

@@ -79,10 +79,10 @@ nodes:
         {name: "cube_bottom_base3", pos:[CUBE_CENTER_x-CUBE_SIDE_LENGTH_x/2.0, CUBE_CENTER_y-CUBE_SIDE_LENGTH_y/2.0, CUBE_CENTER_z-CUBE_SIDE_LENGTH_z/2.0], actuation: 1},
         {name: "cube_bottom_base4", pos:[CUBE_CENTER_x-CUBE_SIDE_LENGTH_x/2.0, CUBE_CENTER_y+CUBE_SIDE_LENGTH_y/2.0, CUBE_CENTER_z-CUBE_SIDE_LENGTH_z/2.0], actuation: 1}, 
 
-        {name: "cube_bottom_base1", pos:[CUBE_CENTER_x+CUBE_SIDE_LENGTH_x/2.0, CUBE_CENTER_y+CUBE_SIDE_LENGTH_y/2.0, CUBE_CENTER_z+CUBE_SIDE_LENGTH_z/2.0], actuation: 1},
-        {name: "cube_bottom_base2", pos:[CUBE_CENTER_x+CUBE_SIDE_LENGTH_x/2.0, CUBE_CENTER_y-CUBE_SIDE_LENGTH_y/2.0, CUBE_CENTER_z+CUBE_SIDE_LENGTH_z/2.0], actuation: 1},
-        {name: "cube_bottom_base3", pos:[CUBE_CENTER_x-CUBE_SIDE_LENGTH_x/2.0, CUBE_CENTER_y-CUBE_SIDE_LENGTH_y/2.0, CUBE_CENTER_z+CUBE_SIDE_LENGTH_z/2.0], actuation: 1},
-        {name: "cube_bottom_base4", pos:[CUBE_CENTER_x-CUBE_SIDE_LENGTH_x/2.0, CUBE_CENTER_y+CUBE_SIDE_LENGTH_y/2.0, CUBE_CENTER_z+CUBE_SIDE_LENGTH_z/2.0], actuation: 1}
+        {name: "cube_top_base1", pos:[CUBE_CENTER_x+CUBE_SIDE_LENGTH_x/2.0, CUBE_CENTER_y+CUBE_SIDE_LENGTH_y/2.0, CUBE_CENTER_z+CUBE_SIDE_LENGTH_z/2.0], actuation: 1},
+        {name: "cube_top_base2", pos:[CUBE_CENTER_x+CUBE_SIDE_LENGTH_x/2.0, CUBE_CENTER_y-CUBE_SIDE_LENGTH_y/2.0, CUBE_CENTER_z+CUBE_SIDE_LENGTH_z/2.0], actuation: 1},
+        {name: "cube_top_base3", pos:[CUBE_CENTER_x-CUBE_SIDE_LENGTH_x/2.0, CUBE_CENTER_y-CUBE_SIDE_LENGTH_y/2.0, CUBE_CENTER_z+CUBE_SIDE_LENGTH_z/2.0], actuation: 1},
+        {name: "cube_top_base4", pos:[CUBE_CENTER_x-CUBE_SIDE_LENGTH_x/2.0, CUBE_CENTER_y+CUBE_SIDE_LENGTH_y/2.0, CUBE_CENTER_z+CUBE_SIDE_LENGTH_z/2.0], actuation: 1}
 
     ]
 
