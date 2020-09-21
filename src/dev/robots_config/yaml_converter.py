@@ -19,7 +19,6 @@ class TensegrityFomratConverter():
 		self.rods = config_vals["rods"]
 		self.cables = config_vals["cables"]
 
-
 		self._evaluate_configs()
 		self._evaluate_constants()
 		self._evaluate_nodes()
