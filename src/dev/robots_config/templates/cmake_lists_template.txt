@@ -1,0 +1,22 @@
+link_directories(${LIB_DIR})
+
+link_libraries(tgcreator
+                util
+                sensors
+                core
+                terrain 
+                tgOpenGLSupport)
+
+
+
+add_executable(App{{ ModelName }}Model
+    {{ ModelName }}Model.cpp
+    App{{ ModelName }}Model.cpp
+    SimpleController.cpp
+) 
+
+
+FIND_PACKAGE(Boost COMPONENTS program_options REQUIRED)
+INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
+
+target_link_libraries(App{{ ModelName }}Model ${Boost_LIBRARIES})

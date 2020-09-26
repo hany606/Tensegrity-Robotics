@@ -3,6 +3,9 @@ from jinja2 import Environment, FileSystemLoader, Template
 import yaml
 import re
 from math import sqrt
+import argparse
+import os
+import sys
 class TensegrityFomratConverter():
 	def __init__(self, file_path):
 		DIR_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -95,7 +98,7 @@ class TensegrityFomratConverter():
 	def get_cables_list(self):
 		pass
 
-	def ntrtsim_converter(self, name="Simple", path="./"):
+	def ntrtsim_converter(self, name="Simple", path="./", template_path="./templates"):
 		def render_template_save(template_path, template_values, save_path):
 			with open(template_path) as reader:
 				template = Template(reader.read())
@@ -172,6 +175,10 @@ class TensegrityFomratConverter():
 
 		if(path[-1] != "/"):
 			path = path + "/"
+
+		if(template_path[-1] != "/"):
+			template_path = template_path + "/"
+		
 		name = name[0].upper() + name[1:]
 
 
@@ -190,11 +197,12 @@ class TensegrityFomratConverter():
 
 		template_values_app = {"ModelName": name, "AddRodsConstraints": _generate_rods_constraints()}
 
-		render_template_save(template_path="./model_templateh.txt", template_values=template_values_model_h, save_path=path+name+"Model.h")
-		render_template_save(template_path="./model_templatecpp.txt", template_values=template_values_model_cpp, save_path=path+name+"Model.cpp")
-		render_template_save(template_path= "./simple_controller_templateh.txt",template_values= {"ModelName": name}, save_path=path+"SimpleController.h")
-		render_template_save(template_path= "./simple_controller_templatecpp.txt",template_values= {"ModelName": name}, save_path=path+"SimpleController.cpp")
-		render_template_save(template_path="./app_template.txt", template_values=template_values_app, save_path=path+f"App{name}Model.cpp")
+		render_template_save(template_path=f"{template_path}model_templateh.txt", template_values=template_values_model_h, save_path=path+name+"Model.h")
+		render_template_save(template_path=f"{template_path}model_templatecpp.txt", template_values=template_values_model_cpp, save_path=path+name+"Model.cpp")
+		render_template_save(template_path=f"{template_path}simple_controller_templateh.txt",template_values= {"ModelName": name}, save_path=path+"SimpleController.h")
+		render_template_save(template_path=f"{template_path}simple_controller_templatecpp.txt",template_values= {"ModelName": name}, save_path=path+"SimpleController.cpp")
+		render_template_save(template_path=f"{template_path}app_template.txt", template_values=template_values_app, save_path=path+f"App{name}Model.cpp")
+		render_template_save(template_path=f"{template_path}cmake_lists_template.txt", template_values= {"ModelName": name}, save_path=path+"CMakeLists.txt")
 
 		
 
@@ -221,9 +229,33 @@ class TensegrityFomratConverter():
 		return nodes, rods, springs
 
 if __name__ == "__main__":
-	from pprint import pprint
+	arg_parser = argparse.ArgumentParser(description='List the content of a folder')
+
+	# Add the arguments
+	arg_parser.add_argument('-p',
+							'--path',
+							type=str,
+							default="./",
+							help='the path to folder to store the project')
+
+	arg_parser.add_argument('-n',
+							'--name',
+							type=str,
+							default="simple",
+							help='Name of the class of the project for the tensegrity strucutre')
+
+
+	arg_parser.add_argument('-t',
+							'--template-path',
+							type=str,
+							default="./templates",
+							help='The path for the templates')
+	
+	args = arg_parser.parse_args()
 	tconv = TensegrityFomratConverter("yaml_test.yaml")
+	tconv.ntrtsim_converter(name=args.name, path=args.path, template_path=args.template_path)
+
+	# from pprint import pprint
 	# pprint(tconv.nodes)
 	# pprint(tconv.rods)
 	# pprint(tconv.cables)
-	tconv.ntrtsim_converter(name="simple", path="../simpleModelConverted")
