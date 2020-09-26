@@ -173,6 +173,23 @@ class TensegrityFomratConverter():
 					output += f"rods[{i}]->getPRigidBody()->setCollisionFlags(rods[{i}]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);{nl}"
 			return output
 
+		def _generate_endpoints_mapping():
+			endpoints = [[] for i in range(len(self.nodes))]
+			for i,c in enumerate(self.cables):
+				endpoints[c["node1"]].append([i,0])
+				endpoints[c["node2"]].append([i,1])
+
+			output = f"int nodes_num = {len(self.nodes)};\n"
+			output += f"int endpoints_mapping [{len(self.nodes)}][2] = " + "{"
+			for p in endpoints:
+				if(len(p) > 0):
+					cable_index, endpoint_index = p[0]
+					output += "{" + str(cable_index) + ", " +  str(endpoint_index) + "}, "
+				else:
+					output += "{-1, -1}, "
+			output = output[:-2] + "};"
+			return output
+
 		if(path[-1] != "/"):
 			path = path + "/"
 
@@ -194,13 +211,12 @@ class TensegrityFomratConverter():
 							"AddCables": _generate_add_cables(),
 							"ConfigurationObjects": _generate_config_objs(),
 						  }
-
 		template_values_app = {"ModelName": name, "AddRodsConstraints": _generate_rods_constraints()}
 
 		render_template_save(template_path=f"{template_path}model_templateh.txt", template_values=template_values_model_h, save_path=path+name+"Model.h")
 		render_template_save(template_path=f"{template_path}model_templatecpp.txt", template_values=template_values_model_cpp, save_path=path+name+"Model.cpp")
 		render_template_save(template_path=f"{template_path}simple_controller_templateh.txt",template_values= {"ModelName": name}, save_path=path+"SimpleController.h")
-		render_template_save(template_path=f"{template_path}simple_controller_templatecpp.txt",template_values= {"ModelName": name}, save_path=path+"SimpleController.cpp")
+		render_template_save(template_path=f"{template_path}simple_controller_templatecpp.txt",template_values= {"ModelName": name, "EndPointsMapping": _generate_endpoints_mapping()}, save_path=path+"SimpleController.cpp")
 		render_template_save(template_path=f"{template_path}app_template.txt", template_values=template_values_app, save_path=path+f"App{name}Model.cpp")
 		render_template_save(template_path=f"{template_path}cmake_lists_template.txt", template_values= {"ModelName": name}, save_path=path+"CMakeLists.txt")
 

@@ -23,6 +23,8 @@
 using namespace std;
 
 
+{{ EndPointsMapping }}
+
 // control_type: 0 for rest_Simple control and 1 for current_Simple control
 SimpleController::SimpleController()
 {
@@ -71,22 +73,33 @@ void SimpleController::onStep({{ ModelName }}Model& subject, double dt)
     globalTime += dt;
     if(globalTime > 0){ //delay start of cable actuation
       if(toggle==0){    //print once when motors start moving        
-        
-        std::cout<<"End Points:\n";
-        for(int i = 0; i < actuators.size(); i++){
-            btVector3 end_point1 = actuators[i]->getAnchors_mod()[0]->getWorldPosition();
-            btVector3 end_point2 = actuators[i]->getAnchors_mod()[1]->getWorldPosition();
+        std::cout<<"Nodes:\n";
+        for(int i = 0; i < nodes_num; i++){
+          if(endpoints_mapping[i][0] < 0){
+            std::cout<<"Cannot find node with index: "<<i<<"\n";
+            continue;
+          }
+
+          btVector3 node = actuators[endpoints_mapping[i][0]]->getAnchors_mod()[endpoints_mapping[i][1]]->getWorldPosition();
+          
+          std::cout<<"Node "<<i<<":"<< node<<"\n";
+        }
+
+        // std::cout<<"End Points:\n";
+        // for(int i = 0; i < actuators.size(); i++){
+        //     btVector3 end_point1 = actuators[i]->getAnchors_mod()[0]->getWorldPosition();
+        //     btVector3 end_point2 = actuators[i]->getAnchors_mod()[1]->getWorldPosition();
             
-            std::cout<<"Cable"<<i<<"-anchor-1: "<<end_point1<<"\n";
-            std::cout<<"Cable"<<i<<"-anchor-2: "<<end_point2<<"\n";
+        //     std::cout<<"Cable"<<i<<"-anchor-1: "<<end_point1<<"\n";
+        //     std::cout<<"Cable"<<i<<"-anchor-2: "<<end_point2<<"\n";
                    
-        }
-        btVector3 CoM = btVector3(0.0, 0.0, 0.0);
-        for(int i = 0; i <rods.size(); i++){
-          CoM += rods[i]->centerOfMass();
-        }
-        CoM /= double(rods.size());
-        std::cout<<"CoM: "<<CoM;
+        // }
+        // btVector3 CoM = btVector3(0.0, 0.0, 0.0);
+        // for(int i = 0; i <rods.size(); i++){
+        //   CoM += rods[i]->centerOfMass();
+        // }
+        // CoM /= double(rods.size());
+        // std::cout<<"CoM: "<<CoM;
         std::cout << endl << "--------------------------------------------------------------------------" << endl;
 
       }
