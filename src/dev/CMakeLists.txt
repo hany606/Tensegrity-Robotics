@@ -12,6 +12,7 @@ subdirs(
 	#legz
 	jumper
 	#boxCube
-	twiceCube
+	#twiceCube
 	simpleModelConverted
+	twiceCubeConverted
 )

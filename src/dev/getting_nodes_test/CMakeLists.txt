@@ -9,17 +9,14 @@ link_libraries(tgcreator
 
 
 
-add_executable(App{{ ModelName }}Model
-    {{ ModelName }}Model.cpp
-    App{{ ModelName }}Model.cpp
+add_executable(AppTwiceCubeModel
+    TwiceCubeModel.cpp
+    AppTwiceCubeModel.cpp
     SimpleController.cpp
-    TCP.cpp
-    JsonStructure.cpp
 ) 
 
 
 FIND_PACKAGE(Boost COMPONENTS program_options REQUIRED)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 
-target_link_libraries(App{{ ModelName }}Model PRIVATE nlohmann_json::nlohmann_json)
-target_link_libraries(App{{ ModelName }}Model ${Boost_LIBRARIES})
+target_link_libraries(AppTwiceCubeModel ${Boost_LIBRARIES})

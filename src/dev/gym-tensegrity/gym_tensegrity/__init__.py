@@ -10,3 +10,8 @@ register(
     id='jumper-v0',
     entry_point='gym_tensegrity.envs:JumperEnv',
 )
+
+register(
+    id='twice-cube-v0',
+    entry_point='gym_tensegrity.envs:TwiceCubeEnv',
+)
