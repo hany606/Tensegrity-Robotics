@@ -55,36 +55,26 @@ namespace
      */
     const struct Config
     {
-        double box_rod_radius;
-		double box_rod_density;
-		double cube_rod_radius;
-		double cube_rod_density;
-		double box_cube_stiffness;
-		double box_cube_damping;
-		double box_cube_pretension;
-		double box_cube_maxTension;
-		double box_cube_targetVelocity;
-		double cube_cube_stiffness;
-		double cube_cube_damping;
-		double cube_cube_pretension;
-		double cube_cube_maxTension;
-		double cube_cube_targetVelocity;
+        double rod_radius;
+		double rod_density;
+		double rod_payload_radius;
+		double rod_payload_density;
+		double spring_stiffness;
+		double spring_damping;
+		double spring_pretension;
+		double spring_maxTension;
+		double spring_targetVelocity;
 		
 
     }c = {
 
-        0.2,
-		20.0,
-		0.2,
-		0.4,
-		1000.0,
-		20.0,
-		500.0,
-		30000,
-		3,
-		1000.0,
-		20.0,
-		100.0,
+        0.7,
+		0.00036326987547825504,
+		1.0,
+		0.0001326291192432374,
+		1750,
+		15.0,
+		0.0,
 		30000,
 		3,
 		
@@ -104,65 +94,93 @@ TwiceCubeModel::~TwiceCubeModel()
 void TwiceCubeModel::addNodes(tgStructure& s)
 {
     // y z x
-    s.addNode(25.0, 1.8346, 25.0);
-	s.addNode(-25.0, 1.8346, 25.0);
-	s.addNode(-25.0, 1.8346, -25.0);
-	s.addNode(25.0, 1.8346, -25.0);
-	s.addNode(25.0, 51.8346, 25.0);
-	s.addNode(-25.0, 51.8346, 25.0);
-	s.addNode(-25.0, 51.8346, -25.0);
-	s.addNode(25.0, 51.8346, -25.0);
-	s.addNode(10.0, 16.834600000000002, 10.0);
-	s.addNode(-10.0, 16.834600000000002, 10.0);
-	s.addNode(-10.0, 16.834600000000002, -10.0);
-	s.addNode(10.0, 16.834600000000002, -10.0);
-	s.addNode(10.0, 36.8346, 10.0);
-	s.addNode(-10.0, 36.8346, 10.0);
-	s.addNode(-10.0, 36.8346, -10.0);
-	s.addNode(10.0, 36.8346, -10.0);
+    s.addNode(-47.4, 4.0, -47.4);
+	s.addNode(-47.4, 4.0, 47.4);
+	s.addNode(47.4, 4.0, -47.4);
+	s.addNode(47.4, 4.0, 47.4);
+	s.addNode(-47.4, 102.0, -47.4);
+	s.addNode(-47.4, 102.0, 47.4);
+	s.addNode(47.4, 102.0, -47.4);
+	s.addNode(47.4, 102.0, 47.4);
+	s.addNode(-15.2, 37.8, -15.2);
+	s.addNode(-15.2, 37.8, 15.2);
+	s.addNode(15.2, 37.8, -15.2);
+	s.addNode(15.2, 37.8, 15.2);
+	s.addNode(-15.2, 68.2, -15.2);
+	s.addNode(-15.2, 68.2, 15.2);
+	s.addNode(15.2, 68.2, -15.2);
+	s.addNode(15.2, 68.2, 15.2);
+	s.addNode(-1.0, 52.0, -1.0);
+	s.addNode(-1.0, 52.0, 1.0);
+	s.addNode(1.0, 52.0, -1.0);
+	s.addNode(1.0, 52.0, 1.0);
+	s.addNode(-1.0, 54.0, -1.0);
+	s.addNode(-1.0, 54.0, 1.0);
+	s.addNode(1.0, 54.0, -1.0);
+	s.addNode(1.0, 54.0, 1.0);
 	
 }
 
 
 void TwiceCubeModel::addRods(tgStructure& s)
 {
-    s.addPair(0, 1, "box_rod");
-	s.addPair(1, 2, "box_rod");
-	s.addPair(2, 3, "box_rod");
-	s.addPair(3, 0, "box_rod");
-	s.addPair(4, 5, "box_rod");
-	s.addPair(5, 6, "box_rod");
-	s.addPair(6, 7, "box_rod");
-	s.addPair(7, 4, "box_rod");
-	s.addPair(0, 4, "box_rod");
-	s.addPair(1, 5, "box_rod");
-	s.addPair(2, 6, "box_rod");
-	s.addPair(3, 7, "box_rod");
-	s.addPair(8, 12, "cube_rod");
-	s.addPair(9, 13, "cube_rod");
-	s.addPair(10, 14, "cube_rod");
-	s.addPair(11, 15, "cube_rod");
+    s.addPair(0, 1, "rod");
+	s.addPair(1, 3, "rod");
+	s.addPair(3, 2, "rod");
+	s.addPair(2, 0, "rod");
+	s.addPair(0, 4, "rod");
+	s.addPair(1, 5, "rod");
+	s.addPair(2, 6, "rod");
+	s.addPair(3, 7, "rod");
+	s.addPair(4, 5, "rod");
+	s.addPair(5, 7, "rod");
+	s.addPair(7, 6, "rod");
+	s.addPair(6, 4, "rod");
+	s.addPair(12-4, 16-4, "rod");
+	s.addPair(13-4, 17-4, "rod");
+	s.addPair(14-4, 18-4, "rod");
+	s.addPair(15-4, 19-4, "rod");
+	s.addPair(20-4, 21-4, "rod_payload");
+	s.addPair(21-4, 23-4, "rod_payload");
+	s.addPair(23-4, 22-4, "rod_payload");
+	s.addPair(22-4, 20-4, "rod_payload");
+	s.addPair(20-4, 24-4, "rod_payload");
+	s.addPair(21-4, 25-4, "rod_payload");
+	s.addPair(22-4, 26-4, "rod_payload");
+	s.addPair(23-4, 27-4, "rod_payload");
+	s.addPair(24-4, 25-4, "rod_payload");
+	s.addPair(25-4, 27-4, "rod_payload");
+	s.addPair(27-4, 26-4, "rod_payload");
+	s.addPair(26-4, 24-4, "rod_payload");
 	
 }
 
 void TwiceCubeModel::addMuscles(tgStructure& s)
 {
-    s.addPair(0, 8, "box_cube_muscle");
-	s.addPair(1, 9, "box_cube_muscle");
-	s.addPair(2, 10, "box_cube_muscle");
-	s.addPair(3, 11, "box_cube_muscle");
-	s.addPair(4, 12, "box_cube_muscle");
-	s.addPair(5, 13, "box_cube_muscle");
-	s.addPair(6, 14, "box_cube_muscle");
-	s.addPair(7, 15, "box_cube_muscle");
-	s.addPair(8, 9, "cube_cube_muscle");
-	s.addPair(9, 10, "cube_cube_muscle");
-	s.addPair(10, 11, "cube_cube_muscle");
-	s.addPair(11, 8, "cube_cube_muscle");
-	s.addPair(12, 13, "cube_cube_muscle");
-	s.addPair(13, 14, "cube_cube_muscle");
-	s.addPair(14, 15, "cube_cube_muscle");
-	s.addPair(15, 12, "cube_cube_muscle");
+    s.addPair(0, 8, "spring_muscle");
+	s.addPair(1, 9, "spring_muscle");
+	s.addPair(2, 10, "spring_muscle");
+	s.addPair(3, 11, "spring_muscle");
+	s.addPair(4, 12, "spring_muscle");
+	s.addPair(5, 13, "spring_muscle");
+	s.addPair(6, 14, "spring_muscle");
+	s.addPair(7, 15, "spring_muscle");
+	s.addPair(8, 9, "spring_muscle");
+	s.addPair(9, 11, "spring_muscle");
+	s.addPair(11, 10, "spring_muscle");
+	s.addPair(10, 8, "spring_muscle");
+	s.addPair(12, 13, "spring_muscle");
+	s.addPair(13, 15, "spring_muscle");
+	s.addPair(15, 14, "spring_muscle");
+	s.addPair(14, 12, "spring_muscle");
+	s.addPair(8, 16, "spring_muscle");
+	s.addPair(9, 17, "spring_muscle");
+	s.addPair(10, 18, "spring_muscle");
+	s.addPair(11, 19, "spring_muscle");
+	s.addPair(12, 20, "spring_muscle");
+	s.addPair(13, 21, "spring_muscle");
+	s.addPair(14, 22, "spring_muscle");
+	s.addPair(15, 23, "spring_muscle");
 	    
 }
 
@@ -172,16 +190,13 @@ void TwiceCubeModel::setup(tgWorld& world)
     tgBuildSpec spec;
     
     // Define the configurations of the rods and strings
-    const tgRod::Config box_rod_config(0.2, 20.0);
-	spec.addBuilder("box_rod", new tgRodInfo(box_rod_config));
-	const tgRod::Config cube_rod_config(0.2, 0.4);
-	spec.addBuilder("cube_rod", new tgRodInfo(cube_rod_config));
-	const tgBasicActuator::Config box_cube_muscle_config(1000.0, 20.0, 500.0, 0, 30000, 3);
-	spec.addBuilder("box_cube_muscle", new tgBasicActuatorInfo(box_cube_muscle_config));
-	const tgBasicActuator::Config cube_cube_muscle_config(1000.0, 20.0, 100.0, 0, 30000, 3);
-	spec.addBuilder("cube_cube_muscle", new tgBasicActuatorInfo(cube_cube_muscle_config));
+    const tgRod::Config rod_config(c.rod_radius, c.rod_density);
+	spec.addBuilder("rod", new tgRodInfo(rod_config));
+	const tgRod::Config rod_payload_config(c.rod_payload_radius, c.rod_payload_density);
+	spec.addBuilder("rod_payload", new tgRodInfo(rod_payload_config));
+	const tgBasicActuator::Config spring_muscle_config(c.spring_stiffness, c.spring_damping, c.spring_pretension, 0, c.spring_maxTension, c.spring_targetVelocity);
+	spec.addBuilder("spring_muscle", new tgBasicActuatorInfo(spring_muscle_config));
 	
-
 
     
     // Create a structure that will hold the details of this model
@@ -213,8 +228,7 @@ void TwiceCubeModel::setup(tgWorld& world)
     allActuators = tgCast::filter<tgModel, tgBasicActuator> (getDescendants());
     allRods = tgCast::filter<tgModel, tgRod> (getDescendants());
 
-	allNodes = s.getNodes();
-
+    
 
     // Notify controllers that setup has finished.
     notifySetup();
@@ -254,11 +268,6 @@ std::vector<tgRod*>& TwiceCubeModel::getAllRods()
     return allRods;
 }
 
-
-tgNodes& TwiceCubeModel::getAllNodes()
-{
-    return allNodes;
-}
 
 
 

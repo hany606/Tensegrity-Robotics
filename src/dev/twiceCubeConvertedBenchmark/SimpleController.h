@@ -14,7 +14,7 @@
 #include "core/tgObserver.h"
 #include "controllers/tgBasicController.h"
 #include "core/tgBasicActuator.h"
-#include "tgcreator/tgNodes.h"
+#include "tgcreator/tgNode.h"
 
 // The C++ Standard Library
 #include <vector>
@@ -55,7 +55,6 @@ public:
     std::vector<tgBasicController*> m_controllers; //instantiate vector of controllers
     std::vector<tgBasicActuator*> actuators;
     std::vector<tgRod*> rods;
-    tgNodes nodes;
 
 private:
 	

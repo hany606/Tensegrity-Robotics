@@ -14,5 +14,5 @@ subdirs(
 	#boxCube
 	#twiceCube
 	simpleModelConverted
-	twiceCubeConverted
+	twiceCubeConvertedBenchmark
 )

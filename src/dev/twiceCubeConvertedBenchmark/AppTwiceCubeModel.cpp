@@ -17,7 +17,7 @@
 */
 
 /**
- * @file App{{ ModelName }}Model.cpp
+ * @file AppTwiceCubeModel.cpp
  * @brief Contains the definition function main() for the Three strut
  * tensegrity TwiceCube example application
  * @author Brian Tietz
@@ -25,7 +25,7 @@
  */
 
 // This application
-#include "{{ ModelName }}Model.h"
+#include "TwiceCubeModel.h"
 #include "SimpleController.h"
 // This library
 #include "core/terrain/tgBoxGround.h"
@@ -46,18 +46,49 @@ namespace po = boost::program_options;
 #include <vector>
 #include <cmath>
 
+# define COLLISIONS_FLAG true
 
 tgSimView* view;
 bool render_flag = false;
 
-void modifyRods({{ ModelName }}Model *model){
-    std::vector<tgRod*> rods = model->getAllRods();
-    // https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=11690
-    {{ AddRodsConstraints }}
+void modifyRods(TwiceCubeModel *model){
+    if(!COLLISIONS_FLAG){
+        std::vector<tgRod*> rods = model->getAllRods();
+        // https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=11690
+        rods[0]->getPRigidBody()->setCollisionFlags(rods[0]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+		rods[1]->getPRigidBody()->setCollisionFlags(rods[1]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+		rods[2]->getPRigidBody()->setCollisionFlags(rods[2]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+		rods[3]->getPRigidBody()->setCollisionFlags(rods[3]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+		rods[4]->getPRigidBody()->setCollisionFlags(rods[4]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+		rods[5]->getPRigidBody()->setCollisionFlags(rods[5]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+		rods[6]->getPRigidBody()->setCollisionFlags(rods[6]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+		rods[7]->getPRigidBody()->setCollisionFlags(rods[7]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+		rods[8]->getPRigidBody()->setCollisionFlags(rods[8]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+		rods[9]->getPRigidBody()->setCollisionFlags(rods[9]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+		rods[10]->getPRigidBody()->setCollisionFlags(rods[10]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+		rods[11]->getPRigidBody()->setCollisionFlags(rods[11]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+		rods[12]->getPRigidBody()->setCollisionFlags(rods[12]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[13]->getPRigidBody()->setCollisionFlags(rods[13]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[14]->getPRigidBody()->setCollisionFlags(rods[14]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[15]->getPRigidBody()->setCollisionFlags(rods[15]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[16]->getPRigidBody()->setCollisionFlags(rods[16]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[17]->getPRigidBody()->setCollisionFlags(rods[17]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[18]->getPRigidBody()->setCollisionFlags(rods[18]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[19]->getPRigidBody()->setCollisionFlags(rods[19]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[20]->getPRigidBody()->setCollisionFlags(rods[20]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[21]->getPRigidBody()->setCollisionFlags(rods[21]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[22]->getPRigidBody()->setCollisionFlags(rods[22]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[23]->getPRigidBody()->setCollisionFlags(rods[23]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[24]->getPRigidBody()->setCollisionFlags(rods[24]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[25]->getPRigidBody()->setCollisionFlags(rods[25]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[26]->getPRigidBody()->setCollisionFlags(rods[26]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		rods[27]->getPRigidBody()->setCollisionFlags(rods[27]->getPRigidBody()->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		
+    }
     
 }
 
-double fullTimeForward(long long num_steps, tgSimulation &simulation, {{ ModelName }}Model *model){
+double fullTimeForward(long long num_steps, tgSimulation &simulation, TwiceCubeModel *model){
     clock_t begin = clock();    // Calculate CPU time on Linux and Wall time on Windows
     simulation.reset();
     modifyRods(model);
@@ -94,12 +125,13 @@ double calculateSD(std::vector<double> vec){
     return std;
 }
 
-void benchmark(int num_repetitions, int num_steps, tgSimulation &simulation, {{ ModelName }}Model *model){
+void benchmark(int num_repetitions, int num_steps, tgSimulation &simulation, TwiceCubeModel *model){
     std::vector<double> durations_full;
     std::vector<double> durations_no_reset;
     for(int i = 0; i < num_repetitions; i++){
         durations_full.push_back(fullTimeForward(num_steps, simulation, model));
         simulation.reset();
+        modifyRods(model);
         durations_no_reset.push_back(noResetForward(num_steps, simulation));
     }
 
@@ -130,7 +162,7 @@ int main(int argc, char** argv)
     if (vm.count("render"))
         render_flag = true;
 
-    // std::cout << "App{{ ModelName }}Model" << std::endl;
+    // std::cout << "AppTwiceCubeModel" << std::endl;
 
     // First create the ground and world. Specify ground rotation in radians
     const double yaw = 0.0;
@@ -158,7 +190,7 @@ int main(int argc, char** argv)
     // Fourth create the models with their controllers and add the models to the
     // simulation
 
-    {{ ModelName }}Model* const myModel = new {{ ModelName }}Model();
+    TwiceCubeModel* const myModel = new TwiceCubeModel();
 
     SimpleController * const myController = new SimpleController();
     myModel->attach(myController);
@@ -170,14 +202,15 @@ int main(int argc, char** argv)
 
     modifyRods(myModel);
 
+    benchmark(5, 4096, simulation, myModel);
 
-    if(render_flag)
-        // With GUI, no exact number of steps until the user press q
-        simulation.run();
-    else
-        // Without GUI
-        //for example simulation_time/timestep_physics = 10,000,000 timestep of simulation
-        simulation.run(simulation_time/timestep_physics);    // for tgSimView -- without window, without rendering, without any graphics
+    // if(render_flag)
+    //     // With GUI, no exact number of steps until the user press q
+    //     simulation.run();
+    // else
+    //     // Without GUI
+    //     //for example simulation_time/timestep_physics = 10,000,000 timestep of simulation
+    //     simulation.run(simulation_time/timestep_physics);    // for tgSimView -- without window, without rendering, without any graphics
     
     //Teardown is handled by delete, so that should be automatic
     return 0;

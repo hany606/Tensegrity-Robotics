@@ -21,7 +21,7 @@
 
 /**
  * @file TwiceCubeModel.h
- * @brief Defines a 16 strut 16 string tensegrity model
+ * @brief Defines a 28 strut 24 string tensegrity model
  * @author Brian Mirletz
  * @version 1.1.0
  * $Id$
@@ -32,7 +32,6 @@
 #include "core/tgSubject.h"
 #include "core/tgRod.h"
 #include "core/tgBasicActuator.h"
-#include "tgcreator/tgNodes.h"
 // The C++ Standard Library
 #include <vector>
 
@@ -108,7 +107,7 @@ public:
      */
     std::vector<tgRod*>& getAllRods();
 
-    tgNodes& getAllNodes();
+
 private:
     
     /**
@@ -149,9 +148,7 @@ public:
      */
     std::vector<tgRod*> allRods;
 
-
-    tgNodes allNodes;
-
+    
 };
 
 #endif

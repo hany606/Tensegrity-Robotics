@@ -1,0 +1,183 @@
+# NTRTsim: using kg, cm, sec
+# Taichi: using kg, m, sec
+units_config:
+    length: 1
+    mass: 1
+    time: 1
+    worldOffset: [0, 0, 50]
+
+constants:
+    # For Taichi
+    SPRING_LENGTH: 0.247 + 0.057 # thread + spring
+    PAYLOAD_RADIUS: 0.01
+
+
+rods_config:
+    [
+        {
+            name: "rod",
+            radius: 0.007, #m
+            density: 0.017/(0.304*3.14159265359*0.007*0.007), #kg/m^3 -- 0.304 = SPRING_LENGTH
+            stiffness: 10000 # Used only for Taichi
+        },
+        {
+            name: "rod_payload",
+            radius: 0.01, #m
+            density: 0.01/12/(0.01*2*3.14159265359*0.01*0.01), #kg/m^3 -- 0.01 = PAYLOAD_RADIUS
+            stiffness: 10000 # Used only for Taichi
+        }
+    ]
+
+cables_config: 
+    [
+        {
+            name: "spring",
+            # stiffness: 1000.0,
+            stiffness: 1750, # kg/s^2 == N/m
+            pretension: 0.0,
+            damping: 15.0,
+            maxTension: 30000,
+            targetVelocity: 3
+        }
+    ]
+
+# actuation here related to taichi simiulator -- works pointwise (mass-spring model)
+nodes:
+    [
+        {name: "frame_bottom_base1", pos: [-0.948/2, -0.948/2, -0.980/2.0], actuation: 0},
+        {name: "frame_bottom_base2", pos: [0.948/2,  -0.948/2, -0.980/2.0], actuation: 0},
+        {name: "frame_bottom_base3", pos: [-0.948/2, 0.948/2,  -0.980/2.0], actuation: 0},
+        {name: "frame_bottom_base4", pos: [0.948/2,  0.948/2,  -0.980/2.0], actuation: 0},
+    
+        {name: "frame_top_base1", pos: [-0.948/2, -0.948/2, 0.980/2.0], actuation: 0},
+        {name: "frame_top_base2", pos: [0.948/2,  -0.948/2, 0.980/2.0,], actuation: 0},
+        {name: "frame_top_base3", pos: [-0.948/2, 0.948/2, 0.980/2.0], actuation: 0},
+        {name: "frame_top_base4", pos: [0.948/2,  0.948/2, 0.980/2.0], actuation: 0},
+        
+        {name: "cube_bottom_base1", pos: [-SPRING_LENGTH/2, -SPRING_LENGTH/2, -SPRING_LENGTH/2.0], actuation: 1},
+        {name: "cube_bottom_base2", pos: [SPRING_LENGTH/2,  -SPRING_LENGTH/2, -SPRING_LENGTH/2.0], actuation: 1},
+        {name: "cube_bottom_base3", pos: [-SPRING_LENGTH/2, SPRING_LENGTH/2, -SPRING_LENGTH/2.0], actuation: 1},
+        {name: "cube_bottom_base4", pos: [SPRING_LENGTH/2,  SPRING_LENGTH/2, -SPRING_LENGTH/2.0], actuation: 1}, 
+
+        {name: "cube_top_base1", pos: [-SPRING_LENGTH/2, -SPRING_LENGTH/2, SPRING_LENGTH/2.0], actuation: 1},
+        {name: "cube_top_base2", pos: [SPRING_LENGTH/2,  -SPRING_LENGTH/2, SPRING_LENGTH/2.0], actuation: 1},
+        {name: "cube_top_base3", pos: [-SPRING_LENGTH/2, SPRING_LENGTH/2, SPRING_LENGTH/2.0], actuation: 1},
+        {name: "cube_top_base4", pos: [SPRING_LENGTH/2,  SPRING_LENGTH/2, SPRING_LENGTH/2.0], actuation: 1},
+
+
+        {name: "payload_bottom_base1", pos: [-PAYLOAD_RADIUS, -PAYLOAD_RADIUS, -PAYLOAD_RADIUS], actuation: 1},
+        {name: "payload_bottom_base2", pos: [PAYLOAD_RADIUS, -PAYLOAD_RADIUS, -PAYLOAD_RADIUS], actuation: 1},
+        {name: "payload_bottom_base3", pos: [-PAYLOAD_RADIUS, PAYLOAD_RADIUS, -PAYLOAD_RADIUS], actuation: 1},
+        {name: "payload_bottom_base4", pos: [PAYLOAD_RADIUS, PAYLOAD_RADIUS, -PAYLOAD_RADIUS], actuation: 1},
+
+        {name: "payload_top_base1", pos: [-PAYLOAD_RADIUS, -PAYLOAD_RADIUS, PAYLOAD_RADIUS], actuation: 1},
+        {name: "payload_top_base2", pos: [PAYLOAD_RADIUS, -PAYLOAD_RADIUS, PAYLOAD_RADIUS], actuation: 1},
+        {name: "payload_top_base3", pos: [-PAYLOAD_RADIUS, PAYLOAD_RADIUS, PAYLOAD_RADIUS], actuation: 1},
+        {name: "payload_top_base4", pos: [PAYLOAD_RADIUS, PAYLOAD_RADIUS, PAYLOAD_RADIUS], actuation: 1},
+
+        # {name: "square", pos: [0.0*1, 0.0*1, 0.0*1], actuation: 1},
+
+    ]
+
+# actuation here related to NTRTsim simiulator -- works Rigid body wise (Rigid body model)
+rods:
+    [
+        {name: "frame_bottom_base1", config: "rod", node1: 0, node2: 1, actuation: 0},
+        {name: "frame_bottom_base2", config: "rod", node1: 1, node2: 3, actuation: 0},
+        {name: "frame_bottom_base3", config: "rod", node1: 3, node2: 2, actuation: 0},
+        {name: "frame_bottom_base4", config: "rod", node1: 2, node2: 0, actuation: 0},
+
+
+        {name: "frame_top_base1", config: "rod", node1: 0, node2: 4, actuation: 0},
+        {name: "frame_top_base2", config: "rod", node1: 1, node2: 5, actuation: 0},
+        {name: "frame_top_base3", config: "rod", node1: 2, node2: 6, actuation: 0},
+        {name: "frame_top_base4", config: "rod", node1: 3, node2: 7, actuation: 0},
+
+        {name: "frame_side1", config: "rod", node1: 4, node2: 5, actuation: 0},
+        {name: "frame_side2", config: "rod", node1: 5, node2: 7, actuation: 0},
+        {name: "frame_side3", config: "rod", node1: 7, node2: 6, actuation: 0},
+        {name: "frame_side4", config: "rod", node1: 6, node2: 4, actuation: 0},
+        
+        
+        {name: "cube_side1", config: "rod", node1: 12-4, node2: 16-4, actuation: 1},
+        {name: "cube_side2", config: "rod", node1: 13-4, node2: 17-4, actuation: 1},
+        {name: "cube_side3", config: "rod", node1: 14-4, node2: 18-4, actuation: 1},
+        {name: "cube_side4", config: "rod", node1: 15-4, node2: 19-4, actuation: 1},
+
+
+
+        {name: "square_bottom_base1", config: "rod_payload", node1: 20-4, node2: 21-4, actuation: 1},
+        {name: "square_bottom_base2", config: "rod_payload", node1: 21-4, node2: 23-4, actuation: 1},
+        {name: "square_bottom_base3", config: "rod_payload", node1: 23-4, node2: 22-4, actuation: 1},
+        {name: "square_bottom_base4", config: "rod_payload", node1: 22-4, node2: 20-4, actuation: 1},
+
+
+        {name: "square_top_base1", config: "rod_payload", node1: 20-4, node2: 24-4, actuation: 1},
+        {name: "square_top_base2", config: "rod_payload", node1: 21-4, node2: 25-4, actuation: 1},
+        {name: "square_top_base3", config: "rod_payload", node1: 22-4, node2: 26-4, actuation: 1},
+        {name: "square_top_base4", config: "rod_payload", node1: 23-4, node2: 27-4, actuation: 1},
+
+        {name: "square_side1", config: "rod_payload", node1: 24-4, node2: 25-4, actuation: 1},
+        {name: "square_side2", config: "rod_payload", node1: 25-4, node2: 27-4, actuation: 1},
+        {name: "square_side3", config: "rod_payload", node1: 27-4, node2: 26-4, actuation: 1},
+        {name: "square_side4", config: "rod_payload", node1: 26-4, node2: 24-4, actuation: 1},
+        
+
+    ]
+
+cables:
+    [
+        {name: "frame_bottom_cube_bottom1", config: "spring", node1: 0, node2: 12-4, length: SPRING_LENGTH},
+        {name: "frame_bottom_cube_bottom2", config: "spring", node1: 1, node2: 13-4, length: SPRING_LENGTH},
+        {name: "frame_bottom_cube_bottom3", config: "spring", node1: 2, node2: 14-4, length: SPRING_LENGTH},
+        {name: "frame_bottom_cube_bottom4", config: "spring", node1: 3, node2: 15-4, length: SPRING_LENGTH},
+
+        {name: "frame_top_cube_top1", config: "spring", node1: 4, node2: 16-4, length: SPRING_LENGTH},
+        {name: "frame_top_cube_top2", config: "spring", node1: 5, node2: 17-4, length: SPRING_LENGTH},
+        {name: "frame_top_cube_top3", config: "spring", node1: 6, node2: 18-4, length: SPRING_LENGTH},
+        {name: "frame_top_cube_top4", config: "spring", node1: 7, node2: 19-4, length: SPRING_LENGTH},
+    
+        {name: "cube_bottom1", config: "spring", node1: 12-4, node2: 13-4, length: SPRING_LENGTH},
+        {name: "cube_bottom2", config: "spring", node1: 13-4, node2: 15-4, length: SPRING_LENGTH},
+        {name: "cube_bottom3", config: "spring", node1: 15-4, node2: 14-4, length: SPRING_LENGTH},
+        {name: "cube_bottom4", config: "spring", node1: 14-4, node2: 12-4, length: SPRING_LENGTH},
+
+
+        # {name: "cube_side1", config: "spring", node1: 12-4, node2: 16-4, length: SPRING_LENGTH},
+        # {name: "cube_side2", config: "spring", node1: 13-4, node2: 17-4, length: SPRING_LENGTH},
+        # {name: "cube_side3", config: "spring", node1: 14-4, node2: 18-4, length: SPRING_LENGTH},
+        # {name: "cube_side4", config: "spring", node1: 15-4, node2: 19-4, length: SPRING_LENGTH},
+
+        {name: "cube_top1", config: "spring", node1: 16-4, node2: 17-4, length: SPRING_LENGTH},
+        {name: "cube_top2", config: "spring", node1: 17-4, node2: 19-4, length: SPRING_LENGTH},
+        {name: "cube_top3", config: "spring", node1: 19-4, node2: 18-4, length: SPRING_LENGTH},
+        {name: "cube_top4", config: "spring", node1: 18-4, node2: 16-4, length: SPRING_LENGTH},
+
+
+
+
+        {name: "cube_bottom_square1", config: "spring", node1: 12-4, node2: 20-4, length: SPRING_LENGTH},
+        {name: "cube_bottom_square2", config: "spring", node1: 13-4, node2: 21-4, length: SPRING_LENGTH},
+        {name: "cube_bottom_square3", config: "spring", node1: 14-4, node2: 22-4, length: SPRING_LENGTH},
+        {name: "cube_bottom_square4", config: "spring", node1: 15-4, node2: 23-4, length: SPRING_LENGTH},
+        
+        {name: "cube_top_square1", config: "spring", node1: 16-4, node2: 24-4, length: SPRING_LENGTH},
+        {name: "cube_top_square2", config: "spring", node1: 17-4, node2: 25-4, length: SPRING_LENGTH},
+        {name: "cube_top_square3", config: "spring", node1: 18-4, node2: 26-4, length: SPRING_LENGTH},
+        {name: "cube_top_square4", config: "spring", node1: 19-4, node2: 27-4, length: SPRING_LENGTH},
+
+
+        
+        # {name: "cube_bottom_square1", config: "spring", node1: 12-4, node2: 8, length: SPRING_LENGTH},
+        # {name: "cube_bottom_square2", config: "spring", node1: 13-4, node2: 8, length: SPRING_LENGTH},
+        # {name: "cube_bottom_square3", config: "spring", node1: 14-4, node2: 8, length: SPRING_LENGTH},
+        # {name: "cube_bottom_square4", config: "spring", node1: 15-4, node2: 8, length: SPRING_LENGTH},
+
+
+        # {name: "cube_top_square1", config: "spring", node1: 16-4, node2: 8, length: SPRING_LENGTH},
+        # {name: "cube_top_square2", config: "spring", node1: 17-4, node2: 8, length: SPRING_LENGTH},
+        # {name: "cube_top_square3", config: "spring", node1: 19-4, node2: 8, length: SPRING_LENGTH},
+        # {name: "cube_top_square4", config: "spring", node1: 18-4, node2: 8, length: SPRING_LENGTH},
+
+
+    ]

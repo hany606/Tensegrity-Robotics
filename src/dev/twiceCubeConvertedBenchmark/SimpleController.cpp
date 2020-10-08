@@ -23,6 +23,9 @@
 using namespace std;
 
 
+int nodes_num = 24;
+int endpoints_mapping [24][2] = {{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {0, 1}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 1}, {6, 1}, {7, 1}, {16, 1}, {17, 1}, {18, 1}, {19, 1}, {20, 1}, {21, 1}, {22, 1}, {23, 1}};
+
 // control_type: 0 for rest_Simple control and 1 for current_Simple control
 SimpleController::SimpleController()
 {
@@ -40,13 +43,8 @@ void SimpleController::onSetup(TwiceCubeModel& subject)
   //get all of the tensegrity structure's cables
   actuators = subject.getAllActuators();
   rods = subject.getAllRods();
-  nodes = subject.getAllNodes();
 
-  std::cout<<nodes.size()<<"\n";
-
-  for(int i = 0; i < nodes.size(); i++)
-    std::cout<<nodes[i]<<"\n";
-  printf("Number of actuators: %d , Number of Rods: %d\n", (int) actuators.size(), (int) rods.size());//DEBUG
+  // printf("Number of actuators: %d , Number of Rods: %d\n", (int) actuators.size(), (int) rods.size());//DEBUG
   // std::cout<<rods[1]->getTags()[0][1]<<"\n";
 
   //Attach a tgBasicController to each actuator
@@ -60,7 +58,7 @@ void SimpleController::onSetup(TwiceCubeModel& subject)
     m_controllers.push_back(m_lenController);
     // getStartSimple
     double start_Simple = actuators[i]->getRestLength();
-    printf("Actutor of string #%d -> start Lenght: %lf\n", (int) i, start_Simple);//DEBUG
+    // printf("Actutor of string #%d -> start Lenght: %lf\n", (int) i, start_Simple);//DEBUG
   }
   
 }
@@ -76,8 +74,18 @@ void SimpleController::onStep(TwiceCubeModel& subject, double dt)
     globalTime += dt;
     if(globalTime > 0){ //delay start of cable actuation
       if(toggle==0){    //print once when motors start moving        
-        for(int i = 0; i < nodes.size(); i++)
-          std::cout<<nodes[i]<<"\n";
+        // std::cout<<"Nodes:\n";
+        for(int i = 0; i < nodes_num; i++){
+          if(endpoints_mapping[i][0] < 0){
+            // std::cout<<"Cannot find node with index: "<<i<<"\n";
+            continue;
+          }
+
+          btVector3 node = actuators[endpoints_mapping[i][0]]->getAnchors_mod()[endpoints_mapping[i][1]]->getWorldPosition();
+          
+          // std::cout<<"Node "<<i<<":"<< node<<"\n";
+        }
+
         // std::cout<<"End Points:\n";
         // for(int i = 0; i < actuators.size(); i++){
         //     btVector3 end_point1 = actuators[i]->getAnchors_mod()[0]->getWorldPosition();
@@ -93,7 +101,7 @@ void SimpleController::onStep(TwiceCubeModel& subject, double dt)
         // }
         // CoM /= double(rods.size());
         // std::cout<<"CoM: "<<CoM;
-        std::cout << endl << "--------------------------------------------------------------------------" << endl;
+        // std::cout << endl << "--------------------------------------------------------------------------" << endl;
 
       }
     }

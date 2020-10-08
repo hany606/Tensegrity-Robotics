@@ -4,9 +4,11 @@
 
 
 units_config:
-    length: 0.01
+    length: 1
     mass: 1
     time: 1
+    worldOffset: [0, 0, 4]
+
 
 constants:
     BOX_SIDE_LENGTH_x: 50
