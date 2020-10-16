@@ -46,7 +46,7 @@
 #include <vector>
 #include <cmath>
 
-# define COLLISIONS_FLAG true
+# define COLLISIONS_FLAG false
 
 
 

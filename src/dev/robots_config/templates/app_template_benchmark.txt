@@ -46,7 +46,7 @@ namespace po = boost::program_options;
 #include <vector>
 #include <cmath>
 
-# define COLLISIONS_FLAG true
+# define COLLISIONS_FLAG false
 
 tgSimView* view;
 bool render_flag = false;

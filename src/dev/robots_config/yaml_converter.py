@@ -203,8 +203,8 @@ class TensegrityFomratConverter():
 			return output
 
 		def _generate_json_zero_arrays():
-			output_lengths = "{" + "0, "*(len(self.cables)-1) + "0}"
-			output_positions = "{" + "0, "*(len(self.nodes)-1) + "0}"
+			output_lengths = "{" + "0.0, "*(len(self.cables)-1) + "0.0}"
+			output_positions = "{" + "{0.0, 0.0, 0.0}, "*(len(self.nodes)-1) + "{0.0, 0.0, 0.0} }"
 			return {"ZeroLengthsArray": output_lengths, "ZeroNodesPositionsArray": output_positions}
 
 		if(path[-1] != "/"):
