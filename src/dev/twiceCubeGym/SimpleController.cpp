@@ -30,7 +30,8 @@ json read_json;
 vector <btVector3> last_positions;
 
 
-{{ EndPointsMapping }}
+int nodes_num = 24;
+int endpoints_mapping [24][2] = {{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {0, 1}, {1, 1}, {2, 1}, {3, 1}, {4, 1}, {5, 1}, {6, 1}, {7, 1}, {16, 1}, {17, 1}, {18, 1}, {19, 1}, {20, 1}, {21, 1}, {22, 1}, {23, 1}};
 
 // control_type: 0 for rest_Simple control and 1 for current_Simple control
 SimpleController::SimpleController(const char* host, const long long port): host_name(host), port_num(port){
@@ -41,7 +42,7 @@ SimpleController::~SimpleController()
 {
 }	
 
-void SimpleController::onSetup({{ ModelName }}Model& subject)
+void SimpleController::onSetup(TwiceCubeGymModel& subject)
 {
 
   std::cout<<"\nStarting communication through TCP: "<<host_name<<port_num<<"\n";//DEBUG
@@ -86,7 +87,7 @@ void SimpleController::onSetup({{ ModelName }}Model& subject)
 }
 
 //This function is being activated each step
-void SimpleController::onStep({{ ModelName }}Model& subject, double dt)
+void SimpleController::onStep(TwiceCubeGymModel& subject, double dt)
 {
 
   if (dt <= 0.0) {

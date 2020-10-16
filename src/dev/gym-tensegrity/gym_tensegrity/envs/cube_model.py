@@ -15,16 +15,20 @@ import os
 import subprocess
 import numpy as np
 
-path_to_model = os.path.join(os.environ["TENSEGRITY_HOME"], "build/dev/twiceCubeConverted/AppTwiceCubeModel")
+# import pprint
+# pp = pprint.PrettyPrinter(width=41, compact=True)
+
+path_to_model = os.path.join(os.environ["TENSEGRITY_HOME"], "build/dev/twiceCubeGym/AppTwiceCubeGymModel")
 sim_exec = "gnome-terminal -e {}".format(path_to_model)
 
 class CubeModel():
     def __init__(self, host_name='localhost', port_num=10040, packet_size=5000,
-                 sim_exec=sim_exec, render_flag=True, controllers_num=16, nodes_num=16):
+                 sim_exec=sim_exec, render_flag=True, controllers_num=16, nodes_num=24):
         self.host_name = host_name
         self.port_num = port_num
         self.packet_size = packet_size
         self.render_flag = render_flag
+        self.nodes_num = nodes_num
         self.actions_json = {
             'controllers_val': [0 for i in range(controllers_num)],
         }
@@ -116,9 +120,9 @@ class CubeModel():
         self.child_process = subprocess.Popen(subprocess_args[:3])  
         #Headless
         # self.child_process = subprocess.Popen(self.sim_exec, shell=True)  
-        #print('#########\nwaiting for a connection\n#########')
+        print('#########\nwaiting for a connection\n#########')
         self.connection, self.clientAddress = self.sock.accept()  #wait until it get a client
-        #print('connection from', self.clientAddress)
+        print('connection from', self.clientAddress)
 
     def closeSimulator(self):
         self.close_flag = True
@@ -145,11 +149,32 @@ class CubeModel():
             
             self.write(json.dumps(self.actions_json))   # Write to the simulator module the json object with the required info
             sim_raw_data = self.read()
-            # print(sim_raw_data)
+            # pp.pprint(sim_raw_data)
             if(sim_raw_data is not None):
                 self.sim_json = json.loads(sim_raw_data)  # Parse the data from string to json
         else:
             self.closeSimulator()
+
+    # TODO: Get here all the nodes except the nodes for the payload (the last 8)
+    def getNodes(self):
+        nodes = []
+        # Notice that the nodes are in the form (y,z,x) as it is coming from the simulator like this
+        for i in range(self.nodes_num):
+            nodes.append(self.sim_json["nodes"][i])
+        return nodes
+
+    # TODO: Get here only the positions for the last 8 and calculate the payload by using CoM (mass for each node is 1 and the total is 8)
+
+    # TODO: Get here all the nodes except the nodes for the payload (the last 8)
+    def getEndPointsVelocities(self):
+        nodes_velocities = []
+        # Notice that the nodes are in the form (y,z,x) as it is coming from the simulator like this
+        for i in range(self.nodes_num):
+            nodes_velocities.append(self.sim_json["nodes_velocities"][i])
+        return nodes_velocities
+
+    # TODO: Get here only the velocities for the last 8 and calculate the payload by using CoM (mass for each node is 1 and the total is 8)
+
 
     def getTime(self):
         return self.sim_json["Time"]
@@ -161,9 +186,11 @@ def main():
     # sleep(1)
     # cube.reset()
     while(1):
+    # for i in range(500):
+        # print(i)
+
         cube.step()
     cube.closeSimulator()
-    sleep(5)
 
 
 if __name__ == "__main__":

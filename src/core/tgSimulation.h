@@ -126,6 +126,8 @@ public:
      */
     tgWorld& getWorld() const;
 
+    std::vector<tgModel*> getModels() const;
+
  private:
     
     /**

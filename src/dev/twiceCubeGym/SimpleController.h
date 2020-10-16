@@ -9,7 +9,7 @@
  */
 
 
-#include "{{ ModelName }}Model.h"
+#include "TwiceCubeGymModel.h"
 // This library
 #include "core/tgObserver.h"
 #include "controllers/tgBasicController.h"
@@ -31,9 +31,9 @@
 
 
 // Forward declarations
-class {{ ModelName }}Model;
+class TwiceCubeGymModel;
 
-class SimpleController : public tgObserver<{{ ModelName }}Model>
+class SimpleController : public tgObserver<TwiceCubeGymModel>
 {
 public:
 	
@@ -49,7 +49,7 @@ public:
      */
     virtual ~SimpleController();
     
-    virtual void onSetup({{ ModelName }}Model& subject);
+    virtual void onSetup(TwiceCubeGymModel& subject);
     
     /**
      * Apply the Simple controller. Called by notifyStep(dt) of its
@@ -58,7 +58,7 @@ public:
      * have a list of allMuscles populated
      * @param[in] dt, current timestep must be positive
      */
-    virtual void onStep({{ ModelName }}Model& subject, double dt);
+    virtual void onStep(TwiceCubeGymModel& subject, double dt);
 
 
     std::vector<tgBasicController*> m_controllers; //instantiate vector of controllers

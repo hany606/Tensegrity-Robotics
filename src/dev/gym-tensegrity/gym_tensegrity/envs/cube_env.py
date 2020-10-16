@@ -39,15 +39,9 @@ class JumperEnv(gym.Env):
                             'port_num':None if 'port_num' not in config.keys() else config['port_num'],
                             'sim_exec':sim_exec if 'sim_exec' not in config.keys() else config['sim_exec'],
                             'dl':0.1 if 'dl' not in config.keys() else config['dl'],
-                            'observation': ['end_points', 'end_points_velocities'] if 'observation' not in config.keys() else config['observation'],
-                            'control_type': 'rest_length_mod' if 'control_type' not in config.keys() else config['control_type'],
+                            'observation': ['nodes', 'nodes_velocities'] if 'observation' not in config.keys() else config['observation'],
                             'num_repeated_action': 1 if 'num_repeated_action' not in config.keys() else config['num_repeated_action'],
                             'max_num_steps': 20000 if 'max_num_steps' not in config.keys() else config['max_num_steps'],
-                            'starting_coordinates': [0,100,0] if 'starting_coordinates' not in config.keys() else config['starting_coordinates'],
-                            'starting_angle': [0,0] if 'starting_angle' not in config.keys() else config['starting_angle'],
-                            'randomized_starting': {"angle":[[False,False], [0,0], [0,0]], "height":[False, 100,100]} if 'randomized_starting' not in config.keys() else config['randomized_starting'],
-                            'starting_leg_angle' : [0,0] if 'starting_leg_angle' not in config.keys() else config['starting_leg_angle'],
-                            'observation_noise': None if 'observation_noise' not in config.keys() else config['observation_noise']
                             }
         else:
             self.config =  {
@@ -55,40 +49,24 @@ class JumperEnv(gym.Env):
                             'port_num':None,
                             'sim_exec':sim_exec,
                             'dl':0.1,
-                            'observation': ['end_points', 'end_points_velocities'],
-                            'control_type': 'rest_length_mod',
+                            'observation': ['nodes', 'nodes_velocities'],
                             'num_repeated_action': 1,
                             'max_num_steps': 20000,
-                            'starting_coordinates': [0,100,0],
-                            'starting_angle': [0,0],
-                            'randomized_starting': {"angle":[[False,False], [0,0], [0,0]], "height":[False, 100,100]},
-                            'starting_leg_angle' : [0,0],
-                            'observation_noise': None
                             }
         super(JumperEnv, self).__init__()
 
-        if('end_points' not in self.config['observation'] and 'rest_length' not in self.config['observation'] and 'current_length'  not in self.config['observation'] and 'end_points_velocities' not in self.config['observation']):
-            raise Exception("Wrong choice for the type of the observation, you should choose one of these [end_points, rest_length, current_length, end_points_velocities] or any option from them together in a form of list")
+        if('nodes' not in self.config['observation'] and 'rest_length' not in self.config['observation'] and 'current_length'  not in self.config['observation'] and 'nodes_velocities' not in self.config['observation']):
+            raise Exception("Wrong choice for the type of the observation, you should choose one of these [nodes, rest_length, current_length, nodes_velocities] or any option from them together in a form of list")
 
-        if('rest_length' not in self.config['control_type'] and 'current_length' not in self.config['control_type'] and 'rest_length_mod'  not in self.config['control_type'] and 'current_length_mod'  not in self.config['control_type']):
-            raise Exception("Wrong choice for the type of the control_type, you should choose one of these [rest_length, current_length, rest_length_mod, current_length_mod]")
-
+      
         # Agent self variables
         self.max_cable_length = 50
-        self.min_leg_angle = -np.pi/2 # in radian
-        self.max_leg_angle =  np.pi/2 # in radian
-        self.end_points_num = 6
         self.min_coordinate = -200
         self.max_coordinate = -self.min_coordinate
         self.dl = self.config['dl'] # This were used for discrete action space
         self.count_rewards_flag = False
-        self.starting_coordinates = self.config['starting_coordinates']    # starting_coordinates: (y,z,x)
-        self.starting_angle = self.config['starting_angle'] # (angle around x-axis, angle around y-axis) in degree as in parsing the angles in radian to cmd command as parameter is giving errors
-        self.starting_leg_angle = self.config['starting_leg_angle']
         self.num_steps = 0
         self.max_num_steps = self.config['max_num_steps']
-        self.observation_noise = self.config['observation_noise']
-
 
         # The angles for min and max here for the randomization in degree
         self.min_starting_angle = [-3, -3] if len(self.config["randomized_starting"]["angle"]) < 2 else self.config["randomized_starting"]["angle"][1]
@@ -107,8 +85,10 @@ class JumperEnv(gym.Env):
         # self.starting_coordinates[1] = 10.535 # starting_coordinates [y,z,x]
         self.env = JumperModel(host_name=self.config['host_name'], port_num=self.config['port_num'],
                                sim_exec=self.config['sim_exec'], dl=self.config['dl'], 
-                               control_type= self.config['control_type'], starting_coordinates=self.starting_coordinates,
+                               starting_coordinates=self.starting_coordinates,
                                starting_angle=self.starting_angle, starting_leg_angle= self.starting_leg_angle)
+        self.end_points_num = self.env.nodes_num - 8 + 1 # Only the active nodes are all the nodes except the last 8 which will be used to generate the payload node
+
         self.env.startSimulator()
 
         # Continuous Action space for the delta lengths
@@ -181,13 +161,6 @@ class JumperEnv(gym.Env):
             observation = self._getObservation()
             rewards += self._getReward(observation)
 
-
-        if(self.observation_noise is not None):
-            self.uncorrelated_noise = np.random.normal(self.observation_noise["uncorrelated"]["mean"],
-                                                       self.observation_noise["uncorrelated"]["stdev"],
-                                                       self.observation_space.shape[0])
-        observation = self._getObservation()
-        noisy_observation = observation + self.uncorrelated_noise + self.correlated_noise
         reward = rewards
         done = self._isDone()
         return observation, reward, done, {}
@@ -218,11 +191,11 @@ class JumperEnv(gym.Env):
     def _getObservation(self):
         observation = np.empty((1,0))
 
-        if('end_points' in self.config['observation']):
+        if('nodes' in self.config['observation']):
             for i in self.env.getEndPoints():
                 observation = np.append(observation, i)
 
-        if('end_points_velocities' in self.config['observation']):
+        if('nodes_velocities' in self.config['observation']):
             observation = np.append(observation, self.env.getEndPointsVelocities())
 
         if('rest_length' in self.config['observation']):

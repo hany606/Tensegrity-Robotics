@@ -190,6 +190,11 @@ tgWorld& tgSimulation::getWorld() const
     return m_view.world();
 }
 
+std::vector<tgModel*> tgSimulation::getModels() const
+{
+    return m_models;
+}
+
 void tgSimulation::step(double dt) const
 {
 // Trying to profile here creates trouble for tgLinearString -  this is outside of the profile loop	
