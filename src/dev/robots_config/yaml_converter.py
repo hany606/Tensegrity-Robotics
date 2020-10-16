@@ -233,20 +233,25 @@ class TensegrityFomratConverter():
 
 		render_template_save(template_path=f"{template_path}model_templateh.txt", template_values=template_values_model_h, save_path=path+name+"Model.h")
 		render_template_save(template_path=f"{template_path}model_templatecpp.txt", template_values=template_values_model_cpp, save_path=path+name+"Model.cpp")
-		# render_template_save(template_path=f"{template_path}gym_controller_templateh.txt",template_values= {"ModelName": name}, save_path=path+"SimpleController.h")
-		render_template_save(template_path=f"{template_path}simple_controller_templateh.txt",template_values= {"ModelName": name}, save_path=path+"SimpleController.h")
-		# render_template_save(template_path=f"{template_path}gym_controller_templatecpp.txt",template_values= {"ModelName": name, "EndPointsMapping": _generate_endpoints_mapping()}, save_path=path+"SimpleController.cpp")
-		render_template_save(template_path=f"{template_path}simple_controller_templatecpp.txt",template_values= {"ModelName": name, "EndPointsMapping": _generate_endpoints_mapping()}, save_path=path+"SimpleController.cpp")
-		# render_template_save(template_path=f"{template_path}gym_app_template.txt", template_values=template_values_app, save_path=path+f"App{name}Model.cpp")
-		# render_template_save(template_path=f"{template_path}app_template.txt", template_values=template_values_app, save_path=path+f"App{name}Model.cpp")
-		render_template_save(template_path=f"{template_path}app_template_benchmark.txt", template_values=template_values_app, save_path=path+f"App{name}Model.cpp")
-		render_template_save(template_path=f"{template_path}cmake_lists_template.txt", template_values= {"ModelName": name}, save_path=path+"CMakeLists.txt")
 
-		# render_template_save(template_path=f"{template_path}json_structure_templateh.txt", template_values={}, save_path=path+"JsonStructure.h")
-		# render_template_save(template_path=f"{template_path}json_structure_templatecpp.txt", template_values=_generate_json_zero_arrays(), save_path=path+"JsonStructure.cpp")
+		render_template_save(template_path=f"{template_path}gym_controller_templateh.txt",template_values= {"ModelName": name}, save_path=path+"SimpleController.h")
+		render_template_save(template_path=f"{template_path}gym_controller_templatecpp.txt",template_values= {"ModelName": name, "EndPointsMapping": _generate_endpoints_mapping()}, save_path=path+"SimpleController.cpp")
+		render_template_save(template_path=f"{template_path}gym_app_template.txt", template_values=template_values_app, save_path=path+f"App{name}Model.cpp")
+		render_template_save(template_path=f"{template_path}gym_cmake_lists_template.txt", template_values= {"ModelName": name}, save_path=path+"CMakeLists.txt")
+
+		# render_template_save(template_path=f"{template_path}simple_controller_templateh.txt",template_values= {"ModelName": name}, save_path=path+"SimpleController.h")
+		# render_template_save(template_path=f"{template_path}simple_controller_templatecpp.txt",template_values= {"ModelName": name, "EndPointsMapping": _generate_endpoints_mapping()}, save_path=path+"SimpleController.cpp")
+		# render_template_save(template_path=f"{template_path}app_template_benchmark.txt", template_values=template_values_app, save_path=path+f"App{name}Model.cpp")
+
+		# render_template_save(template_path=f"{template_path}app_template.txt", template_values=template_values_app, save_path=path+f"App{name}Model.cpp")
+
+		# render_template_save(template_path=f"{template_path}cmake_lists_template.txt", template_values= {"ModelName": name}, save_path=path+"CMakeLists.txt")
+
+		render_template_save(template_path=f"{template_path}json_structure_templateh.txt", template_values={}, save_path=path+"JsonStructure.h")
+		render_template_save(template_path=f"{template_path}json_structure_templatecpp.txt", template_values=_generate_json_zero_arrays(), save_path=path+"JsonStructure.cpp")
 		
-		# render_template_save(template_path=f"{template_path}tcp_templateh.txt", template_values={}, save_path=path+"TCP.h")
-		# render_template_save(template_path=f"{template_path}tcp_templatecpp.txt", template_values=_generate_json_zero_arrays(), save_path=path+"TCP.cpp")
+		render_template_save(template_path=f"{template_path}tcp_templateh.txt", template_values={}, save_path=path+"TCP.h")
+		render_template_save(template_path=f"{template_path}tcp_templatecpp.txt", template_values=_generate_json_zero_arrays(), save_path=path+"TCP.cpp")
 		
 
 	def taichi_converter(self, Node, Rod, Spring):

@@ -42,10 +42,76 @@
 // namespace po = boost::program_options;
 #include <iterator>
 #include <string>
+#include <time.h>
+#include <vector>
+#include <cmath>
+
+# define COLLISIONS_FLAG true
+
 
 
 tgSimView* view;
 bool render_flag = false;
+
+void modifyRods({{ ModelName }}Model *model){
+    if(!COLLISIONS_FLAG){
+        std::vector<tgRod*> rods = model->getAllRods();
+        // https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=11690
+        {{ AddRodsConstraints }}
+    }
+    
+}
+
+double fullTimeForward(long long num_steps, tgSimulation &simulation, {{ ModelName }}Model *model){
+    clock_t begin = clock();    // Calculate CPU time on Linux and Wall time on Windows
+    simulation.reset();
+    modifyRods(model);
+    simulation.run(num_steps);
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    return time_spent;
+}
+
+double noResetForward(long long num_steps, tgSimulation &simulation){
+    clock_t begin = clock();    // Calculate CPU time on Linux and Wall time on Windows
+    simulation.run(num_steps);
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    return time_spent;
+}
+
+double calculateMean(std::vector<double> vec){
+    double total = 0;
+    for(int i = 0; i < vec.size(); i++){
+        total += vec[i];
+    }
+    total /= vec.size();
+    return total;
+}
+
+double calculateSD(std::vector<double> vec){
+    double mean = calculateMean(vec);
+    double std = 0;
+    for(int i = 0; i < vec.size(); i++){
+        std += pow(vec[i] - mean, 2);
+    }
+    std = sqrt(std/(float)vec.size());
+    return std;
+}
+
+void benchmark(int num_repetitions, int num_steps, tgSimulation &simulation, {{ ModelName }}Model *model){
+    std::vector<double> durations_full;
+    std::vector<double> durations_no_reset;
+    for(int i = 0; i < num_repetitions; i++){
+        durations_full.push_back(fullTimeForward(num_steps, simulation, model));
+        simulation.reset();
+        modifyRods(model);
+        durations_no_reset.push_back(noResetForward(num_steps, simulation));
+    }
+
+    printf("Full-Time: Num repetitions: %d; Total: %0.5lfs (+/- %0.5lfs); Per step: %0.5lfs\n", num_repetitions, calculateMean(durations_full), calculateSD(durations_full), calculateMean(durations_full)/(float)num_steps);
+    printf("No-Reset: Num repetitions: %d; Total: %0.5lfs (+/- %0.5lfs); Per step: %0.5lfs\n",  num_repetitions, calculateMean(durations_no_reset), calculateSD(durations_no_reset), calculateMean(durations_no_reset)/(float)num_steps);
+}
 
 
 /**
@@ -88,6 +154,7 @@ int main(int argc, char** argv)
     const double timestep_physics = 0.001; // seconds
     const double timestep_graphics = 1.f/60.f; // seconds
     const long long simulation_time = 10000; // in seconds
+    render_flag = std::stoi(argv[3]);
     if(render_flag)
         view = new tgSimViewGraphics(world, timestep_physics, timestep_graphics, "Tensegrity Jumping Robot", render_flag);
     else
@@ -105,7 +172,6 @@ int main(int argc, char** argv)
     // const long long  port_num = vm["portnum"].as<int>();
     const char* hostname = argv[1];
     const long long  port_num = std::stoll(argv[2]);
-    render_flag = std::stoi(argv[3]);
 
     std::cout<<hostname<<":"<<port_num<<"\n";
     SimpleController* const myController = new SimpleController(hostname, port_num);
@@ -115,9 +181,7 @@ int main(int argc, char** argv)
     // // Add the model to the world
     simulation.addModel(myModel);
     
-    std::vector<tgRod*> rods = myModel->getAllRods();
-    // https://pybullet.org/Bullet/phpBB3/viewtopic.php?t=11690
-    {{ AddRodsConstraints }}
+    modifyRods(myModel);
 
     
     // // return 0;
