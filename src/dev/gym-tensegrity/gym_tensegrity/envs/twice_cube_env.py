@@ -42,7 +42,8 @@ class TwiceCubeEnv(gym.Env):
                             'num_repeated_action': 1 if 'num_repeated_action' not in config.keys() else config['num_repeated_action'],
                             'max_num_steps': 20000 if 'max_num_steps' not in config.keys() else config['max_num_steps'],
                             'goal_coordinate': [12.0 ,-12.0 ,-12.0] if 'goal_coordinate' not in config.keys() else config['goal_coordinate'],
-                            'done_threshold': 0.1 if 'done_threshold' not in config.keys() else config['done_threshold'],
+                            'done_threshold': 0.01 if 'done_threshold' not in config.keys() else config['done_threshold'],
+                            'render': False if 'render' not in config.keys() else config["render"],
                             }
         else:
             self.config =  {
@@ -53,7 +54,8 @@ class TwiceCubeEnv(gym.Env):
                             'num_repeated_action': 1,
                             'max_num_steps': 20000,
                             'goal_coordinate': [12.0, -12.0, -12.0],
-                            'done_threshold': 0.1,
+                            'done_threshold': 0.01,
+                            'render': False,
                             }
         super(TwiceCubeEnv, self).__init__()
 
@@ -72,7 +74,7 @@ class TwiceCubeEnv(gym.Env):
 
         # self.starting_coordinates[1] = 10.535 # starting_coordinates [y,z,x]
         self.env = TwiceCubeModel(host_name=self.config['host_name'], port_num=self.config['port_num'],
-                                  sim_exec=self.config['sim_exec'])
+                                  sim_exec=self.config['sim_exec'], render_flag=self.config["render"])
         self.nodes_num = self.env.nodes_num - 8 + 1 # Only the active nodes are all the nodes except the last 8 which will be used to generate the payload node
 
         self.env.startSimulator()

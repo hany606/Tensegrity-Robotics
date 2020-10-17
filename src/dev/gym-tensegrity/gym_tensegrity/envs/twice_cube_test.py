@@ -77,4 +77,4 @@ def test(config=None):
 
 if __name__ == "__main__":
     # test({"goal_coordinate": [-0.09699148, -0.38100061,  0.10062749]})
-    test()
+    test({"render": True})
