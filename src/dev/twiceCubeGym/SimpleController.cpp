@@ -165,9 +165,9 @@ void SimpleController::onStep(TwiceCubeGymModel& subject, double dt)
 
 
         // (2) Get the length of targeting cables
-        for(int i = 0; i < actuators.size(); i++){
+        for(int j = 0; j < active_actuators_num; j++){
+          int i = active_actuators[j];
           JsonStructure::setRestCableLength(i, (int) (actuators[i]->getRestLength()*10000) /10000.0);
-          JsonStructure::setCurrentCableLength(i, (int) (actuators[i]->getCurrentLength()*10000) /10000.0);
         }
 
         // (4) Set the time stamp

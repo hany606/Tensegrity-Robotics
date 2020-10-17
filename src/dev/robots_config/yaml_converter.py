@@ -207,11 +207,12 @@ class TensegrityFomratConverter():
 			for i,c in enumerate(self.cables):
 				if(int(c["actuation"]) == 1):
 					active_actuators.append(i)
+			self.active_actuators_num = len(active_actuators)
 			output = f"int active_actuators_num = {len(active_actuators)};\n" + f"int active_actuators [{len(active_actuators)}] = " + "{" + (", ".join([str(i) for i in active_actuators])) + "};"
 			return output
 
 		def _generate_json_zero_arrays():
-			output_lengths = "{" + "0.0, "*(len(self.cables)-1) + "0.0}"
+			output_lengths = "{" + "0.0, "*(self.active_actuators_num-1) + "0.0}"
 			output_positions = "{" + "{0.0, 0.0, 0.0}, "*(len(self.nodes)-1) + "{0.0, 0.0, 0.0} }"
 			return {"ZeroLengthsArray": output_lengths, "ZeroNodesPositionsArray": output_positions}
 

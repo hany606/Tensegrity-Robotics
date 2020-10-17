@@ -33,15 +33,16 @@ def test(config=None):
         action[:4] = [0.001 for i in range(4)]
         action[4:] = [-0.001 for i in range(4)]
         action = np.array(action)
-        print("Action: {:}".format(action))
+        # print("Action: {:}".format(action))
         observation, reward, done, _= env.step(action)
+        print(len(observation))
         tot_reward += reward
-        print("Reward: {:}, Done: {:}".format(reward,done))
-        print(f"MSE: {env._mse_payload()}")
+        # print("Reward: {:}, Done: {:}".format(reward,done))
+        # print(f"MSE: {env._mse_payload()}")
         # print("Time: {:}".format(env.env.getTime()))
         # print_observation(observation)
-        print(env.env.getPayLoad()[0])
-        print("Total Reward: {:}".format(tot_reward))
+        # print(env.env.getPayLoad()[0])
+        # print("Total Reward: {:}".format(tot_reward))
         # input("-> check point: WAIT for INPUT !!!!")
 
     #     # sleep(0.01)
@@ -77,4 +78,5 @@ def test(config=None):
 
 if __name__ == "__main__":
     # test({"goal_coordinate": [-0.09699148, -0.38100061,  0.10062749]})
-    test({"render": True})
+    # test({"render": True})
+    test({'observation': ['nodes', 'nodes_velocities', 'rest_length']})

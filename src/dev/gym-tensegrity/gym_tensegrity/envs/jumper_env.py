@@ -24,10 +24,10 @@ from gym_tensegrity.envs.jumper_model import JumperModel
 
 # Machine with Xscreen
 path_to_model = os.path.join(os.environ["TENSEGRITY_HOME"], "build/dev/jumper/AppJumperModel")
-sim_exec = "gnome-terminal -e {}".format(path_to_model)
+# sim_exec = "gnome-terminal -e {}".format(path_to_model)
 
 #Headless
-# sim_exec = '/home/hany/repos/Work/IU/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
+sim_exec = '/home/hany606/repos/Research/Tensegrity/Tensegrity-Robotics/build/dev/jumper/AppJumperModel'
 
 class JumperEnv(gym.Env):
     metadata = {'render.modes': ['human']}

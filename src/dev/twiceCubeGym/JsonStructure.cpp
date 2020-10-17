@@ -10,10 +10,7 @@ using json = nlohmann::json;
 void JsonStructure::setup(){
     JsonStructure::jsonFile = {
         {"rest_cables_lengths", 
-            {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
-        },
-        {"current_cables_lengths", 
-            {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+            {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
         },
         {"nodes",
             {{0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0}, {0.0, 0.0, 0.0} }
@@ -33,10 +30,6 @@ void JsonStructure::setup(json jsonFile){
 
 void JsonStructure::setRestCableLength(int num, double val){
     JsonStructure::jsonFile["rest_cables_lengths"][num] = val;
-}
-
-void JsonStructure::setCurrentCableLength(int num, double val){
-    JsonStructure::jsonFile["current_cables_lengths"][num] = val;
 }
 
 void JsonStructure::setNode(int num, btVector3 node){

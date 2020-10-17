@@ -26,7 +26,7 @@ from gym_tensegrity.envs.twice_cube_model import TwiceCubeModel
 path_to_model = os.path.join(os.environ["TENSEGRITY_HOME"], "build/dev/twiceCubeGym/AppTwiceCubeGymModel")
 sim_exec = "gnome-terminal -e {}".format(path_to_model)
 
-# Headless
+# Headless: to use it, change first in model file in startSimulation function
 # sim_exec = path_to_model
 
 class TwiceCubeEnv(gym.Env):
@@ -64,7 +64,7 @@ class TwiceCubeEnv(gym.Env):
 
       
         # Agent self variables
-        self.max_cable_length = 50
+        self.max_cable_length = 1000
         self.min_coordinate = -200
         self.max_coordinate = -self.min_coordinate
         self.num_steps = 0
@@ -169,7 +169,6 @@ class TwiceCubeEnv(gym.Env):
 
         if('nodes_velocities' in self.config['observation']):
             observation = np.append(observation, self.env.getNodesVelocities())
-
         if('rest_length' in self.config['observation']):
             # observation = np.append(observation, self.env.getLegAngle())
             observation = np.append(observation, self.env.getRestCablesLengths())

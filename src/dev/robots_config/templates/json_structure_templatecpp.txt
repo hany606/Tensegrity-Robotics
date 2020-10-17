@@ -12,9 +12,6 @@ void JsonStructure::setup(){
         {"rest_cables_lengths", 
             {{ ZeroLengthsArray }}
         },
-        {"current_cables_lengths", 
-            {{ ZeroLengthsArray }}
-        },
         {"nodes",
             {{ ZeroNodesPositionsArray }}
         },
@@ -33,10 +30,6 @@ void JsonStructure::setup(json jsonFile){
 
 void JsonStructure::setRestCableLength(int num, double val){
     JsonStructure::jsonFile["rest_cables_lengths"][num] = val;
-}
-
-void JsonStructure::setCurrentCableLength(int num, double val){
-    JsonStructure::jsonFile["current_cables_lengths"][num] = val;
 }
 
 void JsonStructure::setNode(int num, btVector3 node){

@@ -37,8 +37,6 @@ class TwiceCubeModel():
         }
         self.sim_json = {"rest_cables_lengths":
                         [0 for i in range(controllers_num)],
-                        "current_cables_lengths":
-                        [0 for i in range(controllers_num)],
                         "nodes":
                         [[0.,0.,0.] for i in range(nodes_num)],
                         "time": 0.,
@@ -159,29 +157,39 @@ class TwiceCubeModel():
             self.closeSimulator()
 
     def getNodes(self):
-        nodes = []
+        all_nodes = []
         # Notice that the nodes are in the form (y,z,x) as it is coming from the simulator like this
         for i in range(self.nodes_num):
-            nodes.append(self.sim_json["nodes"][i])
+            all_nodes.append(self.sim_json["nodes"][i])
+
         # Get here only the positions for the last 8 and calculate the payload by using CoM (mass for each node is 1 and the total is 8)
-        payload = np.sum(nodes[-8:],axis=0)/8
+        payload = np.sum(all_nodes[-8:],axis=0)/8
         self.payload = payload
-        nodes = np.append((nodes[:-8]), self.payload)
+        nodes = all_nodes[:-8]
+        nodes.append(self.payload)
+        nodes = np.array(nodes)
         return nodes
 
     def getNodesVelocities(self):
-        nodes_velocities = []
+        all_nodes_velocities = []
         # Notice that the nodes are in the form (y,z,x) as it is coming from the simulator like this
         for i in range(self.nodes_num):
-            nodes_velocities.append(self.sim_json["nodes_velocities"][i])
+            all_nodes_velocities.append(self.sim_json["nodes_velocities"][i])
         # Get here only the velocities for the last 8 and calculate the payload by using CoM (mass for each node is 1 and the total is 8)
-        payload_vel = np.sum(nodes_velocities[-8:],axis=0)/8
+        payload_vel = np.sum(all_nodes_velocities[-8:],axis=0)/8
         self.payload_vel = payload_vel
-        nodes_velocities = np.append((nodes_velocities[:-8]), self.payload_vel)
+        nodes_velocities = all_nodes_velocities[:-8]
+        nodes_velocities.append(self.payload_vel)
+        nodes_velocities = np.array(nodes_velocities)
         return nodes_velocities
 
     def getPayLoad(self):
         return (self.payload, self.payload_vel)
+
+    def getRestCablesLengths(self, i=None):
+        if(i is None):
+            return self.sim_json["rest_cables_lengths"]
+        return self.sim_json["rest_cables_lengths"][i]
 
     def getTime(self):
         return self.sim_json["time"]
