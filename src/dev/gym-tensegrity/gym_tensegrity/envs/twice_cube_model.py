@@ -1,7 +1,7 @@
 """twice_cube_model.py: Create the agent of model of the twice cube model tensegrity robot and provide an easy interface to be used with RL algorithms"""
 __author__ = "Hany Hamed"
 __credits__ = ["Hany Hamed"]
-__version__ = "1.0.0"
+__version__ = "0.0.1"
 __email__ = "h.hamed.elanwar@gmail.com / h.hamed@innopolis.university"
 __status__ = "Developing"
 
@@ -21,14 +21,17 @@ import numpy as np
 path_to_model = os.path.join(os.environ["TENSEGRITY_HOME"], "build/dev/twiceCubeGym/AppTwiceCubeGymModel")
 sim_exec = "gnome-terminal -e {}".format(path_to_model)
 
-class CubeModel():
+class TwiceCubeModel():
     def __init__(self, host_name='localhost', port_num=10040, packet_size=5000,
-                 sim_exec=sim_exec, render_flag=True, controllers_num=16, nodes_num=24):
+                 sim_exec=sim_exec, render_flag=True, controllers_num=8, nodes_num=24):
         self.host_name = host_name
         self.port_num = port_num
         self.packet_size = packet_size
         self.render_flag = render_flag
         self.nodes_num = nodes_num
+        self.controllers_num = controllers_num
+        self.payload = None
+        self.payload_vel = None
         self.actions_json = {
             'controllers_val': [0 for i in range(controllers_num)],
         }
@@ -155,41 +158,46 @@ class CubeModel():
         else:
             self.closeSimulator()
 
-    # TODO: Get here all the nodes except the nodes for the payload (the last 8)
     def getNodes(self):
         nodes = []
         # Notice that the nodes are in the form (y,z,x) as it is coming from the simulator like this
         for i in range(self.nodes_num):
             nodes.append(self.sim_json["nodes"][i])
+        # Get here only the positions for the last 8 and calculate the payload by using CoM (mass for each node is 1 and the total is 8)
+        payload = np.sum(nodes[-8:],axis=0)/8
+        self.payload = payload
+        nodes = np.append((nodes[:-8]), self.payload)
         return nodes
 
-    # TODO: Get here only the positions for the last 8 and calculate the payload by using CoM (mass for each node is 1 and the total is 8)
-
-    # TODO: Get here all the nodes except the nodes for the payload (the last 8)
-    def getEndPointsVelocities(self):
+    def getNodesVelocities(self):
         nodes_velocities = []
         # Notice that the nodes are in the form (y,z,x) as it is coming from the simulator like this
         for i in range(self.nodes_num):
             nodes_velocities.append(self.sim_json["nodes_velocities"][i])
+        # Get here only the velocities for the last 8 and calculate the payload by using CoM (mass for each node is 1 and the total is 8)
+        payload_vel = np.sum(nodes_velocities[-8:],axis=0)/8
+        self.payload_vel = payload_vel
+        nodes_velocities = np.append((nodes_velocities[:-8]), self.payload_vel)
         return nodes_velocities
 
-    # TODO: Get here only the velocities for the last 8 and calculate the payload by using CoM (mass for each node is 1 and the total is 8)
-
+    def getPayLoad(self):
+        return (self.payload, self.payload_vel)
 
     def getTime(self):
-        return self.sim_json["Time"]
+        return self.sim_json["time"]
 
 # This function for testing the model by itself
 def main():
-    cube = CubeModel()
+    cube = TwiceCubeModel()
     cube.startSimulator()
     # sleep(1)
     # cube.reset()
     while(1):
     # for i in range(500):
         # print(i)
-
         cube.step()
+        print(cube.getNodes())
+
     cube.closeSimulator()
 
 
