@@ -21,6 +21,7 @@
 #include <algorithm>
 
 #define MAX_BUFF_SIZE 5000
+#define MAX_LENGTH_PERCENT 5
 
 using namespace std;
 using json = nlohmann::json;
@@ -31,6 +32,7 @@ vector <btVector3> last_positions;
 
 
 {{ EndPointsMapping }}
+{{ ActiveActuators }}
 
 // control_type: 0 for rest_Simple control and 1 for current_Simple control
 SimpleController::SimpleController(const char* host, const long long port): host_name(host), port_num(port){
@@ -51,6 +53,8 @@ void SimpleController::onSetup({{ ModelName }}Model& subject)
 
   JsonStructure::setup();
   m_controllers.clear(); //clear vector of controllers
+  max_lengths.clear(); //vector of randomized restlengths
+
     
   //get all of the tensegrity structure's cables
   actuators = subject.getAllActuators();
@@ -68,9 +72,13 @@ void SimpleController::onSetup({{ ModelName }}Model& subject)
     tgBasicController* m_lenController = new tgBasicController(pActuator);
     //add controller to vector
     m_controllers.push_back(m_lenController);
-    // getStartSimple
-    double start_Simple = actuators[i]->getRestLength();
-    printf("Actutor of string #%d -> start Lenght: %lf\n", (int) i, start_Simple);//DEBUG
+  }
+
+  for(int i = 0; i < active_actuators_num; i++){
+    double start_length = actuators[active_actuators[i]]->getRestLength();
+    max_lengths.push_back(MAX_LENGTH_PERCENT*start_length);
+    target_lengths.push_back(0);
+    printf("Actutor of string #%d -> start Lenght: %lf\n", (int) active_actuators[i], start_length);//DEBUG
   }
 
   for(int i = 0; i < nodes_num; i++){
@@ -133,7 +141,8 @@ void SimpleController::onStep({{ ModelName }}Model& subject, double dt)
         SimpleController::tcp_com->read_TCP(buffer,MAX_BUFF_SIZE);
         read_json = JsonStructure::stringToJson(buffer);
 
-        // TODO: Control the cables part
+        // Control the cables part
+        controlRestLength(read_json, dt);
 
         // (1) Get the end-points
         for(int i = 0; i < nodes_num; i++){
@@ -141,6 +150,7 @@ void SimpleController::onStep({{ ModelName }}Model& subject, double dt)
             continue;
 
           btVector3 node = actuators[endpoints_mapping[i][0]]->getAnchors_mod()[endpoints_mapping[i][1]]->getWorldPosition();
+          // relative to the inital CoM
           btVector3 node_relative = node - SimpleController::CoM;
           // JsonStructure::setNode(i,node);
           JsonStructure::setNode(i,node_relative);
@@ -168,5 +178,47 @@ void SimpleController::onStep({{ ModelName }}Model& subject, double dt)
 
     }
   }
+
+}
+
+void SimpleController::calcTargetLengths(json read_json){
+  for(int j = 0; j < active_actuators_num; j++){
+    int i = active_actuators[j];
+    // Discrete action space and for cotinous delta lengths
+    target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["controllers_val"][i];
+    if (target_lengths[i] < 0.0) {
+      target_lengths[i] = 0.0;
+    }
+    // Only this clamping while controlling the rest_lengths
+    if (target_lengths[i] > max_lengths[i]){
+      target_lengths[i] = max_lengths[i];
+      printf("Reached the limit\n");
+    }
+
+    // Continuous action space for lengths
+    // target_lengths[i] = (double)read_json["Controllers_val"][i];
+
+  }
+}
+
+void SimpleController::controlRestLength(json read_json, double dt){
+  //set new targets
+  SimpleController::calcTargetLengths(read_json);
+
+  for(int j = 0; j < active_actuators_num; j++){
+    int i = active_actuators[j];
+    if(((double) read_json["controllers_val"][i]) == 0)
+      continue;
+
+    std::cout<<"Current Length:"<<i<<": "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+
+    // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
+    m_controllers[i]->control(dt, target_lengths[i]);
+    actuators[i]->moveMotors(dt);
+    // printf("%d\n", actuators.size());
+    // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
+    // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
+  }
+  std::cout<<"-------------------------------------\n";
 
 }

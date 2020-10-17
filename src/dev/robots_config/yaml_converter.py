@@ -201,6 +201,14 @@ class TensegrityFomratConverter():
 					output += "{-1, -1}, "
 			output = output[:-2] + "};"
 			return output
+		
+		def _generate_active_actuators():
+			active_actuators = []
+			for i,c in enumerate(self.cables):
+				if(int(c["actuation"]) == 1):
+					active_actuators.append(i)
+			output = f"int active_actuators_num = {len(active_actuators)};\n" + f"int active_actuators [{len(active_actuators)}] = " + "{" + (", ".join([str(i) for i in active_actuators])) + "};"
+			return output
 
 		def _generate_json_zero_arrays():
 			output_lengths = "{" + "0.0, "*(len(self.cables)-1) + "0.0}"
@@ -235,7 +243,7 @@ class TensegrityFomratConverter():
 		render_template_save(template_path=f"{template_path}model_templatecpp.txt", template_values=template_values_model_cpp, save_path=path+name+"Model.cpp")
 
 		render_template_save(template_path=f"{template_path}gym_controller_templateh.txt",template_values= {"ModelName": name}, save_path=path+"SimpleController.h")
-		render_template_save(template_path=f"{template_path}gym_controller_templatecpp.txt",template_values= {"ModelName": name, "EndPointsMapping": _generate_endpoints_mapping()}, save_path=path+"SimpleController.cpp")
+		render_template_save(template_path=f"{template_path}gym_controller_templatecpp.txt",template_values= {"ModelName": name, "EndPointsMapping": _generate_endpoints_mapping(), "ActiveActuators": _generate_active_actuators()}, save_path=path+"SimpleController.cpp")
 		render_template_save(template_path=f"{template_path}gym_app_template.txt", template_values=template_values_app, save_path=path+f"App{name}Model.cpp")
 		render_template_save(template_path=f"{template_path}gym_cmake_lists_template.txt", template_values= {"ModelName": name}, save_path=path+"CMakeLists.txt")
 
