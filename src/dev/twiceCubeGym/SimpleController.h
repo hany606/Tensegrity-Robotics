@@ -60,10 +60,15 @@ public:
      */
     virtual void onStep(TwiceCubeGymModel& subject, double dt);
 
+    virtual void calcTargetLengths(nlohmann::json read_json);
+    virtual void controlRestLength(nlohmann::json read_json, double dt);
+
 
     std::vector<tgBasicController*> m_controllers; //instantiate vector of controllers
     std::vector<tgBasicActuator*> actuators;
     std::vector<tgRod*> rods;
+    std::vector<double> max_lengths; //instantiate vector of random restlengths
+    std::vector<double> target_lengths;
 
 private:
     
