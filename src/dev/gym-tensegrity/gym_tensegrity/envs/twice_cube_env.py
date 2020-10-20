@@ -24,10 +24,10 @@ from gym_tensegrity.envs.twice_cube_model import TwiceCubeModel
 
 # Machine with Xscreen
 path_to_model = os.path.join(os.environ["TENSEGRITY_HOME"], "build/dev/twiceCubeGym/AppTwiceCubeGymModel")
-sim_exec = "gnome-terminal -e {}".format(path_to_model)
+sim_exec_external = "gnome-terminal -e {}".format(path_to_model)
 
 # Headless: to use it, change first in model file in startSimulation function
-# sim_exec = path_to_model
+sim_exec_headless = path_to_model
 
 class TwiceCubeEnv(gym.Env):
     metadata = {'render.modes': ['human']}
@@ -37,25 +37,27 @@ class TwiceCubeEnv(gym.Env):
             self.config =  {
                             'host_name': 'localhost' if 'host_name' not in config.keys() else config['host_name'],
                             'port_num':None if 'port_num' not in config.keys() else config['port_num'],
-                            'sim_exec':sim_exec if 'sim_exec' not in config.keys() else config['sim_exec'],
+                            'sim_exec': sim_exec_headless if 'sim_exec' not in config.keys() else config['sim_exec'],
                             'observation': ['nodes', 'nodes_velocities'] if 'observation' not in config.keys() else config['observation'],
                             'num_repeated_action': 1 if 'num_repeated_action' not in config.keys() else config['num_repeated_action'],
                             'max_num_steps': 20000 if 'max_num_steps' not in config.keys() else config['max_num_steps'],
                             'goal_coordinate': [12.0 ,-12.0 ,-12.0] if 'goal_coordinate' not in config.keys() else config['goal_coordinate'],
                             'done_threshold': 0.01 if 'done_threshold' not in config.keys() else config['done_threshold'],
                             'render': False if 'render' not in config.keys() else config["render"],
+                            'error_threshold': 300 if 'error_threshold' not in config.keys() else config['error_threshold'],
                             }
         else:
             self.config =  {
                             'host_name': 'localhost',
                             'port_num':None,
-                            'sim_exec':sim_exec,
+                            'sim_exec':sim_exec_headless,
                             'observation': ['nodes', 'nodes_velocities'],
                             'num_repeated_action': 1,
                             'max_num_steps': 20000,
                             'goal_coordinate': [12.0, -12.0, -12.0],
                             'done_threshold': 0.01,
                             'render': False,
+                            'error_threshold': 300,
                             }
         super(TwiceCubeEnv, self).__init__()
 
@@ -63,6 +65,10 @@ class TwiceCubeEnv(gym.Env):
             raise Exception("Wrong choice for the type of the observation, you should choose one of these [nodes, rest_length, current_length, nodes_velocities] or any option from them together in a form of list")
 
       
+        if('sim_headless' in config.keys() and config['sim_headless'] == False):
+            self.config = sim_exec_external
+            self.config["sim_headless"] = False
+        self.config["sim_headless"] = True 
         # Agent self variables
         self.max_cable_length = 1000
         self.min_coordinate = -200
@@ -71,10 +77,11 @@ class TwiceCubeEnv(gym.Env):
         self.max_num_steps = self.config['max_num_steps']
         self.goal_coordinate = self.config['goal_coordinate']
         self.done_threshold = self.config['done_threshold']
+        self.error_threshold = self.config['error_threshold']
 
         # self.starting_coordinates[1] = 10.535 # starting_coordinates [y,z,x]
         self.env = TwiceCubeModel(host_name=self.config['host_name'], port_num=self.config['port_num'],
-                                  sim_exec=self.config['sim_exec'], render_flag=self.config["render"])
+                                  sim_exec=self.config['sim_exec'], render_flag=self.config["render"], sim_headless=self.config["sim_headless"])
         self.nodes_num = self.env.nodes_num - 8 + 1 # Only the active nodes are all the nodes except the last 8 which will be used to generate the payload node
 
         self.env.startSimulator()
@@ -121,6 +128,10 @@ class TwiceCubeEnv(gym.Env):
         num_repeated_action = self.config['num_repeated_action']
         rewards = 0
         
+        if(self.num_steps == 1):
+            self.initial_error = self._mse_payload()
+            print(f"Initial Error: {self.initial_error}")
+
         if isinstance(num_repeated_action, int):
             num_steps = num_repeated_action
         else:
@@ -196,7 +207,7 @@ class TwiceCubeEnv(gym.Env):
         #  The criteria for finish will be either
         #   if the payload reaches the specific coordinate or not within minimum error (threshold)
         mse_payload = self._mse_payload()
-        if mse_payload < self.done_threshold or self.num_steps > self.max_num_steps:
+        if mse_payload < self.done_threshold or self.num_steps > self.max_num_steps or mse_payload > self.initial_error + self.error_threshold:
                 self.num_steps = 0
                 return True
         return False

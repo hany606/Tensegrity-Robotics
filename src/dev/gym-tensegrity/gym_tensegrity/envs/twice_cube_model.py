@@ -23,13 +23,14 @@ sim_exec = "gnome-terminal -e {}".format(path_to_model)
 
 class TwiceCubeModel():
     def __init__(self, host_name='localhost', port_num=10040, packet_size=5000,
-                 sim_exec=sim_exec, render_flag=True, controllers_num=8, nodes_num=24):
+                 sim_exec=sim_exec, render_flag=True, controllers_num=8, nodes_num=24, sim_headless=True):
         self.host_name = host_name
         self.port_num = port_num
         self.packet_size = packet_size
         self.render_flag = render_flag
         self.nodes_num = nodes_num
         self.controllers_num = controllers_num
+        self.sim_headless = sim_headless
         self.payload = None
         self.payload_vel = None
         self.actions_json = {
@@ -116,11 +117,13 @@ class TwiceCubeModel():
         # sleep(0.5)
         # subprocess_args = [self.sim_exec[:14], self.sim_exec[15:]]
         #Machine with Xscreen
-        subprocess_args = self.sim_exec.split(" ")
-        subprocess_args[2] = " ".join(subprocess_args[2:])
-        self.child_process = subprocess.Popen(subprocess_args[:3])  
+        if(self.sim_headless == False):
+            subprocess_args = self.sim_exec.split(" ")
+            subprocess_args[2] = " ".join(subprocess_args[2:])
+            self.child_process = subprocess.Popen(subprocess_args[:3])  
         #Headless
-        # self.child_process = subprocess.Popen(self.sim_exec, shell=True)  
+        else:
+            self.child_process = subprocess.Popen(self.sim_exec, shell=True)  
         print('#########\nwaiting for a connection\n#########')
         self.connection, self.clientAddress = self.sock.accept()  #wait until it get a client
         print('connection from', self.clientAddress)
