@@ -129,7 +129,7 @@ class TwiceCubeEnv(gym.Env):
         rewards = 0
         
         if(self.num_steps == 1):
-            self.initial_error = self._mse_payload()
+            self.initial_error = self._euclidean_distance_payload()
             print(f"Initial Error: {self.initial_error}")
 
         if isinstance(num_repeated_action, int):
@@ -186,13 +186,13 @@ class TwiceCubeEnv(gym.Env):
 
         return np.array(observation)
 
-    def _mse(self, obs1, obs2):
-        mse_part = lambda x1, x2: (x1-x2)**2
-        mse = (sum([mse_part(obs1[i], obs2[i]) for i in range(len(obs1))]))/2
-        return mse
+    def _euclidean_distance(self, obs1, obs2):
+        euclidean_distance_part = lambda x1, x2: (x1-x2)**2
+        euclidean_distance = (sum([euclidean_distance_part(obs1[i], obs2[i]) for i in range(len(obs1))]))/2
+        return euclidean_distance
 
-    def _mse_payload(self):
-        return self._mse(self.env.getPayLoad()[0], self.goal_coordinate)
+    def _euclidean_distance_payload(self):
+        return self._euclidean_distance(self.env.getPayLoad()[0], self.goal_coordinate)
 
     # Reward criteria
     def _getReward(self, observation):
@@ -200,14 +200,14 @@ class TwiceCubeEnv(gym.Env):
         #   We need to minimize the time to reach the goal point
         #       Negative reward depends on the time that been 
         reward = -1
-        # reward = -self._mse_payload()
+        # reward = -self._euclidean_distance_payload()
         return reward
 
     def _isDone(self):
         #  The criteria for finish will be either
         #   if the payload reaches the specific coordinate or not within minimum error (threshold)
-        mse_payload = self._mse_payload()
-        if mse_payload < self.done_threshold or self.num_steps > self.max_num_steps or mse_payload > self.initial_error + self.error_threshold:
+        euclidean_distance_payload = self._euclidean_distance_payload()
+        if euclidean_distance_payload < self.done_threshold or self.num_steps > self.max_num_steps or euclidean_distance_payload > self.initial_error + self.error_threshold:
                 self.num_steps = 0
                 return True
         return False

@@ -39,7 +39,7 @@ def test(config=None):
         # print(len(observation))
         tot_reward += reward
         # print("Reward: {:}, Done: {:}".format(reward,done))
-        # print(f"MSE: {env._mse_payload()}")
+        # print(f"Euclidean distance: {env._euclidean_distance_payload()}")
         # print("Time: {:}".format(env.env.getTime()))
         # print_observation(observation)
         # print(env.env.getPayLoad()[0])
