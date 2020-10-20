@@ -32,8 +32,8 @@ sim_exec_headless = path_to_model
 class TwiceCubeEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, config=None):
-        if(config is not None):    
+    def __init__(self, config={}):
+        if(bool(config)):    
             self.config =  {
                             'host_name': 'localhost' if 'host_name' not in config.keys() else config['host_name'],
                             'port_num':None if 'port_num' not in config.keys() else config['port_num'],
@@ -45,6 +45,8 @@ class TwiceCubeEnv(gym.Env):
                             'done_threshold': 0.01 if 'done_threshold' not in config.keys() else config['done_threshold'],
                             'render': False if 'render' not in config.keys() else config["render"],
                             'error_threshold': 300 if 'error_threshold' not in config.keys() else config['error_threshold'],
+                            'max_reward': 500 if 'max_reward' not in config.keys() else config['max_reward'],
+                            'sim_headless': True if 'sim_headless' not in config.keys() else config['sim_headless'],
                             }
         else:
             self.config =  {
@@ -58,17 +60,16 @@ class TwiceCubeEnv(gym.Env):
                             'done_threshold': 0.01,
                             'render': False,
                             'error_threshold': 300,
+                            'max_reward': 500,
+                            'sim_headless': True,
                             }
         super(TwiceCubeEnv, self).__init__()
 
-        if('nodes' not in self.config['observation'] and 'rest_length' not in self.config['observation'] and 'nodes_velocities' not in self.config['observation']):
-            raise Exception("Wrong choice for the type of the observation, you should choose one of these [nodes, rest_length, current_length, nodes_velocities] or any option from them together in a form of list")
-
+        if(not(set(self.config['observation']).issubset(set(['nodes', 'rest_length', 'nodes_velocities'])))):
+            raise Exception("Wrong choice for the type of the observation, you should choose one of these [nodes, rest_length, nodes_velocities] or any option from them together in a form of list")
       
-        if('sim_headless' in config.keys() and config['sim_headless'] == False):
-            self.config = sim_exec_external
-            self.config["sim_headless"] = False
-        self.config["sim_headless"] = True 
+        if(self.config['sim_headless'] == False):
+            self.config["sim_exec"] = sim_exec_external
         # Agent self variables
         self.max_cable_length = 1000
         self.min_coordinate = -200
@@ -78,6 +79,7 @@ class TwiceCubeEnv(gym.Env):
         self.goal_coordinate = self.config['goal_coordinate']
         self.done_threshold = self.config['done_threshold']
         self.error_threshold = self.config['error_threshold']
+        self.max_reward = self.config['max_reward']
 
         # self.starting_coordinates[1] = 10.535 # starting_coordinates [y,z,x]
         self.env = TwiceCubeModel(host_name=self.config['host_name'], port_num=self.config['port_num'],
@@ -114,7 +116,7 @@ class TwiceCubeEnv(gym.Env):
             # high = np.append(high, self.max_leg_angle)
             high = np.append(high, np.full((1,self.env.controllers_num), self.max_cable_length))
 
-
+        self.action_space = spaces.Box(low=np.full((self.env.controllers_num,), -self.delta_length), high=np.full((self.env.controllers_num,), self.delta_length), dtype=np.float32)
         self.observation_space = spaces.Box(low= low, high= high, dtype=np.float32)
 
     def __del__(self):
@@ -157,7 +159,7 @@ class TwiceCubeEnv(gym.Env):
             raise Exception("The action space should be an np.array")
         if action.shape != self.action_space.shape:
             raise Exception("The shape of the provided action does not match")
-
+        
         action = np.clip(action,-self.delta_length, self.delta_length)
         # This is now useless after the value clipping
         if not self.action_space.contains(action):
@@ -200,6 +202,10 @@ class TwiceCubeEnv(gym.Env):
         #   We need to minimize the time to reach the goal point
         #       Negative reward depends on the time that been 
         reward = -1
+        # To make negative correlate with positive rewards
+        # euclidean_distance = self._euclidean_distance_payload()
+        # reward = self.max_reward/(euclidean_distance+1)
+
         # reward = -self._euclidean_distance_payload()
         return reward
 
@@ -207,7 +213,7 @@ class TwiceCubeEnv(gym.Env):
         #  The criteria for finish will be either
         #   if the payload reaches the specific coordinate or not within minimum error (threshold)
         euclidean_distance_payload = self._euclidean_distance_payload()
-        if euclidean_distance_payload < self.done_threshold or self.num_steps > self.max_num_steps or euclidean_distance_payload > self.initial_error + self.error_threshold:
+        if euclidean_distance_payload < self.done_threshold or euclidean_distance_payload > self.initial_error + self.error_threshold or self.num_steps > self.max_num_steps:
                 self.num_steps = 0
                 return True
         return False

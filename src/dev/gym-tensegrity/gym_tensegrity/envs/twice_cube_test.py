@@ -26,28 +26,30 @@ def test(config=None):
     done = False
     # input("-> check point: WAIT for INPUT !!!!")
 
+    steps = 0
     while not done:
         #inp = input("INPUT")
+        steps += 1
         action = env.action_space.sample()
-        action = [0 for i in action]
+        # action = [0 for i in action]
         # action[0  ] = 1
-        action[:4] = [0.001 for i in range(4)]
-        action[4:] = [-0.001 for i in range(4)]
+        # action[:4] = [0.001 for i in range(4)]
+        # action[4:] = [-0.001 for i in range(4)]
         action = np.array(action)
         # print("Action: {:}".format(action))
         observation, reward, done, _= env.step(action)
         # print(len(observation))
         tot_reward += reward
-        # print("Reward: {:}, Done: {:}".format(reward,done))
-        # print(f"Euclidean distance: {env._euclidean_distance_payload()}")
+        print("Reward: {:}, Done: {:}".format(reward,done))
+        print(f"Euclidean distance: {env._euclidean_distance_payload()}")
         # print("Time: {:}".format(env.env.getTime()))
         # print_observation(observation)
         # print(env.env.getPayLoad()[0])
-        # print("Total Reward: {:}".format(tot_reward))
-        # print("-------------------------------------------------")
+        print("Total Reward: {:}".format(tot_reward))
+        print("-------------------------------------------------")
         # sleep(0.01)
         # input("-> check point: WAIT for INPUT !!!!")
-
+    print(f"Total number of steps: {steps}")
     #     # sleep(0.01)
     # input("-> check point: WAIT for INPUT !!!!")
 
@@ -82,4 +84,4 @@ def test(config=None):
 if __name__ == "__main__":
     # test({"goal_coordinate": [-0.09699148, -0.38100061,  0.10062749]})
     # test({"render": True})
-    test({'observation': ['nodes', 'nodes_velocities', 'rest_length'], "render": True})
+    test({'observation': ['nodes', 'nodes_velocities', 'rest_length'], "render": not True})
