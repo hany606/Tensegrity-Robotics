@@ -202,15 +202,30 @@ void SimpleController::calcTargetLengths(json read_json){
 }
 
 void SimpleController::controlRestLength(json read_json, double dt){
-  //set new targets
-  SimpleController::calcTargetLengths(read_json);
+  // set new targets
+  // SimpleController::calcTargetLengths(read_json);
 
   for(int j = 0; j < active_actuators_num; j++){
     int i = active_actuators[j];
+    // Optimization step
     if(((double) read_json["controllers_val"][i]) == 0)
       continue;
 
-    std::cout<<"Current Length:"<<i<<": "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+    // calcTargetLength
+    // Discrete action space and for cotinous delta lengths
+    target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["controllers_val"][i];
+    if (target_lengths[i] < 0.0) {
+      target_lengths[i] = 0.0;
+    }
+    // Only this clamping while controlling the rest_lengths
+    if (target_lengths[i] > max_lengths[i]){
+      target_lengths[i] = max_lengths[i];
+      // printf("Reached the limit\n");
+    }
+    // -----------------------
+
+
+    // std::cout<<"Current Length:"<<i<<": "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
 
     // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
     m_controllers[i]->control(dt, target_lengths[i]);
@@ -219,6 +234,6 @@ void SimpleController::controlRestLength(json read_json, double dt){
     // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
     // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
   }
-  std::cout<<"-------------------------------------\n";
+  // std::cout<<"-------------------------------------\n";
 
 }

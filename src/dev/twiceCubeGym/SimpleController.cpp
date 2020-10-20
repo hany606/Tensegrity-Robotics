@@ -48,10 +48,10 @@ SimpleController::~SimpleController()
 void SimpleController::onSetup(TwiceCubeGymModel& subject)
 {
 
-  std::cout<<"\nStarting communication through TCP: "<<host_name<<port_num<<"\n";//DEBUG
+  // std::cout<<"\nStarting communication through TCP: "<<host_name<<port_num<<"\n";//DEBUG
   SimpleController::tcp_com = new TCP(host_name, port_num);
   SimpleController::tcp_com->setup();
-  std::cout<<"Finished Setup the communication\n";//DEBUG
+  // std::cout<<"Finished Setup the communication\n";//DEBUG
 
   JsonStructure::setup();
   m_controllers.clear(); //clear vector of controllers
@@ -62,7 +62,7 @@ void SimpleController::onSetup(TwiceCubeGymModel& subject)
   actuators = subject.getAllActuators();
   rods = subject.getAllRods();
 
-  printf("Number of actuators: %d , Number of Rods: %d\n", (int) actuators.size(), (int) rods.size());//DEBUG
+  // printf("Number of actuators: %d , Number of Rods: %d\n", (int) actuators.size(), (int) rods.size());//DEBUG
   // std::cout<<rods[1]->getTags()[0][1]<<"\n";
 
   //Attach a tgBasicController to each actuator
@@ -80,12 +80,12 @@ void SimpleController::onSetup(TwiceCubeGymModel& subject)
     double start_length = actuators[active_actuators[i]]->getRestLength();
     max_lengths.push_back(MAX_LENGTH_PERCENT*start_length);
     target_lengths.push_back(0);
-    printf("Actutor of string #%d -> start Lenght: %lf\n", (int) active_actuators[i], start_length);//DEBUG
+    // printf("Actutor of string #%d -> start Lenght: %lf\n", (int) active_actuators[i], start_length);//DEBUG
   }
 
   for(int i = 0; i < nodes_num; i++){
     if(endpoints_mapping[i][0] < 0){
-      std::cout<<"Cannot find node with index: "<<i<<"\n";
+      // std::cout<<"Cannot find node with index: "<<i<<"\n";
       continue;
     }
 
@@ -106,16 +106,16 @@ void SimpleController::onStep(TwiceCubeGymModel& subject, double dt)
     globalTime += dt;
     if(globalTime > 0){ //delay start of cable actuation
       if(toggle==0){    //print once when motors start moving        
-        std::cout<<"Nodes:\n";
+        // std::cout<<"Nodes:\n";
         for(int i = 0; i < nodes_num; i++){
           if(endpoints_mapping[i][0] < 0){
-            std::cout<<"Cannot find node with index: "<<i<<"\n";
+            // std::cout<<"Cannot find node with index: "<<i<<"\n";
             continue;
           }
 
           btVector3 node = actuators[endpoints_mapping[i][0]]->getAnchors_mod()[endpoints_mapping[i][1]]->getWorldPosition();
           
-          std::cout<<"Node "<<i<<":"<< node<<"\n";
+          // std::cout<<"Node "<<i<<":"<< node<<"\n";
         }
 
         // std::cout<<"End Points:\n";
@@ -132,8 +132,8 @@ void SimpleController::onStep(TwiceCubeGymModel& subject, double dt)
           SimpleController::CoM += rods[i]->centerOfMass();
         }
         SimpleController::CoM /= double(rods.size());
-        std::cout<<"CoM: "<<SimpleController::CoM;
-        std::cout << endl << "--------------------------------------------------------------------------" << endl;
+        // std::cout<<"CoM: "<<SimpleController::CoM;
+        // std::cout << endl << "--------------------------------------------------------------------------" << endl;
         toggle = 1;
       }
       if(toggle == 1){
@@ -194,7 +194,7 @@ void SimpleController::calcTargetLengths(json read_json){
     // Only this clamping while controlling the rest_lengths
     if (target_lengths[i] > max_lengths[i]){
       target_lengths[i] = max_lengths[i];
-      printf("Reached the limit\n");
+      // printf("Reached the limit\n");
     }
 
     // Continuous action space for lengths
@@ -205,14 +205,29 @@ void SimpleController::calcTargetLengths(json read_json){
 
 void SimpleController::controlRestLength(json read_json, double dt){
   //set new targets
-  SimpleController::calcTargetLengths(read_json);
+  // SimpleController::calcTargetLengths(read_json);
 
   for(int j = 0; j < active_actuators_num; j++){
     int i = active_actuators[j];
+    // Optimization step
     if(((double) read_json["controllers_val"][i]) == 0)
       continue;
 
-    std::cout<<"Current Length:"<<i<<": "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+    // calcTargetLength
+    // Discrete action space and for cotinous delta lengths
+    target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["controllers_val"][i];
+    if (target_lengths[i] < 0.0) {
+      target_lengths[i] = 0.0;
+    }
+    // Only this clamping while controlling the rest_lengths
+    if (target_lengths[i] > max_lengths[i]){
+      target_lengths[i] = max_lengths[i];
+      // printf("Reached the limit\n");
+    }
+    // -----------------------
+
+
+    // std::cout<<"Current Length:"<<i<<": "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
 
     // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
     m_controllers[i]->control(dt, target_lengths[i]);
@@ -221,6 +236,6 @@ void SimpleController::controlRestLength(json read_json, double dt){
     // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
     // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));
   }
-  std::cout<<"-------------------------------------\n";
+  // std::cout<<"-------------------------------------\n";
 
 }
