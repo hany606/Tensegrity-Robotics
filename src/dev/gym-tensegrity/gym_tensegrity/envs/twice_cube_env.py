@@ -33,36 +33,19 @@ class TwiceCubeEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
     def __init__(self, config={}):
-        if(bool(config)):    
-            self.config =  {
-                            'host_name': 'localhost' if 'host_name' not in config.keys() else config['host_name'],
-                            'port_num':None if 'port_num' not in config.keys() else config['port_num'],
-                            'sim_exec': sim_exec_headless if 'sim_exec' not in config.keys() else config['sim_exec'],
-                            'observation': ['nodes', 'nodes_velocities'] if 'observation' not in config.keys() else config['observation'],
-                            'num_repeated_action': 1 if 'num_repeated_action' not in config.keys() else config['num_repeated_action'],
-                            'max_num_steps': 20000 if 'max_num_steps' not in config.keys() else config['max_num_steps'],
-                            'goal_coordinate': [12.0 ,-12.0 ,-12.0] if 'goal_coordinate' not in config.keys() else config['goal_coordinate'],
-                            'done_threshold': 0.01 if 'done_threshold' not in config.keys() else config['done_threshold'],
-                            'render': False if 'render' not in config.keys() else config["render"],
-                            'error_threshold': 300 if 'error_threshold' not in config.keys() else config['error_threshold'],
-                            'max_reward': 500 if 'max_reward' not in config.keys() else config['max_reward'],
-                            'sim_headless': True if 'sim_headless' not in config.keys() else config['sim_headless'],
-                            }
-        else:
-            self.config =  {
-                            'host_name': 'localhost',
-                            'port_num':None,
-                            'sim_exec':sim_exec_headless,
-                            'observation': ['nodes', 'nodes_velocities'],
-                            'num_repeated_action': 1,
-                            'max_num_steps': 20000,
-                            'goal_coordinate': [12.0, -12.0, -12.0],
-                            'done_threshold': 0.01,
-                            'render': False,
-                            'error_threshold': 300,
-                            'max_reward': 500,
-                            'sim_headless': True,
-                            }
+        original_config = {'host_name': 'localhost',
+                           'port_num': None,
+                           'sim_exec': sim_exec_headless,
+                           'observation': ['nodes', 'nodes_velocities', 'rest_length'],
+                           'num_repeated_action': 1,
+                           'max_num_steps': 20000,
+                           'goal_coordinate': [12.0, -12.0, -12.0],
+                           'done_threshold': 0.01,
+                           'render': False,
+                           'error_threshold': 300,
+                           'max_reward': 500,
+                           'sim_headless': True,}
+        self.config = dict(original_config, **config)
         super(TwiceCubeEnv, self).__init__()
 
         if(not(set(self.config['observation']).issubset(set(['nodes', 'rest_length', 'nodes_velocities'])))):
@@ -131,8 +114,8 @@ class TwiceCubeEnv(gym.Env):
         rewards = 0
         
         if(self.num_steps == 1):
-            self.initial_error = self._euclidean_distance_payload()
-            print(f"Initial Error: {self.initial_error}")
+            self.initial_distance = self._euclidean_distance_payload()
+            print(f"Initial Error: {self.initial_distance}")
 
         if isinstance(num_repeated_action, int):
             num_steps = num_repeated_action
@@ -201,19 +184,19 @@ class TwiceCubeEnv(gym.Env):
         # Reward Criteria will depend on:
         #   We need to minimize the time to reach the goal point
         #       Negative reward depends on the time that been 
-        reward = -1
+        # reward = -1
         # To make negative correlate with positive rewards
         # euclidean_distance = self._euclidean_distance_payload()
         # reward = self.max_reward/(euclidean_distance+1)
 
-        # reward = -self._euclidean_distance_payload()
+        reward = -self._euclidean_distance_payload()/self.initial_distance
         return reward
 
     def _isDone(self):
         #  The criteria for finish will be either
         #   if the payload reaches the specific coordinate or not within minimum error (threshold)
         euclidean_distance_payload = self._euclidean_distance_payload()
-        if euclidean_distance_payload < self.done_threshold or euclidean_distance_payload > self.initial_error + self.error_threshold or self.num_steps > self.max_num_steps:
+        if euclidean_distance_payload < self.done_threshold or euclidean_distance_payload > self.initial_distance + self.error_threshold or self.num_steps > self.max_num_steps:
                 self.num_steps = 0
                 return True
         return False
