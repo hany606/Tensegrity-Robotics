@@ -1,0 +1,18 @@
+{
+  "env": "twiceCube",
+  "env_config": {
+    "observation": [
+      "nodes",
+      "nodes_velocities",
+      "rest_length"
+    ]
+  },
+  "eval_prob": 0.5,
+  "ignore_worker_failures": true,
+  "noise_size": 250000000,
+  "noise_stdev": 0.03,
+  "num_rollouts": 60,
+  "num_workers": 5,
+  "rollouts_used": 30,
+  "sgd_stepsize": 0.1
+}
