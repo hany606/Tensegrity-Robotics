@@ -64,21 +64,19 @@ void SimpleController::onSetup({{ ModelName }}Model& subject)
   // std::cout<<rods[1]->getTags()[0][1]<<"\n";
 
   //Attach a tgBasicController to each actuator
-  for (size_t i = 0; i < actuators.size(); ++i)
-  {
-    tgBasicActuator * const pActuator = actuators[i];
+  for(int j = 0; j < active_actuators_num; j++){
+    int actuator_idx = active_actuators[j];
+    double start_length = actuators[actuator_idx]->getRestLength();
+    max_lengths.push_back(MAX_LENGTH_PERCENT*start_length);
+    target_lengths.push_back(0);
+
+    tgBasicActuator * const pActuator = actuators[actuator_idx];
     assert(pActuator != NULL);  //precondition
     //instantiate controllers for each cable
     tgBasicController* m_lenController = new tgBasicController(pActuator);
     //add controller to vector
     m_controllers.push_back(m_lenController);
-  }
-
-  for(int i = 0; i < active_actuators_num; i++){
-    double start_length = actuators[active_actuators[i]]->getRestLength();
-    max_lengths.push_back(MAX_LENGTH_PERCENT*start_length);
-    target_lengths.push_back(0);
-    printf("Actutor of string #%d -> start Lenght: %lf\n", (int) active_actuators[i], start_length);//DEBUG
+    // printf("Actutor of string #%d -> start Lenght: %lf\n", (int) active_actuators[i], start_length);//DEBUG
   }
 
   for(int i = 0; i < nodes_num; i++){
@@ -205,15 +203,16 @@ void SimpleController::controlRestLength(json read_json, double dt){
   // set new targets
   // SimpleController::calcTargetLengths(read_json);
 
-  for(int j = 0; j < active_actuators_num; j++){
-    int i = active_actuators[j];
+  for(int i = 0; i < active_actuators_num; i++){
+    int actuator_idx = active_actuators[i];
+
     // Optimization step
     if(((double) read_json["controllers_val"][i]) == 0)
       continue;
 
     // calcTargetLength
     // Discrete action space and for cotinous delta lengths
-    target_lengths[i] = actuators[i]->getRestLength() + (double)read_json["controllers_val"][i];
+    target_lengths[i] = actuators[actuator_idx]->getCurrentLength() + (double)read_json["controllers_val"][i];
     if (target_lengths[i] < 0.0) {
       target_lengths[i] = 0.0;
     }
@@ -225,11 +224,11 @@ void SimpleController::controlRestLength(json read_json, double dt){
     // -----------------------
 
 
-    // std::cout<<"Current Length:"<<i<<": "<<actuators[i]->getCurrentLength()<<"\tRest Length: "<<actuators[i]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<std::endl;
+    // std::cout<<"Current:"<<actuator_idx<<": "<<actuators[actuator_idx]->getCurrentLength()<<"\tRest: "<<actuators[actuator_idx]->getRestLength()<<"\tTarget: "<<target_lengths[i]<<"\tControl: "<<((double) read_json["controllers_val"][i])<<std::endl;
 
     // m_controllers[i]->control(dt,((double) read_json["Controllers_val"][i]));
     m_controllers[i]->control(dt, target_lengths[i]);
-    actuators[i]->moveMotors(dt);
+    actuators[actuator_idx]->moveMotors(dt);
     // printf("%d\n", actuators.size());
     // printf("#%d -> %lf\n, -> %lf", i, (double) read_json["Controllers_val"][i], 5);
     // printf("ERR:%lf\n",abs(actuators[i]->getCurrentLength()- (double)read_json["Controllers_val"][i]));

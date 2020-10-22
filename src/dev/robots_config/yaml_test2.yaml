@@ -36,7 +36,7 @@ cables_config:
             stiffness: 1750, # kg/s^2 == N/m
             pretension: 0.0,
             damping: 15.0,
-            maxTension: 0,
+            maxTension: 100,
             targetVelocity: 3
         }
     ]
