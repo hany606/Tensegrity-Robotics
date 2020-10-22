@@ -165,7 +165,7 @@ int main(int argc, char** argv)
     //     render_flag = true;
 
 
-    // std::cout << "AppTwiceCubeGymModel" << std::endl;
+    std::cout << "AppTwiceCubeGymModel" << std::endl;
 
     // First create the ground and world. Specify ground rotation in radians
     const double yaw = 0.0;
@@ -201,7 +201,7 @@ int main(int argc, char** argv)
     const char* hostname = argv[1];
     const long long  port_num = std::stoll(argv[2]);
 
-    // std::cout<<hostname<<":"<<port_num<<"\n";
+    std::cout<<hostname<<":"<<port_num<<"\n";
     SimpleController* const myController = new SimpleController(hostname, port_num);
     myModel->attach(myController);
 

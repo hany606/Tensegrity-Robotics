@@ -14,8 +14,8 @@ from random import randint
 from time import sleep
 
 # Usage example via RLlib CLI:
-# python3 evaluate.py --evaluation-file=trained_agents/train_default/ARS_jumper_3ba03d10_2020-01-17_19-40-36wgy3fy8a/checkpoint_15/checkpoint-15 --agent-config-file=trained_agents/train_default/ARS_jumper_3ba03d10_2020-01-17_19-40-36wgy3fy8a/params.json
-# OR python3 evaluate.py --agent-path=trained_agents/train_default/ARS_jumper_3ba03d10_2020-01-17_19-40-36wgy3fy8a/ --checkpoint-num=120
+# python3 evaluate.py --evaluation-file=trained_agents/ARS_twiceCube_e53d0_00000_0_2020-10-21_16-31-39/checkpoint_220/checkpoint-220 --agent-config-file=trained_agents/ARS_twiceCube_e53d0_00000_0_2020-10-21_16-31-39/params.json
+# OR python3 evaluate.py --agent-path=trained_agents/ARS_twiceCube_e53d0_00000_0_2020-10-21_16-31-39/ --checkpoint-num=220
 
 def create_environment(env_config):
     print("Creation Envirnoment...")

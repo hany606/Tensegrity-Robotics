@@ -46,10 +46,10 @@ SimpleController::~SimpleController()
 void SimpleController::onSetup({{ ModelName }}Model& subject)
 {
 
-  std::cout<<"\nStarting communication through TCP: "<<host_name<<port_num<<"\n";//DEBUG
+  // std::cout<<"\nStarting communication through TCP: "<<host_name<<port_num<<"\n";//DEBUG
   SimpleController::tcp_com = new TCP(host_name, port_num);
   SimpleController::tcp_com->setup();
-  std::cout<<"Finished Setup the communication\n";//DEBUG
+  // std::cout<<"Finished Setup the communication\n";//DEBUG
 
   JsonStructure::setup();
   m_controllers.clear(); //clear vector of controllers
@@ -60,7 +60,7 @@ void SimpleController::onSetup({{ ModelName }}Model& subject)
   actuators = subject.getAllActuators();
   rods = subject.getAllRods();
 
-  printf("Number of actuators: %d , Number of Rods: %d\n", (int) actuators.size(), (int) rods.size());//DEBUG
+  // printf("Number of actuators: %d , Number of Rods: %d\n", (int) actuators.size(), (int) rods.size());//DEBUG
   // std::cout<<rods[1]->getTags()[0][1]<<"\n";
 
   //Attach a tgBasicController to each actuator
@@ -81,7 +81,7 @@ void SimpleController::onSetup({{ ModelName }}Model& subject)
 
   for(int i = 0; i < nodes_num; i++){
     if(endpoints_mapping[i][0] < 0){
-      std::cout<<"Cannot find node with index: "<<i<<"\n";
+      // std::cout<<"Cannot find node with index: "<<i<<"\n";
       continue;
     }
 
@@ -102,16 +102,16 @@ void SimpleController::onStep({{ ModelName }}Model& subject, double dt)
     globalTime += dt;
     if(globalTime > 0){ //delay start of cable actuation
       if(toggle==0){    //print once when motors start moving        
-        std::cout<<"Nodes:\n";
+        // std::cout<<"Nodes:\n";
         for(int i = 0; i < nodes_num; i++){
           if(endpoints_mapping[i][0] < 0){
-            std::cout<<"Cannot find node with index: "<<i<<"\n";
+            // std::cout<<"Cannot find node with index: "<<i<<"\n";
             continue;
           }
 
           btVector3 node = actuators[endpoints_mapping[i][0]]->getAnchors_mod()[endpoints_mapping[i][1]]->getWorldPosition();
           
-          std::cout<<"Node "<<i<<":"<< node<<"\n";
+          // std::cout<<"Node "<<i<<":"<< node<<"\n";
         }
 
         // std::cout<<"End Points:\n";
@@ -128,8 +128,8 @@ void SimpleController::onStep({{ ModelName }}Model& subject, double dt)
           SimpleController::CoM += rods[i]->centerOfMass();
         }
         SimpleController::CoM /= double(rods.size());
-        std::cout<<"CoM: "<<SimpleController::CoM;
-        std::cout << endl << "--------------------------------------------------------------------------" << endl;
+        // std::cout<<"CoM: "<<SimpleController::CoM;
+        // std::cout << endl << "--------------------------------------------------------------------------" << endl;
         toggle = 1;
       }
       if(toggle == 1){
@@ -190,7 +190,7 @@ void SimpleController::calcTargetLengths(json read_json){
     // Only this clamping while controlling the rest_lengths
     if (target_lengths[i] > max_lengths[i]){
       target_lengths[i] = max_lengths[i];
-      printf("Reached the limit\n");
+      // printf("Reached the limit\n");
     }
 
     // Continuous action space for lengths

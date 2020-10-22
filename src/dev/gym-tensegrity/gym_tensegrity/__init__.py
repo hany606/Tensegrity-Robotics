@@ -15,3 +15,8 @@ register(
     id='twice-cube-v0',
     entry_point='gym_tensegrity.envs:TwiceCubeEnv',
 )
+
+register(
+    id='test-v0',
+    entry_point='gym_tensegrity.envs:TestEnv',
+)
