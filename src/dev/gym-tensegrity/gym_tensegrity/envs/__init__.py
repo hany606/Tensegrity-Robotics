@@ -6,3 +6,5 @@ from gym_tensegrity.envs.jumper_env import JumperEnv
 
 from gym_tensegrity.envs.twice_cube_model import TwiceCubeModel
 from gym_tensegrity.envs.twice_cube_env import TwiceCubeEnv
+
+from gym_tensegrity.envs.test_env import TestEnv

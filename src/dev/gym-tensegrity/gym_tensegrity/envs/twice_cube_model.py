@@ -40,6 +40,8 @@ class TwiceCubeModel():
                         [0 for i in range(controllers_num)],
                         "nodes":
                         [[0.,0.,0.] for i in range(nodes_num)],
+                        "nodes_velocities":
+                        [[0.,0.,0.] for i in range(nodes_num)],
                         "time": 0.,
                         "z_finished": 1,
                         "flags":[1,0,0]}

@@ -1,10 +1,3 @@
-"""twice_cube_env.py: Create the gym custom environment of tensegrity TwiceCube tensegrity robot"""
-__author__ = "Hany Hamed"
-__credits__ = ["Hany Hamed"]
-__version__ = "0.0.1"
-__email__ = "h.hamed.elanwar@gmail.com / h.hamed@innopolis.university"
-__status__ = "Developing"
-
 # This file will contain all the information about the agent and the environment starting from the rendering of the GUI to the rewards,... etc.
 import os
 import time
@@ -16,43 +9,42 @@ import signal
 from math import floor,log2, sqrt
 import logging
 from random import randint,uniform
+from gym_tensegrity.envs.twice_cube_model import TwiceCubeModel
 
 
 import numpy as np
 import math
-from gym_tensegrity.envs.twice_cube_model import TwiceCubeModel
 
-# Machine with Xscreen
 path_to_model = os.path.join(os.environ["TENSEGRITY_HOME"], "build/dev/twiceCubeGym/AppTwiceCubeGymModel")
-sim_exec_external = "gnome-terminal -e {}".format(path_to_model)
-
-# Headless: to use it, change first in model file in startSimulation function
 sim_exec_headless = path_to_model
 
-class TwiceCubeEnv(gym.Env):
+
+class TestEnv(gym.Env):
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, config={}):
-        original_config = {'host_name': 'localhost',
+    def __init__(self):
+        super(TestEnv, self).__init__()
+        # self.action_space = spaces.Box(low=np.full((2,), -1), high=np.full((2,), 1), dtype=np.float32)
+        # self.observation_space = spaces.Box(low=np.full((4,), -10), high=np.full((4,), 10), dtype=np.float32)    
+        # self.num_steps = 0
+
+        self.config = {'host_name': 'localhost',
                            'port_num': None,
                            'sim_exec': sim_exec_headless,
                            'observation': ['nodes', 'nodes_velocities', 'rest_length'],
                            'num_repeated_action': 1,
-                           'max_num_steps': 20000,
+                           'max_num_steps':1000,
                            'goal_coordinate': [12.0, -12.0, -12.0],
                            'done_threshold': 0.01,
                            'render': False,
                            'error_threshold': 300,
                            'max_reward': 500,
-                           'sim_headless': True,}
-        self.config = dict(original_config, **config)
-        super(TwiceCubeEnv, self).__init__()
+                           'sim_headless': True}
+        super(TestEnv, self).__init__()
 
         if(not(set(self.config['observation']).issubset(set(['nodes', 'rest_length', 'nodes_velocities'])))):
             raise Exception("Wrong choice for the type of the observation, you should choose one of these [nodes, rest_length, nodes_velocities] or any option from them together in a form of list")
       
-        if(self.config['sim_headless'] == False):
-            self.config["sim_exec"] = sim_exec_external
         # Agent self variables
         self.max_cable_length = 1000
         self.min_coordinate = -200
@@ -102,41 +94,19 @@ class TwiceCubeEnv(gym.Env):
         # self.action_space = spaces.Box(low=np.full((self.env.controllers_num,), -self.delta_length), high=np.full((self.env.controllers_num,), self.delta_length), dtype=np.float32)
         self.observation_space = spaces.Box(low= low, high= high, dtype=np.float32)
 
-    def __del__(self):
-        self.env.closeSimulator()
-    
-    
+
     def step(self, action):
         self.num_steps += 1
-        # This modification of multiple steps of actions was adapted from Atari environment: https://github.com/openai/gym/blob/master/gym/envs/atari/atari_env.py
-        num_steps = 0
-        num_repeated_action = self.config['num_repeated_action']
-        rewards = 0
-        
         if(self.num_steps == 1):
             self.initial_distance = self._euclidean_distance_payload()
             print(f"Initial Error: {self.initial_distance}")
 
-        if isinstance(num_repeated_action, int):
-            num_steps = num_repeated_action
-        else:
-            num_steps = randint(num_repeated_action[0], num_repeated_action[1])
-        
-        
-        for _ in range(num_steps):    
-            self._takeAction(action)
-            observation = self._getObservation()
-            rewards += self._getReward(observation)
-
-        reward = rewards
+        self._takeAction(action)
+        observation = self._getObservation()
+        reward = self._getReward(observation)
         done = self._isDone()
         return observation, reward, done, {}
 
-    # Continuous delta length
-    # action is number that represents the length and the index of the controller
-    # For example imaging that the delta_length = 10
-    # Then if the action belongs to (-10,0]U[0,10) -- controller 0
-    # action belongs to (-50,-40]U[40,50) -- controller 1
     def _takeAction(self, action):
         if (not isinstance(action, np.ndarray)):
             raise Exception("The action space should be an np.array")
@@ -151,11 +121,6 @@ class TwiceCubeEnv(gym.Env):
         self.env.actions_json["controllers_val"][:] = action.tolist()
         self.env.step()
 
-    # Observations:
-    #   - The dimensions is specified above and their min. and max. values
-    #   1- Nodes positions
-    #   2- Nodes velocities
-    #   3- Rest lengths of the cables
     def _getObservation(self):
         observation = np.empty((1,0))
 
@@ -165,11 +130,13 @@ class TwiceCubeEnv(gym.Env):
 
         if('nodes_velocities' in self.config['observation']):
             observation = np.append(observation, self.env.getNodesVelocities())
+
         if('rest_length' in self.config['observation']):
             # observation = np.append(observation, self.env.getLegAngle())
             observation = np.append(observation, self.env.getRestCablesLengths())
 
         return np.array(observation)
+
 
     def _euclidean_distance(self, obs1, obs2):
         euclidean_distance_part = lambda x1, x2: (x1-x2)**2
@@ -216,7 +183,6 @@ class TwiceCubeEnv(gym.Env):
         return self._getObservation()
 
     def render(self, mode='human'):
-        self.env.render()
-
+        pass
     def close(self):
-        self.env.closeSimulator()
+        pass
