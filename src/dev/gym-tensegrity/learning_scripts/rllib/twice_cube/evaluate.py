@@ -183,10 +183,11 @@ class Evaluater:
             else:
                 action = env.action_space.sample()
                 #action = np.zeros(8)
-            print(action)
+            #print(action)
             observation, reward, done, _ = env.step(action)
             #sleep(0.1)
             #self.printer.observation(observation)
+            print(env.env.getPayLoad()[0])
             #self.printer.reward(reward)
             #self.printer.action(action)
             #self.printer.done(done)
